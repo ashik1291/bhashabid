@@ -30,6 +30,7 @@ THIRD_PERSON_ORDINARY_TO_HONORIFIC = {
     "বলল": "বললেন", "করল": "করলেন", "গেল": "গেলেন", "খেল": "খেলেন",
     "দেখল": "দেখলেন", "নিল": "নিলেন", "দিল": "দিলেন", "বলে": "বলেন",
     "করে": "করেন", "যায়": "যান", "খায়": "খান", "দেখে": "দেখেন",
+    "দেয়": "দেন", "নেয়": "নেন",
     "হলো": "হলেন", "বলবে": "বলবেন", "করবে": "করবেন", "যাবে": "যাবেন",
     "ছিল": "ছিলেন", "আসে": "আসেন", "এলো": "এলেন", "আসলো": "আসলেন",
     "আসবে": "আসবেন", "থাকে": "থাকেন", "থাকবে": "থাকবেন", "হয়েছে": "হয়েছেন",
@@ -161,6 +162,38 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             middle = m_tini.group(2)
             verb = m_tini.group(3)
             matched = m_tini.group(0)
+
+            # Linguistic Guard 1: Subordinate clause boundary ('যে' / 'যেন')
+            # If 'যে' appears in middle (e.g. 'তিনি বললেন যে সময় হয়েছে'),
+            # the verb belongs to the embedded subordinate clause, not 'তিনি'.
+            if re.search(r"(?<![\u0980-\u09FF])(যে|যেন)(?![\u0980-\u09FF])", middle):
+                continue
+
+            # Linguistic Guard 2: Prior honorific verb already exists in middle
+            # e.g. 'তিনি পদ ছাড়েন বলে' -> 'ছাড়েন' is already the main verb matching 'তিনি'.
+            has_prior_hon_verb = any(
+                re.search(rf"(?<![\u0980-\u09FF]){hv}(?![\u0980-\u09FF])", middle)
+                for hv in THIRD_PERSON_HONORIFIC_TO_ORDINARY.keys()
+            )
+            if has_prior_hon_verb:
+                continue
+
+            # Linguistic Guard 3: Non-finite participle in compound or serial verb construction
+            # e.g. 'তিনি বাতিল করে দেন' or 'তিনি বাতিল করে ... বলেন'
+            rest_of_clause = line[m_tini.end():]
+            if verb in ("করে", "হয়ে", "গিয়ে", "এসে", "দেখে", "বলে"):
+                # Check if an honorific finite verb follows in the same clause
+                if any(
+                    re.search(rf"(?<![\u0980-\u09FF]){hv}(?![\u0980-\u09FF])", rest_of_clause)
+                    for hv in THIRD_PERSON_HONORIFIC_TO_ORDINARY.keys()
+                ):
+                    continue
+
+            # Linguistic Guard 4: Quotative complementizer 'বলে' followed by reporting predicate
+            # e.g. 'বলে জানা গেছে', 'বলে মনে করা হয়', 'বলে দাবি করা হয়'
+            if verb == "বলে" and re.search(r"^\s*(?:জানা গেছে|মনে করা|দাবি করা|উল্লেখ করা|প্রকাশ|জানানো)", rest_of_clause):
+                continue
+
             hon_verb = THIRD_PERSON_ORDINARY_TO_HONORIFIC.get(verb, f"{verb}েন")
             ord_subj = "সে" if subj == "তিনি" else "তারা"
             suggestion = f"বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): '{subj}{middle}{hon_verb}' অথবা বিকল্প ২ (সাধারণ সর্বনাম): '{ord_subj}{middle}{verb}'"
@@ -181,6 +214,17 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             middle = m_se.group(2)
             verb = m_se.group(3)
             matched = m_se.group(0)
+
+            # Linguistic Guard 5: Demonstrative determiner 'সে' modifying a noun
+            # e.g. 'সে কথা ভাবা দরকার', 'সে সময়', 'সে বিষয়'
+            if subj == "সে" and re.match(r"^\s*(?:কথা|বিষয়|সময়|দিন|বছর|ঘটনা|মুহূর্ত|স্থান|জায়গা|কারণে|ফলে|লোক|ব্যক্তি)(?![\u0980-\u09FF])", middle):
+                continue
+
+            # Linguistic Guard 6: Another honorific subject intervenes in middle
+            # e.g. 'সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন' -> subject of 'করেন' is 'তিনি', not 'সে'.
+            if subj == "সে" and re.search(r"(?<![\u0980-\u09FF])(তিনি|তাঁরা|আপনারা)(?![\u0980-\u09FF])", middle):
+                continue
+
             ord_verb = THIRD_PERSON_HONORIFIC_TO_ORDINARY.get(verb, verb)
             hon_subj = "তিনি" if subj == "সে" else "তাঁরা"
             suggestion = f"বিকল্প ১ (সাধারণ ক্রিয়াপদ): '{subj}{middle}{ord_verb}' অথবা বিকল্প ২ (সম্ভ্রমাত্মক সর্বনাম): '{hon_subj}{middle}{verb}'"

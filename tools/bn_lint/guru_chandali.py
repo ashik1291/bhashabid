@@ -2,7 +2,6 @@
 # Sadhu-Cholito mixing detection (গুরুচণ্ডালী দোষ)
 import re
 from .models import LintIssue, LintSeverity
-from ..bn_normalize.unicode import canonicalize_unicode
 
 SADHU_MARKERS = {
     "আসিয়া": "এসে",
