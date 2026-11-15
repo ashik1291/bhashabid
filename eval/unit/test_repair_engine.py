@@ -85,6 +85,23 @@ class TestRepairEngine(unittest.TestCase):
             self.assertIn(expected, repaired)
             self.assertTrue(len(fixes) > 0)
 
+    def test_context_aware_moto_and_lexicon_repairs(self):
+        # 1. Similarity 'মত' should become 'মতো'
+        sim_text = "পানির মত সহজ ও ফুলের মত সুন্দর।"
+        repaired_sim, fixes_sim = repair_text(sim_text)
+        self.assertIn("পানির মতো সহজ ও ফুলের মতো সুন্দর", repaired_sim)
+
+        # 2. Opinion 'মত' should stay intact
+        op_text = "আমার মত হলো এই সিদ্ধান্ত সঠিক নয়।"
+        repaired_op, fixes_op = repair_text(op_text)
+        self.assertIn("আমার মত হলো", repaired_op)
+
+        # 3. Offline lexicon high-confidence repair
+        lex_typo_text = "সেখানে কোনো দূর্ঘটনা ঘটেনি।"
+        repaired_lex, fixes_lex = repair_text(lex_typo_text)
+        self.assertIn("কোনো দুর্ঘটনা ঘটেনি", repaired_lex)
+        self.assertTrue(any(f["category"] == "ORTHOGRAPHY_PHONETIC" for f in fixes_lex))
+
     def test_mcp_server_repair_tool(self):
         server = BhashabidMCPServer()
         res = server.call_tool(

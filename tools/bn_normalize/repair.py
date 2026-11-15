@@ -21,6 +21,18 @@ from ..bn_lint.honorifics import (
 B_L = r"(?<![\u0980-\u09FF])"
 B_R = r"(?![\u0980-\u09FF])"
 
+# Pronoun stems where 'মত' denotes opinion/view rather than comparison
+PRONOUN_OPINION_STEMS = {
+    "আমার", "আমাদের", "তোমার", "তোমাদের", "তার", "তাদের", "তাঁর", "তাঁদের",
+    "কার", "কাদের", "যার", "যাদের", "এর", "এদের", "ওর", "ওদের", "কারও", "কারো"
+}
+
+def _fix_similarity_moto(match):
+    word = match.group(1)
+    if word in PRONOUN_OPINION_STEMS:
+        return match.group(0)  # Preserve untouched to prevent opinion ambiguity
+    return f"{word} মতো"
+
 # Deterministic canonical calque repairs (replaces unnatural machine translations with standard Bengali)
 CANONICAL_CALQUE_REPAIRS = [
     # Causal / passive calques
@@ -147,6 +159,39 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
                 "replacement": replacement,
                 "description": desc
             })
+
+    # 3c. Context-aware similarity 'মত' -> 'মতো' (leaves pronoun opinion stems 'আমার মত' untouched)
+    sim_moto_pat = re.compile(r"\b([\u0980-\u09FF]+(?:ের|র))\s+মত\b")
+    if sim_moto_pat.search(current_text):
+        new_text = sim_moto_pat.sub(_fix_similarity_moto, current_text)
+        if new_text != current_text:
+            applied_fixes.append({
+                "category": "GRAMMATICAL_INVARIANT",
+                "pattern": r"-র/-এর মত",
+                "replacement": "-র/-এর মতো",
+                "description": "সাদৃশ্যবাচক প্রত্যয় প্রমিতকরণ: '-র মত' -> '-র মতো'"
+            })
+            current_text = new_text
+
+    # 3d. Safe High-Confidence Lexicon Typo Repairs (Homophone single candidate repairs)
+    try:
+        from .lexicon import get_default_lexicon
+        lex = get_default_lexicon()
+        typo_tokens = set(re.findall(r"[\u0980-\u09FF]{4,}", current_text))
+        for token in typo_tokens:
+            fixed_lemma = lex.find_high_confidence_repair(token)
+            if fixed_lemma and fixed_lemma != token:
+                token_pat = re.compile(B_L + re.escape(token) + B_R)
+                if token_pat.search(current_text):
+                    current_text = token_pat.sub(fixed_lemma, current_text)
+                    applied_fixes.append({
+                        "category": "ORTHOGRAPHY_PHONETIC",
+                        "pattern": token,
+                        "replacement": fixed_lemma,
+                        "description": f"অফলাইন লেক্সিকন প্রমিত রূপ: '{token}' -> '{fixed_lemma}'"
+                    })
+    except Exception:
+        pass
 
     # 4. Guru-Chandali Harmonization (Archaic Sadhu verbs in Cholito text)
     tokens = set(re.findall(r"[\u0980-\u09FF]+", current_text))

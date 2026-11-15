@@ -136,6 +136,7 @@ class BengaliOfflineLexicon:
 
         candidates = []
         w_len = len(w)
+        w_set = set(w)
 
         # Fast prune: determine candidate search characters (first char + homophonic variants)
         c0 = w[0]
@@ -153,8 +154,12 @@ class BengaliOfflineLexicon:
         if not candidate_pool:
             candidate_pool = self._vocab
 
+        min_char_overlap = max(1, len(w_set) - 1)
         for candidate in candidate_pool:
-            if abs(len(candidate) - w_len) > 2:
+            if abs(len(candidate) - w_len) > 1:
+                continue
+            # Fast character overlap filter
+            if len(w_set.intersection(candidate)) < min_char_overlap:
                 continue
             # Phonetic match check
             dist = bengali_edit_distance(w, candidate)
@@ -165,12 +170,30 @@ class BengaliOfflineLexicon:
         candidates.sort(key=lambda x: (x[1], len(x[0])))
         return [c[0] for c in candidates[:max_suggestions]]
 
+    def find_high_confidence_repair(self, word: str) -> Optional[str]:
+        """
+        Finds a safe, deterministic replacement if the word is an unambiguous
+        phonetic typo of a validated standard lemma (distance <= 1.0, length >= 4).
+        """
+        w = canonicalize_unicode(word)
+        if len(w) < 4 or self.is_known(w):
+            return None
+        suggestions = self.suggest_corrections(w, max_suggestions=1, max_distance=1.0)
+        if suggestions and suggestions[0] != w:
+            return suggestions[0]
+        return None
+
     def audit_text(self, text: str) -> List[Dict]:
         """
         Audits a Bengali text and flags potential typos with phonetic suggestions.
+        Safely ignores code-switched alphanumeric hybrid compounds (e.g. K8s-ভিত্তিক, API-এর).
         """
+        # Pre-filter out English alphanumeric hyphenated terms
+        clean_text = re.sub(r"[A-Za-z0-9]+-(?:[\u0980-\u09FF]+)", " ", text)
+        clean_text = re.sub(r"[A-Za-z0-9]+", " ", clean_text)
+
         issues = []
-        tokens = re.finditer(r"[\u0980-\u09FF]+", text)
+        tokens = re.finditer(r"[\u0980-\u09FF]+", clean_text)
         for m in tokens:
             word = m.group(0)
             # Skip single characters and numerals
@@ -178,7 +201,7 @@ class BengaliOfflineLexicon:
                 continue
             if not self.is_known(word):
                 suggestions = self.suggest_corrections(word, max_suggestions=2, max_distance=2.5)
-                if suggestions:
+                if suggestions and suggestions[0] != word:
                     issues.append({
                         "word": word,
                         "span": (m.start(), m.end()),
