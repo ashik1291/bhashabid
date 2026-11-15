@@ -118,6 +118,32 @@ def handle_prosody(args):
         sys.stderr.write(f"Error: {e}\n")
         return 1
 
+def handle_spellcheck(args):
+    try:
+        from .bn_normalize.lexicon import get_default_lexicon
+        text = resolve_text_or_file(args.text)
+        lex = get_default_lexicon()
+        issues = lex.audit_text(text)
+        if getattr(args, "json", False):
+            import json
+            print(json.dumps({
+                "issues_count": len(issues),
+                "issues": issues
+            }, ensure_ascii=False, indent=2))
+        else:
+            if not issues:
+                print("✓ কোনো সম্ভাব্য বানান বিভ্রাট পাওয়া যায়নি (No spelling issues found).")
+            else:
+                print(f"শনাক্তকৃত সম্ভাব্য বানান সমস্যা: {len(issues)} টি")
+                print("=" * 60)
+                for item in issues:
+                    suggs = ", ".join(item["suggestions"])
+                    print(f"- শব্দ: '{item['word']}' -> সম্ভাব্য শুদ্ধ রূপ: {suggs}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Spellcheck Error: {e}\n")
+        return 1
+
 def handle_writ(args):
     try:
         from .bn_legal import determine_writ_type, generate_writ_prayer, CONSTITUTIONAL_PROVISIONS
@@ -414,6 +440,12 @@ def main():
     p_lint.add_argument("text", help="Bengali text string or path to text file")
     p_lint.add_argument("--json", action="store_true", help="Output results in JSON format")
     p_lint.set_defaults(func=handle_lint)
+
+    # spellcheck
+    p_spell = subparsers.add_parser("spellcheck", help="Offline phonetic spellchecking and typo detection")
+    p_spell.add_argument("text", help="Bengali text string or path to a text file")
+    p_spell.add_argument("--json", action="store_true", help="Output results in JSON format")
+    p_spell.set_defaults(func=handle_spellcheck)
 
     # prosody
     p_prosody = subparsers.add_parser("prosody", help="Analyze Bengali poetic metre, scansion, and Payar conformity")

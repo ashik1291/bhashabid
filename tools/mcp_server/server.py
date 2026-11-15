@@ -92,6 +92,17 @@ class BhashabidMCPServer:
                     },
                     "required": ["remedy", "subject", "authority"]
                 }
+            },
+            {
+                "name": "spellcheck_text",
+                "description": "Offline deterministic Bengali spellchecker: detects unrecognized words and suggests closest phonetic corrections.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "text": {"type": "string", "description": "The Bengali text to spellcheck."}
+                    },
+                    "required": ["text"]
+                }
             }
         ]
 
@@ -199,6 +210,16 @@ class BhashabidMCPServer:
                 "writ_type": wtype.value,
                 "constitutional_article": CONSTITUTIONAL_PROVISIONS.get(wtype, ""),
                 "prayers": prayers
+            }
+
+        elif name == "spellcheck_text":
+            from ..bn_normalize.lexicon import get_default_lexicon
+            raw_text = arguments.get("text", "")
+            lex = get_default_lexicon()
+            issues = lex.audit_text(raw_text)
+            return {
+                "issues_count": len(issues),
+                "issues": issues
             }
 
         else:

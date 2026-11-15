@@ -4,6 +4,7 @@ from .unicode import canonicalize_unicode, is_nfc_normalized
 from .punctuation import normalize_punctuation
 from .orthography import normalize_orthography
 from .repair import repair_text
+from .lexicon import BengaliOfflineLexicon, get_default_lexicon, bengali_edit_distance
 
 __all__ = [
     "normalize",
@@ -12,5 +13,8 @@ __all__ = [
     "is_nfc_normalized",
     "normalize_punctuation",
     "normalize_orthography",
-    "repair_text"
+    "repair_text",
+    "BengaliOfflineLexicon",
+    "get_default_lexicon",
+    "bengali_edit_distance"
 ]
