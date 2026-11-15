@@ -1,0 +1,32 @@
+id: CRD-DFT-037
+title: 'Candidate Rule for Pattern: nopCommerce'
+domain: Consumer E-Commerce & Retail Logistics
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'nopCommerce' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- এছাড়াও nopCommerce মধ্যম ট্রাস্ট হোস্টিং এর মধ্যে ও চালানো যায়
+- ৪০০,০০০ এর বেশি বার ডাউনলোড এর ভিত্তিতে nopCommerce সবচেয়ে বেশি রেটিং প্রাপ্ত এবং
+  ডাউনলোড এর সংখ্যার বিবেচনায় প্রথম ৫ টি মাইক্রোসফট ওয়েব প্লাটফর্ম ইন্সটলার এর অন্তর্গত
+  অ্যাপলিকেশন গুলোর একটি
+common_llm_error: LLMs emit unadapted English terminology 'nopCommerce' in Bengali
+  contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail'
+- Principle P2 Human Provenance Audit Gate
+- Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)
+- e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines
+- Universal Postal Union & Domestic Courier Conveyancing Standards
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

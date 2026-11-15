@@ -1,0 +1,28 @@
+id: CRD-DFT-039
+title: 'Candidate Rule for Pattern: Codeplex'
+domain: Consumer E-Commerce & Retail Logistics
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Codeplex' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- এছাড়াও এটি ১১ তম সবচেয়ে বেশি বার ডাউনলোড হওয়া Codeplex এর একটি অ্যাপলিকেশন
+common_llm_error: LLMs emit unadapted English terminology 'Codeplex' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail'
+- Principle P2 Human Provenance Audit Gate
+- Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)
+- e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines
+- Universal Postal Union & Domestic Courier Conveyancing Standards
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

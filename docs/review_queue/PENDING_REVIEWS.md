@@ -16,7 +16,7 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue (10 Cards Awaiting Human Review)
+## 📥 Pending Candidate Queue (19 Cards Awaiting Human Review)
 
 ### Draft 1: [CRD-DFT-024] Candidate Rule for Pattern: ঝোপের চারপাশে পেটাচ্ছেন
 - **File**: `knowledge\cards\drafts\CRD-DFT-024.yaml`
@@ -231,6 +231,198 @@ bhashabid review --card CRD-DFT-032 --reviewer "Ashikur Rahman Bhuiyan" --affili
 **Quick Action Command**:
 ```bash
 bhashabid review --card CRD-DFT-033 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 11: [CRD-DFT-034] Candidate Rule for Pattern: ASP, NET, SQL
+- **File**: `knowledge\cards\drafts\CRD-DFT-034.yaml`
+- **Domain**: `Consumer E-Commerce & Retail Logistics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'ASP, NET, SQL' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ নপকমার্স. নপকমার্স (ইংরেজি: nopCommerce) এখনকার সময়ের অন্যতম জনপ্রিয় মুক্ত সোর্স ই-কর্মাস প্লাটফর্ম; যাতে ASP.NET MVC 5.0 এবং MS SQL ২০০৮ (অথবা এর পরের ভার্সন) ব্যাকএন্ড ডেটাবেজ এর জন্য ব্যবহার করা হয়েছে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'ASP, NET, SQL' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail, Principle P2 Human Provenance Audit Gate, Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯), e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines, Universal Postal Union & Domestic Courier Conveyancing Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-034 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 12: [CRD-DFT-035] Candidate Rule for Pattern: paparazzo
+- **File**: `knowledge\cards\drafts\CRD-DFT-035.yaml`
+- **Domain**: `Mass Media & Digital Journalism` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'paparazzo' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এটি মূলত একটি বহুবাচক শব্দ, যা এসেছে একবাচক ইতালীয় শব্দ paparazzo থেকে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'paparazzo' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies, Principle P2 Human Provenance Audit Gate, Bangladesh Press Council Code of Ethics & Stylebook, Press Institute of Bangladesh (PIB) Media Reporting Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-035 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 13: [CRD-DFT-036] Candidate Rule for Pattern: Authorize, net
+- **File**: `knowledge\cards\drafts\CRD-DFT-036.yaml`
+- **Domain**: `Consumer E-Commerce & Retail Logistics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Authorize, net' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এখানে একই ওয়েবসাইট থেকে একাধিক দোকান, একাধিক বিক্রেতা, একাধিক গুদাম, একাধিক ভাষা, মাল্টি কারেন্সি, বহু-ট্যাক্স এবং সেইসাথে সবচেয়ে জনপ্রিয় গেটওয়ের Authorize.net, পেপ্যাল, গুগল চেকআউট জন্য সবকিছু ও এর সাথে আরও অনেক কিছু তৈরি করা আছে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Authorize, net' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail, Principle P2 Human Provenance Audit Gate, Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯), e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines, Universal Postal Union & Domestic Courier Conveyancing Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-036 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 14: [CRD-DFT-037] Candidate Rule for Pattern: nopCommerce
+- **File**: `knowledge\cards\drafts\CRD-DFT-037.yaml`
+- **Domain**: `Consumer E-Commerce & Retail Logistics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'nopCommerce' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এছাড়াও nopCommerce মধ্যম ট্রাস্ট হোস্টিং এর মধ্যে ও চালানো যায়
+  - ✗ ৪০০,০০০ এর বেশি বার ডাউনলোড এর ভিত্তিতে nopCommerce সবচেয়ে বেশি রেটিং প্রাপ্ত এবং ডাউনলোড এর সংখ্যার বিবেচনায় প্রথম ৫ টি মাইক্রোসফট ওয়েব প্লাটফর্ম ইন্সটলার এর অন্তর্গত অ্যাপলিকেশন গুলোর একটি
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'nopCommerce' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail, Principle P2 Human Provenance Audit Gate, Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯), e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines, Universal Postal Union & Domestic Courier Conveyancing Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-037 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 15: [CRD-DFT-038] Candidate Rule for Pattern: Packt
+- **File**: `knowledge\cards\drafts\CRD-DFT-038.yaml`
+- **Domain**: `Consumer E-Commerce & Retail Logistics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Packt' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ "নপকমার্স " ২০১১ এবং ২০১২ সালে অনুষ্ঠিত Packt মুক্ত সোর্স ই-কমার্স প্রতিযোগীতার ফাইনালিস্ট ছিল
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Packt' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail, Principle P2 Human Provenance Audit Gate, Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯), e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines, Universal Postal Union & Domestic Courier Conveyancing Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-038 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 16: [CRD-DFT-039] Candidate Rule for Pattern: Codeplex
+- **File**: `knowledge\cards\drafts\CRD-DFT-039.yaml`
+- **Domain**: `Consumer E-Commerce & Retail Logistics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Codeplex' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এছাড়াও এটি ১১ তম সবচেয়ে বেশি বার ডাউনলোড হওয়া Codeplex এর একটি অ্যাপলিকেশন
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Codeplex' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail, Principle P2 Human Provenance Audit Gate, Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯), e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines, Universal Postal Union & Domestic Courier Conveyancing Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-039 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 17: [CRD-DFT-040] Candidate Rule for Pattern: তারা যেহেতু তারকাদের নিয়ে কাজ করেন
+- **File**: `knowledge\cards\drafts\CRD-DFT-040.yaml`
+- **Domain**: `Mass Media & Digital Journalism` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Pronominal and verbal honorific concordance mismatch for 'তারা যেহেতু তারকাদের নিয়ে কাজ করেন' requires harmonization.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ তারা যেহেতু তারকাদের নিয়ে কাজ করে
+  - ✓ তাঁরা যেহেতু তারকাদের নিয়ে কাজ করেন
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ কিন্তু তারা যেহেতু তারকাদের নিয়ে কাজ করেন, এবং একই কাজটি করে তারকা সংশ্লিষ্ট ম্যাগাজিন ও পত্রিকাগুলোও, তাই মাঝে মাঝে পাপারাৎসিদের সাথে তাদের পার্থক্য করা দুষ্কর হয়ে পড়ে
+
+**Common LLM Error**: LLMs produce honorific discordance between subject pronoun and verb for 'তারা যেহেতু তারকাদের নিয়ে কাজ করেন'.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies, Principle P2 Human Provenance Audit Gate, Bangladesh Press Council Code of Ethics & Stylebook, Press Institute of Bangladesh (PIB) Media Reporting Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-040 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 18: [CRD-DFT-041] Candidate Rule for Pattern: Peterme, com
+- **File**: `knowledge\cards\drafts\CRD-DFT-041.yaml`
+- **Domain**: `Mass Media & Digital Journalism` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Peterme, com' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ সংক্ষিপ্ত রূপ, "ব্লগ" শব্দটি পিটার মেরহোলজ দ্বারা উদ্ভাবিত হয়েছিল, যিনি ১৯৯৯ সালের এপ্রিল বা মে মাসে তাঁর ব্লগ Peterme.com-এর সাইডবারে ওয়েব্লগ শব্দটি মজা করে ভেঙে ''ওই ব্লগ'' লিখেছলেন
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Peterme, com' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies, Principle P2 Human Provenance Audit Gate, Bangladesh Press Council Code of Ethics & Stylebook, Press Institute of Bangladesh (PIB) Media Reporting Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-041 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 19: [CRD-DFT-042] Candidate Rule for Pattern: mojo
+- **File**: `knowledge\cards\drafts\CRD-DFT-042.yaml`
+- **Domain**: `Mass Media & Digital Journalism` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'mojo' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ mojo নামটি ২০০৫ সাল থেকে ব্যবহৃত হচ্ছে যার শুরুটা হয়েছিল পোর্ট মেয়ারস নিউজ–প্রেস থেকে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'mojo' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies, Principle P2 Human Provenance Audit Gate, Bangladesh Press Council Code of Ethics & Stylebook, Press Institute of Bangladesh (PIB) Media Reporting Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-042 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
 ```
 
 ---

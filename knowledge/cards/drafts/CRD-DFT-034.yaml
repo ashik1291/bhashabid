@@ -1,0 +1,31 @@
+id: CRD-DFT-034
+title: 'Candidate Rule for Pattern: ASP, NET, SQL'
+domain: Consumer E-Commerce & Retail Logistics
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'ASP, NET, SQL' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- 'নপকমার্স. নপকমার্স (ইংরেজি: nopCommerce) এখনকার সময়ের অন্যতম জনপ্রিয় মুক্ত সোর্স
+  ই-কর্মাস প্লাটফর্ম; যাতে ASP.NET MVC 5.0 এবং MS SQL ২০০৮ (অথবা এর পরের ভার্সন) ব্যাকএন্ড
+  ডেটাবেজ এর জন্য ব্যবহার করা হয়েছে'
+common_llm_error: LLMs emit unadapted English terminology 'ASP, NET, SQL' in Bengali
+  contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia E-Commerce & Retail'
+- Principle P2 Human Provenance Audit Gate
+- Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)
+- e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines
+- Universal Postal Union & Domestic Courier Conveyancing Standards
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null
