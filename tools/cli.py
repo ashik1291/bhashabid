@@ -79,8 +79,24 @@ def handle_normalize(args):
 def handle_repair(args):
     try:
         from .bn_normalize.repair import repair_text
+        import difflib
         text = resolve_text_or_file(args.text)
         repaired, fixes = repair_text(text, profile=args.profile)
+
+        if getattr(args, "diff", False):
+            diff = difflib.unified_diff(
+                text.splitlines(keepends=True),
+                repaired.splitlines(keepends=True),
+                fromfile="original",
+                tofile="repaired"
+            )
+            diff_text = "".join(diff)
+            if not diff_text:
+                print("✓ কোনো পরিবর্তন প্রয়োজন নেই (No changes needed).")
+            else:
+                print(diff_text)
+            return 0
+
         if getattr(args, "json", False):
             import json
             print(json.dumps({
@@ -95,6 +111,12 @@ def handle_repair(args):
                 print("\n[Applied Fixes]:")
                 for f in fixes:
                     print(f"  - {f['description']}")
+
+        if getattr(args, "write", False) and os.path.isfile(args.text):
+            with open(args.text, "w", encoding="utf-8") as f:
+                f.write(repaired)
+            print(f"\n[Saved]: Changes successfully written to {args.text}")
+
         return 0
     except Exception as e:
         sys.stderr.write(f"Repair Error: {e}\n")
@@ -435,6 +457,8 @@ def main():
     p_rep.add_argument("--profile", default="bd_standard", choices=["bd_standard", "wb_standard"])
     p_rep.add_argument("--json", action="store_true", help="Output results in JSON format")
     p_rep.add_argument("--verbose", "-v", action="store_true", help="Show applied repair explanations")
+    p_rep.add_argument("--diff", action="store_true", help="Show unified diff of proposed changes without altering file")
+    p_rep.add_argument("--write", "-w", action="store_true", help="Write repaired text in-place to the target file")
     p_rep.set_defaults(func=handle_repair)
 
     # lint

@@ -48,7 +48,7 @@ THIRD_PERSON_HONORIFIC_TO_ORDINARY = {
 APNI_CLASH_PAT = re.compile(
     B_L + r"(আপনি|আপনারা)" + B_R +
     r"((?:(?!(?:আপনি|আপনারা)" + B_R + r")[^।?!,;:\n])*?)" +
-    B_L + r"(করো|যাও|বলো|খাও|দেখো|নাও|দাও|হও|করিস|যাবি|বলিস|খাস|দেখিস)" + B_R
+    B_L + r"(করো|যাও|বলো|খাও|দেখো|নাও|দাও|হও|এসো|করিস|যাবি|বলিস|খাস|দেখিস|আসিস)" + B_R
 )
 
 # 2. তুমি + formal or intimate verbs
@@ -79,6 +79,11 @@ SE_CLASH_PAT = re.compile(
     B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন)" + B_R
 )
 
+# Universal clause boundary marker: subordinate and coordinate conjunctions
+CLAUSE_BOUNDARY_PAT = re.compile(
+    B_L + r"(যে|যেন|কারণ|যেহেতু|সেহেতু|যখন|তখন|যদি|তবে|তাহলে|কিন্তু|অথবা|বা|যাতে|নইলে)" + B_R
+)
+
 def check_honorific_clash(text: str) -> list[LintIssue]:
     issues = []
     lines = text.splitlines()
@@ -90,6 +95,10 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             middle = m_tumi.group(2)
             verb = m_tumi.group(3)
             matched = m_tumi.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
 
             if verb in FORMAL_TO_FAMILIAR_VERBS:
                 correct_familiar_verb = FORMAL_TO_FAMILIAR_VERBS[verb]
@@ -122,6 +131,10 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             middle = m_apni.group(2)
             verb = m_apni.group(3)
             matched = m_apni.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
 
             if verb in FAMILIAR_TO_FORMAL_VERBS:
                 correct_formal_verb = FAMILIAR_TO_FORMAL_VERBS[verb]
@@ -163,10 +176,8 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             verb = m_tini.group(3)
             matched = m_tini.group(0)
 
-            # Linguistic Guard 1: Subordinate clause boundary ('যে' / 'যেন')
-            # If 'যে' appears in middle (e.g. 'তিনি বললেন যে সময় হয়েছে'),
-            # the verb belongs to the embedded subordinate clause, not 'তিনি'.
-            if re.search(r"(?<![\u0980-\u09FF])(যে|যেন)(?![\u0980-\u09FF])", middle):
+            # Linguistic Guard 1: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
                 continue
 
             # Linguistic Guard 2: Prior honorific verb already exists in middle
@@ -214,6 +225,10 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             middle = m_se.group(2)
             verb = m_se.group(3)
             matched = m_se.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
 
             # Linguistic Guard 5: Demonstrative determiner 'সে' modifying a noun
             # e.g. 'সে কথা ভাবা দরকার', 'সে সময়', 'সে বিষয়'

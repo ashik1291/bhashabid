@@ -30,6 +30,17 @@ class TestBengaliOfflineLexicon(unittest.TestCase):
         self.assertFalse(self.lex.is_known("মনযোগ"))
         self.assertFalse(self.lex.is_known("পুরষ্কার"))
 
+    def test_compound_and_affix_recognition(self):
+        # Productive compounds and affixes must be recognized as valid words
+        compounds = [
+            "পরিবেশবান্ধব",
+            "তথ্যপ্রযুক্তি",
+            "বেআইনি",
+            "অপ্রয়োজনীয়"
+        ]
+        for c in compounds:
+            self.assertTrue(self.lex.is_known(c), f"Expected '{c}' to be recognized as a valid compound/affixed word")
+
     def test_phonetic_spelling_suggestions(self):
         test_cases = [
             ("মনযোগ", "মনোযোগ"),

@@ -18,12 +18,18 @@ BENGALI_CONFUSION_PAIRS = [
 ]
 
 BENGALI_PRODUCTIVE_SUFFIXES = [
+    # Plural & Case Inflections
     "গুলোতে", "গুলোর", "গুলো", "গুলা", "গুলিতে", "গুলির", "গুলি",
-    "ভিত্তিক", "বিষয়ক", "সংক্রান্ত", "সমৃদ্ধ",
     "দেরকে", "দের", "খানিক", "খানা", "খানি", "টিকে", "টির", "টি", "টাকে", "টার", "টা",
-    "ভাবে", "মূলক",
-    "ের", "কে", "তে", "এ", "য়", "ে",
-    "ও", "ই"
+    "ের", "কে", "তে", "এ", "য়", "ে", "ও", "ই",
+    # Productive Compound Affixes & Nominal Endings
+    "ভিত্তিক", "বিষয়ক", "সংক্রান্ত", "সমৃদ্ধ", "বান্ধব", "কেন্দ্রিক",
+    "চালিত", "যুক্ত", "বিহীন", "হীন", "যোগ্য", "শীল", "বিরোধী",
+    "পন্থী", "মুখী", "বাদী", "ভাবে", "মূলক"
+]
+
+BENGALI_PRODUCTIVE_PREFIXES = [
+    "অনতি", "অপ", "অভি", "অধি", "প্রতি", "উপ", "সু", "কু", "বে", "না", "অ", "অন"
 ]
 
 def _phonetic_cost(c1: str, c2: str) -> float:
@@ -113,15 +119,37 @@ class BengaliOfflineLexicon:
                 self._index_word(cw)
 
     def is_known(self, word: str) -> bool:
-        """Checks if a given word or its valid inflected form is recognized in the lexicon."""
+        """
+        Checks if a given word, its inflected form, prefixed form,
+        or decomposed compound constituents exist in the standard lexicon.
+        """
         w = canonicalize_unicode(word)
         if w in self._vocab:
             return True
+
+        # 1. Productive Suffix & Inflection Stripping
         for sfx in BENGALI_PRODUCTIVE_SUFFIXES:
             if w.endswith(sfx) and len(w) > len(sfx) + 1:
                 stem = w[:-len(sfx)]
                 if stem in self._vocab:
                     return True
+
+        # 2. Productive Prefix Stripping (e.g. অপ্রয়োজনীয়, বেআইনি)
+        for pfx in BENGALI_PRODUCTIVE_PREFIXES:
+            if w.startswith(pfx) and len(w) > len(pfx) + 2:
+                stem = w[len(pfx):]
+                if stem in self._vocab:
+                    return True
+
+        # 3. Compound Word Decomposition (সমাসবদ্ধ পদ, e.g. তথ্যপ্রযুক্তি)
+        w_len = len(w)
+        if w_len >= 6:
+            for k in range(3, w_len - 2):
+                w1 = w[:k]
+                w2 = w[k:]
+                if w1 in self._vocab and (w2 in self._vocab or any(w2.endswith(sfx) and w2[:-len(sfx)] in self._vocab for sfx in BENGALI_PRODUCTIVE_SUFFIXES)):
+                    return True
+
         return False
 
     def suggest_corrections(self, word: str, max_suggestions: int = 3, max_distance: float = 3.0) -> List[str]:

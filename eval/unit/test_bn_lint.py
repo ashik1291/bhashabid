@@ -69,6 +69,17 @@ class TestBnLint(unittest.TestCase):
         clean_bound = "সে গতকাল সেখানে গিয়েছিল এবং সেবা করেছিল।"
         self.assertFalse(any("HONORIFIC" in i.rule_id for i in lint_text(clean_bound)))
 
+        # Multi-clause subordinate sentences must produce ZERO honorific false positives
+        multi_clause_cases = [
+            "আপনি বললেন যে তুমি যাও।",
+            "তুমি বললে কারণ সে আসবে।",
+            "তিনি অনুমতি দিলে তবে সে যাবে।",
+            "তিনি ডাকলেন কিন্তু সে এলো না।"
+        ]
+        for mc in multi_clause_cases:
+            mc_issues = [i for i in lint_text(mc) if "HONORIFIC" in i.rule_id]
+            self.assertEqual(len(mc_issues), 0, f"Expected 0 honorific clashes for: {mc}")
+
     def test_bidirectional_honorific_suggestions(self):
         # 'তুমি সিদ্ধান্ত নেন' must suggest both 'তুমি সিদ্ধান্ত নাও' and 'আপনি সিদ্ধান্ত নেন'
         text = "তুমি সিদ্ধান্ত নেন"
