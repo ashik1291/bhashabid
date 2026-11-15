@@ -1,0 +1,39 @@
+id: CRD-DFT-035
+title: 'Rule for Journalism Terminology: ''Paparazzi'' / ''Paparazzo'' (প্যাপারাজ্জি)'
+domain: Mass Media & Digital Journalism
+profile: bd_standard
+register: formal
+rule_summary: In journalism, media reporting, and entertainment news, translate the
+  Italian loanwords paparazzo (singular) and paparazzi (plural) using standard phonetic
+  Bengali 'প্যাপারাজ্জি' or descriptive terminology 'অনাহূত আলোকচিত্রী', retaining
+  the Latin term in parentheses on first mention.
+good_examples:
+- আন্তর্জাতিক বিনোদন জগতে খ্যাতিমান তারকাদের ব্যক্তিগত মুহূর্ত ফ্রেমবন্দী করতে প্যাপারাজ্জিদের
+  (Paparazzi) উপস্থিতি প্রায়ই দেখা যায়।
+- মূল ইতালীয় একবচন রূপ 'প্যাপারাজ্জো' (Paparazzo) হলেও বাংলা গণমাধ্যমে সচরাচর 'প্যাপারাজ্জি'
+  শব্দটিই শ্রেণিবাচক বিশেষ্য হিসেবে বহুল প্রচলিত।
+- তারকাদের ব্যক্তিগত গোপনীয়তা রক্ষা এবং অনাহূত আলোকচিত্রীদের (Paparazzi) দৌরাত্ম্য
+  বন্ধে প্রেস কাউন্সিলের গণমাধ্যম নীতিমালার ওপর জোর দেওয়া হয়েছে।
+bad_examples:
+- এটি মূলত একটি বহুবাচক শব্দ, যা এসেছে একবাচক ইতালীয় শব্দ paparazzo থেকে।
+- পাপারাতসোরা সেলিব্রিটিদের পিছু নিয়েছে।
+- পাপারাজ্জিরা ক্যামেরা দিয়ে ফটো তুলতেছে।
+common_llm_error: LLMs leave unadapted Latin words ('paparazzo') in native text or
+  produce inconsistent phonetic transliterations ('পাপারাতসো') without standard media
+  register phrasing.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Press Council Code of Ethics & Stylebook
+- Press Institute of Bangladesh (PIB) Media Reporting Standards
+confidence: reviewed
+created_date: '2026-11-12'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: 'Approved: Enriched with multi-register media journalism exemplars under
+    Principle P2.'
+  signature_hash: sha256:abd5e291b05862b5

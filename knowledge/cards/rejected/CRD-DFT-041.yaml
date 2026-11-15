@@ -17,14 +17,13 @@ sources:
 - Principle P2 Human Provenance Audit Gate
 - Bangladesh Press Council Code of Ethics & Stylebook
 - Press Institute of Bangladesh (PIB) Media Reporting Standards
-confidence: candidate
+confidence: rejected
 created_date: '2026-11-12'
 last_modified: '2026-11-12'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
-    human linguistic review and authentic positive Bengali exemplars (good_examples).
-  signature_hash: null
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Rejected web domain artifact (Peterme.com).
+  signature_hash: sha256:9935045cb070c5d6

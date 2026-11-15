@@ -15,14 +15,13 @@ sources:
 - Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)
 - e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines
 - Universal Postal Union & Domestic Courier Conveyancing Standards
-confidence: candidate
+confidence: rejected
 created_date: '2026-11-12'
 last_modified: '2026-11-12'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
-    human linguistic review and authentic positive Bengali exemplars (good_examples).
-  signature_hash: null
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Rejected code hosting platform name (Codeplex).
+  signature_hash: sha256:ec764b88f63cbc92

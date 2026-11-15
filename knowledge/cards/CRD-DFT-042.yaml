@@ -1,0 +1,40 @@
+id: CRD-DFT-042
+title: 'Rule for Digital Media Terminology: ''MoJo'' (Mobile Journalism / মোবাইল সাংবাদিকতা)'
+domain: Mass Media & Digital Journalism
+profile: bd_standard
+register: formal
+rule_summary: In digital journalism, newsroom workflows, and media studies, translate
+  the portmanteau MoJo (Mobile Journalism) as 'মোবাইল সাংবাদিকতা' or phonetic transliteration
+  'মোজো (MoJo)', retaining the English abbreviation in parentheses on first mention.
+  Avoid raw uncontextualized lowercase 'mojo'.
+good_examples:
+- ডিজিটাল সংবাদমাধ্যমে তাৎক্ষণিক সংবাদ পরিবেশনে মোবাইল সাংবাদিকতা বা 'মোজো' (MoJo)
+  এখন অত্যন্ত শক্তিশালী মাধ্যম।
+- স্মার্টফোনের আধুনিক প্রযুক্তি কাজে লাগিয়ে মাঠপর্যায় থেকে সরাসরি সংবাদ সম্প্রচারের
+  প্রক্রিয়াকে সংক্ষেপে 'মোজো' (Mobile Journalism) বলা হয়।
+- প্রেস ইনস্টিটিউট বাংলাদেশ (পিআইবি) তরুণ সাংবাদিকদের জন্য মোবাইল সাংবাদিকতা (MoJo)
+  বিষয়ক বিশেষ প্রশিক্ষণ কর্মশালার আয়োজন করেছে।
+bad_examples:
+- mojo নামটি ২০০৫ সাল থেকে ব্যবহৃত হচ্ছে যার শুরুটা হয়েছিল পোর্ট মেয়ারস নিউজ–প্রেস
+  থেকে।
+- মোবাইলে নিউজ করাকে মোজো টেকনোলজি বলে যা জার্নালিস্টরা ইউজ করে।
+- মোজো হলো এমন এক জাদু যা দিয়ে সহজে ভিডিও এডিট করা যায়।
+common_llm_error: LLMs leave raw uncapitalized 'mojo' unclarified or confuse journalistic
+  MoJo (Mobile Journalism) with colloquial slang ('magic charm'), failing to use the
+  standard Bengali term 'মোবাইল সাংবাদিকতা'.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Press Council Code of Ethics & Stylebook
+- Press Institute of Bangladesh (PIB) Media Reporting Standards
+confidence: reviewed
+created_date: '2026-11-12'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: 'Approved: Enriched with mobile journalism media exemplars under Principle
+    P2.'
+  signature_hash: sha256:cc5a15a539f992ef

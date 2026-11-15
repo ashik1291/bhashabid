@@ -1,0 +1,41 @@
+id: CRD-DFT-040
+title: 'Rule for Third-Person Plural Honorific Concordance: ''তারা ... করে'' vs ''তাঁরা
+  ... করেন'''
+domain: Mass Media & Digital Journalism
+profile: bd_standard
+register: formal
+rule_summary: In formal journalism and editorial reporting, maintain strict pronominal-verbal
+  concordance in the 3rd person plural. Pair ordinary 'তারা' with ordinary verbs ('করে',
+  'বলে'), and honorific 'তাঁরা' with honorific verbs ('করেন', 'বলেন'). Never mix ordinary
+  'তারা' with honorific 'করেন'.
+good_examples:
+- তাঁরা যেহেতু পেশাদার সাংবাদিক হিসেবে কাজ করেন, তাই তথ্যের বস্তুনিষ্ঠতা যাচাই করা
+  তাঁদের নৈতিক দায়িত্ব।
+- তারা যেহেতু বিনোদন জগতের তারকাদের নিয়ে কাজ করে, তাই তাদের কাজের ধরন সাধারণ বার্তা
+  সাংবাদিকদের চেয়ে আলাদা।
+- চলচ্চিত্র ব্যক্তিত্ব ও বিশিষ্ট অতিথিবৃন্দ অনুষ্ঠানে উপস্থিত ছিলেন এবং তাঁরা নিজ
+  নিজ অভিজ্ঞতা ব্যক্ত করেন।
+bad_examples:
+- কিন্তু তারা যেহেতু তারকাদের নিয়ে কাজ করেন, তাই মাঝে মাঝে তাদের পার্থক্য করা দুষ্কর
+  হয়ে পড়ে।
+- বিশিষ্ট অধ্যাপকেরা সভায় আসেন এবং তারা তাদের বক্তব্য তুলে ধরেন।
+- তাঁরা মাঠে নামে এবং জয়লাভ করে।
+common_llm_error: LLMs frequently omit the honorific nasalization (Chandrabindu) on
+  third-person plural pronouns ('তারা' vs 'তাঁরা') and mismatch them with verbal inflections
+  ('তারা ... করেন' or 'তাঁরা ... করে').
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Journalism & Media Studies'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Press Council Code of Ethics & Stylebook
+- Press Institute of Bangladesh (PIB) Media Reporting Standards
+confidence: reviewed
+created_date: '2026-11-12'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: 'Approved: Enriched with plural honorific concordance exemplars under Principle
+    P2.'
+  signature_hash: sha256:5c0f74bd39b4904e
