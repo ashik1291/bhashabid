@@ -20,8 +20,8 @@ class TestRepairEngine(unittest.TestCase):
             ("আদালত জিজ্ঞেস করে একটি রুল জারি করেছে", "আদালত রুল নিশি জারি করেছেন"),
             ("পেপারটি তর্ক করে যে উন্নয়ন আবশ্যক।", "গবেষণাপত্রে যুক্তি উপস্থাপন করা হয়েছে যে উন্নয়ন আবশ্যক।"),
             ("উপকূলে ১০ নম্বর বড় বিপদের সংকেত দেখানো হয়েছে।", "উপকূলে ১০ নম্বর মহাবিপদ সংকেত দেখানো হয়েছে।"),
-            ("তিনি ঝোপের চারপাশে পেটাচ্ছেন।", "তিনি ঘুরিয়ে-পেঁচিয়ে কথা বলছেন।"),
-            ("খারাপ কর্মী তার সরঞ্জামকে দোষ দেয়।", "নাচতে না জানলে উঠান বাঁকা।")
+            ("জমির বিক্রির কাগজ হস্তান্তর করা হলো।", "জমির সাফ-কবলা বিক্রয় দলিল হস্তান্তর করা হলো।"),
+            ("ফসলে ক্ষতিকর পোকা মারার ওষুধ দেওয়া হয়েছে।", "ফসলে ক্ষতিকর বালাইনাশক দেওয়া হয়েছে।")
         ]
         for raw, expected in cases:
             repaired, fixes = repair_text(raw)
@@ -102,14 +102,30 @@ class TestRepairEngine(unittest.TestCase):
         self.assertIn("কোনো দুর্ঘটনা ঘটেনি", repaired_lex)
         self.assertTrue(any(f["category"] == "ORTHOGRAPHY_PHONETIC" for f in fixes_lex))
 
+    def test_ambiguous_proverbs_preserved_literally(self):
+        # Literal contexts must NOT be mutated by repair()
+        literal_cake = "টেবিলে একটি কেকের টুকরো আছে।"
+        repaired_cake, fixes_cake = repair_text(literal_cake)
+        self.assertEqual(repaired_cake, literal_cake)
+        self.assertEqual(len(fixes_cake), 0)
+
+        literal_hunter = "শিকারি ঝোপের চারপাশে পেটাচ্ছিলেন।"
+        repaired_hunter, fixes_hunter = repair_text(literal_hunter)
+        self.assertEqual(repaired_hunter, literal_hunter)
+        self.assertEqual(len(fixes_hunter), 0)
+
+        # But linter MUST flag them as potential calques
+        issues = lint_text(literal_cake)
+        self.assertTrue(any("কেকের টুকরো" in i.matched_text for i in issues))
+
     def test_mcp_server_repair_tool(self):
         server = BhashabidMCPServer()
         res = server.call_tool(
             "repair_text",
-            {"text": "তিনি ঝোপের চারপাশে পেটাচ্ছেন."}
+            {"text": "আদালত জিজ্ঞেস করে একটি রুল জারি করেছে."}
         )
         self.assertIn("repaired", res)
-        self.assertIn("ঘুরিয়ে-পেঁচিয়ে কথা বলছেন।", res["repaired"])
+        self.assertIn("রুল নিশি জারি করেছেন।", res["repaired"])
         self.assertGreater(res["fixes_count"], 0)
 
 if __name__ == "__main__":

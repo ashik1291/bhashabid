@@ -52,16 +52,7 @@ CANONICAL_CALQUE_REPAIRS = [
     (re.compile(B_L + r"বড়\s+বিপদের\s+সংকেত" + B_R), "মহাবিপদ সংকেত"),
     (re.compile(B_L + r"বিক্রির\s+কাগজ" + B_R), "সাফ-কবলা বিক্রয় দলিল"),
     (re.compile(B_L + r"পোকা\s+মারার\s+ওষুধ" + B_R), "বালাইনাশক"),
-    # Idioms & Proverbs
-    (re.compile(B_L + r"ঝোপের\s+চারপাশে\s+পেটাচ্ছেন" + B_R), "ঘুরিয়ে-পেঁচিয়ে কথা বলছেন"),
-    (re.compile(B_L + r"ঝোপের\s+চারপাশে\s+পেটানো" + B_R), "ঘুরিয়ে-পেঁচিয়ে কথা বলা"),
-    (re.compile(B_L + r"কেকের\s+টুকরো" + B_R), "পানির মতো সহজ কাজ"),
     (re.compile(B_L + r"পরাজয়\s+স্বীকার\s+করেছে" + B_R), "পরাজিত হয়েছে"),
-    (re.compile(B_L + r"কাজ\s+শব্দের\s+চেয়ে\s+জোরে\s+কথা\s+বলে" + B_R), "কথার চেয়ে কাজের মূল্য বেশি"),
-    (re.compile(B_L + r"খারাপ\s+কর্মী\s+তার\s+সরঞ্জামকে\s+দোষ\s+দেয়" + B_R), "নাচতে না জানলে উঠান বাঁকা"),
-    (re.compile(B_L + r"ঘেউ\s+ঘেউ\s+করা\s+কুকুর\s+কদাচিৎ\s+কামড়ায়" + B_R), "যত গর্জে তত বর্ষে না"),
-    (re.compile(B_L + r"অধিক\s+রাঁধুনি\s+ঝোল\s+নষ্ট\s+করে" + B_R), "অধিক সন্ন্যাসীতে গাজন নষ্ট"),
-    (re.compile(B_L + r"একটি\s+পাথর\s+দিয়ে\s+দুটি\s+পাখি\s+মারা" + B_R), "এক ঢিলে দুই পাখি মারা"),
     # Best practice calque naturalization
     (re.compile(B_L + r"সর্বোত্তম\s+অনুশীলন(?:গুলো|সমূহ|গুলা)?" + B_R), "সর্বোত্তম চর্চা")
 ]
@@ -161,7 +152,7 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
             })
 
     # 3c. Context-aware similarity 'মত' -> 'মতো' (leaves pronoun opinion stems 'আমার মত' untouched)
-    sim_moto_pat = re.compile(r"\b([\u0980-\u09FF]+(?:ের|র))\s+মত\b")
+    sim_moto_pat = re.compile(r"(?<![\u0980-\u09FF])([\u0980-\u09FF]+(?:ের|র))\s+মত(?![\u0980-\u09FF])")
     if sim_moto_pat.search(current_text):
         new_text = sim_moto_pat.sub(_fix_similarity_moto, current_text)
         if new_text != current_text:

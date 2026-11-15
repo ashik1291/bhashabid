@@ -97,7 +97,7 @@ flowchart TD
 
 | Metric | Target | Current Production Status |
 | :--- | :---: | :---: |
-| **Unit & Regression Tests** | 100% Pass | **111 / 111 Tests Passing (100% Green)** |
+| **Unit & Regression Tests** | 100% Pass | **112 / 112 Tests Passing (100% Green)** |
 | **Principle P2 Provenance Cards** | 100% Reviewed | **48 / 48 Cards Cryptographically Signed** |
 | **Core Skill Token Budget** | < 390 Tokens | **298 True BPE Tokens (`cl100k_base`)** |
 | **Domain Sectors Supported** | 17 Sectors | **17 Sectors across 9 Reference Guides** |
