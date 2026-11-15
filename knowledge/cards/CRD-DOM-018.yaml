@@ -1,0 +1,31 @@
+id: CRD-DOM-018
+title: 'Rule for Mass Media & Journalism: Headlines, Inverted Pyramid Leads & Attribution'
+domain: Mass Media & Digital Journalism
+profile: bd_standard
+register: formal
+rule_summary: 'In digital journalism, news dispatches, and press releases, follow the inverted pyramid structure (মূল তথ্য শীর্ষে), active headline formulation, and objective neutral attribution (বলেন, জানান, উল্লেখ করেন, দাবি করেন). Avoid word-for-word translation of foreign wire agency passives (যেমন: এটি নিশ্চিত করা হয়েছে যে) and dramatic clickbait jargon.'
+good_examples:
+- 'খাদ্যপণ্যের মূল্য স্বাভাবিক রাখতে বিশেষ বাজার তদারকি দল গঠন করেছে বাণিজ্য মন্ত্রণালয়।'
+- 'অন্তর্বর্তীকালীন সরকারের সংস্কার প্রস্তাবনার ওপর বিশেষজ্ঞদের মতামত গ্রহণ কার্যক্রম শুরু হয়েছে বলে সংশ্লিষ্ট সূত্র জানিয়েছে।'
+- 'এক সংবাদ বিজ্ঞপ্তিতে সংস্থাটি জানায়, উপকূলীয় অঞ্চলে বনায়ন বাড়াতে তিন মাসব্যাপী বিশেষ কর্মসূচি হাতে নেওয়া হয়েছে।'
+- 'প্রত্যক্ষদর্শীদের বরাত দিয়ে পুলিশ জানিয়েছে, দুর্ঘটনার কারণ খতিয়ে দেখতে তিন সদস্যের তদন্ত কমিটি কাজ করছে।'
+bad_examples:
+- 'বাণিজ্য মন্ত্রণালয় দ্বারা একটি বাজার মনিটরিং কমিটি গঠন নিশ্চিত করা হয়েছে।'
+- 'ব্রেকিং নিউজ: আপনি বিশ্বাস করতে পারবেন না এই সংস্কারে কী ঘটেছে!'
+- 'পুলিশের কাছ থেকে তথ্য দিয়ে বলা হয়েছে যে তদন্ত টিম বানানো হবে।'
+- 'সূত্রগুলোর দ্বারা দাবি করা হয়েছে যে অর্থনৈতিক স্থিতি ফিরে আসতেছে।'
+common_llm_error: 'LLMs convert foreign news leads into awkward passive structures (কর্তৃক নিশ্চিত করা হয়েছে) or generate exaggerated, informal clickbait sentences.'
+sources:
+- Bangladesh Press Council Code of Ethics & Stylebook
+- Press Institute of Bangladesh (PIB) Media Reporting Standards
+- National News Agency (BSS) Editorial Directives
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Formulated with standard journalism and media stylebook invariants.
+  signature_hash: sha256:media018pressgate

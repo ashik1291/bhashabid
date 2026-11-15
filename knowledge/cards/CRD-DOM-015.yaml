@@ -1,0 +1,31 @@
+id: CRD-DOM-015
+title: 'Rule for Citizen Digital Services: Public Portals, NID Verification & Civic Registrations'
+domain: Citizen Digital Services & Smart Governance
+profile: bd_standard
+register: formal
+rule_summary: 'In citizen-facing e-governance portals and public service chatbots (যেমন: জন্ম ও মৃত্যু নিবন্ধন, জাতীয় পরিচয়পত্র সংশোধন, ই-পাসপোর্ট, জমির খাজনা/ই-নামজারি), use plain, unambiguous, civic-accessible Bengali (সহজ নাগরিক বাংলা). Avoid complex bureaucratic circumlocution and literal English technical jargon.'
+good_examples:
+- জাতীয় পরিচয়পত্র (NID) সংশোধনের আবেদন করতে প্রয়োজনীয় সনদপত্রসহ নির্ধারিত সরকারি ফি অনলাইনে জমা দিন।
+- ভূমি উন্নয়ন কর (খাজনা) পরিশোধের পর তাৎক্ষণিকভাবে কিউআর কোডযুক্ত ডিজিটাল দাখিলা সংগ্রহ করা যাবে।
+- ইউনিয়ন ডিজিটাল সেন্টারে উপস্থিত হয়ে নাগরিক সনদ ও জন্ম নিবন্ধনের ডিজিটাল অনুলিপি উত্তোলন করা সম্ভব।
+- পাসপোর্টের আবেদনপত্র দাখিলের পূর্বে প্রদত্ত তথ্যের নির্ভুলতা সতর্কতার সাথে যাচাই করে নিন।
+bad_examples:
+- এনআইডি কার্ড কারেকশনের জন্য অনলাইন পোর্টালে অ্যাপ্লিকেশন সাবমিট করুন।
+- ভূমি কর সংক্রান্ত তথ্যাবলি দাখিলা করার নিমিত্তে উক্ত পোর্টালে প্রবেশ করত কার্যকর ব্যবস্থা গ্রহণ বাঞ্ছনীয়।
+- জন্ম নিবন্ধন ডিজিটাল সার্টিফিকেট ডাউনলোড করতে এই লিংকে ক্লিক মারুন।
+- পাসপোর্ট ফি পেমেন্ট গেটওয়ে দিয়ে প্রসেস হয়ে সাকসেস হয়েছে।
+common_llm_error: 'LLMs either emit ultra-archaic bureaucratic jargon (নিমিত্তে, করত, বাঞ্ছনীয়) or crude colloquial code-mixing (অ্যাপ্লিকেশন সাবমিট করুন, ক্লিক মারুন).'
+sources:
+- Aspire to Innovate (a2i) Citizen Service Standards (স্মার্ট নাগরিক সেবা রূপরেখা)
+- Bangladesh National Portal (bangladesh.gov.bd) Terminology Guide
+- Election Commission Bangladesh National ID Registration Rules
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Formulated with plain-language civic governance invariants.
+  signature_hash: sha256:gov015civicgate

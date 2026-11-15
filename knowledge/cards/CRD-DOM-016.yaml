@@ -1,0 +1,31 @@
+id: CRD-DOM-016
+title: 'Rule for Customer Support & Conversational Chat: Empathetic, Polite & Natural Tone'
+domain: Customer Support & Conversational Chat
+profile: bd_standard
+register: formal
+rule_summary: 'In customer care, conversational bots, and omnichannel support, maintain an empathetic, warm, and consistently respectful tone (আপনা সম্বোধন). Avoid robotic corporate coldness (যেমন: মহাশয়, আপনার পত্র হস্তগত হইল) as well as disrespectful colloquial slang (যেমন: আরে ভাই, একটু ওয়েট করেন). Express empathy for customer inconvenience while offering crisp solutions.'
+good_examples:
+- আমাদের সাথে যোগাযোগ করার জন্য ধন্যবাদ। আপনাকে কীভাবে সহযোগিতা করতে পারি?
+- আপনার অনাকাঙ্ক্ষিত সাময়িক অসুবিধার জন্য আমরা আন্তরিকভাবে দুঃখিত; বিষয়টি সমাধানে আমরা দ্রুত কাজ করছি।
+- আপনার অভিযোগটি সংশ্লিষ্ট কারিগরি বিভাগে পাঠানো হয়েছে, অতিসত্বর একজন প্রতিনিধি আপনার সাথে যোগাযোগ করবেন।
+- সেবাটি গ্রহণ করার প্রক্রিয়া বিস্তারিত বুঝতে কি আর কোনো তথ্য প্রয়োজন?
+bad_examples:
+- মহাশয়, আপনার প্রেরিত বার্তাটি আমাদের কর্ণগোচর হইয়াছে এবং প্রতিকারমূলক ব্যবস্থা বিবেচনাধীন আছে।
+- আরে ভাই, নেটওয়ার্কের সমস্যা থাকলে আমরা কি করব, একটু ওয়েট করেন দেখতেছি।
+- আপনার ইস্যু ক্লোজ করে দেওয়া হলো, কোনো হেল্প লাগলে আবার নক করবেন।
+- অনুগ্রহপূর্বক অবগতির জন্য জানানো যাইতেছে যে সেবাটি বন্ধ আছে।
+common_llm_error: 'LLMs swing wildly between archaic 19th-century epistolary phrasing and uncourteous social media street slang.'
+sources:
+- Bangla Academy Conversational Polite Register Standards
+- Telecom & Omnichannel Customer Experience Quality Benchmarks
+- Consumer Rights Guidance Protocols
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Formulated with polite conversational customer care invariants.
+  signature_hash: sha256:care016custgate

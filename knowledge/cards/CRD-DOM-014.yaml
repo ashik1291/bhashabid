@@ -1,0 +1,31 @@
+id: CRD-DOM-014
+title: 'Rule for E-Commerce & Retail Logistics: Order Fulfillment, Cash on Delivery & Returns'
+domain: Consumer E-Commerce & Retail Logistics
+profile: bd_standard
+register: formal
+rule_summary: 'In consumer e-commerce, digital retail, and delivery dispatches, avoid mechanical literal translations of English retail terms (যেমন: চেকআউট করুন, কার্টটি দেখুন, ক্যাশ অন ডেলিভারি ফেইল্ড). Use standard, customer-friendly Bengali terminology: পণ্য প্রাপ্তির পর মূল্য পরিশোধ (COD), নির্বাচিত পণ্য/ঝুড়ি (Cart), মূল্য পরিশোধে এগিয়ে যান (Checkout), and পণ্য ফেরত ও মূল্য প্রত্যর্পণ নীতিমালা (Return & Refund Policy).'
+good_examples:
+- পণ্য হাতে পাওয়ার পর মূল্য পরিশোধের (Cash on Delivery) সুবিধা গ্রহণ করতে নিচের বাটনে চাপ দিন।
+- আপনার নির্বাচিত পণ্যের তালিকা দেখতে বা পরিবর্তন করতে 'পণ্যের ঝুড়ি' (Cart) অপশনে প্রবেশ করুন।
+- ত্রুটিপূর্ণ পণ্য পরিবর্তনের জন্য ডেলিভারির তিন দিনের মধ্যে আমাদের পণ্য ফেরত ও মূল্য প্রত্যর্পণ নীতিমালার আওতায় আবেদন করুন।
+- আপনার পার্সেলটি সফলভাবে কুরিয়ারে হস্তান্তর করা হয়েছে, ট্র্যাকিং কোডের মাধ্যমে বর্তমান অবস্থান জানতে পারবেন।
+bad_examples:
+- আপনার শপিং কার্ট চেকআউট করুন এবং পেমেন্ট সম্পন্ন করুন।
+- ক্যাশ অন ডেলিভারি ফেইল্ড হয়েছে কারণ কাস্টমার নট ফাউন্ড।
+- এই আইটেমের কোনো রিটার্ন ও রিফান্ড পলিসি নেই।
+- অর্ডার ট্র্যাক করতে শিপিং ইনফো দেখুন।
+common_llm_error: 'LLMs alternate between raw transliterated Banglish (কার্ট চেকআউট করুন, রিফান্ড পলিসি) and awkward broken calques instead of standard retail Bengali.'
+sources:
+- Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)
+- e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines
+- Universal Postal Union & Domestic Courier Conveyancing Standards
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Formulated with standard e-commerce and retail logistics invariants.
+  signature_hash: sha256:ecom014prodgate

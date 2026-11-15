@@ -1,0 +1,31 @@
+id: CRD-DOM-017
+title: 'Rule for MFS & Grassroots FinTech: Mobile Money, Remittance, Microloans & Fraud Prevention'
+domain: MFS, Microfinance & Grassroots FinTech
+profile: bd_standard
+register: formal
+rule_summary: 'In mobile financial services (MFS যেমন: বিকাশ, নগদ, রকেট), microcredit disclosures, and digital remittance notifications, prioritize crystal-clear security phrasing and financial accuracy. Never translate English security warnings literally (যেমন: পিন কাউকে শেয়ার করবেন না). Use authoritative consumer safety terms: গোপন পিন নম্বর ও ওটিপি কাউকে প্রদান করবেন না, প্রতারণামূলক লেনদেন থেকে সতর্ক থাকুন, and বৈধ পথে রেমিট্যান্স প্রেরণ।'
+good_examples:
+- আপনার বিকাশ/নগদ অ্যাকাউন্টের গোপন পিন (PIN) বা ওটিপি (OTP) কখনোই কারো সাথে শেয়ার করবেন না; কোনো কর্মকর্তা কখনোই আপনার পিন জানতে চাইবেন না।
+- বৈধ চ্যানেলে প্রেরিত প্রবাসী আয়ের (রেমিট্যান্স) উপর সরকার নির্ধারিত নগদ প্রণোদনা প্রদান করা হচ্ছে।
+- ক্ষুদ্রঋণের মাসিক কিস্তি পরিশোধের সময় ডিজিটাল রসিদ সংগ্রহ করুন এবং ব্যালেন্স যাচাই করে নিন।
+- কোনো অপরিচিত নম্বরের প্রলোভনে অর্থ পাঠানো থেকে বিরত থাকুন এবং অবিলম্বে হেল্পলাইনে যোগাযোগ করুন।
+bad_examples:
+- আপনার পিন কোড কাউকে শেয়ার করবেন না অন্যথায় লস হবে।
+- রেমিট্যান্স ক্যাশ আউট করার জন্য চার্জ কাটবে না বলে অফার দেওয়া হচ্ছে।
+- লোন পাস হয়েছে, ইনস্টলমেন্ট দিতে টাকা সেন্ড মানি করুন।
+- ফ্রড এড়াতে কাস্টমার কেয়ারে কল দেন।
+common_llm_error: 'LLMs generate casual, ambiguous security warnings or confusing financial terms that risk user security and violate Bangladesh Bank MFS circulars.'
+sources:
+- Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines
+- Microcredit Regulatory Authority (MRA) Rules & Standards
+- Anti-Money Laundering & Financial Fraud Prevention Protocols
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Formulated with grassroots MFS and consumer security invariants.
+  signature_hash: sha256:mfs017fintechgate

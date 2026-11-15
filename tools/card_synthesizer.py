@@ -70,6 +70,29 @@ AUTHORITATIVE_DOMAIN_STANDARDS = {
         "Bangla Academy Standard Bengali Grammar (প্রমিত বাংলা ভাষার ব্যাকরণ)",
         "Bangla Academy Promito Byaboharik Bangla Obhidhan",
         "Bengali Syntax Naturalization Guidelines"
+    ],
+    "Consumer E-Commerce & Retail Logistics": [
+        "Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)",
+        "e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines",
+        "Universal Postal Union & Domestic Courier Conveyancing Standards"
+    ],
+    "Citizen Digital Services & Smart Governance": [
+        "Aspire to Innovate (a2i) Citizen Service Standards (স্মার্ট নাগরিক সেবা রূপরেখা)",
+        "Bangladesh National Portal (bangladesh.gov.bd) Terminology Guide",
+        "Election Commission Bangladesh National ID Registration Rules"
+    ],
+    "Customer Support & Conversational Chat": [
+        "Bangla Academy Conversational Polite Register Standards",
+        "Telecom & Omnichannel Customer Experience Quality Benchmarks"
+    ],
+    "MFS, Microfinance & Grassroots FinTech": [
+        "Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines",
+        "Microcredit Regulatory Authority (MRA) Rules & Standards",
+        "Anti-Money Laundering & Financial Fraud Prevention Protocols"
+    ],
+    "Mass Media & Digital Journalism": [
+        "Bangladesh Press Council Code of Ethics & Stylebook",
+        "Press Institute of Bangladesh (PIB) Media Reporting Standards"
     ]
 }
 
@@ -87,6 +110,17 @@ CANONICAL_DOMAIN_MAP = {
     "Education & Pedagogy": "Education & NCTB Pedagogy",
     "Science & Encyclopedic": "ICT & Software Engineering",
     "Corporate & Tech": "ICT & Software Engineering",
+    "E-Commerce & Retail": "Consumer E-Commerce & Retail Logistics",
+    "E-Commerce": "Consumer E-Commerce & Retail Logistics",
+    "Logistics & Delivery": "Consumer E-Commerce & Retail Logistics",
+    "Public Services": "Citizen Digital Services & Smart Governance",
+    "Smart Governance": "Citizen Digital Services & Smart Governance",
+    "Customer Care": "Customer Support & Conversational Chat",
+    "Conversational": "Customer Support & Conversational Chat",
+    "MFS & FinTech": "MFS, Microfinance & Grassroots FinTech",
+    "FinTech": "MFS, Microfinance & Grassroots FinTech",
+    "Media & Journalism": "Mass Media & Digital Journalism",
+    "Journalism": "Mass Media & Digital Journalism",
     "translation": "Translation & Calque Naturalization",
     "general": "Translation & Calque Naturalization",
 }

@@ -53,8 +53,8 @@ def audit_cards():
     # 3. Internal duplicate examples
     internal_dups = []
     for path, c in all_cards:
-        bads = c.get("bad_examples") or []
-        goods = c.get("good_examples") or []
+        bads = [str(b) for b in (c.get("bad_examples") or [])]
+        goods = [str(g) for g in (c.get("good_examples") or [])]
         if len(bads) != len(set(bads)):
             internal_dups.append((Path(path).name, "bad_examples", bads))
         if len(goods) != len(set(goods)):
