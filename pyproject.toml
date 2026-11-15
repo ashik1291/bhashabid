@@ -24,10 +24,11 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["tools*"]
+include = ["bhashabid*", "tools*"]
 
 [tool.setuptools.package-data]
 "tools" = ["assets/**/*", "assets/*"]
+"bhashabid" = ["assets/**/*", "assets/*"]
 
 [project.urls]
 "Homepage" = "https://github.com/ashik1291/bhashabid"
