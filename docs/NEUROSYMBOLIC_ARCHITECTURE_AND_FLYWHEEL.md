@@ -135,31 +135,29 @@ Bhashabid replicates this exact flywheel for human language:
 Bhashabid represents a paradigm shift for South Asian natural language processing by bridging the gap between **probabilistic frontier LLMs** and **deterministic linguistic invariants**:
 
 ```text
-+---------------------------------------------------------------------------------------------------+
-|                                  USER PROMPT / AI AGENT TASK                                      |
-+---------------------------------------------------------------------------------------------------+
+┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                   USER PROMPT / AI AGENT TASK                                     │
+└─────────────────────────────────────────────────┬─────────────────────────────────────────────────┘
                                                   │
                                                   ▼
-+---------------------------------------------------------------------------------------------------+
-|               CORE SKILL KERNEL (Programmatically Capped Under 390 BPE Tokens)                     |
-+---------------------------------------------------------------------------------------------------+
-       │                                     │                                      │
-       ▼ [Pillar 1]                          ▼ [Pillar 3]                           ▼ [Pillar 4]
-+----------------------+           +-------------------------+            +-------------------------+
-| PROGRAMMATIC TOKEN   |           | MODULAR DOMAIN          |            | DETERMINISTIC PYTHON    |
-| CEILING              |           | ISOLATION               |            | COPROCESSOR (MCP & CLI) |
-| • 298 True BPE Tokens|           | • 9 On-Demand Guides    |            | • 500,000 words/second  |
-| • Universal Invariant|           | • 17 Specialized Sectors|            | • Zero Token Cost ($0)  |
-| • Zero Context Bloat |           | • 0.0 Unrelated Tokens  |            | • 100% Math/NFC Exact   |
-+----------------------+           +-------------------------+            +-------------------------+
-                                                                                        ▲
-                                                                                        │
-                                             ▲                                          │
-                                             │ [Pillar 2: Supervised Closed Loop]       │
-                       +─────────────────────────────────────────────+                  │
-                       | HARVESTER ➔ DRAFT CARDS ➔ HUMAN SIGN-OFF(P2)| ─────────────────┘
-                       | Real Anomalies ➔ Verified Invariants Distill |
-                       +─────────────────────────────────────────────+
+┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│              CORE SKILL KERNEL (Programmatically Capped Under 390 BPE Tokens • cl100k)            │
+└───────────────────────┬─────────────────────────┬─────────────────────────┬───────────────────────┘
+                        │                         │                         │
+                        ▼ [Pillar 1]              ▼ [Pillar 3]              ▼ [Pillar 4]
+┌───────────────────────────────┐ ┌───────────────────────────────┐ ┌───────────────────────────────┐
+│  PROGRAMMATIC TOKEN CEILING   │ │   MODULAR DOMAIN ISOLATION    │ │ DETERMINISTIC COPROCESSOR     │
+│ • 298 True BPE Tokens         │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
+│ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~500,000 words/second       │
+│ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • 100% Exact Math, NFC & Dari │
+└───────────────────────────────┘ └───────────────────────────────┘ └───────────────▲───────────────┘
+                                                  ▲                                 │
+                                                  │                                 │
+                                                  │ [Pillar 2: Supervised Loop]     │
+                        ┌─────────────────────────┴─────────────────────────┐       │
+                        │ HARVESTER ➔ DRAFT CARDS ➔ HUMAN REVIEW GATE (P2)  ├───────┘
+                        │ Real-World Anomalies ➔ Verified Invariants Distill│
+                        └───────────────────────────────────────────────────┘
 ```
 
 ### 1. Neurosymbolic Synergy with Frontier Models (~80-85% Baseline ➔ 100% Deterministic Last-Mile)
