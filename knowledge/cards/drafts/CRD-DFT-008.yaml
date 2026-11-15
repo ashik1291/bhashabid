@@ -3,16 +3,28 @@ title: 'Candidate Rule for Pattern: alphabet'
 domain: Academic Research & Methodology
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'alphabet' requires naturalization to
-  active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
+rule_summary: When the English term "alphabet" appears in Bengali academic writing,
+  evaluate whether a suitable Bengali equivalent, such as "বর্ণমালা", preserves the
+  intended linguistic meaning. Prefer standard Bengali terminology when the context
+  permits. Retain the English term in parentheses when necessary for technical precision,
+  disambiguation, or reference to a specific linguistic concept.
 good_examples:
-- প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
+- বর্ণমালা (alphabet)
+- বাংলা বর্ণমালার গঠন ও বৈশিষ্ট্য
+- বিভিন্ন ভাষার বর্ণমালার তুলনামূলক বিশ্লেষণ
 bad_examples:
-- আবজাদ. একটি আবজাদ ( (); অথবা আবগাদ, আক্ষ. অনু. alphabet) হলো একটি লিখন পদ্ধতি, যেখানে
-  কেবল ব্যঞ্জনবর্ণগুলোকে অক্ষর বা চিহ্নের মাধ্যমে উপস্থাপন করা হয়, আর স্বরবর্ণগুলোকে
-  পাঠককে অনুমান করে নিতে হয় (যদি না অন্য কোনোভাবে, যেমন—ডায়াক্রিটিক ব্যবহার করে সেগুলোকে
-  উপস্থাপন করা হয়)
-common_llm_error: LLMs emit literal calques or non-standard syntax for 'alphabet'.
+- Bengali alphabet-এর পরিবর্তে অপ্রয়োজনে English terminology ব্যবহার করা, যখন "বাংলা
+  বর্ণমালা" অর্থগতভাবে যথাযথ।
+- Abjad-কে সরাসরি alphabet হিসেবে শ্রেণিবদ্ধ করা, যখন আলোচনার উদ্দেশ্য দুই ধরনের লিখন
+  পদ্ধতির পার্থক্য নির্ধারণ করা।
+common_llm_error: Unnecessary English terminology, literal translation, inconsistent
+  Bengali terminology, and incorrect classification of linguistically distinct writing
+  systems.
+validation_requirements:
+- Verify terminology against authoritative Bengali linguistic references.
+- Validate positive and negative examples with contextual evidence.
+- Ensure the rule does not force translations that alter technical meaning.
+- Record traceable source references and human review evidence.
 sources:
 - 'Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research'
 - Principle P2 Human Provenance Audit Gate
@@ -20,12 +32,11 @@ sources:
 - Linguistic Society of Bangladesh Peer-Reviewed Standards
 confidence: candidate
 created_date: '2026-11-12'
-last_modified: '2026-11-12'
+last_modified: '2026-11-15'
 review:
   reviewer_name: null
   reviewer_affiliation: null
   reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
-    human native-speaker sign-off.
+  status: REVISION_SUBMITTED_AWAITING_FINAL_SIGN_OFF
+  notes: Revised with human expert linguistic structure and validation criteria.
   signature_hash: null

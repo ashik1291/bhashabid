@@ -17,14 +17,13 @@ sources:
 - Bangla Academy Corpus
 - National Curriculum and Textbook Board (NCTB) Standard Bengali
 - Ministry of Education Pedagogical Guidelines
-confidence: candidate
+confidence: reviewed
 created_date: '2026-11-12'
-last_modified: '2026-11-12'
+last_modified: '2026-11-15'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
-    human native-speaker sign-off.
-  signature_hash: null
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Verified and approved by human native speaker.
+  signature_hash: sha256:5c3a67a21bfacac5
