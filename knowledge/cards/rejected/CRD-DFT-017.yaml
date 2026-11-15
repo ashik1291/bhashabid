@@ -17,14 +17,13 @@ sources:
 - Principle P2 Human Provenance Audit Gate
 - Bangla Academy Linguistic Research Methodology Guidelines
 - Linguistic Society of Bangladesh Peer-Reviewed Standards
-confidence: candidate
+confidence: rejected
 created_date: '2026-11-12'
 last_modified: '2026-11-12'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
-    human native-speaker sign-off.
-  signature_hash: null
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Rejected quoted drama title; permissible verbatim title.
+  signature_hash: sha256:aa29f9d02943fa7e

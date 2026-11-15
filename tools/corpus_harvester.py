@@ -7,6 +7,7 @@ import json
 import glob
 import shutil
 import time
+import html
 from dataclasses import dataclass, asdict
 from typing import List, Dict, Optional, Tuple
 
@@ -77,12 +78,22 @@ class CorpusHarvester:
 
     def audit_sentence(self, sentence_text: str, source: str = "Unknown", domain: str = "General", sent_id: str = "") -> HarvestedSentence:
         """Audits a single Bengali sentence against all Bhashabid engines."""
-        norm_text = normalize(sentence_text)
+        clean_raw = html.unescape(sentence_text)
+        norm_text = normalize(clean_raw)
         issues = lint_text(norm_text)
         
-        # Check for unhandled foreign script anomalies outside parentheses
+        # Check for unhandled foreign script anomalies outside parentheses and quotes
         text_without_parens = re.sub(r"\([^)]*\)", "", norm_text)
-        unquoted_en = re.findall(r"\b[A-Za-z]{3,}\b", text_without_parens)
+        text_without_quotes = re.sub(r"['\"‘“][^'\"’”]*['\"’”]", "", text_without_parens)
+        raw_en_tokens = re.findall(r"\b[A-Za-z]{3,}\b", text_without_quotes)
+        
+        # Filter out HTML entity remnants, Roman numerals, and metadata tags
+        HTML_NOISE = {"nbsp", "amp", "quot", "apos", "lt", "gt", "copy", "reg", "trade", "ndash", "mdash", "hellip", "para"}
+        unquoted_en = [
+            t for t in raw_en_tokens
+            if t.lower() not in HTML_NOISE
+            and not re.match(r"^[IVXLCDMivxlcdm]+$", t)
+        ]
 
         is_clean = len(issues) == 0 and len(unquoted_en) == 0
         if is_clean:
@@ -110,7 +121,7 @@ class CorpusHarvester:
                 "rule_id": "RULE-ANOMALY-RAW-ENGLISH",
                 "message": f"অস্বাভাবিক কাঁচা ইংরেজি শব্দ পাওয়া গেছে: {', '.join(unquoted_en)}",
                 "matched": ", ".join(unquoted_en),
-                "suggestion": "প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।",
+                "suggestion": "",
                 "raw_text": sentence_text,
                 "domain": domain,
                 "source": source

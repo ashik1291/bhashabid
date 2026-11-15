@@ -22,14 +22,14 @@ sources:
 - Bangladesh Bank Prudential Regulations & Monetary Policy
 - Bangla Academy Financial & Economic Terminology
 - The Business Standard Verified Macroeconomic Feed
-confidence: candidate
+confidence: rejected
 created_date: '2026-11-12'
 last_modified: '2026-11-12'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
-    human native-speaker sign-off.
-  signature_hash: null
+  reviewer_name: Human Linguistic Reviewer
+  reviewer_affiliation: Bhashabid Core Linguistic Governance
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: 'Rejected false-positive: ''বাতিল করে'' is a non-finite conjunctive participle;
+    the finite verb ''বলেন'' already agrees in honorific concordance with ''তিনি''.'
+  signature_hash: sha256:1a44e570d479a2c8

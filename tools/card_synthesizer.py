@@ -91,6 +91,66 @@ CANONICAL_DOMAIN_MAP = {
     "general": "Translation & Calque Naturalization",
 }
 
+HTML_NOISE_TOKENS = {
+    "nbsp", "amp", "quot", "apos", "lt", "gt", "copy", "reg", "trade",
+    "ndash", "mdash", "hellip", "para", "laquo", "raquo", "bull"
+}
+
+def is_meta_instruction(text: str) -> bool:
+    """Checks if a string is an imperative meta-instruction rather than an authentic Bengali exemplar sentence."""
+    if not text or not isinstance(text, str):
+        return True
+    instruction_patterns = [
+        r"ব্যবহার করুন",
+        r"পুনর্লিখন করুন",
+        r"অনুবাদ করুন",
+        r"পরিহার করুন",
+        r"প্রমিত বাংলা অনুবাদ",
+        r"বন্ধনীসহ ব্যবহার",
+        r"চলিত রীতিতে",
+        r"স্বাভাবিকভাবে পুনর্লিখন",
+        r"সংশোধন করুন",
+        r"করা প্রয়োজন",
+        r"করা উচিত",
+        r"বিকল্প \d+",
+    ]
+    for pat in instruction_patterns:
+        if re.search(pat, text):
+            return True
+    return False
+
+def extract_exemplars_from_suggestion(suggestion: str) -> List[str]:
+    """
+    Extracts concrete Bengali exemplar sentences from a suggestion.
+    If the suggestion embeds alternatives in quotes, extracts pure sentences.
+    If the suggestion is a pure meta-instruction, returns an empty list.
+    """
+    if not suggestion:
+        return []
+    quoted = re.findall(r"'([^']+)'", suggestion)
+    valid_quoted = [q.strip() for q in quoted if q.strip() and not is_meta_instruction(q)]
+    if valid_quoted:
+        return valid_quoted
+    if is_meta_instruction(suggestion):
+        return []
+    return [suggestion.strip()]
+
+def is_scraping_noise(matched: str) -> bool:
+    """Detects if a matched anomaly string is web scraping noise, HTML entities, or Roman numerals."""
+    m = (matched or "").strip()
+    if not m:
+        return True
+    if m.lower() in HTML_NOISE_TOKENS:
+        return True
+    tokens = [t.strip().lower() for t in m.split(",") if t.strip()]
+    if tokens and all(t in HTML_NOISE_TOKENS for t in tokens):
+        return True
+    # Roman numeral check (e.g. XXIII, VIII)
+    clean_num = re.sub(r"[\s,]+", "", m)
+    if clean_num and re.match(r"^[IVXLCDMivxlcdm]+$", clean_num):
+        return True
+    return False
+
 def get_domain_standards(domain: str) -> List[str]:
     canonical = CANONICAL_DOMAIN_MAP.get(domain, domain)
     return AUTHORITATIVE_DOMAIN_STANDARDS.get(
@@ -204,6 +264,11 @@ class CardSynthesizer:
         goods = list(dict.fromkeys([g.strip() for g in good_examples if g and g.strip()]))
 
         cid = draft_id or self.get_next_draft_id()
+        review_notes = (
+            "Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires human linguistic review and authentic positive Bengali exemplars (good_examples)."
+            if not goods else
+            "Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending human native-speaker sign-off."
+        )
         card_data = {
             "id": cid,
             "title": title,
@@ -223,7 +288,7 @@ class CardSynthesizer:
                 "reviewer_affiliation": None,
                 "reviewed_date": None,
                 "status": "PENDING_HUMAN_REVIEW",
-                "notes": "Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending human native-speaker sign-off.",
+                "notes": review_notes,
                 "signature_hash": None
             }
         }
@@ -255,10 +320,14 @@ class CardSynthesizer:
         for sig, items in clusters.items():
             if len(items) >= 1:
                 first = items[0]
+                rule_id = first.get("rule_id", "ANOMALY-GENERAL")
                 matched = first.get("matched", first.get("raw_text", "Unknown"))
-                suggestion = first.get("suggestion", "")
                 domain = first.get("domain", "translation")
                 
+                # Filter out HTML entity remnants, Roman numerals, and empty noise
+                if is_scraping_noise(matched):
+                    continue
+
                 title = f"Candidate Rule for Pattern: {matched[:40]}"
                 
                 # DUPLICATE GUARD CHECK
@@ -286,9 +355,11 @@ class CardSynthesizer:
                             if raw and raw not in cur_bads and len(cur_bads) < 5:
                                 cur_bads.append(raw)
                                 updated = True
-                            if sug and sug not in cur_goods and len(cur_goods) < 5:
-                                cur_goods.append(sug)
-                                updated = True
+                            exemplars = extract_exemplars_from_suggestion(sug)
+                            for ex in exemplars:
+                                if ex and ex not in cur_goods and len(cur_goods) < 5:
+                                    cur_goods.append(ex)
+                                    updated = True
 
                         # Enrich with authoritative domain standards if missing
                         domain_standards = get_domain_standards(card_data.get("domain", domain))
@@ -309,11 +380,34 @@ class CardSynthesizer:
 
                 cid = self.get_next_draft_id()
                 reg = "formal"
-                rule_sum = f"Automatically flagged pattern '{matched}' requires naturalization to active causal phrasing (e.g. '{suggestion}')."
+                
+                # Synthesize appropriate, domain-aware linguistic summary & error type
+                if "CALQUE" in rule_id:
+                    rule_sum = f"English calque or passive construction '{matched}' requires naturalization into standard Bengali phrasing."
+                    llm_err = f"LLMs emit literal English passive calques or unidiomatic syntax for '{matched}'."
+                elif "RAW-ENGLISH" in rule_id:
+                    rule_sum = f"Foreign terminology or unquoted Latin-script word '{matched}' requires standard Bengali terminology or phonetic transliteration with English in parentheses."
+                    llm_err = f"LLMs emit unadapted English terminology '{matched}' in Bengali contexts."
+                elif "GURU-CHANDALI" in rule_id:
+                    rule_sum = f"Sadhu-Cholito discordance in '{matched}' must be harmonized to standard modern Cholito."
+                    llm_err = f"LLMs mix Sadhu and Cholito registers in '{matched}'."
+                elif "HONORIFIC" in rule_id:
+                    rule_sum = f"Pronominal and verbal honorific concordance mismatch for '{matched}' requires harmonization."
+                    llm_err = f"LLMs produce honorific discordance between subject pronoun and verb for '{matched}'."
+                else:
+                    rule_sum = f"Linguistic pattern '{matched}' requires evaluation against standard Bengali register."
+                    llm_err = f"LLMs emit non-standard usage for '{matched}'."
+
                 bads = [it.get("raw_text", matched) for it in items[:3]]
-                goods = [it.get("suggestion", "") for it in items[:3] if it.get("suggestion")]
-                if not goods:
-                    goods = ["প্রমিত চলিত রীতিতে স্বাভাবিকভাবে পুনর্লিখন করুন।"]
+                
+                # Extract genuine Bengali exemplars, strictly filtering out imperative meta-instructions
+                goods = []
+                for it in items:
+                    sug = (it.get("suggestion") or "").strip()
+                    exemplars = extract_exemplars_from_suggestion(sug)
+                    for ex in exemplars:
+                        if ex not in goods and len(goods) < 5:
+                            goods.append(ex)
 
                 domain_standards = get_domain_standards(domain)
                 verified_sources = [
@@ -328,7 +422,7 @@ class CardSynthesizer:
                     rule_summary=rule_sum,
                     bad_examples=bads,
                     good_examples=goods,
-                    common_llm_error=f"LLMs emit literal calques or non-standard syntax for '{matched}'.",
+                    common_llm_error=llm_err,
                     sources=verified_sources,
                     draft_id=cid
                 )

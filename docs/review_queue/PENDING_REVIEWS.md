@@ -16,21 +16,23 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue (15 Cards Awaiting Human Review)
+## 📥 Pending Candidate Queue (3 Cards Awaiting Human Review)
 
-### Draft 1: [CRD-DFT-009] Candidate Rule for Pattern: Help, OAuth
+### Draft 1: [CRD-DFT-009] Candidate Rule for Technical Acronym: OAuth
 - **File**: `knowledge\cards\drafts\CRD-DFT-009.yaml`
 - **Domain**: `ICT & Software Engineering` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'Help, OAuth' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
+- **Rule Summary**: When referencing the authentication framework 'OAuth', use the standard Bengali phonetic transliteration 'ওঅথ' along with 'OAuth' in parentheses on first mention, preserving technical clarity without leaving raw English tokens or unresolved documentation paths.
 
 **Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
+  - ✓ ওঅথ (OAuth) হলো ইন্টারনেট ব্যবহারকারীদের নিরাপদ প্রমাণীকরণের একটি উন্মুক্ত প্রমিত প্রটোকল।
+  - ✓ অ্যাপ্লিকেশনটিতে নিরাপদ প্রবেশাধিকার নিশ্চিত করতে ওঅথ ২.০ (OAuth 2.0) ফ্রেমওয়ার্ক ব্যবহার করা হয়েছে।
 
 **Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ ওঅথ. মিডিয়াউইকির (উইকিপিডিয়া ব্যবহৃত সফটওয়্যার) ওঅথ সমর্থনের জন্য দেখুন mw:Help:OAuth ওঅথ হল প্রবেশ প্রতিনিধিদের জন্য একটি বিশেষ মুক্ত আদর্শ,যে পদ্ধতিতে ইন্টারনেট ব্যবহারকারীরা কোন পাসওয়ার্ড দেয়া ছাড়াই অন্য ওয়েবসাইটকে তাদের ওয়েবসাইট কিংবা অ্যাপ্লিকেশনের তথ্যাদিতে প্রবেশাধিকার দেন
+  - ✗ মিডিয়াউইকির ওঅথ সমর্থনের জন্য দেখুন mw:Help:OAuth ওঅথ হল প্রবেশ প্রতিনিধিদের জন্য...
+  - ✗ OAuth ব্যবহার করে ইউজারের ডাটা ফেচ করা হচ্ছে।
 
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'Help, OAuth'.
+**Common LLM Error**: LLMs emit raw unadapted English technical tokens or unformatted documentation paths instead of standard Bengali technical transliteration with parenthetical English.
 **Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Computer Science & Software, Principle P2 Human Provenance Audit Gate, Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards, Open-Source Bengali Localization Best Practices
 
 **Quick Action Command**:
@@ -40,107 +42,21 @@ bhashabid review --card CRD-DFT-009 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 2: [CRD-DFT-010] Candidate Rule for Pattern: Salesians, Don, Bosco
-- **File**: `knowledge\cards\drafts\CRD-DFT-010.yaml`
-- **Domain**: `Education & NCTB Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'Salesians, Don, Bosco' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ Salesians of Don Bosco (SDB)র অধীনস্থ ডনবস্কো সোসাইটি বিশ্ববিদ্যালয়টি পরিচালনা করেন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'Salesians, Don, Bosco'.
-**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Education & Pedagogy, Principle P2 Human Provenance Audit Gate, National Curriculum and Textbook Board (NCTB) Standard Bengali, Ministry of Education Pedagogical Guidelines
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-010 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 3: [CRD-DFT-011] Candidate Rule for Pattern: MissingDaughter
-- **File**: `knowledge\cards\drafts\CRD-DFT-011.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'MissingDaughter' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ বিডিওএসএনের #MissingDaughter কার্যক্রমের অংশ হিসেবে আয়োজিত এ প্রতিযোগিতার লক্ষ্য মেয়েদের প্রোগ্রামিংয়ে আগ্রহী করে তোলা এবং প্রযুক্তি খাতে তাদের অংশগ্রহণ বাড়ানো
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'MissingDaughter'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-011 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 4: [CRD-DFT-012] Candidate Rule for Pattern: abdul, alim
-- **File**: `knowledge\cards\drafts\CRD-DFT-012.yaml`
-- **Domain**: `ICT & Software Engineering` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'abdul, alim' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ md abdul alim m2a এটি প্রতিষ্ঠা করেন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'abdul, alim'.
-**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Information Technology & Computing, Principle P2 Human Provenance Audit Gate, Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards, Open-Source Bengali Localization Best Practices
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-012 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 5: [CRD-DFT-013] Candidate Rule for Pattern: Career, Era, Opportunities, and, Challen
-- **File**: `knowledge\cards\drafts\CRD-DFT-013.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'Career, Era, Opportunities, and, Challenges' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ খুদে ভক্তের জন্য কেন কেঁদেছিলেন হুমায়ূন আহমেদ প্রতিযোগিতার পাশাপাশি বিকেল ৩টায় ‘Career in AI Era: Opportunities and Challenges’ শীর্ষক একটি প্যানেল আলোচনা অনুষ্ঠিত হবে
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'Career, Era, Opportunities, and, Challenges'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-013 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 6: [CRD-DFT-014] Candidate Rule for Pattern: continution, form
+### Draft 2: [CRD-DFT-014] Candidate Rule for Administrative Term: Continuation Form
 - **File**: `knowledge\cards\drafts\CRD-DFT-014.yaml`
 - **Domain**: `Education & NCTB Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'continution, form' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
+- **Rule Summary**: When referring to administrative verification forms such as 'continuation form' in academic contexts, use standard Bengali terminology such as 'অধ্যয়ন ধারাবাহিকতা ফরম' or 'ধারাবাহিকতা প্রত্যয়ন ফরম', optionally retaining the English term in parentheses.
 
 **Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
+  - ✓ শিক্ষার্থী থাকার প্রমাণ হিসেবে প্রতি তিন মাস অন্তর প্রতিষ্ঠানপ্রধানের প্রত্যয়নসহ 'অধ্যয়ন ধারাবাহিকতা ফরম' (continuation form) জমা দিতে হবে।
+  - ✓ বৃত্তিপ্রাপ্ত শিক্ষার্থীদের নিয়মিত উপস্থিতির প্রমাণ হিসেবে প্রতি ত্রৈমাসিকে ধারাবাহিকতা প্রত্যয়ন ফরম দাখিল করা বাধ্যতামূলক।
 
 **Negative Examples (ভ্রান্ত প্রয়োগ)**:
   - ✗ শিক্ষার্থী থাকার প্রমাণ হিসেবে ৩ মাস পর পর বিভাগীয় এবং শিক্ষানুস্থানের প্রধানের স্বাক্ষর থাকা 'continution form' জমা দিতে হয়
+  - ✗ স্টুডেন্ট কন্টিনিউয়েশন ফর্ম ফিলাপ করে অফিসে সাবমিট করতে হবে।
 
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'continution, form'.
+**Common LLM Error**: LLMs emit raw English jargon or unstandardized transliterations instead of formal administrative Bengali terms.
 **Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Education & Pedagogy, Principle P2 Human Provenance Audit Gate, National Curriculum and Textbook Board (NCTB) Standard Bengali, Ministry of Education Pedagogical Guidelines
 
 **Quick Action Command**:
@@ -150,209 +66,26 @@ bhashabid review --card CRD-DFT-014 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 7: [CRD-DFT-015] Candidate Rule for Pattern: XXIII, VIII
-- **File**: `knowledge\cards\drafts\CRD-DFT-015.yaml`
-- **Domain**: `Constitutional Law & Writs` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'XXIII, VIII' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ এটি মূলত বাংলাদেশ সরকার কর্তৃক প্রণীত ১৯৮০ সালের আইন নং XXIII থেকে ১৯৮২ সালের অধ্যাদেশ নং VIII পর্যন্ত বলবৎ আইনের ৩৭ নং আইন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'XXIII, VIII'.
-**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Bangladesh Case Law & Jurisprudence, Principle P2 Human Provenance Audit Gate, Constitution of the People's Republic of Bangladesh (Article 102), Supreme Court of Bangladesh Judicial Precedents, Bangla Academy Law Dictionary
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-015 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 8: [CRD-DFT-016] Candidate Rule for Pattern: SVO
+### Draft 3: [CRD-DFT-016] Candidate Rule for Syntactic Typology Acronym: SVO / SOV
 - **File**: `knowledge\cards\drafts\CRD-DFT-016.yaml`
 - **Domain**: `Academic Research & Methodology` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'SVO' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
+- **Rule Summary**: In linguistic and academic syntactic analysis, translate sentence-order typology acronyms such as SVO and SOV using standard Bengali grammatical categories ('কর্তা-ক্রিয়া-কর্ম' for SVO and 'কর্তা-কর্ম-ক্রিয়া' for SOV), retaining the Latin acronym in parentheses for scholarly reference.
 
 **Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
+  - ✓ বাংলা ভাষার স্বাভাবিক পদক্রম হলো কর্তা-কর্ম-ক্রিয়া (SOV), পক্ষান্তরে ইংরেজি প্রধানত কর্তা-ক্রিয়া-কর্ম (SVO) পদক্রমের ভাষা।
+  - ✓ বাক্যতাত্ত্বিক তুলনামূলক গবেষণায় প্রমিত বাংলা পদক্রমের স্বাতন্ত্র্য বিশ্লেষণ করা হয়েছে।
 
 **Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ এ ধরনের পদক্রমকে ইংরেজিতে সংক্ষেপে SVO(Subject-Verb-Object) বলা হয়
   - ✗ ইংরেজি একটি উল্লেখযোগ্য SVO ভাষা
   - ✗ যেমন- "অহন(কর্তা) ভালোবাসে(ক্রিয়া) তাকে(কর্ম)" হলো একটি SVO পদক্রম
 
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'SVO'.
+**Common LLM Error**: LLMs leave linguistic typology abbreviations untranslated without standard Bengali grammatical equivalents.
 **Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Bengali Grammar & Philology, Principle P2 Human Provenance Audit Gate, Bangla Academy Linguistic Research Methodology Guidelines, Linguistic Society of Bangladesh Peer-Reviewed Standards
 
 **Quick Action Command**:
 ```bash
 bhashabid review --card CRD-DFT-016 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 9: [CRD-DFT-017] Candidate Rule for Pattern: Ahan, Loves, Him
-- **File**: `knowledge\cards\drafts\CRD-DFT-017.yaml`
-- **Domain**: `Academic Research & Methodology` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'Ahan, Loves, Him' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ "Ahan(S) Loves(V) Him(O)" হলো একটি ইংরেজি বাক্য যা আলোচ্য পদক্রমঅনুসরণ করে গঠিত হয়েছে
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'Ahan, Loves, Him'.
-**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Bengali Grammar & Philology, Principle P2 Human Provenance Audit Gate, Bangla Academy Linguistic Research Methodology Guidelines, Linguistic Society of Bangladesh Peer-Reviewed Standards
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-017 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 10: [CRD-DFT-018] Candidate Rule for Pattern: তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদ
-- **File**: `knowledge\cards\drafts\CRD-DFT-018.yaml`
-- **Domain**: `Creative Fiction & Dialogue` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে'').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে'
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে।
-  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 3313/2026)।
-  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 2392/2026)।
-  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 9828/2026)।
-  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 1661/2026)।
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে'.
-**Sources / Citations**: Corpus Harvest Provenance: Learning from Mistakes Engine (Offline Autonomous Synthesis), Principle P2 Human Provenance Audit Gate, Bangla Academy Standard Bengali Grammar (প্রমিত বাংলা ভাষার ব্যাকরণ), Bangla Academy Modern Bengali Dictionary (আধুনিক বাংলা অভিধান)
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-018 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 11: [CRD-DFT-019] Candidate Rule for Pattern: nbsp
-- **File**: `knowledge\cards\drafts\CRD-DFT-019.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'nbsp' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ &nbsp;দুই দশক পর অ্যান্ডি স্যাকস চরিত্রে ফিরেছেন অ্যান
-  - ✗ নদীতে হারিয়েছে তাঁদের ঘর অভিযোজনে কত অর্থায়ন &nbsp; বাংলাদেশের তৃতীয় জাতীয়ভাবে নির্ধারিত অবদান বা এনডিসি ৩.০ অনুযায়ী, অভিযোজনের অগ্রাধিকার বাস্তবায়নে বছরে ৮ দশমিক ৫ বিলিয়ন ডলার প্রয়োজন
-  - ✗ ’ (সহিহ বুখারি, হাদিস: ৫২৩৩)&nbsp; এর শিক্ষা হলো, কোনো দুজনের মনে ভালোবাসা তৈরি হলে তাদের জন্য সবচেয়ে সুন্দর ও নিরাপদ পরিণতি বিয়ে
-  - ✗ ’&nbsp; সাহাবিরা অবাক হয়ে জিজ্ঞেস করলেন, ‘আল্লাহর রাসুল, আমাদের কেউ নিজের চাহিদা পূরণ করবে, আর তাতেও কি সওয়াব হবে?’ নবীজি উত্তর দিলেন, ‘তোমরা বলো তো, যদি সে হারাম পথে তা পূরণ করত, তবে কি তার পাপ হতো না? ঠিক তেমনি সে যখন হালাল পথে তা পূরণ করে, তখন তার জন্য সওয়াব লেখা হয়
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'nbsp'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-019 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 12: [CRD-DFT-020] Candidate Rule for Pattern: তিনি পদ ছাড়েন বলে
-- **File**: `knowledge\cards\drafts\CRD-DFT-020.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'তিনি পদ ছাড়েন বলে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি পদ ছাড়েন বলেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে পদ ছাড়েন বলে'').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি পদ ছাড়েন বলেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে পদ ছাড়েন বলে'
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ এর জের ধরে এনভিডিয়ার পরিচালনা পর্ষদের সিদ্ধান্তে তিনি পদ ছাড়েন বলে জানা গেছে
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি পদ ছাড়েন বলে'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-020 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 13: [CRD-DFT-021] Candidate Rule for Pattern: সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন
-- **File**: `knowledge\cards\drafts\CRD-DFT-021.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সাধারণ ক্রিয়াপদ): 'সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করে' অথবা বিকল্প ২ (সম্ভ্রমাত্মক সর্বনাম): 'তিনি কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন'').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ বিকল্প ১ (সাধারণ ক্রিয়াপদ): 'সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করে' অথবা বিকল্প ২ (সম্ভ্রমাত্মক সর্বনাম): 'তিনি কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন'
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ নরওয়ে প্রশাসন যদি ভারতীয়দের সঙ্গে এমন আচরণ করত, তবে কেমন হতো সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-021 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 14: [CRD-DFT-022] Candidate Rule for Pattern: তিনি সেই বিয়ে বাতিল করে
-- **File**: `knowledge\cards\drafts\CRD-DFT-022.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'তিনি সেই বিয়ে বাতিল করে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি সেই বিয়ে বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে সেই বিয়ে বাতিল করে'').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি সেই বিয়ে বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে সেই বিয়ে বাতিল করে'
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ খানসা নবীজির কাছে গিয়ে অভিযোগ করলে তিনি সেই বিয়ে বাতিল করে দেন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি সেই বিয়ে বাতিল করে'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-022 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 15: [CRD-DFT-023] Candidate Rule for Pattern: তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচ
-- **File**: `knowledge\cards\drafts\CRD-DFT-023.yaml`
-- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ কিন্তু ২৫ মে তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে চট্টগ্রাম সফরের আয়োজন করতে বলেন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'.
-**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-023 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
 ```
 
 ---

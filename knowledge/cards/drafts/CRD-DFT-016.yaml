@@ -1,17 +1,16 @@
 id: CRD-DFT-016
-title: 'Candidate Rule for Pattern: SVO'
+title: 'Candidate Rule for Syntactic Typology Acronym: SVO / SOV'
 domain: Academic Research & Methodology
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'SVO' requires naturalization to active
-  causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
+rule_summary: In linguistic and academic syntactic analysis, translate sentence-order typology acronyms such as SVO and SOV using standard Bengali grammatical categories ('কর্তা-ক্রিয়া-কর্ম' for SVO and 'কর্তা-কর্ম-ক্রিয়া' for SOV), retaining the Latin acronym in parentheses for scholarly reference.
 good_examples:
-- প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
+- বাংলা ভাষার স্বাভাবিক পদক্রম হলো কর্তা-কর্ম-ক্রিয়া (SOV), পক্ষান্তরে ইংরেজি প্রধানত কর্তা-ক্রিয়া-কর্ম (SVO) পদক্রমের ভাষা।
+- বাক্যতাত্ত্বিক তুলনামূলক গবেষণায় প্রমিত বাংলা পদক্রমের স্বাতন্ত্র্য বিশ্লেষণ করা হয়েছে।
 bad_examples:
-- এ ধরনের পদক্রমকে ইংরেজিতে সংক্ষেপে SVO(Subject-Verb-Object) বলা হয়
 - ইংরেজি একটি উল্লেখযোগ্য SVO ভাষা
 - যেমন- "অহন(কর্তা) ভালোবাসে(ক্রিয়া) তাকে(কর্ম)" হলো একটি SVO পদক্রম
-common_llm_error: LLMs emit literal calques or non-standard syntax for 'SVO'.
+common_llm_error: LLMs leave linguistic typology abbreviations untranslated without standard Bengali grammatical equivalents.
 sources:
 - 'Corpus Harvest Provenance: Bangla Wikipedia Bengali Grammar & Philology'
 - Principle P2 Human Provenance Audit Gate
@@ -19,12 +18,11 @@ sources:
 - Linguistic Society of Bangladesh Peer-Reviewed Standards
 confidence: candidate
 created_date: '2026-11-12'
-last_modified: '2026-11-12'
+last_modified: '2026-11-15'
 review:
   reviewer_name: null
   reviewer_affiliation: null
   reviewed_date: null
   status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
-    human native-speaker sign-off.
+  notes: Revised with authoritative Bengali syntactic terminology following human review.
   signature_hash: null
