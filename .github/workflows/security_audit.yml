@@ -29,15 +29,16 @@ jobs:
     - name: Install Dependencies & Security Scanners
       run: |
         python -m pip install --upgrade pip
-        pip install bandit build twine defusedxml pyyaml requests
+        pip install bandit bandit-sarif-formatter build twine defusedxml pyyaml requests
 
     - name: Run Bandit AST Security Scan (SARIF Report)
       run: |
-        bandit -r bhashabid/ tools/ -ll -f sarif -o bandit-results.sarif || true
+        bandit -r bhashabid/ tools/ -ll -f sarif -o bandit-results.sarif
         bandit -r bhashabid/ tools/ -ll
 
     - name: Upload Bandit SARIF to GitHub Security Tab
       uses: github/codeql-action/upload-sarif@v3
+      continue-on-error: true
       if: always()
       with:
         sarif_file: bandit-results.sarif
