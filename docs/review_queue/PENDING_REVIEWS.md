@@ -16,9 +16,26 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue
+## 📥 Pending Candidate Queue (1 Cards Awaiting Human Review)
 
-✓ **All caught up! Zero draft cards currently pending review.**
+### Draft 1: [CRD-DFT-059] Candidate Rule for Pattern: BCE
+- **File**: `knowledge\cards\drafts\CRD-DFT-059.yaml`
+- **Domain**: `MFS, Microfinance & Grassroots FinTech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'BCE' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ প্রচলিত মুদ্রা রূপে অর্থমুদ্রাই মানব সভ্যতায় প্রায় ১০,০০০ BCE থেকেই প্রভুত্ব বিস্তার করতে শুরু করে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'BCE' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Currency & Financial Inclusion, Principle P2 Human Provenance Audit Gate, Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines, Microcredit Regulatory Authority (MRA) Rules & Standards, Anti-Money Laundering & Financial Fraud Prevention Protocols
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-059 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
 
 ---
 
