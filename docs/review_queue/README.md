@@ -34,13 +34,17 @@ Fork the repository, edit the draft file (e.g. `knowledge/cards/drafts/CRD-DFT-0
 
 ```yaml
 review:
-  reviewer_name: "Your Full Name"
+  reviewer_name: "Your Full Name (@github_username or email)"
   reviewer_affiliation: "Your Title / Native Speaker / Organization"
   reviewed_date: "YYYY-MM-DD"
   status: APPROVED               # Options: APPROVED, REJECTED, NEEDS_REVISION
   notes: "Verified against Bangla Academy Promito standards. Examples validated."
   signature_hash: null           # Will be computed during distillation
 ```
+
+> **Reviewer Identification Policy**:
+> - External contributors submitting PR reviews may provide their name and contact email or GitHub handle in `reviewer_name` and `reviewer_affiliation`.
+> - Maintainer approvals by Project Architect use `Ashikur Rahman Bhuiyan (@ashik1291)`.
 
 #### Option B: Propose Changes or Corrections
 If a rule or example is inaccurate, edit the `rule_summary`, `good_examples`, or `bad_examples` directly in the YAML file and submit your PR.

@@ -203,14 +203,17 @@ def handle_review(args):
                     print("-" * 80)
             return 0
 
-        if not args.card or not args.reviewer or not args.affiliation:
-            sys.stderr.write("Review Error: --card, --reviewer, and --affiliation are required for sign-off. Use --list to view pending cards.\n")
+        reviewer_name = (args.reviewer or "Ashikur Rahman Bhuiyan (@ashik1291)").strip()
+        reviewer_affiliation = (args.affiliation or "Native Bengali Speaker & Project Architect (@ashik1291)").strip()
+
+        if not args.card:
+            sys.stderr.write("Review Error: --card is required for sign-off. Use --list to view pending cards.\n")
             return 1
 
         apply_human_review(
             card_id=args.card,
-            reviewer_name=args.reviewer,
-            reviewer_affiliation=args.affiliation,
+            reviewer_name=reviewer_name,
+            reviewer_affiliation=reviewer_affiliation,
             action=args.action,
             notes=args.notes
         )
@@ -491,8 +494,8 @@ def main():
     p_rev = subparsers.add_parser("review", help="Human native-speaker review sign-off tool (Principle P2)")
     p_rev.add_argument("--list", action="store_true", help="List all candidate cards awaiting human review")
     p_rev.add_argument("--card", default=None, help="Card ID to sign off, e.g. CRD-DFT-001")
-    p_rev.add_argument("--reviewer", default=None, help="Full name of human reviewer")
-    p_rev.add_argument("--affiliation", default=None, help="Reviewer qualification or affiliation")
+    p_rev.add_argument("--reviewer", default="Ashikur Rahman Bhuiyan (@ashik1291)", help="Full name or handle of reviewer (default: Ashikur Rahman Bhuiyan (@ashik1291))")
+    p_rev.add_argument("--affiliation", default="Native Bengali Speaker & Project Architect (@ashik1291)", help="Reviewer qualification or affiliation")
     p_rev.add_argument("--action", default="approve", choices=["approve", "reject"])
     p_rev.add_argument("--notes", default="Verified and approved by human native speaker.")
     p_rev.set_defaults(func=handle_review)

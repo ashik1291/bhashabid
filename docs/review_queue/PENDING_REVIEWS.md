@@ -160,7 +160,7 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 28: [CRD-DOM-013] Poetic Metaphors, Imagery & Figurative Diction (কাব্যিক রূপক, চিত্রকল্প ও ভাবার্থ প্রকাশ)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
@@ -195,62 +195,62 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 35: [CRD-GRM-002] Honorific Concordance Across Pronouns and Verbs (আপনি / তুমি / তুই)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 36: [CRD-GRM-003] Bengali Case Markers and Postposition Agreement (কারক ও বিভক্তি)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 37: [CRD-GRM-004] Bengali Euphonic Junctions (সন্ধি: স্বরসন্ধি ও ব্যঞ্জনসন্ধি)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 38: [CRD-GRM-005] Bengali Compound Formation (সমাস: দ্বন্দ্ব, দ্বিগু, তৎপুরুষ ও কর্মধারয়)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 39: [CRD-NUM-001] Irregular Bengali Cardinal Numbers 0-99 (০-৯৯ অনিয়মিত সংখ্যা)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 40: [CRD-ORT-001] Unicode NFC Canonicalization and Composite Graphemes (য়, ড়, ঢ়)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 41: [CRD-ORT-002] Bangla Academy Loanword S-Rule (বিদেশি শব্দে 'স' বনাম 'ষ')
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 42: [CRD-ORT-003] Regional Orthographic Variations (বাংলাদেশ প্রমিত বনাম পশ্চিমবঙ্গ বানানরীতি)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 43: [CRD-TRN-001] Translation Idioms vs Literal English Calques (ভাবানুবাদ বনাম আক্ষরিক অনুবাদ)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 44: [CRD-TRN-002] High Court & Judicial Reporting Formulas (হাইকোর্টের রুল ও রিট মামলার প্রমিত পরিভাষা)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 45: [CRD-TRN-003] Macroeconomic & Financial News Syntax (অর্থনৈতিক সংবাদ ও বাংলাদেশ ব্যাংক পরিভাষা)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 46: [CRD-TRN-004] Sports Vernacular & Cricket Reporting (ক্রিকেট ও ক্রীড়া সংবাদ পরিভাষা)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
@@ -260,6 +260,6 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
 ### Card 48: [CRD-TRN-006] Proverbs, Idioms & Metaphoric Equivalence (প্রবাদ-প্রবচন, বাগধারা ও রূপকার্থ সমীকরণ)
-- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (@ashik1291 - Native Bengali Speaker & Project Architect)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)

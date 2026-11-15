@@ -16,7 +16,7 @@ Every reviewed knowledge card in `knowledge/cards/` is permanently sealed with:
   ```yaml
   review:
     reviewer_name: Ashikur Rahman Bhuiyan
-    reviewer_affiliation: Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>)
+    reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
     reviewed_date: '2026-11-11'
     status: APPROVED
     signature_hash: sha256:3d8471ca88058639

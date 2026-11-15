@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "bhashabid"
 version = "1.0.1"
 authors = [
-  { name = "Ashikur Rahman Bhuiyan", email = "ashikur.bhuiyan@brainstation-23.com" },
+  { name = "Ashikur Rahman Bhuiyan (@ashik1291)" },
   { name = "Bhashabid Contributors", email = "contributors@bhashabid.org" },
 ]
 description = "The Deterministic Bengali linguistic coprocessor engine & progressive skill layer with a Supervised Self-Learning Distillation Loop."
