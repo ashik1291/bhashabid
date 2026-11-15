@@ -16,53 +16,9 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue (16 Cards Awaiting Human Review)
+## 📥 Pending Candidate Queue (14 Cards Awaiting Human Review)
 
-### Draft 1: [CRD-DFT-007] Candidate Rule for Pattern: তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপ
-- **File**: `knowledge\cards\drafts\CRD-DFT-007.yaml`
-- **Domain**: `Constitutional Law & Writs` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে'').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে'
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে থাকেন
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে'.
-**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Bangladesh Case Law & Jurisprudence, Principle P2 Human Provenance Audit Gate, Constitution of the People's Republic of Bangladesh (Article 102), Supreme Court of Bangladesh Judicial Precedents, Bangla Academy Law Dictionary
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-007 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 2: [CRD-DFT-008] Candidate Rule for Pattern: alphabet
-- **File**: `knowledge\cards\drafts\CRD-DFT-008.yaml`
-- **Domain**: `Academic Research & Methodology` | **Profile**: `bd_standard` | **Register**: `formal`
-- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
-- **Rule Summary**: Automatically flagged pattern 'alphabet' requires naturalization to active causal phrasing (e.g. 'প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।').
-
-**Positive Examples (শুদ্ধ প্রয়োগ)**:
-  - ✓ প্রমিত বাংলা অনুবাদ বা বন্ধনীসহ ব্যবহার করুন।
-
-**Negative Examples (ভ্রান্ত প্রয়োগ)**:
-  - ✗ আবজাদ. একটি আবজাদ ( (); অথবা আবগাদ, আক্ষ. অনু. alphabet) হলো একটি লিখন পদ্ধতি, যেখানে কেবল ব্যঞ্জনবর্ণগুলোকে অক্ষর বা চিহ্নের মাধ্যমে উপস্থাপন করা হয়, আর স্বরবর্ণগুলোকে পাঠককে অনুমান করে নিতে হয় (যদি না অন্য কোনোভাবে, যেমন—ডায়াক্রিটিক ব্যবহার করে সেগুলোকে উপস্থাপন করা হয়)
-
-**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'alphabet'.
-**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research, Principle P2 Human Provenance Audit Gate, Bangla Academy Linguistic Research Methodology Guidelines, Linguistic Society of Bangladesh Peer-Reviewed Standards
-
-**Quick Action Command**:
-```bash
-bhashabid review --card CRD-DFT-008 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
-```
-
----
-
-### Draft 3: [CRD-DFT-009] Candidate Rule for Pattern: Help, OAuth
+### Draft 1: [CRD-DFT-009] Candidate Rule for Pattern: Help, OAuth
 - **File**: `knowledge\cards\drafts\CRD-DFT-009.yaml`
 - **Domain**: `ICT & Software Engineering` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -84,7 +40,7 @@ bhashabid review --card CRD-DFT-009 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 4: [CRD-DFT-010] Candidate Rule for Pattern: Salesians, Don, Bosco
+### Draft 2: [CRD-DFT-010] Candidate Rule for Pattern: Salesians, Don, Bosco
 - **File**: `knowledge\cards\drafts\CRD-DFT-010.yaml`
 - **Domain**: `Education & NCTB Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -106,7 +62,7 @@ bhashabid review --card CRD-DFT-010 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 5: [CRD-DFT-011] Candidate Rule for Pattern: MissingDaughter
+### Draft 3: [CRD-DFT-011] Candidate Rule for Pattern: MissingDaughter
 - **File**: `knowledge\cards\drafts\CRD-DFT-011.yaml`
 - **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -128,7 +84,7 @@ bhashabid review --card CRD-DFT-011 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 6: [CRD-DFT-012] Candidate Rule for Pattern: abdul, alim
+### Draft 4: [CRD-DFT-012] Candidate Rule for Pattern: abdul, alim
 - **File**: `knowledge\cards\drafts\CRD-DFT-012.yaml`
 - **Domain**: `ICT & Software Engineering` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -150,7 +106,7 @@ bhashabid review --card CRD-DFT-012 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 7: [CRD-DFT-013] Candidate Rule for Pattern: Career, Era, Opportunities, and, Challen
+### Draft 5: [CRD-DFT-013] Candidate Rule for Pattern: Career, Era, Opportunities, and, Challen
 - **File**: `knowledge\cards\drafts\CRD-DFT-013.yaml`
 - **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -172,7 +128,7 @@ bhashabid review --card CRD-DFT-013 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 8: [CRD-DFT-014] Candidate Rule for Pattern: continution, form
+### Draft 6: [CRD-DFT-014] Candidate Rule for Pattern: continution, form
 - **File**: `knowledge\cards\drafts\CRD-DFT-014.yaml`
 - **Domain**: `Education & NCTB Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -194,7 +150,7 @@ bhashabid review --card CRD-DFT-014 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 9: [CRD-DFT-015] Candidate Rule for Pattern: XXIII, VIII
+### Draft 7: [CRD-DFT-015] Candidate Rule for Pattern: XXIII, VIII
 - **File**: `knowledge\cards\drafts\CRD-DFT-015.yaml`
 - **Domain**: `Constitutional Law & Writs` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -216,7 +172,7 @@ bhashabid review --card CRD-DFT-015 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 10: [CRD-DFT-016] Candidate Rule for Pattern: SVO
+### Draft 8: [CRD-DFT-016] Candidate Rule for Pattern: SVO
 - **File**: `knowledge\cards\drafts\CRD-DFT-016.yaml`
 - **Domain**: `Academic Research & Methodology` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -240,7 +196,7 @@ bhashabid review --card CRD-DFT-016 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 11: [CRD-DFT-017] Candidate Rule for Pattern: Ahan, Loves, Him
+### Draft 9: [CRD-DFT-017] Candidate Rule for Pattern: Ahan, Loves, Him
 - **File**: `knowledge\cards\drafts\CRD-DFT-017.yaml`
 - **Domain**: `Academic Research & Methodology` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -262,7 +218,7 @@ bhashabid review --card CRD-DFT-017 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 12: [CRD-DFT-018] Candidate Rule for Pattern: তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদ
+### Draft 10: [CRD-DFT-018] Candidate Rule for Pattern: তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদ
 - **File**: `knowledge\cards\drafts\CRD-DFT-018.yaml`
 - **Domain**: `Creative Fiction & Dialogue` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -288,7 +244,7 @@ bhashabid review --card CRD-DFT-018 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 13: [CRD-DFT-019] Candidate Rule for Pattern: nbsp
+### Draft 11: [CRD-DFT-019] Candidate Rule for Pattern: nbsp
 - **File**: `knowledge\cards\drafts\CRD-DFT-019.yaml`
 - **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -313,7 +269,7 @@ bhashabid review --card CRD-DFT-019 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 14: [CRD-DFT-020] Candidate Rule for Pattern: তিনি পদ ছাড়েন বলে
+### Draft 12: [CRD-DFT-020] Candidate Rule for Pattern: তিনি পদ ছাড়েন বলে
 - **File**: `knowledge\cards\drafts\CRD-DFT-020.yaml`
 - **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -335,7 +291,7 @@ bhashabid review --card CRD-DFT-020 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 15: [CRD-DFT-021] Candidate Rule for Pattern: সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন
+### Draft 13: [CRD-DFT-021] Candidate Rule for Pattern: সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন
 - **File**: `knowledge\cards\drafts\CRD-DFT-021.yaml`
 - **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -357,7 +313,7 @@ bhashabid review --card CRD-DFT-021 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-### Draft 16: [CRD-DFT-022] Candidate Rule for Pattern: তিনি সেই বিয়ে বাতিল করে
+### Draft 14: [CRD-DFT-022] Candidate Rule for Pattern: তিনি সেই বিয়ে বাতিল করে
 - **File**: `knowledge\cards\drafts\CRD-DFT-022.yaml`
 - **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
 - **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
@@ -379,7 +335,7 @@ bhashabid review --card CRD-DFT-022 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 ---
 
-## 🛡️ Active Production Cards (33 Approved in `knowledge/cards/`)
+## 🛡️ Active Production Cards (35 Approved in `knowledge/cards/`)
 
 ### Card 1: [CRD-DFT-001] Candidate Rule for Pattern: দ্বারা চালিত
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
@@ -406,142 +362,152 @@ bhashabid review --card CRD-DFT-022 --reviewer "Ashikur Rahman Bhuiyan" --affili
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 6: [CRD-DOM-001] Official Administrative Applications & Petitions (দাপ্তরিক আবেদন ও দরখাস্তের প্রমিত কাঠামো)
+### Card 6: [CRD-DFT-007] Candidate Rule for Pattern: অনুপস্থিতিতে দায়িত্বভার পালন
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 7: [CRD-DFT-008] Candidate Rule for Pattern: alphabet
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 8: [CRD-DOM-001] Official Administrative Applications & Petitions (দাপ্তরিক আবেদন ও দরখাস্তের প্রমিত কাঠামো)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 7: [CRD-DOM-002] Letter Writing & Correspondence Registers (চিঠিপত্র ও সামাজিক যোগাযোগের অনুশাসন)
+### Card 9: [CRD-DOM-002] Letter Writing & Correspondence Registers (চিঠিপত্র ও সামাজিক যোগাযোগের অনুশাসন)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 8: [CRD-DOM-003] Literary Fiction & Story Writing (কথাসাহিত্য, গল্প ও সংলাপ লিখন শৈলী)
+### Card 10: [CRD-DOM-003] Literary Fiction & Story Writing (কথাসাহিত্য, গল্প ও সংলাপ লিখন শৈলী)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 9: [CRD-DOM-004] Academic & Scholarly Research Prose (শিক্ষায়তনিক ও গবেষণা প্রবন্ধ শৈলী)
+### Card 11: [CRD-DOM-004] Academic & Scholarly Research Prose (শিক্ষায়তনিক ও গবেষণা প্রবন্ধ শৈলী)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 10: [CRD-DOM-005] Book Authoring & Non-Fiction Essays (মননশীল প্রবন্ধ ও গ্রন্থ প্রণয়ন রীতি)
+### Card 12: [CRD-DOM-005] Book Authoring & Non-Fiction Essays (মননশীল প্রবন্ধ ও গ্রন্থ প্রণয়ন রীতি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 11: [CRD-DOM-006] Corporate & Marketing Copywriting (কর্পোরেট যোগাযোগ ও বাণিজ্যিক কপিরাইটিং)
+### Card 13: [CRD-DOM-006] Corporate & Marketing Copywriting (কর্পোরেট যোগাযোগ ও বাণিজ্যিক কপিরাইটিং)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 12: [CRD-DOM-007] Legal Drafting & Contracts (আইনি দলিল, চুক্তিপত্র ও নোটিশ লিখন)
+### Card 14: [CRD-DOM-007] Legal Drafting & Contracts (আইনি দলিল, চুক্তিপত্র ও নোটিশ লিখন)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 13: [CRD-DOM-008] Healthcare & Medical Public Advisories (চিকিৎসাসেবা ও জনস্বাস্থ্য যোগাযোগ)
+### Card 15: [CRD-DOM-008] Healthcare & Medical Public Advisories (চিকিৎসাসেবা ও জনস্বাস্থ্য যোগাযোগ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 14: [CRD-DOM-009] Classical Bengali Prosody & Poetic Scansion (বাংলা ছন্দবিজ্ঞান ও পয়ার প্রকরণ)
+### Card 16: [CRD-DOM-009] Classical Bengali Prosody & Poetic Scansion (বাংলা ছন্দবিজ্ঞান ও পয়ার প্রকরণ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 15: [CRD-DOM-010] Land Records & Property Deeds (ভূমি রেজিস্ট্রি, খতিয়ান ও সাফ-কবলা দলিল)
+### Card 17: [CRD-DOM-010] Land Records & Property Deeds (ভূমি রেজিস্ট্রি, খতিয়ান ও সাফ-কবলা দলিল)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 16: [CRD-DOM-011] Agronomy, Meteorology & Disaster Bulletins (কৃষি সম্প্রসারণ, আবহাওয়া ও দুর্যোগ পূর্বাভাস)
+### Card 18: [CRD-DOM-011] Agronomy, Meteorology & Disaster Bulletins (কৃষি সম্প্রসারণ, আবহাওয়া ও দুর্যোগ পূর্বাভাস)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 17: [CRD-DOM-012] NCTB Creative Pedagogy & Exam Questioning (জাতীয় শিক্ষাক্রম ও সৃজনশীল প্রশ্নপদ্ধতি কাঠামো)
+### Card 19: [CRD-DOM-012] NCTB Creative Pedagogy & Exam Questioning (জাতীয় শিক্ষাক্রম ও সৃজনশীল প্রশ্নপদ্ধতি কাঠামো)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 18: [CRD-DOM-013] Poetic Metaphors, Imagery & Figurative Diction (কাব্যিক রূপক, চিত্রকল্প ও ভাবার্থ প্রকাশ)
+### Card 20: [CRD-DOM-013] Poetic Metaphors, Imagery & Figurative Diction (কাব্যিক রূপক, চিত্রকল্প ও ভাবার্থ প্রকাশ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 19: [CRD-GRM-001] Sadhu-Cholito Verb Consistency (গুরুচণ্ডালী দোষ পরিহার)
+### Card 21: [CRD-GRM-001] Sadhu-Cholito Verb Consistency (গুরুচণ্ডালী দোষ পরিহার)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 20: [CRD-GRM-002] Honorific Concordance Across Pronouns and Verbs (আপনি / তুমি / তুই)
+### Card 22: [CRD-GRM-002] Honorific Concordance Across Pronouns and Verbs (আপনি / তুমি / তুই)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 21: [CRD-GRM-003] Bengali Case Markers and Postposition Agreement (কারক ও বিভক্তি)
+### Card 23: [CRD-GRM-003] Bengali Case Markers and Postposition Agreement (কারক ও বিভক্তি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 22: [CRD-GRM-004] Bengali Euphonic Junctions (সন্ধি: স্বরসন্ধি ও ব্যঞ্জনসন্ধি)
+### Card 24: [CRD-GRM-004] Bengali Euphonic Junctions (সন্ধি: স্বরসন্ধি ও ব্যঞ্জনসন্ধি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 23: [CRD-GRM-005] Bengali Compound Formation (সমাস: দ্বন্দ্ব, দ্বিগু, তৎপুরুষ ও কর্মধারয়)
+### Card 25: [CRD-GRM-005] Bengali Compound Formation (সমাস: দ্বন্দ্ব, দ্বিগু, তৎপুরুষ ও কর্মধারয়)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 24: [CRD-NUM-001] Irregular Bengali Cardinal Numbers 0-99 (০-৯৯ অনিয়মিত সংখ্যা)
+### Card 26: [CRD-NUM-001] Irregular Bengali Cardinal Numbers 0-99 (০-৯৯ অনিয়মিত সংখ্যা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 25: [CRD-ORT-001] Unicode NFC Canonicalization and Composite Graphemes (য়, ড়, ঢ়)
+### Card 27: [CRD-ORT-001] Unicode NFC Canonicalization and Composite Graphemes (য়, ড়, ঢ়)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 26: [CRD-ORT-002] Bangla Academy Loanword S-Rule (বিদেশি শব্দে 'স' বনাম 'ষ')
+### Card 28: [CRD-ORT-002] Bangla Academy Loanword S-Rule (বিদেশি শব্দে 'স' বনাম 'ষ')
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 27: [CRD-ORT-003] Regional Orthographic Variations (বাংলাদেশ প্রমিত বনাম পশ্চিমবঙ্গ বানানরীতি)
+### Card 29: [CRD-ORT-003] Regional Orthographic Variations (বাংলাদেশ প্রমিত বনাম পশ্চিমবঙ্গ বানানরীতি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 28: [CRD-TRN-001] Translation Idioms vs Literal English Calques (ভাবানুবাদ বনাম আক্ষরিক অনুবাদ)
+### Card 30: [CRD-TRN-001] Translation Idioms vs Literal English Calques (ভাবানুবাদ বনাম আক্ষরিক অনুবাদ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 29: [CRD-TRN-002] High Court & Judicial Reporting Formulas (হাইকোর্টের রুল ও রিট মামলার প্রমিত পরিভাষা)
+### Card 31: [CRD-TRN-002] High Court & Judicial Reporting Formulas (হাইকোর্টের রুল ও রিট মামলার প্রমিত পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 30: [CRD-TRN-003] Macroeconomic & Financial News Syntax (অর্থনৈতিক সংবাদ ও বাংলাদেশ ব্যাংক পরিভাষা)
+### Card 32: [CRD-TRN-003] Macroeconomic & Financial News Syntax (অর্থনৈতিক সংবাদ ও বাংলাদেশ ব্যাংক পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 31: [CRD-TRN-004] Sports Vernacular & Cricket Reporting (ক্রিকেট ও ক্রীড়া সংবাদ পরিভাষা)
+### Card 33: [CRD-TRN-004] Sports Vernacular & Cricket Reporting (ক্রিকেট ও ক্রীড়া সংবাদ পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 32: [CRD-TRN-005] Article 102 Constitutional Writs Taxonomy & Drafting (সংবিধানের ১০২ অনুচ্ছেদের রিট মামলার প্রমিত পরিভাষা)
+### Card 34: [CRD-TRN-005] Article 102 Constitutional Writs Taxonomy & Drafting (সংবিধানের ১০২ অনুচ্ছেদের রিট মামলার প্রমিত পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 33: [CRD-TRN-006] Proverbs, Idioms & Metaphoric Equivalence (প্রবাদ-প্রবচন, বাগধারা ও রূপকার্থ সমীকরণ)
+### Card 35: [CRD-TRN-006] Proverbs, Idioms & Metaphoric Equivalence (প্রবাদ-প্রবচন, বাগধারা ও রূপকার্থ সমীকরণ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)

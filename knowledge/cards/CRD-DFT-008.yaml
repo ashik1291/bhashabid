@@ -30,13 +30,13 @@ sources:
 - Principle P2 Human Provenance Audit Gate
 - Bangla Academy Linguistic Research Methodology Guidelines
 - Linguistic Society of Bangladesh Peer-Reviewed Standards
-confidence: candidate
+confidence: reviewed
 created_date: '2026-11-12'
 last_modified: '2026-11-15'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: REVISION_SUBMITTED_AWAITING_FINAL_SIGN_OFF
-  notes: Revised with human expert linguistic structure and validation criteria.
-  signature_hash: null
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Verified and approved by human native speaker.
+  signature_hash: sha256:0d4884487dc31797
