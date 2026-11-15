@@ -36,6 +36,8 @@ def handle_number(args):
             fmt = "date_ordinal"
         elif getattr(args, "grouped", False):
             fmt = "grouped"
+        elif getattr(args, "command", "") == "format-number" and fmt == "words":
+            fmt = "grouped"
 
         if fmt == "grouped":
             print(format_lakh_crore(val_str))
@@ -409,8 +411,8 @@ def main():
     )
     subparsers = parser.add_subparsers(dest="command", help="Subcommand to execute")
 
-    # number
-    p_num = subparsers.add_parser("number", help="Convert numbers to Bengali words or formatted digits")
+    # number (alias: format-number)
+    p_num = subparsers.add_parser("number", aliases=["format-number"], help="Convert numbers to Bengali words or formatted digits")
     p_num.add_argument("value", help="Number value (e.g. 99, 1234567, 3.14, 50.25)")
     p_num.add_argument("--format", choices=["words", "grouped", "currency", "fraction", "ordinal", "date_ordinal"], default="words")
     p_num.add_argument("--currency", action="store_true", help="Format as Bengali currency words (টাকা/পয়সা)")
