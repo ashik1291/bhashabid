@@ -1,25 +1,18 @@
 id: CRD-DFT-007
-title: 'Candidate Rule for Pattern: অনুপস্থিতিতে দায়িত্বভার পালন'
+title: "Rule for Absence Substitution & Honorific Concordance in Official Dispatches"
 domain: Constitutional Law & Writs
 profile: bd_standard
 register: formal
-rule_summary: 'Automatically flagged pattern ''তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের
-  ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে'' contains redundant pronoun
-  repetition (''তার অবর্তমানে তার'') and an honorific concordance clash (''তিনি ...
-  করে''). "তার অবর্তমানে" means "in his/her absence" (কর্মকর্তার অনুপস্থিতিতে). Revised
-  standard phrasing: ''তিনি চিফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তাঁর অনুপস্থিতিতে
-  দায়িত্বভার পালন করেন'' অথবা ''চিফ মেট্রোপলিটন ম্যাজিস্ট্রেটের অনুপস্থিতিতে ডেপুটি
-  হিসেবে তিনি দায়িত্ব পালন করেন'''
+rule_summary: 'When drafting official appointments or judicial dispatches involving substitution during absence, avoid redundant repetitive pronouns (such as তার অবর্তমানে তার) and ensure honorific verbal agreement (তিনি ... করেন, NOT তিনি ... করে). Use formal administrative phrasing: কর্মকর্তার অনুপস্থিতিতে দায়িত্বভার পালন করেন।'
 good_examples:
-- তিনি চিফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তাঁর অনুপস্থিতিতে দায়িত্বভার
-  পালন করেন।
-- চিফ মেট্রোপলিটন ম্যাজিস্ট্রেটের অনুপস্থিতিতে ডেপুটি হিসেবে তিনি সার্বিক দায়িত্ব
-  পালন করেন।
+- তিনি চিফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তাঁর অনুপস্থিতিতে যাবতীয় দায়িত্বভার পালন করেন।
+- চিফ মেট্রোপলিটন ম্যাজিস্ট্রেটের অনুপস্থিতিতে ডেপুটি হিসেবে তিনি বিচারিক ও প্রশাসনিক সার্বিক দায়িত্ব পালন করেন।
+- বিভাগীয় কর্মকর্তার অনুপস্থিতিতে দায়িত্বপ্রাপ্ত উপ-পরিচালক তাঁর যাবতীয় দাপ্তরিক কার্যভার পরিচালনা করবেন।
 bad_examples:
-- তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার
-  পালন করে
-common_llm_error: LLMs repeat redundant pronouns ('তার অবর্তমানে তার') and mix 3rd-person
-  honorific pronoun 'তিনি' with ordinary pronoun 'তার' and non-honorific verb 'করে'.
+- তিনি চীফ মেট্রোপলিটন ম্যাজিস্ট্রেটের ডেপুটি হিসেবে তার অবর্তমানে তার দায়িত্বভার পালন করে
+- তিনি বিচারকের অবর্তমানে তার দায়িত্ব পালন করে রায় প্রদান করেন।
+- ডেপুটি ম্যাজিস্ট্রেট তার অনুপস্থিতিতে তার অফিসের কাজ করে।
+common_llm_error: "LLMs repeat redundant pronouns ('তার অবর্তমানে তার') and mix 3rd-person honorific pronoun 'তিনি' with ordinary pronoun 'তার' and non-honorific verb 'করে'."
 sources:
 - 'Corpus Harvest Provenance: Bangla Wikipedia Bangladesh Case Law & Jurisprudence'
 - Principle P2 Human Provenance Audit Gate

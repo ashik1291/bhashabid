@@ -1,19 +1,18 @@
 id: CRD-DFT-006
-title: 'Candidate Rule for Pattern: ঝোপের চারপাশে পেটাচ্ছেন'
-domain: Creative Fiction & Dialogue
+title: "Rule for English Idiom Naturalization: 'Beat Around the Bush' -> 'ঘুরিয়ে-পেঁচিয়ে কথা বলা'"
+domain: Translation & Calque Naturalization
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'ঝোপের চারপাশে পেটাচ্ছেন' requires naturalization
-  to active causal phrasing (e.g. 'স্বাভাবিক বাংলা প্রকাশভঙ্গি 'ঘুরিয়ে-পেঁচিয়ে কথা
-  বলা / মূল প্রসঙ্গ এড়িয়ে যাওয়া' ব্যবহার করুন।').
+rule_summary: 'When translating the English idiomatic expression beat around the bush, translate the figurative meaning into standard Bengali idioms such as ঘুরিয়ে-পেঁচিয়ে কথা বলা, মূল প্রসঙ্গ এড়িয়ে যাওয়া, or আসল কথা চেপে যাওয়া। Never translate the metaphor literally as ঝোপের চারপাশে পেটানো।'
 good_examples:
-- স্বাভাবিক বাংলা প্রকাশভঙ্গি 'ঘুরিয়ে-পেঁচিয়ে কথা বলা / মূল প্রসঙ্গ এড়িয়ে যাওয়া' ব্যবহার
-  করুন।
+- সরাসরি প্রশ্নের উত্তর না দিয়ে তিনি অপ্রয়োজনীয় কথার অবতারণা করে ঘুরিয়ে-পেঁচিয়ে বক্তব্য দিচ্ছেন।
+- মূল প্রসঙ্গ এড়িয়ে না গিয়ে সুনির্দিষ্ট আর্থিক ঘাটতির বিষয়ে স্পষ্ট বক্তব্য দিন।
+- বিষয়টি নিয়ে অযথা ঘুরিয়ে-পেঁচিয়ে কথা বলার কোনো সুযোগ নেই, সরাসরি সিদ্ধান্ত জানানো প্রয়োজন।
 bad_examples:
-- ঝোপের চারপাশে পেটাচ্ছেন
 - আপনি কেন সবসময় ঝোপের চারপাশে পেটাচ্ছেন? এই কাজটি কোনো কেকের টুকরো নয়।
-common_llm_error: LLMs emit literal calques or non-standard syntax for 'ঝোপের চারপাশে
-  পেটাচ্ছেন'.
+- তিনি সরাসরি প্রশ্নের উত্তর না দিয়ে ঝোপের চারপাশে পেটাচ্ছেন।
+- রাজনীতিবিদরা প্রায়ই আসল কথা না বলে ঝোপে লাঠি মারেন।
+common_llm_error: "LLMs frequently translate English cultural idioms and metaphors literally into Bengali without parsing figurative semantics, producing unintelligible phrases like 'ঝোপের চারপাশে পেটানো' and 'কেকের টুকরো'."
 sources:
 - Corpus Harvester Anomaly Detector
 - Bangla Academy Corpus

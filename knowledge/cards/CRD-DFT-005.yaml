@@ -1,22 +1,21 @@
 id: CRD-DFT-005
-title: 'Candidate Rule for Pattern: বড় বিপদের সংকেত'
-domain: Disaster Early Warning
+title: "Rule for Meteorological Disaster Warning: 'মহাবিপদ সংকেত' (Great Danger Signal)"
+domain: Agronomy & Disaster Management
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'বড় বিপদের সংকেত' requires naturalization
-  to active causal phrasing (e.g. 'স্বাভাবিক বাংলা প্রকাশভঙ্গি 'মহাবিপদ সংকেত' ব্যবহার
-  করুন।').
+rule_summary: 'In cyclone early warning bulletins and Disaster Management protocols, translate maritime warning signals 8, 9, and 10 strictly as মহাবিপদ সংকেত (Great Danger Signal), and signals 5, 6, 7 as বিপদ সংকেত (Danger Signal). Never invent literal descriptive phrases like বড় বিপদের সংকেত।'
 good_examples:
-- স্বাভাবিক বাংলা প্রকাশভঙ্গি 'মহাবিপদ সংকেত' ব্যবহার করুন।
+- ঘূর্ণিঝড়টি প্রবল শক্তিতে উপকূলের দিকে অগ্রসর হওয়ায় মোংলা ও পায়রা সমুদ্রবন্দরকে ১০ নম্বর মহাবিপদ সংকেত প্রদর্শন করতে বলা হয়েছে।
+- দুর্যোগ ব্যবস্থাপনা অধিদপ্তরের জরুরি নির্দেশনায় উপকূলীয় জেলাগুলোতে ৮ নম্বর মহাবিপদ সংকেত জারির পর আশ্রয়কেন্দ্রগুলো প্রস্তুত রাখা হয়েছে।
+- উপকূলের নদী ও সমুদ্রবন্দরগুলোকে যথাসময়ে সতর্ক সংকেত থেকে মহাবিপদ সংকেতে উন্নীত করা হয়।
 bad_examples:
-- বড় বিপদের সংকেত
 - ঘূর্ণিঝড় কাছে আসায় সমুদ্রবন্দরগুলোকে ১০ নম্বর বড় বিপদের সংকেত উত্তোলন করতে বলা হয়েছে।
-common_llm_error: LLMs emit literal calques or non-standard syntax for 'বড় বিপদের
-  সংকেত'.
+- আবহাওয়া অফিস উপকূলীয় অঞ্চলসমূহে আট নম্বর বিশাল বিপদের সংকেত দেখাতে বলেছে।
+- ঝড় বেশি শক্তিশালী হওয়ায় চরম বিপদের সংকেত ঘোষণা করা হলো।
+common_llm_error: "LLMs translate the maritime adjective 'Great' literally as 'বড়' or 'বিশাল', creating non-standard warning categories ('বড় বিপদের সংকেত') that violate the Ministry of Disaster Management's Standing Orders on Disaster (SOD)."
 sources:
 - Corpus Harvester Anomaly Detector
 - Bangla Academy Corpus
-- Bangla Academy Standard Bengali Grammar
 - Ministry of Agriculture & Department of Agricultural Extension (DAE)
 - Disaster Management Bureau Standing Orders on Disaster (SOD)
 confidence: reviewed

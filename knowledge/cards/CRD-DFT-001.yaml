@@ -1,23 +1,24 @@
 id: CRD-DFT-001
-title: 'Candidate Rule for Pattern: দ্বারা চালিত'
-domain: translation
+title: "Rule for Naturalizing Passive Calque: 'দ্বারা চালিত' (Driven By)"
+domain: Translation & Calque Naturalization
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'দ্বারা চালিত' requires naturalization
-  to active causal phrasing (e.g. 'পরিচালিত', 'নেতৃত্বে', 'কারণে').
+rule_summary: 'When translating English passive causal constructions such as driven by, avoid the mechanical calque দ্বারা চালিত. Replace with natural Bengali causal structures using কারণে, ফলে, প্রভাবে, অধীনে পরিচালিত, or নেতৃত্বে, matching the specific domain register.'
 good_examples:
-- খাদ্যপণ্যের মূল্যবৃদ্ধির কারণে মূল্যস্ফীতি বেড়েছে।
-- প্রকল্পটির কাজ বিদ্যুৎ বিভাগের অধীনে পরিচালিত হচ্ছে।
-- প্রধান উপদেষ্টার সভাপতিত্বে অনুষ্ঠিত বৈঠকে এ সিদ্ধান্ত গৃহীত হয়।
+- খাদ্যপণ্যের অস্বাভাবিক মূল্যবৃদ্ধির কারণে সামগ্রিক মূল্যস্ফীতি নতুন উচ্চতায় পৌঁছেছে।
+- কৃত্রিম বুদ্ধিমত্তা ও প্রযুক্তি খাতের প্রবৃদ্ধির প্রভাবে বৈশ্বিক পুঁজিবাজারে চাঞ্চল্য সৃষ্টি হয়েছে।
+- বিদ্যুৎ ও জ্বালানি মন্ত্রণালয়ের অধীনে পরিচালিত এ প্রকল্পের কাজ দ্রুত গতিতে এগিয়ে চলেছে।
+- প্রধান উপদেষ্টার নেতৃত্বে অনুষ্ঠিত উপদেষ্টা পরিষদের বৈঠকে জাতীয় নীতি বাস্তবায়নের সিদ্ধান্ত গৃহীত হয়।
 bad_examples:
-- মূল্যবৃদ্ধি দ্বারা চালিত মূল্যস্ফীতি।
-- প্রকল্পটি বিদ্যুৎ বিভাগ দ্বারা পরিচালিত।
-- প্রধান উপদেষ্টা দ্বারা সভাপতিত্ব করা বৈঠকে।
-common_llm_error: LLMs emit literal English passive calques ('দ্বারা চালিত', 'দ্বারা
-  অনুষ্ঠিত') instead of natural active causal syntax.
+- খাদ্যপণ্যের মূল্যবৃদ্ধি দ্বারা চালিত হয়ে সামগ্রিক মূল্যস্ফীতি বেড়েছে।
+- প্রযুক্তি খাতের প্রবৃদ্ধি দ্বারা চালিত পুঁজিবাজার আজ উর্ধ্বমুখী।
+- প্রকল্পটি বিদ্যুৎ বিভাগ দ্বারা পরিচালিত হয়ে সমাপ্তির পথে।
+- প্রধান উপদেষ্টা দ্বারা সভাপতিত্ব করা বৈঠকে এ সিদ্ধান্ত গৃহীত হয়।
+common_llm_error: "LLMs translate the English passive participle 'driven by' literally as 'দ্বারা চালিত' rather than selecting natural causal postpositions ('কারণে', 'ফলে', 'প্রভাবে') or active institutional phrasing ('নেতৃত্বে', 'অধীনে')."
 sources:
 - Corpus Harvester Anomaly Detector
 - Bangla Academy Promito Byaboharik Bangla Obhidhan
+- Bangla Academy Standard Bengali Grammar (প্রমিত বাংলা ভাষার ব্যাকরণ)
 confidence: reviewed
 created_date: '2026-11-12'
 last_modified: '2026-11-15'

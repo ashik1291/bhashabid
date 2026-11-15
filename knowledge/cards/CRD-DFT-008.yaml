@@ -1,30 +1,18 @@
 id: CRD-DFT-008
-title: 'Candidate Rule for Pattern: alphabet'
+title: "Rule for Academic Linguistics: Terminology for 'Alphabet' vs 'Writing Systems'"
 domain: Academic Research & Methodology
 profile: bd_standard
 register: formal
-rule_summary: When the English term "alphabet" appears in Bengali academic writing,
-  evaluate whether a suitable Bengali equivalent, such as "বর্ণমালা", preserves the
-  intended linguistic meaning. Prefer standard Bengali terminology when the context
-  permits. Retain the English term in parentheses when necessary for technical precision,
-  disambiguation, or reference to a specific linguistic concept.
+rule_summary: 'When translating or referencing the term alphabet in academic and linguistic discourse, prefer standard Bengali বর্ণমালা where semantically appropriate. Retain the English term in parentheses on first mention for technical precision, and maintain strict terminological distinction between alphabetic, abjad, and abugida writing systems.'
 good_examples:
-- বর্ণমালা (alphabet)
-- বাংলা বর্ণমালার গঠন ও বৈশিষ্ট্য
-- বিভিন্ন ভাষার বর্ণমালার তুলনামূলক বিশ্লেষণ
+- বাংলা বর্ণমালার গঠন ও ঐতিহাসিক বিবর্তন নিয়ে গবেষকগণ বিস্তারিত আলোকপাত করেছেন।
+- বিভিন্ন ভাষার লিখন পদ্ধতি ও বর্ণমালার (alphabet) তুলনামূলক বিশ্লেষণে ধ্বনিতাত্ত্বিক বৈশিষ্ট্যসমূহ চিহ্নিত করা হয়েছে।
+- স্বরবর্ণসমৃদ্ধ বাংলা বর্ণমালা (Abugida/Alphasyllabary) এবং আরবি আবজাদ (Abjad) লিখনরীতির কাঠামোগত পার্থক্য তাত্ত্বিকভাবে বিশ্লেষণ করা প্রয়োজন।
 bad_examples:
-- Bengali alphabet-এর পরিবর্তে অপ্রয়োজনে English terminology ব্যবহার করা, যখন "বাংলা
-  বর্ণমালা" অর্থগতভাবে যথাযথ।
-- Abjad-কে সরাসরি alphabet হিসেবে শ্রেণিবদ্ধ করা, যখন আলোচনার উদ্দেশ্য দুই ধরনের লিখন
-  পদ্ধতির পার্থক্য নির্ধারণ করা।
-common_llm_error: Unnecessary English terminology, literal translation, inconsistent
-  Bengali terminology, and incorrect classification of linguistically distinct writing
-  systems.
-validation_requirements:
-- Verify terminology against authoritative Bengali linguistic references.
-- Validate positive and negative examples with contextual evidence.
-- Ensure the rule does not force translations that alter technical meaning.
-- Record traceable source references and human review evidence.
+- Bengali alphabet-এর ব্যাকরণিক গঠন ইংরেজি অ্যালফাবেটের চেয়ে অনেকটাই ভিন্ন।
+- আরবি আবজাদকে কোনো তাত্ত্বিক পার্থক্য ছাড়াই সরাসরি অ্যালফাবেট বা সাধারণ বর্ণমালা হিসেবে অনুবাদ করা।
+- বাংলা বর্ণমালার আলোচনায় অপ্রয়োজনে ইংরেজি alphabet টার্মিনোলজি বারবার ব্যবহার করা।
+common_llm_error: 'LLMs indiscriminately use Latin transliterations (অ্যালফাবেট) instead of established Bengali linguistic terms (বর্ণমালা), and fail to distinguish between alphabets, abjads, and abugidas.'
 sources:
 - 'Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research'
 - Principle P2 Human Provenance Audit Gate

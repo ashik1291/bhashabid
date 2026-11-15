@@ -1,23 +1,21 @@
 id: CRD-DFT-004
-title: 'Candidate Rule for Pattern: জিজ্ঞেস করে একটি রুল'
-domain: Judicial & High Court
+title: "Rule for Judicial Idiom in Writ Petitions: 'রুল নিশি জারি' (Issuance of Rule Nisi)"
+domain: Constitutional Law & Writs
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'জিজ্ঞেস করে একটি রুল' requires naturalization
-  to active causal phrasing (e.g. 'স্বাভাবিক বাংলা প্রকাশভঙ্গি 'কেন ... হবে না, তা
-  জানতে চেয়ে রুল জারি করেছেন' ব্যবহার করুন।').
+rule_summary: 'In High Court legal reporting and writ jurisprudence, translate the English legal action issued a rule asking why using authentic Supreme Court terminology: কেন ... হবে না, তা জানতে চেয়ে রুল নিশি জারি করেছেন। Never translate literally as জিজ্ঞেস করে একটি রুল।'
 good_examples:
-- স্বাভাবিক বাংলা প্রকাশভঙ্গি 'কেন ... হবে না, তা জানতে চেয়ে রুল জারি করেছেন' ব্যবহার
-  করুন।
+- বিনা বিচারে আটক রাখা কেন বেআইনি ও অসাংবিধানিক ঘোষণা করা হবে না, তা জানতে চেয়ে মহামান্য হাইকোর্ট রুল নিশি জারি করেছেন।
+- প্রজ্ঞাপনটি কেন আইনগত কর্তৃত্ববহির্ভূত ঘোষণা করা হবে না, সরকারের সংশ্লিষ্ট কর্তৃপক্ষকে চার সপ্তাহের মধ্যে তার কারণ দর্শানোর নির্দেশ দিয়ে রুল জারি করা হয়েছে।
+- রিট আবেদনের প্রাথমিক শুনানি গ্রহণ করে বিচারপতিদের সমন্বয়ে গঠিত দ্বৈত বেঞ্চ বিবাদীদের প্রতি রুল জারি করেন।
 bad_examples:
-- জিজ্ঞেস করে একটি রুল
 - হাইকোর্ট সরকারকে জিজ্ঞেস করে একটি রুল জারি করেছে কেন আটক বেআইনি হবে না।
-common_llm_error: LLMs emit literal calques or non-standard syntax for 'জিজ্ঞেস করে
-  একটি রুল'.
+- আদালত একটি রুল জারি করেছে এবং জানতে চেয়েছে যে এটা কেন অবৈধ নয়।
+- হাইকোর্ট চার সপ্তাহের জন্য কেন অবৈধ হবে না বলে একটা রুল ইস্যু করেছে।
+common_llm_error: "LLMs translate Anglo-American and Commonwealth legal idioms ('issued a rule asking the respondent to show cause') word-for-word into colloquial Bengali ('জিজ্ঞেস করে একটি রুল জারি করেছে') instead of using standard Bangladesh Supreme Court writ terminology ('কারণ দর্শানোর নির্দেশ দিয়ে রুল নিশি জারি')."
 sources:
 - Corpus Harvester Anomaly Detector
 - Bangla Academy Corpus
-- Bangla Academy Standard Bengali Grammar
 - Constitution of the People's Republic of Bangladesh (Article 102)
 - Supreme Court of Bangladesh Judicial Precedents
 - Bangla Academy Law Dictionary

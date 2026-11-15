@@ -1,17 +1,18 @@
 id: CRD-DFT-002
-title: 'Candidate Rule for Pattern: পড়িয়া'
+title: "Rule for Sadhu-Cholito Concordance in Pedagogical Prompts: 'পড়িয়া' vs 'পড়ে'"
 domain: Education & NCTB Pedagogy
 profile: bd_standard
 register: formal
-rule_summary: Automatically flagged pattern 'পড়িয়া' requires naturalization to active
-  causal phrasing (e.g. 'চলিত রূপে 'পড়ে' ব্যবহার করুন।').
+rule_summary: 'In contemporary educational textbooks, exam stems, and NCTB pedagogical prompts, maintain consistent Modern Standard Cholito. Avoid archaic Sadhu non-finite verb forms such as পড়িয়া, করিয়া, বলিয়া when surrounding interrogatives and directives use Cholito (যেমন: দাও, লেখ, বোঝাও).'
 good_examples:
-- চলিত রূপে 'পড়ে' ব্যবহার করুন।
+- 'উদ্দীপকটি পড়ে নিচের প্রশ্নগুলোর যথাযথ উত্তর দাও: (ক) সালোকসংশ্লেষণ প্রক্রিয়ার প্রধান কাঁচামাল কী? (খ) উদ্ভিদের পাতাকে কেন খাদ্য তৈরির কারখানা বলা হয়? বুঝিয়ে লেখ।'
+- 'অনুচ্ছেদটি মনোযোগ দিয়ে পড়ে ৩ ও ৪ নম্বর প্রশ্নের উত্তর লেখ।'
+- 'কবিতাংশটি পড়ে কবি কী বার্তা দিতে চেয়েছেন তা নিজের ভাষায় সংক্ষেপে ব্যাখ্যা করো।'
 bad_examples:
-- পড়িয়া
-- 'উদ্দীপকটি পড়িয়া নিচের প্রশ্নগুলোর উত্তর দাও: (ক) সালোকসংশ্লেষণ প্রক্রিয়ার প্রধান
-  কাঁচামাল কী? (খ) উদ্ভিদের পাতাকে কেন রান্নাতত্ত্বের সাথে তুলনা করা হয়? বুঝিয়ে লেখ।'
-common_llm_error: LLMs emit literal calques or non-standard syntax for 'পড়িয়া'.
+- 'উদ্দীপকটি পড়িয়া নিচের প্রশ্নগুলোর উত্তর দাও: (ক) সালোকসংশ্লেষণ প্রক্রিয়ার প্রধান কাঁচামাল কী? বুঝিয়ে লেখ।'
+- 'উপরের চার্টটি নিরীক্ষণ করিয়া সিদ্ধান্তগুলো বর্ণনা করো।'
+- 'তথ্যসূত্রটি পড়িয়া বিশ্লেষণ করে দেখাও।'
+common_llm_error: "LLMs retrieve obsolete question bank templates containing archaic Sadhu non-finite participles ('পড়িয়া', 'দেখিয়া', 'করিয়া') and combine them with modern Cholito imperatives ('দাও', 'লেখ'), creating Guru-chandali register discordance."
 sources:
 - Corpus Harvester Anomaly Detector
 - Bangla Academy Corpus
