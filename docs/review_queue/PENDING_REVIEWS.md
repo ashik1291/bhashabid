@@ -16,9 +16,51 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue
+## 📥 Pending Candidate Queue (2 Cards Awaiting Human Review)
 
-✓ **All caught up! Zero draft cards currently pending review.**
+### Draft 1: [CRD-DFT-043] Candidate Rule for Pattern: তারা সেই অর্থ ফেরত দিয়েছিলেন
+- **File**: `knowledge\cards\drafts\CRD-DFT-043.yaml`
+- **Domain**: `Consumer E-Commerce & Retail Logistics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Pronominal and verbal honorific concordance mismatch for 'তারা সেই অর্থ ফেরত দিয়েছিলেন' requires harmonization.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ তারা সেই অর্থ ফেরত দিয়েছিল
+  - ✓ তাঁরা সেই অর্থ ফেরত দিয়েছিলেন
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ যদিও পরবর্তীতে তারা সেই অর্থ ফেরত দিয়েছিলেন, তবুও নাসা তাদের কঠোরভাবে তিরস্কার করে
+
+**Common LLM Error**: LLMs produce honorific discordance between subject pronoun and verb for 'তারা সেই অর্থ ফেরত দিয়েছিলেন'.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Postal & Courier Logistics, Principle P2 Human Provenance Audit Gate, Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯), e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines, Universal Postal Union & Domestic Courier Conveyancing Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-043 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 2: [CRD-DFT-044] Candidate Rule for Pattern: TCK
+- **File**: `knowledge\cards\drafts\CRD-DFT-044.yaml`
+- **Domain**: `Customer Support & Conversational Chat` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'TCK' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ আমাদের গ্রাহক সেবা কেন্দ্রে যোগাযোগের জন্য ধন্যবাদ; আপনার টিকিট নং TCK-942 সমাধানে প্রতিনিধি দ্রুত ব্যবস্থা গ্রহণ করছেন।
+  - ✗ আমাদের গ্রাহক সেবা কেন্দ্রে যোগাযোগের জন্য ধন্যবাদ; আপনার টিকিট নং TCK-881 সমাধানে প্রতিনিধি দ্রুত ব্যবস্থা গ্রহণ করছেন।
+  - ✗ আমাদের গ্রাহক সেবা কেন্দ্রে যোগাযোগের জন্য ধন্যবাদ; আপনার টিকিট নং TCK-509 সমাধানে প্রতিনিধি দ্রুত ব্যবস্থা গ্রহণ করছেন।
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'TCK' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Learning from Mistakes Engine (Offline Autonomous Synthesis), Principle P2 Human Provenance Audit Gate, Bangla Academy Conversational Polite Register Standards, Telecom & Omnichannel Customer Experience Quality Benchmarks
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-044 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
 
 ---
 
