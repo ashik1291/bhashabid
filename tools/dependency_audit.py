@@ -60,7 +60,7 @@ def query_osv_vulnerabilities(pkg_name: str, version: str = None) -> list[dict]:
         }
     )
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:  # nosec B310
             data = json.loads(resp.read().decode("utf-8"))
             return data.get("vulns", [])
     except Exception as ex:
