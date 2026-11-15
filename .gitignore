@@ -42,3 +42,6 @@ state/STOP
 docs/assets/*.png
 docs/assets/*.jpg
 docs/assets/*.jpeg
+
+# Temporary scratch & live test scripts
+scratch/
