@@ -443,8 +443,12 @@ def run_practice_cycle(
         if harvester and hasattr(harvester, "harvested"):
             anomalies = []
             for s in harvester.harvested:
-                if s.category in ["ANOMALY_CANDIDATE", "CANARY_TRAPPED"]:
-                    for f in s.flaws:
+                # Only genuinely unhandled anomalies (e.g. unhandled raw English, unclassified domain traps)
+                # require new knowledge card drafting. Flaws already handled by established production linter
+                # rules (RULE-LINT-*) are verified trapped canaries and do not spawn redundant draft cards.
+                for f in s.flaws:
+                    rid = f.get("rule_id", "")
+                    if rid.startswith("RULE-ANOMALY-") or s.category == "ANOMALY_CANDIDATE":
                         f.setdefault("domain", s.domain)
                         f.setdefault("source", s.source)
                         f.setdefault("raw_text", s.raw_text)

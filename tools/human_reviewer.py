@@ -82,6 +82,26 @@ def apply_human_review(
     sig_hash = compute_card_hash(card)
 
     if action.lower() == "approve":
+        # Principle P2 Strict Exemplar & Metadata Validation Gate
+        goods = card.get("good_examples") or []
+        bads = card.get("bad_examples") or []
+        title = (card.get("title") or "").strip()
+        rule_sum = (card.get("rule_summary") or "").strip()
+
+        if not title:
+            raise ValueError(f"Principle P2 Violation: Card {card_id} is missing a valid title.")
+        if not rule_sum:
+            raise ValueError(f"Principle P2 Violation: Card {card_id} is missing a rule_summary.")
+        if not goods or not isinstance(goods, list) or len(goods) == 0:
+            raise ValueError(f"Principle P2 Violation: Card {card_id} has empty good_examples. Production cards must contain authentic positive Bengali exemplars.")
+        if not bads or not isinstance(bads, list) or len(bads) == 0:
+            raise ValueError(f"Principle P2 Violation: Card {card_id} has empty bad_examples. Production cards must contain error contrast examples.")
+
+        from tools.card_synthesizer import is_meta_instruction
+        for ex in goods:
+            if is_meta_instruction(ex):
+                raise ValueError(f"Principle P2 Violation: Card {card_id} good_examples contains a placeholder meta-instruction: '{ex}'. Must be authentic Bengali prose.")
+
         card["confidence"] = "reviewed"
         card["review"] = {
             "reviewer_name": reviewer_name.strip(),

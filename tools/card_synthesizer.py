@@ -144,8 +144,7 @@ def is_meta_instruction(text: str) -> bool:
         r"চলিত রীতিতে",
         r"স্বাভাবিকভাবে পুনর্লিখন",
         r"সংশোধন করুন",
-        r"করা প্রয়োজন",
-        r"করা উচিত",
+        r"(?:ব্যবহার|অনুবাদ|পুনর্লিখন|সংশোধন)\s+করা\s+(?:প্রয়োজন|উচিত|হবে)",
         r"বিকল্প \d+",
     ]
     for pat in instruction_patterns:
@@ -169,15 +168,26 @@ def extract_exemplars_from_suggestion(suggestion: str) -> List[str]:
         return []
     return [suggestion.strip()]
 
+SCRAPING_NOISE_TOKENS = HTML_NOISE_TOKENS | {
+    "ctrl", "alt", "shift", "tab", "esc", "enter", "delete", "insert", "caps", "space", "home", "pgup", "pgdn", "key",
+    "pdf", "sms", "otp", "nid", "tin", "bin", "url", "api", "app", "web", "sim", "bdt", "usd", "eur",
+    "atm", "pos", "ram", "rom", "cpu", "gpu", "wifi", "qr", "pin", "jpg", "jpeg", "png", "zip", "mp3", "mp4",
+    "mbps", "kbps", "gb", "mb", "tb", "ghz", "khz", "mhz", "fps", "dpi", "px", "rem", "em", "doc", "docx", "xls", "xlsx",
+    "tck", "inv", "ref", "id", "seq"
+}
+
 def is_scraping_noise(matched: str) -> bool:
-    """Detects if a matched anomaly string is web scraping noise, HTML entities, or Roman numerals."""
+    """Detects if a matched anomaly string is web scraping noise, HTML entities, Roman numerals, or serial codes."""
     m = (matched or "").strip()
     if not m:
         return True
-    if m.lower() in HTML_NOISE_TOKENS:
+    if m.lower() in SCRAPING_NOISE_TOKENS:
         return True
     tokens = [t.strip().lower() for t in m.split(",") if t.strip()]
-    if tokens and all(t in HTML_NOISE_TOKENS for t in tokens):
+    if tokens and all(t in SCRAPING_NOISE_TOKENS for t in tokens):
+        return True
+    # Serial tracking code or model code (e.g. TCK-942, INV-104, CRD-001)
+    if re.match(r"^[A-Za-z]{2,6}[-_]?\d+$", m):
         return True
     # Roman numeral check (e.g. XXIII, VIII)
     clean_num = re.sub(r"[\s,]+", "", m)
@@ -315,8 +325,8 @@ class CardSynthesizer:
             "common_llm_error": common_llm_error,
             "sources": sources,
             "confidence": "candidate",
-            "created_date": "2026-11-12",
-            "last_modified": "2026-11-12",
+            "created_date": datetime.now().strftime("%Y-%m-%d"),
+            "last_modified": datetime.now().strftime("%Y-%m-%d"),
             "review": {
                 "reviewer_name": None,
                 "reviewer_affiliation": None,

@@ -1,0 +1,42 @@
+id: CRD-DFT-044
+title: 'Rule for Customer Support Omnichannel Messaging: Service Ticket & Tracking
+  Nomenclature (সেবা টিকিট ও অভিযোগ ট্র্যাকিং)'
+domain: Customer Support & Conversational Chat
+profile: bd_standard
+register: formal
+rule_summary: 'গ্রাহক সেবা ও অমনিচ্যানেল বার্তা বিনিময়ে টিকিট বা অভিযোগ ট্র্যাকিং
+  কোড (যেমন: TCK-942, Ticket ID) ব্যবহারের ক্ষেত্রে বাংলিশ অপপ্রয়োগ (''রিজল্ভ'', ''ক্লোজ'',
+  ''সল্ভ'', ''এসাইন'') পরিহার করে প্রমিত প্রাতিষ্ঠানিক বাংলা পরিভাষা (''সমাধান'',
+  ''নিষ্পত্তি'', ''পর্যালোচনা'', ''প্রতিনিধি নির্ধারণ'') ও ব্যাকরণসম্মত বাক্যগঠন নিশ্চিত
+  করতে হবে। ট্র্যাকিং কোড অবিকৃত থাকবে।'
+good_examples:
+- আমাদের গ্রাহক সেবা কেন্দ্রে যোগাযোগের জন্য ধন্যবাদ; আপনার অভিযোগ ট্র্যাকিং নম্বর
+  TCK-942, দ্রুত সমাধানের লক্ষ্যে প্রতিনিধি বিষয়টি পর্যালোচনা করছেন।
+- 'আপনার সেবা টিকিট নম্বর (Ticket ID: TCK-881) সফলভাবে নিবন্ধিত হয়েছে; আগামী ২৪ ঘণ্টার
+  মধ্যে এ বিষয়ে প্রয়োজনীয় ব্যবস্থা গ্রহণ করা হবে।'
+- প্রদত্ত টিকিট নম্বরের (TCK-509) বর্তমান অবস্থা ও অগ্রগতির বিবরণ জানতে আমাদের গ্রাহক
+  পোর্টালের 'সেবা ট্র্যাকিং' অপশনে প্রবেশ করুন।
+bad_examples:
+- আপনার টিকেট টিসিকে-৯৪২ রিজলভ করতে এজেন্ট এসাইন করা হয়েছে।
+- Customer query TCK-942 ক্লোজ করা হয়েছে, ফিডব্যাক দিন।
+- টিকেট নং TCK-509 সল্ভ হয়ে গেছে, ধন্যবাদ।
+common_llm_error: LLMs produce hybrid Banglish jargon ('রিজল্ভ', 'ক্লোজ', 'এসাইন',
+  'সল্ভ') and non-standard spellings ('টিকেট') instead of standard administrative/customer-support
+  Bengali ('টিকিট', 'সমাধান', 'পর্যালোচনা', 'প্রতিনিধি নির্ধারণ') when conveying ticketing
+  updates.
+sources:
+- Principle P2 Human Provenance Audit Gate
+- Bangla Academy Conversational Polite Register Standards
+- Telecom & Omnichannel Customer Experience Quality Benchmarks
+- Secretariat Instructions (সচিবালয় নির্দেশমালা, জনপ্রশাসন মন্ত্রণালয়)
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker & Linguistic Arbiter
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: 'Verified Option 2: Customer support omnichannel ticketing resolution nomenclature
+    and authentic exemplars under Principle P2.'
+  signature_hash: sha256:8c11c8eadd4dfc6d

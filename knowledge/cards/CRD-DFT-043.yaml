@@ -1,0 +1,34 @@
+id: CRD-DFT-043
+title: 'Rule for E-Commerce Logistics: Honorific Concordance in Settlement Reporting
+  (তারা বনাম তাঁরা)'
+domain: Consumer E-Commerce & Retail Logistics
+profile: bd_standard
+register: formal
+rule_summary: 'ই-কমার্স ও পার্সেল লেনদেন বিবরণীতে সর্বনাম ও ক্রিয়াপদের সম্ভ্রমাত্মক
+  সংগতি নিশ্চিত করতে হবে; সাধারণ সর্বনাম ''তারা''-র সাথে সাধারণ ক্রিয়া (যেমন: ''ফেরত
+  দিয়েছিল'') এবং সম্ভ্রমাত্মক ''তাঁরা''-র সাথে সম্ভ্রমাত্মক ক্রিয়া (যেমন: ''ফেরত দিয়েছিলেন'')
+  ব্যবহার বাধ্যতামূলক।'
+good_examples:
+- তারা সেই অর্থ ফেরত দিয়েছিল
+- তাঁরা সেই অর্থ ফেরত দিয়েছিলেন
+bad_examples:
+- যদিও পরবর্তীতে তারা সেই অর্থ ফেরত দিয়েছিলেন, তবুও নাসা তাদের কঠোরভাবে তিরস্কার করে
+common_llm_error: LLMs produce honorific discordance between subject pronoun and verb
+  (e.g. pairing informal তারা with honorific দিয়েছিলেন).
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Postal & Courier Logistics'
+- Principle P2 Human Provenance Audit Gate
+- Consumers' Rights Protection Act 2009 (ভোক্তা অধিকার সংরক্ষণ আইন ২০০৯)
+- e-Commerce Association of Bangladesh (e-CAB) Operational Guidelines
+- Universal Postal Union & Domestic Courier Conveyancing Standards
+confidence: reviewed
+created_date: '2026-11-12'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Lead Bengali Native Speaker & Linguistic Arbiter
+  reviewed_date: '2026-11-15'
+  status: APPROVED
+  notes: Verified e-commerce logistics honorific concordance and exemplar validity
+    under Principle P2.
+  signature_hash: sha256:f537ef24bb69a05d

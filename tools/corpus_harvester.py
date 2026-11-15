@@ -85,13 +85,31 @@ class CorpusHarvester:
         # Check for unhandled foreign script anomalies outside parentheses and quotes
         text_without_parens = re.sub(r"\([^)]*\)", "", norm_text)
         text_without_quotes = re.sub(r"['\"‘“][^'\"’”]*['\"’”]", "", text_without_parens)
-        raw_en_tokens = re.findall(r"\b[A-Za-z]{3,}\b", text_without_quotes)
         
-        # Filter out HTML entity remnants, Roman numerals, and metadata tags
+        # Strip web URLs, email addresses, hashtags, and system serial tracking IDs (e.g. TCK-942, INV-104)
+        text_clean = re.sub(r"https?://\S+|www\.\S+", "", text_without_quotes)
+        text_clean = re.sub(r"\b[\w\.-]+@[\w\.-]+\.\w+\b", "", text_clean)
+        text_clean = re.sub(r"\b[A-Za-z0-9_-]+\.(?:com|org|net|gov|edu|io|ai|bd)\b", "", text_clean, flags=re.IGNORECASE)
+        text_clean = re.sub(r"#\w+", "", text_clean)
+        text_clean = re.sub(r"\b[A-Za-z]{2,6}[-_]\d+\b", "", text_clean)
+        text_clean = re.sub(r"\b[A-Za-z]+\d+[A-Za-z0-9]*\b", "", text_clean)
+        
+        raw_en_tokens = re.findall(r"\b[A-Za-z]{3,}\b", text_clean)
+        
+        # Filter out HTML entity remnants, Roman numerals, keyboard shortcuts, standard tech acronyms & file extensions
         HTML_NOISE = {"nbsp", "amp", "quot", "apos", "lt", "gt", "copy", "reg", "trade", "ndash", "mdash", "hellip", "para"}
+        KEYBOARD_KEYS = {"ctrl", "alt", "shift", "tab", "esc", "enter", "delete", "insert", "caps", "space", "home", "pgup", "pgdn", "key"}
+        STANDARD_TECH_TERMS = {
+            "pdf", "sms", "otp", "nid", "tin", "bin", "url", "api", "app", "web", "sim", "bdt", "usd", "eur",
+            "atm", "pos", "ram", "rom", "cpu", "gpu", "wifi", "qr", "pin", "jpg", "jpeg", "png", "zip", "mp3", "mp4",
+            "mbps", "kbps", "gb", "mb", "tb", "ghz", "khz", "mhz", "fps", "dpi", "px", "rem", "em", "doc", "docx", "xls", "xlsx"
+        }
+        
         unquoted_en = [
             t for t in raw_en_tokens
             if t.lower() not in HTML_NOISE
+            and t.lower() not in KEYBOARD_KEYS
+            and t.lower() not in STANDARD_TECH_TERMS
             and not re.match(r"^[IVXLCDMivxlcdm]+$", t)
         ]
 

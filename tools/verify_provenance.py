@@ -32,6 +32,19 @@ def audit_provenance() -> dict:
                 stats["p2_violations"].append(
                     f"{cid}: Marked 'reviewed' without authenticated human reviewer metadata."
                 )
+            
+            # Principle P2 Exemplar Quality Invariants
+            goods = card.get("good_examples") or []
+            bads = card.get("bad_examples") or []
+            if not goods:
+                stats["p2_violations"].append(f"{cid}: Empty good_examples in reviewed production card.")
+            if not bads:
+                stats["p2_violations"].append(f"{cid}: Empty bad_examples in reviewed production card.")
+            
+            from tools.card_synthesizer import is_meta_instruction
+            for ex in goods:
+                if is_meta_instruction(ex):
+                    stats["p2_violations"].append(f"{cid}: good_examples contains meta-instruction: '{ex}'")
         elif conf == "data-supported":
             stats["data_supported"] += 1
         elif conf == "rejected":
