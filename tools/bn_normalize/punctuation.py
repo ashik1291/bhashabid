@@ -69,9 +69,9 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
     text = re.sub(r"\s+([\u0964!?,;:])", r"\1", text)
 
     # Standardize ASCII quotes to curved Bengali quotes
-    # Opening double quote
-    text = re.sub(r'(^|\s)"([\u0980-\u09FF])', r'\1“\2', text)
-    # Closing double quote
-    text = re.sub(r'([\u0980-\u09FF])"($|\s|[\u0964!?,])', r'\1”\2', text)
+    # Opening double quote (preceded by start/space/dash/punctuation, followed by letter)
+    text = re.sub(r'(^|[\s—,;:])"([\u0980-\u09FFA-Za-z\'])', r'\1“\2', text)
+    # Closing double quote (preceded by letter/punctuation, followed by end/space/dash/punctuation)
+    text = re.sub(r'([\u0980-\u09FFA-Za-z\u0964!?,.;\'])\"($|[\s—\u0964!?,.;])', r'\1”\2', text)
 
     return text

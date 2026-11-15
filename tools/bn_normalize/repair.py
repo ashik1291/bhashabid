@@ -52,6 +52,18 @@ CANONICAL_CALQUE_REPAIRS = [
     (re.compile(B_L + r"একটি\s+পাথর\s+দিয়ে\s+দুটি\s+পাখি\s+মারা" + B_R), "এক ঢিলে দুই পাখি মারা")
 ]
 
+# Deterministic grammatical pleonasms and ungrammatical affix repairs (অপপ্রয়োগ ও বাহুল্য বর্জন)
+CANONICAL_GRAMMAR_DEFECT_REPAIRS = [
+    # Pleonasm: প্রায়শই -> প্রায়শ / প্রায়ই
+    (re.compile(B_L + r"প্রায়শই" + B_R), "প্রায়শ", "বাহুল্য প্রত্যয় বর্জন: 'প্রায়শই' -> 'প্রায়শ'"),
+    # Suffix defect: একত্রিত -> একত্র
+    (re.compile(B_L + r"একত্রিত\s+করে" + B_R), "একত্র করে", "প্রত্যয়ঘটিত অপপ্রয়োগ নিবারণ: 'একত্রিত করে' -> 'একত্র করে'"),
+    (re.compile(B_L + r"একত্রিত\s+হয়ে" + B_R), "একত্র হয়ে", "প্রত্যয়ঘটিত অপপ্রয়োগ নিবারণ: 'একত্রিত হয়ে' -> 'একত্র হয়ে'"),
+    (re.compile(B_L + r"একত্রিতভাবে" + B_R), "একত্রে", "প্রত্যয়ঘটিত অপপ্রয়োগ নিবারণ: 'একত্রিতভাবে' -> 'একত্রে'"),
+    # Relative-correlative number concordance: যেসব ... তার সমাধান -> যেসব ... সেগুলোর সমাধান
+    (re.compile(B_L + r"যেসব\s+([\u0980-\u09FF\s,]+?)\s+তার\s+সমাধান(?=(?:ের|ে)?" + B_R + ")"), r"যেসব \1 সেগুলোর সমাধান", "বচন সংগতি: 'যেসব ... তার সমাধান' -> 'যেসব ... সেগুলোর সমাধান'"),
+]
+
 
 def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict]]:
     """
@@ -109,6 +121,17 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
                 "pattern": pat.pattern,
                 "replacement": replacement,
                 "description": f"Naturalized literal calque to '{replacement}'"
+            })
+
+    # 3b. Canonical Grammar Defect Repairs (Pleonasm, Affixes & Concordance)
+    for pat, replacement, desc in CANONICAL_GRAMMAR_DEFECT_REPAIRS:
+        if pat.search(current_text):
+            current_text = pat.sub(replacement, current_text)
+            applied_fixes.append({
+                "category": "GRAMMATICAL_INVARIANT",
+                "pattern": pat.pattern,
+                "replacement": replacement,
+                "description": desc
             })
 
     # 4. Guru-Chandali Harmonization (Archaic Sadhu verbs in Cholito text)

@@ -60,6 +60,17 @@ class TestRepairEngine(unittest.TestCase):
         self.assertEqual(repaired, clean_text)
         self.assertEqual(len(fixes), 0)
 
+    def test_grammar_defect_and_pleonasm_repairs(self):
+        cases = [
+            ("আমি প্রায়শই সিস্টেম ডিজাইন বিষয়ক আলোচনা দেখি।", "আমি প্রায়শ সিস্টেম ডিজাইন বিষয়ক আলোচনা দেখি।"),
+            ("বিভিন্ন সার্ভিসকে একত্রিত করে একটি কাঠামো গড়ে তোলা।", "বিভিন্ন সার্ভিসকে একত্র করে একটি কাঠামো গড়ে তোলা।"),
+            ("প্রকৌশলীরা যেসব সমস্যার মুখোমুখি হন, তার সমাধানের জন্য এটি উপযোগী।", "প্রকৌশলীরা যেসব সমস্যার মুখোমুখি হন, সেগুলোর সমাধানের জন্য এটি উপযোগী।")
+        ]
+        for raw, expected in cases:
+            repaired, fixes = repair_text(raw)
+            self.assertIn(expected, repaired)
+            self.assertTrue(any(f["category"] == "GRAMMATICAL_INVARIANT" for f in fixes))
+
     def test_mcp_server_repair_tool(self):
         server = BhashabidMCPServer()
         res = server.call_tool(

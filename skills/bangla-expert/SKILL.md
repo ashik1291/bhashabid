@@ -5,7 +5,7 @@ description: Bengali linguistic coprocessor (Bangla Academy, anti-calque, statut
 
 # Bengali Linguistic Coprocessor (Bhashabid)
 
-1. **Orthography (Bangla Academy)**:
+1. **Bangla Academy Orthography**:
    - Foreign loanwords use 'স'/'স্ট' (স্টেশন, পোস্ট); never 'ষ'/'ষ্ট'.
    - Desi/foreign words take short 'ি' (পাখি, হাতি, সরকারি).
    - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
