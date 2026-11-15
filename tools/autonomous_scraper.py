@@ -164,6 +164,73 @@ DEFAULT_FEEDS = [
         "domain": "Education & NCTB Pedagogy",
         "sector": 11,
         "is_json_api": True
+    },
+    # Sector 12: Consumer E-Commerce & Retail Logistics
+    {
+        "name": "Bangla Wikipedia E-Commerce & Retail",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ই-বাণিজ্য") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Consumer E-Commerce & Retail Logistics",
+        "sector": 12,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Postal & Courier Logistics",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ডাক_ব্যবস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Consumer E-Commerce & Retail Logistics",
+        "sector": 12,
+        "is_json_api": True
+    },
+    # Sector 13: Citizen Digital Services & Smart Governance
+    {
+        "name": "Bangla Wikipedia Digital Bangladesh & Citizen Services",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ডিজিটাল_বাংলাদেশ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Citizen Digital Services & Smart Governance",
+        "sector": 13,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Government Portals & Public Services",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_সরকারি_সংস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Citizen Digital Services & Smart Governance",
+        "sector": 13,
+        "is_json_api": True
+    },
+    # Sector 14: Customer Support & Conversational Chat
+    {
+        "name": "Bangla Wikipedia Telecommunications & Customer Experience",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:টেলিযোগাযোগ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Customer Support & Conversational Chat",
+        "sector": 14,
+        "is_json_api": True
+    },
+    # Sector 15: MFS, Microfinance & Grassroots FinTech
+    {
+        "name": "Bangla Wikipedia Mobile Banking & FinTech",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:মোবাইল_ব্যাংকিং") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "MFS, Microfinance & Grassroots FinTech",
+        "sector": 15,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Microcredit & Financial Inclusion",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ক্ষুদ্রঋণ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "MFS, Microfinance & Grassroots FinTech",
+        "sector": 15,
+        "is_json_api": True
+    },
+    # Sector 16: Mass Media & Digital Journalism
+    {
+        "name": "The Business Standard (TBS Bangla Media Dispatch)",
+        "url": "https://www.tbsnews.net/bangla/rss.xml",
+        "domain": "Mass Media & Digital Journalism",
+        "sector": 16
+    },
+    {
+        "name": "Bangla Wikipedia Journalism & Media Studies",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:সাংবাদিকতা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Mass Media & Digital Journalism",
+        "sector": 16,
+        "is_json_api": True
     }
 ]
 

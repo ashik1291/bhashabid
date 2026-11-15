@@ -83,6 +83,46 @@ DOMAINS_PRACTICE_SET = [
             "ঘূর্ণিঝড়ের প্রভাবে উপকূলীয় অঞ্চলে ৫-৭ ফুট উচ্চতার ঝড় বৃদ্ধি দেখা যেতে পারে।",
             "উদ্দীপকটি পড়িয়া নিচের জ্ঞান ও অনুধাবনমূলক প্রশ্নের উত্তর দাও।"
         ]
+    },
+    {
+        "day": "Modern Citizen Sector 1",
+        "domain": "Consumer E-Commerce & Retail Logistics",
+        "inputs": [
+            "আপনার কার্টে পণ্য যুক্ত হয়েছে, দয়া করে চেকআউট সম্পন্ন করুন।",
+            "অর্ডারটি সফলভাবে গৃহীত হয়েছে; আগামী ৩ কার্যদিবসের মধ্যে পণ্য আপনার ঠিকানায় সরবরাহ করা হবে।"
+        ]
+    },
+    {
+        "day": "Modern Citizen Sector 2",
+        "domain": "Citizen Digital Services & Smart Governance",
+        "inputs": [
+            "জাতীয় পরিচয়পত্র সংশোধন বা ই-পাসপোর্ট নবায়নের আবেদন অনলাইনে দাখিল করা যাইবে।",
+            "খতিয়ান বা পরচা সংগ্রহ এবং অনলাইন দাখিলা পরিশোধের জন্য প্রয়োজনীয় সরকারি ফি জমা দিন।"
+        ]
+    },
+    {
+        "day": "Modern Citizen Sector 3",
+        "domain": "Customer Support & Conversational Chat",
+        "inputs": [
+            "আপনার সমস্যাটির জন্য আমরা আন্তরিকভাবে দুঃখিত; বিষয়টি দ্রুত সমাধানের জন্য সংশ্লিষ্ট বিভাগে পাঠানো হয়েছে।",
+            "আপনার মূল্যবান মতামত আমাদের সেবার মান উন্নয়নে সহায়তা করবে।"
+        ]
+    },
+    {
+        "day": "Modern Citizen Sector 4",
+        "domain": "MFS, Microfinance & Grassroots FinTech",
+        "inputs": [
+            "আপনার পিন বা ওটিপি কখনোই কারো সাথে শেয়ার করবেন না; কোনো এজেন্ট কখনো গোপন পিন জানতে চাইবে না।",
+            "লেনদেন সফল হয়েছে, আপনার একাউন্টে ক্যাশ আউট চার্জ প্রযোজ্য হয়েছে।"
+        ]
+    },
+    {
+        "day": "Modern Citizen Sector 5",
+        "domain": "Mass Media & Digital Journalism",
+        "inputs": [
+            "রাজধানীর মহাখালীতে সড়ক দুর্ঘটনায় দুজন নিহত হয়েছেন বলে পুলিশ নিশ্চিত করেছে।",
+            "ব্রেকিং নিউজ: আপনি বিশ্বাস করতে পারবেন না কী ঘটেছে।"
+        ]
     }
 ]
 
@@ -183,11 +223,13 @@ def run_practice_cycle(
     if continuous:
         print(f"Mode: Continuous Soak Test | Target Window: {duration_minutes} minutes | End: {end_time.strftime('%H:%M:%S')}")
     else:
-        print(f"Mode: High-Throughput Execution | Target: {duration_minutes or 150} Minutes Worth of Practice across All 8 Domains ({target_rounds} Rounds)")
+        print(f"Mode: High-Throughput Execution | Target: {duration_minutes or 150} Minutes Worth of Practice across All {len(DOMAINS_PRACTICE_SET)} Domains ({target_rounds} Rounds)")
     print("=" * 80)
+    distinct_sectors = len(set(d for d, _, _ in harvested_items)) if harvested_items else 16
+    total_canaries = sum(len(d["inputs"]) for d in DOMAINS_PRACTICE_SET)
     print("PRACTICE DATASET SELECTION & LEARNING DECISION:")
-    print(f"  • Track 1: [OLD / INVARIANT CANARIES]      : 18 fixed benchmark inputs across 8 domains (Anti-regression)")
-    print(f"  • Track 2: [NEW / REAL-WORLD HARVESTED]    : {len(harvested_items)} authentic sentences across all 11 professional sectors")
+    print(f"  • Track 1: [OLD / INVARIANT CANARIES]      : {total_canaries} fixed benchmark inputs across {len(DOMAINS_PRACTICE_SET)} domains (Anti-regression)")
+    print(f"  • Track 2: [NEW / REAL-WORLD HARVESTED]    : {len(harvested_items)} authentic sentences across all {distinct_sectors} professional sectors")
     print(f"  • Track 3: [DYNAMIC ADVERSARIAL SYNTHESIS] : 25 randomized variants/round (Sadhu-Cholito, calques, Unicode)")
     print("=" * 80)
 
