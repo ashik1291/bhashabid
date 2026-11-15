@@ -199,11 +199,32 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
             msg += f"  - {s}\n"
     return msg
 
+def verify_skill_safety(src_dir: Path) -> bool:
+    """
+    Security Gate: Verifies that the skill source directory contains only safe declarative
+    markdown/documentation files and zero executable binaries, scripts, or hooks.
+    """
+    banned_extensions = {".exe", ".dll", ".so", ".sh", ".bat", ".cmd", ".ps1", ".vbs", ".bin"}
+    for f in src_dir.rglob("*"):
+        if f.is_file():
+            if f.suffix.lower() in banned_extensions:
+                raise PermissionError(f"Security Alert: Executable binary or script '{f.name}' blocked from skill installation.")
+            if f.suffix.lower() in {".md", ".mdc", ".txt"}:
+                try:
+                    text = f.read_text(encoding="utf-8", errors="ignore")
+                    if "rm -rf" in text or "format c:" in text.lower():
+                        raise PermissionError(f"Security Alert: Destructive command pattern detected in '{f.name}'.")
+                except Exception as ex:
+                    if isinstance(ex, PermissionError):
+                        raise ex
+    return True
+
 def install_skill(target: str = "all", workspace_dir: str = None, with_mcp: bool = True) -> str:
     """
     Installs Bhashabid skill files and reference guides globally for detected environments.
     """
     src_dir = get_source_skill_dir()
+    verify_skill_safety(src_dir)
     home = Path.home()
     env_info = detect_environments()
     dest_paths = []

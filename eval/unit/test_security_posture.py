@@ -13,6 +13,7 @@ import ast
 import unittest
 import yaml
 import glob
+from pathlib import Path
 from bhashabid import repair, normalize, lint, format_number, scan_line, spellcheck
 from tools.mcp_server.server import BhashabidMCPServer
 
@@ -152,6 +153,35 @@ class TestSecurityPosture(unittest.TestCase):
             self.assertIn("rule_summary", data)
             self.assertIn("confidence", data)
             self.assertEqual(data.get("confidence"), "reviewed")
+
+    def test_secret_leak_scanner(self):
+        """Repository must be completely free of secrets, credentials, and work emails."""
+        from tools.secret_scanner import scan_repository
+        leaks = scan_repository(Path(REPO_ROOT))
+        self.assertEqual(leaks, 0, f"Security Violation: {leaks} secret/credential leak(s) detected.")
+
+    def test_dependency_cve_audit(self):
+        """Direct dependencies must have 0 known CVEs in Google OSV / PyPA database."""
+        from tools.dependency_audit import audit_dependencies
+        status = audit_dependencies()
+        self.assertEqual(status, 0, "Dependency Security Audit detected vulnerable packages.")
+
+    def test_skill_installer_safety_gate(self):
+        """Skill installer must verify directory safety and reject executable files."""
+        import tempfile
+        from pathlib import Path
+        from tools.skill_installer import verify_skill_safety
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir)
+            # 1. Safe markdown should pass
+            (tmppath / "guide.md").write_text("# Safe Guide", encoding="utf-8")
+            self.assertTrue(verify_skill_safety(tmppath))
+
+            # 2. Executable binary should be blocked
+            (tmppath / "payload.exe").write_text("MZ...", encoding="utf-8")
+            with self.assertRaises(PermissionError):
+                verify_skill_safety(tmppath)
 
 if __name__ == "__main__":
     unittest.main()

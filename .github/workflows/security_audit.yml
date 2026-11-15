@@ -31,6 +31,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install bandit bandit-sarif-formatter build twine defusedxml pyyaml requests
 
+    - name: Run Secret & Privacy Leak Scanner
+      run: |
+        python tools/secret_scanner.py
+
+    - name: Run Dependency Vulnerability Audit (Google OSV / PyPA)
+      run: |
+        python tools/dependency_audit.py
+
     - name: Run Bandit AST Security Scan (SARIF Report)
       run: |
         bandit -r bhashabid/ tools/ -ll -f sarif -o bandit-results.sarif
