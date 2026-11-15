@@ -1,0 +1,35 @@
+id: CRD-DFT-023
+title: 'Candidate Rule for Pattern: তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচ'
+domain: Macroeconomics & Banking
+profile: bd_standard
+register: formal
+rule_summary: 'Automatically flagged pattern ''তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি
+  বাতিল করে'' requires naturalization to active causal phrasing (e.g. ''বিকল্প ১ (সম্ভ্রমাত্মক
+  ক্রিয়াপদ): ''তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করেন'' অথবা বিকল্প
+  ২ (সাধারণ সর্বনাম): ''সে তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'''').'
+good_examples:
+- 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): ''তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি
+  বাতিল করেন'' অথবা বিকল্প ২ (সাধারণ সর্বনাম): ''সে তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি
+  বাতিল করে'''
+bad_examples:
+- কিন্তু ২৫ মে তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে চট্টগ্রাম সফরের
+  আয়োজন করতে বলেন
+common_llm_error: LLMs emit literal calques or non-standard syntax for 'তিনি তাঁর
+  সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Prudential Regulations & Monetary Policy
+- Bangla Academy Financial & Economic Terminology
+- The Business Standard Verified Macroeconomic Feed
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
+    human native-speaker sign-off.
+  signature_hash: null

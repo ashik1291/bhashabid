@@ -16,7 +16,7 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue (14 Cards Awaiting Human Review)
+## 📥 Pending Candidate Queue (15 Cards Awaiting Human Review)
 
 ### Draft 1: [CRD-DFT-009] Candidate Rule for Pattern: Help, OAuth
 - **File**: `knowledge\cards\drafts\CRD-DFT-009.yaml`
@@ -331,6 +331,28 @@ bhashabid review --card CRD-DFT-021 --reviewer "Ashikur Rahman Bhuiyan" --affili
 **Quick Action Command**:
 ```bash
 bhashabid review --card CRD-DFT-022 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 15: [CRD-DFT-023] Candidate Rule for Pattern: তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচ
+- **File**: `knowledge\cards\drafts\CRD-DFT-023.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Automatically flagged pattern 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'').
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ কিন্তু ২৫ মে তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে চট্টগ্রাম সফরের আয়োজন করতে বলেন
+
+**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি তাঁর সামরিক সচিবকে রাজশাহীর কর্মসূচি বাতিল করে'.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-023 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
 ```
 
 ---
