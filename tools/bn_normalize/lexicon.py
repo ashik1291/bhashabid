@@ -64,12 +64,17 @@ class BengaliOfflineLexicon:
     """
     def __init__(self, vocab: Optional[Set[str]] = None):
         self._vocab: Set[str] = set()
+        self._by_first_char: Dict[str, Set[str]] = {}
         if vocab:
-            for w in vocab:
-                clean_w = canonicalize_unicode(w.strip())
-                if clean_w:
-                    self._vocab.add(clean_w)
+            self.add_words(vocab)
         self._load_core_defaults()
+
+    def _index_word(self, cw: str):
+        self._vocab.add(cw)
+        c0 = cw[0]
+        if c0 not in self._by_first_char:
+            self._by_first_char[c0] = set()
+        self._by_first_char[c0].add(cw)
 
     def _load_core_defaults(self):
         """Populates high-frequency standard Bengali lemmas and morphological roots."""
@@ -98,14 +103,14 @@ class BengaliOfflineLexicon:
             "ভেতরে", "বাইরে", "সামনে", "পেছনে", "সকল", "সব", "অনেক", "কিছু", "খুব", "বেশি"
         ]
         for w in core_seeds:
-            self._vocab.add(canonicalize_unicode(w))
+            self._index_word(canonicalize_unicode(w))
 
     def add_words(self, words: Set[str]):
         """Adds a collection of validated Bengali words to the lexicon."""
         for w in words:
             cw = canonicalize_unicode(w.strip())
             if cw and len(cw) >= 2:
-                self._vocab.add(cw)
+                self._index_word(cw)
 
     def is_known(self, word: str) -> bool:
         """Checks if a given word or its valid inflected form is recognized in the lexicon."""
@@ -132,8 +137,23 @@ class BengaliOfflineLexicon:
         candidates = []
         w_len = len(w)
 
-        # Fast prune: only compare candidates with length difference <= 2
-        for candidate in self._vocab:
+        # Fast prune: determine candidate search characters (first char + homophonic variants)
+        c0 = w[0]
+        search_chars = {c0}
+        for grp, _ in BENGALI_CONFUSION_PAIRS:
+            if c0 in grp:
+                search_chars.update(grp)
+
+        candidate_pool = set()
+        for sc in search_chars:
+            if sc in self._by_first_char:
+                candidate_pool.update(self._by_first_char[sc])
+
+        # If pool is empty or tiny, fallback to full vocab
+        if not candidate_pool:
+            candidate_pool = self._vocab
+
+        for candidate in candidate_pool:
             if abs(len(candidate) - w_len) > 2:
                 continue
             # Phonetic match check
@@ -175,7 +195,20 @@ def get_default_lexicon() -> BengaliOfflineLexicon:
     global _GLOBAL_LEXICON
     if _GLOBAL_LEXICON is None:
         _GLOBAL_LEXICON = BengaliOfflineLexicon()
-        # Seed from available clean corpora sources
+        # 1. Load packaged 78,000+ offline Bengali vocabulary asset
+        try:
+            import os
+            import gzip
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+            asset_path = os.path.join(base_dir, "tools", "assets", "lexicon", "bn_vocab_78k.txt.gz")
+            if os.path.isfile(asset_path):
+                with gzip.open(asset_path, "rt", encoding="utf-8") as f:
+                    words = {line.strip() for line in f if line.strip()}
+                    _GLOBAL_LEXICON.add_words(words)
+        except Exception:
+            pass
+
+        # 2. Seed from available clean domain corpora sources
         try:
             import glob
             import os
