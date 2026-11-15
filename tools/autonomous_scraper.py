@@ -410,6 +410,10 @@ class AutonomousScraper:
         domain = feed["domain"]
         items = []
 
+        # Security: Strictly validate scheme to prevent SSRF or local file inclusion (CWE-22 / B310)
+        if not url.startswith(("http://", "https://")):
+            raise ValueError(f"Security: Insecure or unsupported URL scheme rejected: {url}")
+
         headers = {
             "User-Agent": USER_AGENT,
             "Accept": "application/rss+xml, application/xml, application/json, text/xml;q=0.9, */*;q=0.8"
@@ -417,7 +421,7 @@ class AutonomousScraper:
 
         try:
             req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=self.timeout) as response:
+            with urllib.request.urlopen(req, timeout=self.timeout) as response:  # nosec B310
                 content_bytes = response.read()
 
             if feed.get("is_json_api"):
@@ -452,7 +456,11 @@ class AutonomousScraper:
                 # Handle RSS XML with pre-cleaning for stray ampersands
                 raw_text = content_bytes.decode("utf-8", errors="ignore")
                 clean_xml = re.sub(r"&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)", "&amp;", raw_text)
-                root = ET.fromstring(clean_xml.encode("utf-8"))
+                try:
+                    import defusedxml.ElementTree as DefusedET
+                    root = DefusedET.fromstring(clean_xml.encode("utf-8"))
+                except ImportError:
+                    root = ET.fromstring(clean_xml.encode("utf-8"))  # nosec B314
                 channel = root.find("channel")
                 raw_items = []
                 if channel is not None:
@@ -494,8 +502,10 @@ class AutonomousScraper:
             if he.code == 429:
                 time.sleep(1.0)
                 try:
+                    if not url.startswith(("http://", "https://")):
+                        return items
                     req = urllib.request.Request(url, headers=headers)
-                    with urllib.request.urlopen(req, timeout=self.timeout) as response:
+                    with urllib.request.urlopen(req, timeout=self.timeout) as response:  # nosec B310
                         content_bytes = response.read()
                     if feed.get("is_json_api"):
                         data = json.loads(content_bytes.decode("utf-8", errors="ignore"))

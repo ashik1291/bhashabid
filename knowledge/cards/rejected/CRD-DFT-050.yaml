@@ -1,0 +1,29 @@
+id: CRD-DFT-050
+title: 'Candidate Rule for Pattern: norad'
+domain: Citizen Digital Services & Smart Governance
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'norad' requires standard
+  Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- কানাডা norad.mil ডোমেইন ব্যবহার করছে কারণ তারা যুক্তরাষ্ট্রের সাথে যৌথভাবে উত্তর
+  আমেরিকার মহাকাশ প্রতিরক্ষা কমান্ড পরিচালনা করে
+common_llm_error: LLMs emit unadapted English terminology 'norad' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Digital Systems & Public Portals'
+- Principle P2 Human Provenance Audit Gate
+- Aspire to Innovate (a2i) Citizen Service Standards (স্মার্ট নাগরিক সেবা রূপরেখা)
+- Bangladesh National Portal (bangladesh.gov.bd) Terminology Guide
+- Election Commission Bangladesh National ID Registration Rules
+confidence: rejected
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Valid technical military domain name (norad.mil); URL identifiers must remain
+    in Latin script.
+  signature_hash: sha256:13d6ac31a7dc799e

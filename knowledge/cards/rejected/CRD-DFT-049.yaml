@@ -1,0 +1,30 @@
+id: CRD-DFT-049
+title: 'Candidate Rule for Pattern: Framework'
+domain: Education & Pedagogy
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Framework' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- তাত্ত্বিক কাঠামোগুলো হলো ইউজেস অ্যান্ড গ্র্যাটিফিকেশনস থিওরি (Uses and Gratifications
+  Theory), ইউনেসকোর মিডিয়া অ্যান্ড ইনফরমেশন লিটারেসি (এমআইএল) ফ্রেমওয়ার্ক (UNESCO
+  Media and Information Literacy (MIL) Framework) এবং ডিফিউশন অব ইনোভেশনস থিওরি (Diffusion
+  of Innovations Theory)
+common_llm_error: LLMs emit unadapted English terminology 'Framework' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy)'
+- Principle P2 Human Provenance Audit Gate
+- National Curriculum and Textbook Board (NCTB) Standard Bengali
+- Ministry of Education Pedagogical Guidelines
+confidence: rejected
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: 'False positive: Bengali transliteration (ফ্রেমওয়ার্ক) is already present
+    alongside standard parenthetical English.'
+  signature_hash: sha256:f57d1259f2567c18

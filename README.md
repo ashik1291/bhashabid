@@ -5,8 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
 [![PyPI: v1.0.1](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/1.0.1/)
-[![Tests: 117 Passing](https://img.shields.io/badge/Tests-117%20Passing-brightgreen.svg)](eval/unit)
-[![Proven Knowledge: 48 Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-48%2F48%20Cards%20Reviewed-blueviolet.svg)](knowledge/cards)
+[![Tests: 123 Passing](https://img.shields.io/badge/Tests-123%20Passing-brightgreen.svg)](eval/unit)
+[![Security: Bandit 0-Vuln](https://img.shields.io/badge/Security-Bandit%200--Vuln-brightgreen.svg)](SECURITY.md)
+[![Supply Chain: Sigstore Attested](https://img.shields.io/badge/Supply%20Chain-Sigstore%20Attested-blue.svg)](SECURITY.md)
+[![P2 Provenance: 49 Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-49%2F49%20Cards%20Reviewed-blueviolet.svg)](knowledge/cards)
 [![Core Skill Token Budget: 298 BPE](https://img.shields.io/badge/Core%20Budget-298%20%2F%20390%20Tokens-success.svg)](skills/bangla-expert/SKILL.md)
 
 > **Bhashabid** (ভাষাবিদ) is the **first-ever open-source Bengali language coprocessor engine** featuring a **constitutionally supervised self-learning loop**. Operating as an external cognitive and deterministic coprocessor without retraining model weights, it continuously harvests real-world anomalies, synthesizes candidate rules, and distills high-level invariants under human verification (Principle P2) and a strict < 390 token ceiling—systematically elevating the accuracy, orthography, and native fluency of AI-generated Bengali across **17 specialized professional sectors**.

@@ -1,0 +1,29 @@
+id: CRD-DFT-057
+title: 'Candidate Rule for Pattern: Honneur, souffrir'
+domain: Education & NCTB Pedagogy
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Honneur, souffrir'
+  requires standard Bengali terminology or phonetic transliteration with English in
+  parentheses.
+good_examples: []
+bad_examples:
+- ১৯২৭ সালে প্রকাশিত L’Honneur de souffrir কাব্যগ্রন্থে সেই বেদনার গভীর প্রকাশ দেখা
+  যায়
+common_llm_error: LLMs emit unadapted English terminology 'Honneur, souffrir' in Bengali
+  contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy)'
+- Principle P2 Human Provenance Audit Gate
+- National Curriculum and Textbook Board (NCTB) Standard Bengali
+- Ministry of Education Pedagogical Guidelines
+confidence: rejected
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Foreign world literature poetry title (L'Honneur de souffrir by Anna de Noailles).
+  signature_hash: sha256:f86949bc5d010dee

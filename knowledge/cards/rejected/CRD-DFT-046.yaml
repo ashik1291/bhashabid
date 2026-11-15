@@ -1,0 +1,32 @@
+id: CRD-DFT-046
+title: 'Candidate Rule for Pattern: DNS, onion, DNS, onion'
+domain: Citizen Digital Services & Smart Governance
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'DNS, onion, DNS,
+  onion' requires standard Bengali terminology or phonetic transliteration with English
+  in parentheses.
+good_examples: []
+bad_examples:
+- এই ধরনের ঠিকানাগুলি প্রকৃত DNS নাম নয়, এবং .onion টিএলডি ইন্টারনেট DNS রুটে থাকে
+  না, তবে উপযুক্ত প্রক্সি সফ্টওয়্যার ইনস্টল করার মাধ্যমে, ওয়েব ব্রাউজারগুলির মতো ইন্টারনেট
+  প্রোগ্রামগুলি টর নেটওয়ার্কের মাধ্যমে অনুরোধ পাঠিয়ে .onion ঠিকানা সহ সাইটগুলিতে অ্যাক্সেস
+  করতে পারে
+common_llm_error: LLMs emit unadapted English terminology 'DNS, onion, DNS, onion'
+  in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Digital Systems & Public Portals'
+- Principle P2 Human Provenance Audit Gate
+- Aspire to Innovate (a2i) Citizen Service Standards (স্মার্ট নাগরিক সেবা রূপরেখা)
+- Bangladesh National Portal (bangladesh.gov.bd) Terminology Guide
+- Election Commission Bangladesh National ID Registration Rules
+confidence: rejected
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Valid Latin-script technical network protocol identifiers (DNS, .onion TLD).
+  signature_hash: sha256:bfdef9f523316eca

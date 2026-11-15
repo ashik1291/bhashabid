@@ -1,0 +1,31 @@
+id: CRD-DFT-056
+title: 'Candidate Rule for Pattern: Kaniz, Supriya, dragon, fruit, revolutio'
+domain: Macroeconomics & Banking
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Kaniz, Supriya, dragon,
+  fruit, revolution, The, Business, Standard, March' requires standard Bengali terminology
+  or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- 'Kaniz Supriya, ‘How a Facebook group is fuelling Bangladesh''s dragon fruit revolution’,
+  The Business Standard, 5 March, https://www.tbsnews.net/features/panorama/how-facebook-group-fuelling-bangladeshs-dragon-fruit-revolution-1085431
+  , প্রবেশ: ১০ এপ্রিল ২০২৫'
+common_llm_error: LLMs emit unadapted English terminology 'Kaniz, Supriya, dragon,
+  fruit, revolution, The, Business, Standard, March' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Prudential Regulations & Monetary Policy
+- Bangla Academy Financial & Economic Terminology
+- The Business Standard Verified Macroeconomic Feed
+confidence: rejected
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: English media publication citation and article headline (The Business Standard).
+  signature_hash: sha256:131e6fdff673e9f6

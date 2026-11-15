@@ -114,30 +114,33 @@ class BhashabidMCPServer:
             raw_val = str(arguments.get("number", 0)).strip()
             fmt = arguments.get("format", "words")
             val_ascii = to_ascii_digits(raw_val)
-            if fmt == "grouped":
-                res = format_lakh_crore(val_ascii)
-                return {"result": res}
-            elif fmt == "currency":
-                res = format_currency_words(float(val_ascii))
-                return {"result": res}
-            elif fmt == "fraction":
-                from ..bn_numbers import fraction_to_bangla_words
-                res = fraction_to_bangla_words(float(val_ascii))
-                return {"result": res}
-            elif fmt == "ordinal":
-                from ..bn_numbers import to_classical_ordinal
-                res = to_classical_ordinal(int(val_ascii))
-                return {"result": res}
-            elif fmt == "date_ordinal":
-                from ..bn_numbers import to_date_ordinal
-                res = to_date_ordinal(int(val_ascii))
-                return {"result": res}
-            else:
-                if "." in val_ascii:
-                    res = decimal_to_bangla_words(val_ascii)
+            try:
+                if fmt == "grouped":
+                    res = format_lakh_crore(val_ascii)
+                    return {"result": res}
+                elif fmt == "currency":
+                    res = format_currency_words(float(val_ascii))
+                    return {"result": res}
+                elif fmt == "fraction":
+                    from ..bn_numbers import fraction_to_bangla_words
+                    res = fraction_to_bangla_words(float(val_ascii))
+                    return {"result": res}
+                elif fmt == "ordinal":
+                    from ..bn_numbers import to_classical_ordinal
+                    res = to_classical_ordinal(int(val_ascii))
+                    return {"result": res}
+                elif fmt == "date_ordinal":
+                    from ..bn_numbers import to_date_ordinal
+                    res = to_date_ordinal(int(val_ascii))
+                    return {"result": res}
                 else:
-                    res = number_to_bangla_words(int(val_ascii))
-                return {"result": res}
+                    if "." in val_ascii:
+                        res = decimal_to_bangla_words(val_ascii)
+                    else:
+                        res = number_to_bangla_words(int(val_ascii))
+                    return {"result": res}
+            except (ValueError, TypeError) as ve:
+                return {"result": "", "error": f"Invalid numeric input '{raw_val}': {str(ve)}"}
 
         elif name == "normalize_text":
             raw_text = arguments.get("text", "")

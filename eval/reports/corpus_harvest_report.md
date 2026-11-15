@@ -1,7 +1,7 @@
 # Real-World Corpus Harvesting & Multi-Domain Audit Report
 
-- **Total Ingested Sentences**: `114`
-- **Clean Human Benchmark**: `107` (Verified authentic native sentences)
+- **Total Ingested Sentences**: `120`
+- **Clean Human Benchmark**: `113` (Verified authentic native sentences)
 - **Canary Trapped**: `7` (Flaws successfully intercepted by linter)
 - **New Anomaly Candidates**: `0` (Flagged for human linguistic review)
 
@@ -123,3 +123,9 @@
 | `CORP-EDU-003` | Classical Poetic Corpus | Poetic Prosody | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
 | `CORP-EDU-004` | Department of Agricultural Extension (DAE) | Agronomy & Crop Protection | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
 | `CORP-EDU-005` | Healthcare Clinical Protocol | Healthcare & Medicine | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
+| `CORP-TRN-001` | Bangla Academy Translation Studies | Translation & Calque Naturalization | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
+| `CORP-TRN-002` | Comparative Literature Canon | Translation & Calque Naturalization | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
+| `CORP-TRN-003` | Grammar Register Standardization | Translation & Calque Naturalization | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
+| `CORP-TRN-004` | Proverb Canon & Pragmatics | Translation & Calque Naturalization | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
+| `CORP-TRN-005` | Applied Lexicography Guide | Translation & Calque Naturalization | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |
+| `CORP-TRN-006` | Bengali Semantic Studies | Translation & Calque Naturalization | `BENCHMARK_CLEAN` | `0` | ✓ 100% Clean Authentic Bengali |

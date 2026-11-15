@@ -1,0 +1,28 @@
+id: CRD-DFT-048
+title: 'Candidate Rule for Pattern: POSDCORB'
+domain: Official Administrative
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'POSDCORB' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- তিনি প্রথম ১৯৩৫ সালে এই বিষয়টি উপস্থাপন করেন প্রাথমিকভাবে, POSDCORB জনসেবা পেশাদারদের
+  উন্নয়নের প্রচেষ্টায় কল্পনা করা হয়েছিল
+common_llm_error: LLMs emit unadapted English terminology 'POSDCORB' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Public Administration'
+- Principle P2 Human Provenance Audit Gate
+- Secretariat Instructions (সচিবালয় নির্দেশমালা, জনপ্রশাসন মন্ত্রণালয়)
+- Bangladesh Government Official Memo Standards
+confidence: rejected
+created_date: '2026-11-15'
+last_modified: '2026-11-15'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-15'
+  status: REJECTED
+  notes: Classical public administration management acronym (POSDCORB); Latin script
+    is standard in official administrative literature.
+  signature_hash: sha256:cf828d969f16bf69
