@@ -246,8 +246,10 @@ for issue in issues:
     print(issue.suggestion)  # "তুমি সিদ্ধান্ত নাও" / "আপনি সিদ্ধান্ত নেন"
 
 # Classical 14-Akshar Payar Scansion (8+6)
-is_valid, report = bhashabid.verify_payar("কাশীদাস কহে সাধু শুনে পুণ্যবান")
-print(is_valid)  # True
+result = bhashabid.verify_payar("কাশীদাস কহে সাধু শুনে পুণ্যবান")
+print(result.is_valid_payar)  # True
+print(result.total_morae)     # 14 (8+6)
+print(result.explanation)     # "শুদ্ধ পয়ার ছন্দ: ৮+৬=১৪ মাত্রার পর্ব ও মধ্যযতি যথাযথভাবে বিন্যস্ত।"
 ```
 
 ### 2. Command-Line Interface (CLI)
