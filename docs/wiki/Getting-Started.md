@@ -6,6 +6,12 @@ Bhashabid can be installed and used in multiple workflows depending on your envi
 
 ## 1. Quick Installation (Python >= 3.10)
 
+### Official Release via PyPI (Recommended)
+```bash
+pip install bhashabid
+```
+
+### Developer Mode (From Source)
 ```bash
 # Clone the repository
 git clone https://github.com/ashik1291/bhashabid.git
@@ -13,11 +19,6 @@ cd bhashabid
 
 # Install locally in editable mode
 pip install -e .
-```
-
-To install directly from GitHub without cloning:
-```bash
-pip install git+https://github.com/ashik1291/bhashabid.git
 ```
 
 ---
@@ -30,6 +31,21 @@ The `bhashabid` executable provides instant terminal access to all linguistic en
 ```bash
 # Automatically install SKILL.md and all 8 reference guides to Antigravity, Claude, or Cursor
 bhashabid install-skill --target all
+```
+
+### In-Place File Repair & Diff
+```bash
+# Preview changes with unified color diff
+bhashabid repair article.txt --diff
+
+# Safe in-place file repair
+bhashabid repair article.txt --write
+```
+
+### 78,000+ Word Offline Phonetic Spellchecker
+```bash
+bhashabid spellcheck "আবিস্কার"
+# Output: Suggestions for 'আবিস্কার': ['আবিষ্কার']
 ```
 
 ### Numeral & Currency Conversion
@@ -91,21 +107,26 @@ bhashabid review --card CRD-DFT-001 --reviewer "Your Name" --affiliation "Native
 ## 3. Python SDK Usage
 
 ```python
-from tools.bn_numbers import number_to_bangla_words, format_lakh_crore
-from tools.bn_normalize import normalize
-from tools.bn_lint import lint_text
-from tools.bn_prosody import verify_payar
-from tools.bn_legal import determine_writ_type, generate_writ_prayer
+import bhashabid
 
-# 1. Number words
-print(number_to_bangla_words(75))  # "পঁচাত্তর"
+# 1. 1-Liner Automatic Repair (Unicode NFC, Bangla Academy spelling & Dari)
+repaired, diffs = bhashabid.repair("তিনি স্টেশন থেকে বাড়ি ফিরলেন.")
+print(repaired)  # "তিনি স্টেশন থেকে বাড়ি ফিরলেন।"
 
-# 2. Text normalization (Bangla Academy standards + Dari)
-clean_text = normalize("তিনি স্টেশন থেকে বাড়ি ফিরলেন.")
-print(clean_text)  # "তিনি স্টেশন থেকে বাড়ি ফিরলেন।"
+# 2. 78,000+ Word Offline Phonetic Spellchecker (sub-10ms)
+suggestions = bhashabid.spellcheck("আবিস্কার")
+print(suggestions)  # ['আবিষ্কার']
 
-# 3. Linter diagnostics
-issues = lint_text("তুমি সিদ্ধান্ত নেন")
+# 3. Statutory South Asian Currency & Number Formatting
+print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
+print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
+
+# 4. Static Grammar, Honorific & Calque Linter
+issues = bhashabid.lint("তুমি সিদ্ধান্ত নেন")
 for issue in issues:
     print(issue.message, "->", issue.suggestion)
+
+# 5. Classical 14-Akshar Payar Verification (8+6)
+is_valid, report = bhashabid.verify_payar("কাশীদাস কহে সাধু শুনে পুণ্যবান")
+print(is_valid)  # True
 ```

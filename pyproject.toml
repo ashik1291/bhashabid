@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bhashabid"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
   { name = "Ashikur Rahman Bhuiyan", email = "ashikur.bhuiyan@brainstation-23.com" },
   { name = "Bhashabid Contributors", email = "contributors@bhashabid.org" },

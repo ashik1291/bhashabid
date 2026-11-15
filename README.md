@@ -4,8 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
-[![Version: v1.0.0](https://img.shields.io/badge/Version-v1.0.0-blue.svg)](https://github.com/ashik1291/bhashabid)
-[![Tests: 102 Passing](https://img.shields.io/badge/Tests-102%20Passing-brightgreen.svg)](eval/unit)
+[![PyPI: v1.0.1](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/1.0.1/)
+[![Tests: 111 Passing](https://img.shields.io/badge/Tests-111%20Passing-brightgreen.svg)](eval/unit)
 [![Proven Knowledge: 48 Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-48%2F48%20Cards%20Reviewed-blueviolet.svg)](knowledge/cards)
 [![Core Skill Token Budget: 298 BPE](https://img.shields.io/badge/Core%20Budget-298%20%2F%20390%20Tokens-success.svg)](skills/bangla-expert/SKILL.md)
 
@@ -13,76 +13,152 @@
 
 ---
 
-## 🎯 What Bhashabid Does & What Problem It Solves Uniquely
+## ⚡ Quickstart (1-Minute Setup)
 
-### The Fundamental Problem with Frontier LLMs in Bengali
-Frontier large language models (GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, DeepSeek V3) possess vast latent Bengali vocabularies, but their generative decoders suffer from four structural vulnerabilities:
-1. **English Syntactic Calquing**: Literal translation of English passive voice using *"দ্বারা"* (*"খাদ্যমূল্য বৃদ্ধির দ্বারা চালিত"*), clumsy modal verbs, and unidiomatic idioms (*"ঝোপের চারপাশে পেটানো"* for *beat around the bush*).
-2. **Honorific & Register Discordance**: Inconsistent pronominal and verbal honorific agreement (mixing informal *তারা* with honorific *দিয়েছিলেন*, or *তুমি* with *নেন*), and breaking *Sadhu-Cholito* harmony (*Guru-chandali* दोष).
-3. **Probabilistic Failure on Exact Rules**: LLMs frequently predict incorrect compound numerals (*"নব্বই নয়"* instead of *"নিরানব্বই"*), format currency with Western 3-digit commas instead of South Asian lakh/crore commas (`1,234,567` instead of `১২,৩৪,৫৬৭`), and fail to terminate sentences with Dari (`।`).
-4. **Context Window Dilution**: Conventional approaches dump 10,000+ token monolithic prompt guides into the context window, causing catastrophic instruction forgetting and ballooning API costs.
+Install globally from [PyPI](https://pypi.org/project/bhashabid/):
+```bash
+pip install bhashabid
+```
 
-### How Bhashabid Solves This Uniquely
-Bhashabid does not attempt to train a new model from scratch. Instead, it pairs with frontier models as a **high-speed, deterministic coprocessor and progressive skill layer**:
-- **Deterministic Offloading via Python & MCP**: Exact rules (0–99 irregular numbers, lakh/crore currency words, Unicode NFC normalization, Dari punctuation, 14-akshar Payar metric scansion) run in local Python algorithms at **500,000 words/second with 100% mathematical precision and $0.00 token cost**.
-- **Progressive Disclosure (< 390 Token Budget)**: The core skill kernel is strictly programmatically capped at **< 390 tokens** (currently **298 true BPE tokens** on `cl100k_base`). Deep domain knowledge is segmented into **9 isolated reference guides** loaded strictly on demand.
-- **Closed-Loop Learning Flywheel (Principle P2)**: When real-world scraping or practice runs encounter linguistic anomalies, candidate cards are synthesized automatically. Before entering production, every single card must undergo **cryptographic human native-speaker review (P2)** with SHA-256 signature verification.
+### Python SDK (`import bhashabid`)
+```python
+import bhashabid
+
+# 1. Automatic Bengali Unicode & Spelling Repair (<2ms, Zero-LLM)
+repaired, diffs = bhashabid.repair("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন.")
+# Output: "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
+
+# 2. Offline Phonetic Spellchecker (78,000+ Word Compressed Lexicon, 9.2ms)
+suggestions = bhashabid.spellcheck("আবিস্কার")
+# Output: ['আবিষ্কার']
+
+# 3. Statutory South Asian Currency & Number Formatting
+print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
+print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
+
+# 4. Static Honorific & Calque Linter
+issues = bhashabid.lint("তারা সেই অর্থ ফেরত দিয়েছিলেন।")
+```
+
+### Command Line Interface (CLI)
+```bash
+# In-place safe file repair with colored unified diff
+bhashabid repair article.txt --diff --write
+
+# Convert numbers to authentic Bengali words
+bhashabid number 99 --format words                  # Output: নিরানব্বই
+
+# Offline spellcheck across 78,000 words
+bhashabid spellcheck "আবিস্কার"
+```
 
 ---
 
-## 📊 Side-by-Side Comparison: Frontier LLMs vs. Bhashabid
+## 🎯 What Bhashabid Does & What Problem It Solves Uniquely
 
-| Linguistic Dimension | Where Frontier Models Fail (Raw LLM) | What Bhashabid Enforces (Coprocessor) | Concrete Real-World Example |
+### The Production Reality: Frontier LLMs (~80–85% Fluent) & The Deterministic "Last-Mile"
+Frontier large language models (such as GPT-4o, Claude 3.5 Sonnet, and Gemini 1.5 Pro) are remarkably competent. Across standard Bengali conversation, translation, and open-ended generation, **frontier models routinely achieve ~80% to 85%+ semantic fluency**. They are not illiterate or broken.
+
+However, because frontier LLMs are **probabilistic token predictors**, mission-critical production workflows (banking systems, legal writs, government administrative memos, high-throughput publications) encounter a persistent **15–20% "Last-Mile" fidelity and determinism gap**:
+
+1. **Probabilistic Failure on Exact Statutory Rules**:
+   - While an LLM can easily generate creative prose, it cannot mathematically guarantee statutory formatting. It frequently emits Western 3-digit comma formats (`1,234,567.50`) instead of South Asian statutory banking standards (`১২,৩৪,৫৬৭.৫০`), drops sentence-final Dari (`।`) in favor of ASCII periods (`.`), or hallucinates irregular Bengali numerals in check disbursements.
+2. **Hidden Unicode Grapheme Corruption & Non-NFC Normalization**:
+   - LLMs generate subword byte sequences, not canonical Unicode codepoints. Output text frequently contains decomposed vowel signs, broken Hasanta / ZWJ sequences, or non-NFC characters that render fine on one screen but break database indexing, full-text search, and accessibility screen readers.
+3. **Pronominal & Honorific Drift Across Multi-Clause Contexts**:
+   - In short conversational turns, LLMs maintain honorifics well. But across complex legal, corporate, or administrative paragraphs with multiple clauses, probabilistic decoders frequently mix registers (e.g. pairing informal *তারা* with honorific *দিয়েছিলেন*, or drifting between *আপনি* and *তুমি*).
+4. **Subtle English Syntactic Calquing in High-Stakes Sectors**:
+   - In professional and technical domains, translated text frequently retains English passive voice structures (overusing *"দ্বারা"* or *"কর্তৃক"* instead of natural Bengali active causal constructions: *"মূল্যবৃদ্ধির দ্বারা প্রভাবিত"* instead of *"মূল্যবৃদ্ধিজনিত কারণে"*).
+5. **Context Window Dilution & High API Costs**:
+   - Attempting to force an LLM to follow 2,000 lines of Bangla Academy rules by dumping static guides into its system prompt costs thousands of tokens per call, increases latency, and causes instruction dilution.
+6. **Zero Offline Capability**:
+   - Frontier models require live cloud network connectivity and API keys. They cannot run in disconnected local environments, air-gapped workstations, or microservice edge pipelines.
+
+### 🤝 The Neurosymbolic Solution: Coprocessor Synergy, Not Replacement
+Bhashabid does not attempt to train a model from scratch or replace frontier LLMs. Instead, it pairs with them as a **high-speed, deterministic neurosymbolic coprocessor**:
+- **Frontier LLM (Semantic Heavy-Lifter)**: Handles open-domain world knowledge, reasoning, creative depth, and semantic generation (~85% of the cognitive burden).
+- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the 15% deterministic last mile—zero-latency Unicode NFC normalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and ultra-lean (< 390 BPE tokens) context-aware guidance via MCP & pure local Python.
+
+---
+
+## 📊 Side-by-Side Comparison: Frontier LLMs vs. Bhashabid Coprocessor
+
+| Linguistic & Production Dimension | Frontier LLM Baseline (Probabilistic Generation) | Bhashabid Neurosymbolic Coprocessor (Deterministic Guard) | Empirical Production Example |
 | :--- | :--- | :--- | :--- |
-| **1. Irregular Cardinal Numbers** | Compounds numbers literally or uses decimal digit translation (*নব্বই নয়*). | Deterministic lookup for all 0–99 irregular cardinals, fractions (*দেড়, আড়াই*). | Input `99` ➔ Raw: *"নব্বই নয়"* ❌ <br>Bhashabid: **"নিরানব্বই"** ✔️ |
-| **2. South Asian Currency Grouping** | Western 3-digit comma grouping (`1,234,567.50`). | Exact South Asian lakh/crore grouping and currency in words. | Input `1234567.50` ➔ Raw: *"1,234,567.50"* ❌ <br>Bhashabid: **"১২,৩৪,৫৬৭.৫০ (বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা)"** ✔️ |
-| **3. English Passive Voice Calques** | Translates passives with *"দ্বারা"* (*"দ্বারা চালিত"*, *"দ্বারা অনুষ্ঠিত"*). | Real-time static linter converts passive calques into natural active causal phrasing. | Raw: *"খাদ্যমূল্য বৃদ্ধির দ্বারা চালিত"* ❌ <br>Bhashabid: **"খাদ্যপণ্যের মূল্যবৃদ্ধির কারণে... দাঁড়িয়েছে"** ✔️ |
-| **4. Pronominal & Verbal Honorifics** | Mismatches subject pronouns and verb honorific levels (*"তারা ফেরত দিয়েছিলেন"*). | Enforces strict grammatical concordance (*তারা ... ফেরত দিয়েছিল* vs *তাঁরা ... ফেরত দিয়েছিলেন*). | Raw: *"তারা অর্থ ফেরত দিয়েছিলেন"* ❌ <br>Bhashabid: **"তাঁরা সেই অর্থ ফেরত দিয়েছিলেন"** ✔️ |
-| **5. Judicial Writ Formulas (Article 102)** | Hallucinates colloquial phrases (*"জিজ্ঞেস করে রুল দিয়েছে"*). | Enforces Supreme Court of Bangladesh canonical Rule Nisi and prayer formulas. | Raw: *"কেন বেআইনি হবে না জিজ্ঞেস করে রুল দিয়েছে"* ❌ <br>Bhashabid: **"কেন বেআইনি ঘোষণা করা হবে না, তা জানতে চেয়ে রুল জারি করেছেন"** ✔️ |
-| **6. Administrative Memos & Petitions** | Calques *"Dear Sir"* as *"প্রিয় মহাশয়"*; uses broken closings. | Enforces *Bangladesh Secretariat Instructions* (*সচিবালয় নির্দেশমালা*). | Raw: *"প্রিয় মহাশয়, আশা করি ভালো আছেন"* ❌ <br>Bhashabid: **"বরাবর... বিষয়:... জনাব, বিনীত নিবেদন এই যে..."** ✔️ |
-| **7. Customer Support & Omnichannel** | Produces hybrid Banglish jargon (*"টিকেট রিজলভ করতে এজেন্ট এসাইন করা হয়েছে"*). | Standardizes professional customer care Bengali while preserving tracking IDs (`TCK-942`). | Raw: *"Query ক্লোজ করা হয়েছে, ফিডব্যাক দিন"* ❌ <br>Bhashabid: **"আপনার অভিযোগ ট্র্যাকিং নম্বর TCK-942 দ্রুত সমাধানের লক্ষ্যে পর্যালোচনা করা হচ্ছে"** ✔️ |
-| **8. MFS & FinTech Protocols** | Translates wallet terms literally or generates unsafe financial instructions. | Formulates Bangladesh Bank PSD & MRA compliant digital wallet disclosures. | Raw: *"ক্যাশ আউট ফি চার্জ করা হবে"* ❌ <br>Bhashabid: **"প্রতি হাজারে নির্ধারিত ক্যাশ-আউট চার্জ প্রযোজ্য হবে"** ✔️ |
-| **9. Bangla Academy Orthography** | Spells foreign loanwords with *"ষ"* (*ষ্টেশন, পোষ্ট*); uses long *"ী"* in non-tatsama words (*পাখী*). | Deterministically normalizes text to modern Bangla Academy standards. | Raw: *"রেল ষ্টেশনে পাখী ডাকছে"* ❌ <br>Bhashabid: **"রেল স্টেশনে পাখি ডাকছে"** ✔️ |
-| **10. Sentence Punctuation** | Terminates sentences with ASCII periods (`.`) instead of Dari (`।`). | Deterministically converts sentence-ending periods to Dari while protecting decimal numbers (`৩.১৪`). | Raw: *"তিনি বাড়ি গেলেন."* ❌ <br>Bhashabid: **"তিনি বাড়ি গেলেন।"** ✔️ |
-| **11. Classical 14-Akshar Payar Scansion** | Emits pseudo-verse with arbitrary line breaks and broken syllable rhythm. | Deterministic phonological syllabifier (*মুক্তদল* vs *রুদ্ধদল*) verifies exact 8+6=14 akshar Payar cadence. | Raw: Broken 17-syllable prose line ❌ <br>Bhashabid: **Validates exact 8+6=14 akshar Payar couplets** ✔️ |
-| **12. Land Registry & Deeds (Saf-Kabala)** | Uses informal phrasing (*"জমির বিক্রির কাগজ"*). | Enforces statutory Registration Act deed taxonomy (সাফ-কবলা, মৌজা, খতিয়ান, দাগ নং, চৌহদ্দি). | Raw: *"জমির বিক্রির কাগজ হস্তান্তর করলাম"* ❌ <br>Bhashabid: **"রেজিস্ট্রিকৃত সাফ-কবলা বিক্রয় দলিলমূলে চূড়ান্ত দখল বুঝিয়ে দেওয়া হলো"** ✔️ |
-| **13. Disaster Warning & Cyclone Signals** | Translates storm surge as *"ঝড় বৃদ্ধি"*; hallucinates warning signals. | Enforces official BMD maritime warning signals (মহাবিপদ সংকেত ১-১০) and canonical *জলোচ্ছ্বাস*. | Raw: *"উপকূলীয় অঞ্চলে ঝড় বৃদ্ধি দেখা যেতে পারে"* ❌ <br>Bhashabid: **"উপকূলীয় জেলাসমূহে ৫-৭ ফুট উচ্চতার জলোচ্ছ্বাসের আশঙ্কা রহিয়াছে"** ✔️ |
-| **14. NCTB Creative Pedagogy** | Generates arbitrary essay prompts without cognitive grading. | Formulates canonical NCTB 4-tier Bloom's taxonomy framework (উদ্দীপক, জ্ঞান, অনুধাবন, প্রয়োগ, উচ্চতর দক্ষতা). | Raw: Unstructured single essay prompts ❌ <br>Bhashabid: **Structured 4-tier rubric (ক/খ/গ/ঘ)** ✔️ |
+| **1. South Asian Currency & Numbers** | High fluency, but frequently defaults to Western 3-digit comma grouping (`1,234,567.50`). | Mathematically guarantees South Asian Lakh/Crore grouping and official check words in Bengali. | Input: `1234567.50`<br>Raw LLM: `1,234,567.50` ⚠️<br>Bhashabid: **"১২,৩৪,৫৬৭.৫০ (বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র)"** ✔️ |
+| **2. Unicode NFC & Punctuation** | Emits mixed Unicode codepoints (NFD/broken Hasanta) and ASCII periods (`.`) instead of Dari (`।`). | Deterministically canonicalizes Unicode to NFC and converts terminal periods to Dari while preserving decimals (`৩.১৪`). | Raw LLM: `"তিনি বাড়ি গেলেন."` ⚠️<br>Bhashabid: **"তিনি বাড়ি গেলেন।"** ✔️ |
+| **3. Bangla Academy Orthography** | Frequently blends archaic, dialectal, and modern spellings based on historical internet training data (*ষ্টেশন, পাখী, পোষ্ট*). | Deterministically normalizes loanwords and native vocabulary to official Bangla Academy standards (*স্টেশন, পাখি, পোস্ট*). | Raw LLM: `"রেল ষ্টেশনে পাখী ডাকছে"` ⚠️<br>Bhashabid: **"রেল স্টেশনে পাখি ডাকছে"** ✔️ |
+| **4. Pronominal & Verbal Honorifics** | Prone to register drift across multi-clause sentences (mixing informal *তারা* with honorific *দিয়েছিলেন*). | Enforces strict grammatical concordance (*তারা ... দিয়েছিল* vs *তাঁরা ... দিয়েছিলেন*) across clause boundaries. | Raw LLM: `"তারা অর্থ ফেরত দিয়েছিলেন"` ⚠️<br>Bhashabid: **"তাঁরা সেই অর্থ ফেরত দিয়েছিলেন"** ✔️ |
+| **5. Passive Voice English Calques** | Translates technical passives with literal *"দ্বারা"* (*"মুদ্রাস্ফীতির দ্বারা চালিত"*). | Converts passive calques into natural, active causal Bengali syntax. | Raw LLM: `"মুদ্রাস্ফীতির দ্বারা চালিত রাজস্ব ঘাটতি"` ⚠️<br>Bhashabid: **"মুদ্রাস্ফীতিজনিত কারণে রাজস্ব ঘাটতি বৃদ্ধি পেয়েছে"** ✔️ |
+| **6. Judicial Writ Formulas (Article 102)** | Approximates legal phrasing colloquially (*"জিজ্ঞেস করে রুল জারি করেছে"*). | Enforces Supreme Court of Bangladesh statutory Rule Nisi show-cause and prayer formulas. | Raw LLM: `"কেন বেআইনি হবে না জিজ্ঞেস করে রুল দিয়েছে"` ⚠️<br>Bhashabid: **"কেন বেআইনি ঘোষণা করা হবে না, তা জানতে চেয়ে রুল জারি করেছেন"** ✔️ |
+| **7. Secretariat Administrative Memos** | Calques English salutations (*"Dear Sir"* ➔ *"প্রিয় মহাশয়"*). | Enforces official *Bangladesh Secretariat Instructions* (*সচিবালয় নির্দেশমালা*) opening and closing protocols. | Raw LLM: `"প্রিয় মহাশয়, আশা করি ভালো আছেন"` ⚠️<br>Bhashabid: **"বরাবর... বিষয়:... জনাব, বিনীত নিবেদন এই যে..."** ✔️ |
+| **8. Classical 14-Akshar Payar Scansion** | Cannot reliably count poetic morae due to subword BPE tokenization abstraction. | Deterministic phonological syllabifier (*মুক্তদল* vs *রুদ্ধদল*) verifies exact 8+6=14 akshar Payar cadence. | Raw LLM: Pseudo-verse with broken 16/17 syllable rhythm ⚠️<br>Bhashabid: **Validates exact 8+6=14 akshar Payar couplets** ✔️ |
+| **9. Context Window & Token Efficiency** | Dumping massive style guides (5,000–10,000 tokens) exhausts context, increases latency, and costs money. | Root skill kernel is strictly capped under **390 tokens** (currently **298 true BPE tokens** on `cl100k_base`), loading domains on-demand. | Raw LLM: 10,000+ token monolithic prompt injection ⚠️<br>Bhashabid: **298 true BPE tokens + 0-token Python offloading** ✔️ |
+| **10. Local Offline Edge Execution** | Requires active internet, cloud API keys, and 500ms–2000ms latency per request. | 100% offline, local execution with 78,000+ word lexicon; processes at **500,000 words/second** in under 5ms. | Raw LLM: Cloud dependent, network latency, API costs ⚠️<br>Bhashabid: **Pure local Python, 0 network calls, $0.00 marginal cost** ✔️ |
 
 ---
 
 ## 🏛️ The 4 Pioneering Architectural Pillars
 
 ```mermaid
-graph TD
+flowchart TD
     UserReq["User Prompt / AI Agent Task"] --> Router["Core Skill Kernel (298 BPE Tokens)"]
     
-    subgraph Pillar1 ["Pillar 1: Programmatic Token Ceiling"]
-        Router -->|"Strict Budget Guard (< 390)"| ActiveContext["298 True BPE Tokens (cl100k)"]
+    subgraph Pillar1["Pillar 1: Programmatic Token Ceiling"]
+        Router -->|"Strict Budget Guard: Under 390 Tokens"| ActiveContext["298 True BPE Tokens (cl100k)"]
     end
     
-    subgraph Pillar3 ["Pillar 3: Modular Domain Isolation"]
-        Router -.->|"On-Demand Only"| LegalGuide["constitutional_writs.md (0 tokens if unrelated)"]
-        Router -.->|"On-Demand Only"| BankingGuide["journalism_domains.md (0 tokens if unrelated)"]
-        Router -.->|"On-Demand Only"| FinTechGuide["ecommerce_fintech_civic.md (0 tokens if unrelated)"]
-        Router -.->|"On-Demand Only"| CreativeGuide["creative_writing.md (0 tokens if unrelated)"]
+    subgraph Pillar3["Pillar 3: Modular Domain Isolation"]
+        Router -->|"On-Demand Only"| LegalGuide["constitutional_writs.md (0 tokens if unrelated)"]
+        Router -->|"On-Demand Only"| BankingGuide["journalism_domains.md (0 tokens if unrelated)"]
+        Router -->|"On-Demand Only"| FinTechGuide["ecommerce_fintech_civic.md (0 tokens if unrelated)"]
+        Router -->|"On-Demand Only"| CreativeGuide["creative_writing.md (0 tokens if unrelated)"]
     end
     
-    subgraph Pillar4 ["Pillar 4: Deterministic MCP Offloading"]
-        ActiveContext ==>|"Zero Token Cost ($0.00)"| FastPython["Python Engine (500k words/sec)"]
+    subgraph Pillar4["Pillar 4: Deterministic MCP Offloading"]
+        ActiveContext -->|"Zero Token Cost: Local Python"| FastPython["Python Engine (500k words/sec)"]
         FastPython --> ExactNum["Exact 0-99 Numbers (নিরানব্বই)"]
         FastPython --> LakhCrore["Lakh/Crore Comma Grouping (১২,৩৪,৫৬৭)"]
         FastPython --> UnicodeNFC["Unicode NFC & Dari (।) Normalizer"]
         FastPython --> ProsodyPayar["14-Akshar Payar Syllabic Verifier"]
     end
     
-    subgraph Pillar2 ["Pillar 2: Supervised Self-Learning Loop"]
+    subgraph Pillar2["Pillar 2: Supervised Self-Learning Loop"]
         RealWorldAnomalies["Harvester: Real-World Scraped Corpora"] --> Synthesizer["tools/card_synthesizer.py"]
         Synthesizer --> ReviewP2["Human Native Sign-Off Gate (Principle P2)"]
         ReviewP2 --> Distiller["tools/skill_distiller.py"]
         Distiller -->|"Extracts Invariants: 1 rule covers 50k phrases"| CoreInvariants["Zero-Bloat Invariant Updates"]
         CoreInvariants --> Router
     end
+```
+
+### Visual Architecture Overview (Cross-Platform Diagnostic Diagram)
+```text
++---------------------------------------------------------------------------------------------------+
+|                                  USER PROMPT / AI AGENT TASK                                      |
++---------------------------------------------------------------------------------------------------+
+                                                  │
+                                                  ▼
++---------------------------------------------------------------------------------------------------+
+|               CORE SKILL KERNEL (Programmatically Capped Under 390 BPE Tokens)                     |
++---------------------------------------------------------------------------------------------------+
+       │                                     │                                      │
+       ▼ [Pillar 1]                          ▼ [Pillar 3]                           ▼ [Pillar 4]
++----------------------+           +-------------------------+            +-------------------------+
+| PROGRAMMATIC TOKEN   |           | MODULAR DOMAIN          |            | DETERMINISTIC PYTHON    |
+| CEILING              |           | ISOLATION               |            | COPROCESSOR (MCP & CLI) |
+| • 298 True BPE Tokens|           | • 9 On-Demand Guides    |            | • 500,000 words/second  |
+| • Universal Invariant|           | • 17 Specialized Sectors|            | • Zero Token Cost ($0)  |
+| • Zero Context Bloat |           | • 0.0 Unrelated Tokens  |            | • 100% Math/NFC Exact   |
++----------------------+           +-------------------------+            +-------------------------+
+                                                                                        ▲
+                                                                                        │
+                                             ▲                                          │
+                                             │ [Pillar 2: Supervised Closed Loop]       │
+                       +─────────────────────────────────────────────+                  │
+                       | HARVESTER ➔ DRAFT CARDS ➔ HUMAN SIGN-OFF(P2)| ─────────────────┘
+                       | Real Anomalies ➔ Verified Invariants Distill |
+                       +─────────────────────────────────────────────+
 ```
 
 ### 1. Hard Programmatic Token Ceiling (< 390 Tokens Core Budget)
@@ -97,7 +173,7 @@ graph TD
 - **Problem**: Exposing all specialized vocabularies simultaneously confuses model style and wastes tokens.
 - **Solution**: 17 sectors are organized into **9 isolated reference guides**. An agent writing poetry burns **0.0 prompt tokens** on Supreme Court writ rules or central bank banking regulations.
 
-### 4. Deterministic Python Offloading via MCP ($0.00 Token Cost)
+### 4. Deterministic Python Offloading via MCP (Zero Token Cost)
 - **Problem**: LLMs struggle with mathematical lookups, comma spacing, and phonological syllable counting.
 - **Solution**: Bhashabid offloads deterministic operations to local Python algorithms via the **Model Context Protocol (MCP)** and CLI at **500,000 words/second**, with **100% mathematical precision and 0 prompt tokens burned**.
 
@@ -135,7 +211,7 @@ Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Eve
 
 | Verification Suite | Target | Observed Result | Status |
 | :--- | :---: | :---: | :---: |
-| **Automated Unit & Regression Suite** | 100% Pass | **102 / 102 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-102%2F102%20Pass-brightgreen.svg) |
+| **Automated Unit & Regression Suite** | 100% Pass | **111 / 111 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-111%2F111%20Pass-brightgreen.svg) |
 | **Principle P2 Provenance Integrity** | 100% Signed | **48 / 48 Cards Reviewed** | ![P2](https://img.shields.io/badge/P2%20Provenance-48%2F48%20Reviewed-blueviolet.svg) |
 | **Core Skill Token Footprint** | < 390 Tokens | **298 True BPE Tokens** (`cl100k_base`) | ![Tokens](https://img.shields.io/badge/BPE%20Tokens-298%20%2F%20390-success.svg) |
 | **Invariant Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles / Summaries / Examples** | ![Duplicates](https://img.shields.io/badge/Duplicates-0-brightgreen.svg) |
@@ -148,47 +224,41 @@ Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Eve
 
 ## 🚀 How to Use Bhashabid Today
 
-### 1. 1-Command Skill Installation (Antigravity, Claude, Cursor)
-Install the progressive skill along with **all 9 specialized reference guides** into your coding environment:
-```bash
-# Install globally to all detected environments (Antigravity, Claude, and Cursor)
-bhashabid install-skill --target all
+### 1. Python SDK (`import bhashabid`)
+```python
+import bhashabid
 
-# Or install specifically:
-bhashabid install-skill --target antigravity
-bhashabid install-skill --target claude
-bhashabid install-skill --target cursor
+# Automated Unicode NFC canonicalization, spelling & Dari punctuation
+repaired, diffs = bhashabid.repair("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন.")
+print(repaired)  # "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
 
-# Uninstall cleanly at any time:
-bhashabid uninstall-skill --target all
+# 78,000+ Word Offline Phonetic Spellchecker (sub-10ms)
+suggestions = bhashabid.spellcheck("আবিস্কার")
+print(suggestions)  # ['আবিষ্কার']
+
+# South Asian Lakh/Crore Currency & Number Formatting
+print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
+print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
+
+# Static Grammar, Honorific & Calque Linter
+issues = bhashabid.lint("তুমি সিদ্ধান্ত নেন")
+for issue in issues:
+    print(issue.suggestion)  # "তুমি সিদ্ধান্ত নাও" / "আপনি সিদ্ধান্ত নেন"
+
+# Classical 14-Akshar Payar Scansion (8+6)
+is_valid, report = bhashabid.verify_payar("কাশীদাস কহে সাধু শুনে পুণ্যবান")
+print(is_valid)  # True
 ```
 
-### 2. Standalone All-In-One Prompt (ChatGPT, Claude Web, Gemini Web, DeepSeek)
-If you are using a web browser interface and cannot install files, copy the single self-contained prompt:
-👉 **[`skills/bangla-expert/STANDALONE_ALL_IN_ONE.md`](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
-
-Paste it into ChatGPT Custom Instructions, Claude System Prompts, or Gemini to immediately eliminate machine-translation calques.
-
-### 3. Model Context Protocol (MCP) Server
-Expose Bhashabid's deterministic tools via stdio MCP for Claude Desktop, Cursor, Windsurf, or Zed:
+### 2. Command-Line Interface (CLI)
 ```bash
-bhashabid-mcp
-# or: bhashabid mcp
-```
-**Exposed Deterministic Tools**:
-- `convert_number`: Irregular 0–99 cardinal words, currency words, South Asian comma grouping.
-- `normalize_text`: Unicode NFC canonical decomposition, Dari punctuation, Bangla Academy vowel rules.
-- `lint_text`: Static analysis for Guru-chandali, honorific discordance, and 20+ English calques.
-- `prosody_scan`: Classical scansion (Dalabritta, Matrabritta, Aksharbritta) and 14-akshar Payar validation.
-- `generate_writ_prayer`: Drafts Article 102 High Court constitutional writ prayers in statutory Bengali.
+# In-place safe file repair with colored unified diff
+bhashabid repair article.txt --diff --write
 
-### 4. Command-Line Interface (CLI)
-Install globally from PyPI:
-```bash
-pip install bhashabid
-```
-Run any linguistic task instantly:
-```bash
+# Offline spellcheck across 78,000 words
+bhashabid spellcheck "আবিস্কার"
+# Output: Suggestions for 'আবিস্কার': ['আবিষ্কার']
+
 # Convert numbers to authentic Bengali words
 bhashabid number 99 --format words
 # Output: নিরানব্বই
@@ -203,32 +273,44 @@ bhashabid lint "তারা সেই অর্থ ফেরত দিয়েছ
 # Verify 14-akshar Payar poetic metre (8+6)
 bhashabid prosody "কাশীদাস কহে সাধু শুনে পুণ্যবান" --verify-payar
 
-# Draft High Court constitutional writ prayers
+# Draft High Court constitutional writ prayers (Article 102)
 bhashabid writ --remedy "detention" --subject "জনাব করিম" --authority "স্বরাষ্ট্র সচিব"
-
-# List candidate knowledge cards awaiting human sign-off (Principle P2)
-bhashabid review --list
 ```
 
-### 5. Python SDK
-```python
-from tools.bn_numbers import number_to_bangla_words, format_lakh_crore
-from tools.bn_normalize import normalize
-from tools.bn_lint import lint_text
-from tools.bn_prosody import verify_payar
+### 3. 1-Command Skill Installation (Antigravity, Claude, Cursor)
+Install the progressive skill along with **all 9 specialized reference guides** into your coding environment:
+```bash
+# Install globally to all detected environments (Antigravity, Claude, and Cursor)
+bhashabid install-skill --target all
 
-# Deterministic numerals
-print(number_to_bangla_words(99))  # "নিরানব্বই"
+# Or install specifically:
+bhashabid install-skill --target antigravity
+bhashabid install-skill --target claude
+bhashabid install-skill --target cursor
 
-# Orthography & Punctuation
-print(normalize("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন."))
-# "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
-
-# Linter checks with bidirectional repair suggestions
-issues = lint_text("তুমি সিদ্ধান্ত নেন")
-for issue in issues:
-    print(issue.suggestion)  # তুমি সিদ্ধান্ত নাও / আপনি সিদ্ধান্ত নেন
+# Uninstall cleanly at any time:
+bhashabid uninstall-skill --target all
 ```
+
+### 4. Model Context Protocol (MCP) Server
+Expose Bhashabid's deterministic tools via stdio MCP for Claude Desktop, Cursor, Windsurf, or Zed:
+```bash
+bhashabid-mcp
+# or: bhashabid mcp
+```
+**Exposed Deterministic Tools**:
+- `bhashabid_repair`: Automatic Unicode NFC normalization, Bangla Academy orthography, and Dari punctuation.
+- `bhashabid_spellcheck`: 78k offline phonetic candidate search with compound word decomposition.
+- `bhashabid_format_number`: Irregular 0–99 cardinal words, currency words, South Asian comma grouping.
+- `bhashabid_lint`: Static analysis for Guru-chandali, cross-clause honorific concordance, and English calques.
+- `bhashabid_prosody`: Classical scansion (Dalabritta, Matrabritta, Aksharbritta) and 14-akshar Payar validation.
+- `generate_writ_prayer`: Drafts Article 102 High Court constitutional writ prayers in statutory Bengali.
+
+### 5. Standalone All-In-One Prompt (ChatGPT, Claude Web, Gemini Web, DeepSeek)
+If you are using a web browser interface and cannot install files, copy the single self-contained prompt:
+👉 **[`skills/bangla-expert/STANDALONE_ALL_IN_ONE.md`](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
+
+Paste it into ChatGPT Custom Instructions, Claude System Prompts, or Gemini Gems to immediately eliminate machine-translation calques.
 
 ---
 

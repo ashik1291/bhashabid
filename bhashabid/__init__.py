@@ -11,7 +11,7 @@ from tools.bn_normalize.lexicon import get_default_lexicon, bengali_edit_distanc
 from tools.bn_numbers import format_lakh_crore as format_number, number_to_bangla_words, format_currency_words
 from tools.bn_prosody import scan_line, verify_payar
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 def spellcheck(text_or_word: str):
     """
