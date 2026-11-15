@@ -3,14 +3,16 @@ title: 'Candidate Rule for Administrative Term: Continuation Form'
 domain: Education & NCTB Pedagogy
 profile: bd_standard
 register: formal
-rule_summary: When referring to administrative verification forms such as 'continuation form' in academic contexts, use standard Bengali terminology such as 'অধ্যয়ন ধারাবাহিকতা ফরম' or 'ধারাবাহিকতা প্রত্যয়ন ফরম', optionally retaining the English term in parentheses.
+rule_summary: When referencing periodic enrollment verification or stipend status forms ('continuation form'), translate as 'অধ্যয়ন ধারাবাহিকতা ফরম' or 'ধারাবাহিকতা প্রত্যয়নপত্র' in formal educational registers, optionally retaining the English term in parentheses on first mention.
 good_examples:
-- শিক্ষার্থী থাকার প্রমাণ হিসেবে প্রতি তিন মাস অন্তর প্রতিষ্ঠানপ্রধানের প্রত্যয়নসহ 'অধ্যয়ন ধারাবাহিকতা ফরম' (continuation form) জমা দিতে হবে।
-- বৃত্তিপ্রাপ্ত শিক্ষার্থীদের নিয়মিত উপস্থিতির প্রমাণ হিসেবে প্রতি ত্রৈমাসিকে ধারাবাহিকতা প্রত্যয়ন ফরম দাখিল করা বাধ্যতামূলক।
+- বৃত্তিপ্রাপ্ত গবেষকদের নিয়মিত উপস্থিতি ও শিক্ষাগত অগ্রগতি নিশ্চিত করতে প্রতি তিন মাস অন্তর বিভাগীয় প্রধানের স্বাক্ষরযুক্ত 'অধ্যয়ন ধারাবাহিকতা ফরম' (continuation form) বৃত্তি শাখায় দাখিল করতে হবে।
+- উচ্চশিক্ষা কার্যক্রম অব্যাহত রাখার প্রমাণস্বরূপ সংশ্লিষ্ট প্রতিষ্ঠানপ্রধানের প্রত্যয়নসহ ধারাবাহিকতা ফরম জমা দেওয়া বাধ্যতামূলক।
+- শিক্ষাবর্ষের প্রতিটি সেমিস্টার শেষে নির্ধারিত ধারাবাহিকতা প্রত্যয়নপত্র দাখিল না করলে আর্থিক অনুদান সাময়িকভাবে স্থগিত হতে পারে।
 bad_examples:
-- শিক্ষার্থী থাকার প্রমাণ হিসেবে ৩ মাস পর পর বিভাগীয় এবং শিক্ষানুস্থানের প্রধানের স্বাক্ষর থাকা 'continution form' জমা দিতে হয়
-- স্টুডেন্ট কন্টিনিউয়েশন ফর্ম ফিলাপ করে অফিসে সাবমিট করতে হবে।
-common_llm_error: LLMs emit raw English jargon or unstandardized transliterations instead of formal administrative Bengali terms.
+- শিক্ষার্থী থাকার প্রমাণ হিসেবে ৩ মাস পর পর বিভাগীয় এবং শিক্ষানুস্থানের প্রধানের স্বাক্ষর থাকা 'continution form' জমা দিতে হয়।
+- বৃত্তি সচল রাখতে স্টুডেন্টদের রেগুলার কন্টিনিউয়েশন ফর্ম পূরণ করে সাইন করিয়ে জমা দিতে হবে।
+- অধ্যয়ন চালু রাখার ফর্ম জমা না দিলে স্কলারশিপ বন্ধ হয়ে যাবে।
+common_llm_error: LLMs emit raw English jargon ('continution form ফিলাপ'), misspell compound administrative words, or generate overly colloquial literal translations ('অধ্যয়ন চালু রাখার ফর্ম').
 sources:
 - 'Corpus Harvest Provenance: Bangla Wikipedia Education & Pedagogy'
 - Principle P2 Human Provenance Audit Gate
@@ -24,5 +26,5 @@ review:
   reviewer_affiliation: null
   reviewed_date: null
   status: PENDING_HUMAN_REVIEW
-  notes: Revised with authentic administrative & educational Bengali exemplars following human review.
+  notes: Enriched with administrative institutional exemplars and clear contrasts under Principle P2.
   signature_hash: null
