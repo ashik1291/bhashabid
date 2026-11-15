@@ -12,6 +12,8 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
+from tools.domain_taxonomy import canonicalize_sector, CANONICAL_SECTORS
+
 MISTAKES_LEDGER = os.path.join(REPO_ROOT, "memory", "mistakes", "ledger.jsonl")
 
 # Sector mapping to mistake IDs and core linguistic learning patterns
@@ -70,6 +72,15 @@ SECTOR_MISTAKE_PATTERNS = {
         "variables": {
             "memo": ["০৫.০০.০০০০.১৩০.০০.০১২.২৪", "০৪.০০.০০০০.১৫০.০০.০২৫.২৪", "০৮.০০.০০০০.১৮০.০০.০৩৮.২৪"]
         }
+    },
+    "Creative Fiction & Spoken Dialogue": {
+        "mistake_ids": ["MST-0004", "MST-0005"],
+        "templates": [
+            "তিনি শান্ত দৃষ্টিতে তাকালেন এবং বললেন, 'আপনি কি সত্যিই মনে করেন যে কালকের সভায় আমি উপস্থিত ছিলাম?'",
+            "সে দ্রুত পায়ে এগিয়ে এসে বলল, 'তুমি যদি এই সিদ্ধান্ত নাও, তবে ভবিষ্যতের সব দায়ভার তোমার ওপরই বর্তাবে।'",
+            "খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে।"
+        ],
+        "variables": {}
     },
     "Creative Fiction & Dialogue": {
         "mistake_ids": ["MST-0004", "MST-0005"],
@@ -145,6 +156,46 @@ SECTOR_MISTAKE_PATTERNS = {
         ],
         "variables": {}
     },
+    "Translation & Calque Naturalization": {
+        "mistake_ids": ["MST-0003", "MST-0005"],
+        "templates": [
+            "ইংরেজি প্রবাদ বা বাগধারার অন্ধ আক্ষরিক অনুবাদ পরিহারপূর্বক স্বাভাবিক বাংলা বাগ্ধারা ব্যবহার করা বিধেয়, যেমন {calque}।",
+            "অনুবাদ সাহিত্যের ক্ষেত্রে কর্মবাচ্যের অনুকরণে 'কর্তৃক বা দ্বারা সংঘটিত' পরিহার করে সক্রিয় কর্তৃবাচ্য রক্ষা করা বাঞ্ছনীয়।",
+            "প্রচলিত বাংলা প্রবাদ অনুসারে {proverb}—সুতরাং ব্যর্থতার জন্য পরিস্থিতির উপর দোষ চাপানো নিষ্ফল।"
+        ],
+        "variables": {
+            "calque": [
+                "'কেকের টুকরো' নয় বরং 'পানির মতো সহজ কাজ'",
+                "'ঝোপের চারপাশে পেটানো' নয় বরং 'ঘুরিয়ে-পেঁচিয়ে কথা বলা'",
+                "'হাড় ভেঙে দেওয়া' নয় বরং 'গোপন তথ্য ফাঁস করে দেওয়া'"
+            ],
+            "proverb": [
+                "নাচতে না জানলে উঠান বাঁকা",
+                "অধিক সন্ন্যাসীতে গাজন নষ্ট",
+                "গাছে কাঁঠাল গোঁফে তেল"
+            ]
+        }
+    },
+    "Translation, Calque De-Naturalization & Idioms": {
+        "mistake_ids": ["MST-0003", "MST-0005"],
+        "templates": [
+            "ইংরেজি প্রবাদ বা বাগধারার অন্ধ আক্ষরিক অনুবাদ পরিহারপূর্বক স্বাভাবিক বাংলা বাগ্ধারা ব্যবহার করা বিধেয়, যেমন {calque}।",
+            "অনুবাদ সাহিত্যের ক্ষেত্রে কর্মবাচ্যের অনুকরণে 'কর্তৃক বা দ্বারা সংঘটিত' পরিহার করে সক্রিয় কর্তৃবাচ্য রক্ষা করা বাঞ্ছনীয়।",
+            "প্রচলিত বাংলা প্রবাদ অনুসারে {proverb}—সুতরাং ব্যর্থতার জন্য পরিস্থিতির উপর দোষ চাপানো নিষ্ফল।"
+        ],
+        "variables": {
+            "calque": [
+                "'কেকের টুকরো' নয় বরং 'পানির মতো সহজ কাজ'",
+                "'ঝোপের চারপাশে পেটানো' নয় বরং 'ঘুরিয়ে-পেঁচিয়ে কথা বলা'",
+                "'হাড় ভেঙে দেওয়া' নয় বরং 'গোপন তথ্য ফাঁস করে দেওয়া'"
+            ],
+            "proverb": [
+                "নাচতে না জানলে উঠান বাঁকা",
+                "অধিক সন্ন্যাসীতে গাজন নষ্ট",
+                "গাছে কাঁঠাল গোঁফে তেল"
+            ]
+        }
+    },
     "Consumer E-Commerce & Retail Logistics": {
         "mistake_ids": ["MST-0010"],
         "templates": [
@@ -167,6 +218,17 @@ SECTOR_MISTAKE_PATTERNS = {
         "variables": {
             "nid_app": ["NID-2026-881", "NID-2026-442", "NID-2026-905"],
             "mutation_no": ["MUT-7712", "MUT-8840", "MUT-9214"]
+        }
+    },
+    "Customer Support & Omnichannel Messaging": {
+        "mistake_ids": ["MST-0010"],
+        "templates": [
+            "আমাদের গ্রাহক সেবা কেন্দ্রে যোগাযোগের জন্য ধন্যবাদ; আপনার টিকিট নং {ticket_no} সমাধানে প্রতিনিধি দ্রুত ব্যবস্থা গ্রহণ করছেন।",
+            "অনাকাঙ্ক্ষিত সাময়িক অসুবিধার জন্য আমরা আন্তরিকভাবে দুঃখিত, আপনার অ্যাকাউন্টের তথ্যাদি যাচাই করে সেবাটি সচল করা হচ্ছে।",
+            "সেবা সংক্রান্ত যেকোনো জিজ্ঞাসা থাকলে নির্দ্বিধায় আমাদের ডিজিটাল হেল্পলাইনে অবগত করুন।"
+        ],
+        "variables": {
+            "ticket_no": ["TCK-881", "TCK-942", "TCK-331", "TCK-509"]
         }
     },
     "Customer Support & Conversational Chat": {
@@ -240,7 +302,8 @@ class MistakeLearningSynthesizer:
         justified by historical mistakes.
         """
         exclude_fps = exclude_fingerprints if exclude_fingerprints is not None else set()
-        cfg = SECTOR_MISTAKE_PATTERNS.get(sector)
+        canon_sector = canonicalize_sector(sector)
+        cfg = SECTOR_MISTAKE_PATTERNS.get(canon_sector) or SECTOR_MISTAKE_PATTERNS.get(sector)
         if not cfg:
             return []
 

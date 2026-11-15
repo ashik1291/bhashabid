@@ -20,11 +20,12 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from tools.bn_normalize.unicode import canonicalize_unicode
+from tools.domain_taxonomy import canonicalize_sector, CANONICAL_SECTORS, get_sector_number
 
 # Persistent hash cache to guarantee zero duplicate sentence ingestion across practice cycles
 FINGERPRINTS_PATH = os.path.join(REPO_ROOT, "state", "scraped_fingerprints.json")
 
-# Authoritative live RSS and open API feeds covering all 11 professional sectors of Bhashabid
+# Authoritative live RSS and open API feeds covering all 17 professional sectors of Bhashabid
 DEFAULT_FEEDS = [
     # Sector 1: Constitutional Law & Writs
     {
@@ -42,7 +43,7 @@ DEFAULT_FEEDS = [
     },
     # Sector 2: Macroeconomics & Banking
     {
-        "name": "The Business Standard (TBS Bangla)",
+        "name": "The Business Standard (TBS Bangla Economy)",
         "url": "https://www.tbsnews.net/bangla/rss.xml",
         "domain": "Macroeconomics & Banking",
         "sector": 2
@@ -60,17 +61,16 @@ DEFAULT_FEEDS = [
         "sector": 2,
         "is_json_api": True
     },
-    # Sector 3: Healthcare & Clinical Epidemiology
+    # Sector 3: Healthcare & Epidemiology
+    {
+        "name": "BBC News Bangla (Healthcare & Science)",
+        "url": "https://feeds.bbci.co.uk/bengali/rss.xml",
+        "domain": "Healthcare & Epidemiology",
+        "sector": 3
+    },
     {
         "name": "Bangla Wikipedia Clinical Medicine & Epidemiology",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:চিকিৎসাবিজ্ঞান") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
-        "domain": "Healthcare & Epidemiology",
-        "sector": 3,
-        "is_json_api": True
-    },
-    {
-        "name": "Bangla Wikipedia Public Health & Epidemiology",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:মহামারীবিজ্ঞান") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Healthcare & Epidemiology",
         "sector": 3,
         "is_json_api": True
@@ -82,18 +82,38 @@ DEFAULT_FEEDS = [
         "domain": "Administrative Governance & Memos",
         "sector": 4
     },
-    # Sector 5: Creative Fiction & Dialogue
+    {
+        "name": "Bangla Wikipedia Public Administration",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:জনপ্রশাসন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Administrative Governance & Memos",
+        "sector": 4,
+        "is_json_api": True
+    },
+    # Sector 5: Creative Fiction & Spoken Dialogue
+    {
+        "name": "Prothom Alo (Literature & Society)",
+        "url": "https://www.prothomalo.com/feed",
+        "domain": "Creative Fiction & Spoken Dialogue",
+        "sector": 5
+    },
     {
         "name": "Bangla Wikipedia Bengali Literature & Fiction",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলা_সাহিত্য") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
-        "domain": "Creative Fiction & Dialogue",
+        "domain": "Creative Fiction & Spoken Dialogue",
         "sector": 5,
         "is_json_api": True
     },
-    # Sector 6: Classical Poetry & Payar Prosody
+    # Sector 6: Classical Poetry & Prosody
     {
         "name": "Bangla Wikipedia Poetry & Classical Verse",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলা_কবিতা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Classical Poetry & Prosody",
+        "sector": 6,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Classical Literature & Metrics",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাঙালি_কবি") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Classical Poetry & Prosody",
         "sector": 6,
         "is_json_api": True
@@ -116,6 +136,13 @@ DEFAULT_FEEDS = [
     # Sector 8: Land Registry & Deeds
     {
         "name": "Bangla Wikipedia Land Law & Property Registry",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:সম্পত্তি_আইন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Land Registry & Deeds",
+        "sector": 8,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Legal Framework & Conveyancing",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:আইন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Land Registry & Deeds",
         "sector": 8,
@@ -137,6 +164,12 @@ DEFAULT_FEEDS = [
     },
     # Sector 10: ICT & Software Engineering
     {
+        "name": "The Daily Star Bangla (Tech & Software)",
+        "url": "https://bangla.thedailystar.net/rss.xml",
+        "domain": "ICT & Software Engineering",
+        "sector": 10
+    },
+    {
         "name": "Bangla Wikipedia Information Technology & Computing",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:তথ্য_প্রযুক্তি") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "ICT & Software Engineering",
@@ -152,89 +185,139 @@ DEFAULT_FEEDS = [
     },
     # Sector 11: Education & NCTB Pedagogy
     {
+        "name": "Prothom Alo (Education & Pedagogy)",
+        "url": "https://www.prothomalo.com/feed",
+        "domain": "Education & NCTB Pedagogy",
+        "sector": 11
+    },
+    {
         "name": "Bangla Wikipedia Education & Pedagogy",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:শিক্ষা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Education & NCTB Pedagogy",
         "sector": 11,
         "is_json_api": True
     },
+    # Sector 12: Translation & Calque Naturalization
     {
-        "name": "Bangla Wikipedia Education in Bangladesh & Curriculum",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_শিক্ষা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
-        "domain": "Education & NCTB Pedagogy",
-        "sector": 11,
+        "name": "Deutsche Welle (DW Bangla - Translated Features)",
+        "url": "https://rss.dw.com/rdf/rss-ben-all",
+        "domain": "Translation & Calque Naturalization",
+        "sector": 12
+    },
+    {
+        "name": "Bangla Wikipedia Translation Studies & Lexicography",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:অনুবাদ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Translation & Calque Naturalization",
+        "sector": 12,
         "is_json_api": True
     },
-    # Sector 12: Consumer E-Commerce & Retail Logistics
+    {
+        "name": "Bangla Wikipedia Proverbs & Cultural Idioms",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:প্রবাদ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Translation & Calque Naturalization",
+        "sector": 12,
+        "is_json_api": True
+    },
+    # Sector 13: Consumer E-Commerce & Retail Logistics
+    {
+        "name": "The Business Standard (TBS Bangla Commerce)",
+        "url": "https://www.tbsnews.net/bangla/rss.xml",
+        "domain": "Consumer E-Commerce & Retail Logistics",
+        "sector": 13
+    },
     {
         "name": "Bangla Wikipedia E-Commerce & Retail",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ই-বাণিজ্য") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Consumer E-Commerce & Retail Logistics",
-        "sector": 12,
+        "sector": 13,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Postal & Courier Logistics",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ডাক_ব্যবস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Consumer E-Commerce & Retail Logistics",
-        "sector": 12,
-        "is_json_api": True
-    },
-    # Sector 13: Citizen Digital Services & Smart Governance
-    {
-        "name": "Bangla Wikipedia Digital Bangladesh & Citizen Services",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ডিজিটাল_বাংলাদেশ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
-        "domain": "Citizen Digital Services & Smart Governance",
         "sector": 13,
         "is_json_api": True
     },
+    # Sector 14: Customer Support & Omnichannel Messaging
     {
-        "name": "Bangla Wikipedia Government Portals & Public Services",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_সরকারি_সংস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
-        "domain": "Citizen Digital Services & Smart Governance",
-        "sector": 13,
-        "is_json_api": True
+        "name": "The Business Standard (TBS Bangla Support & Telecom)",
+        "url": "https://www.tbsnews.net/bangla/rss.xml",
+        "domain": "Customer Support & Omnichannel Messaging",
+        "sector": 14
     },
-    # Sector 14: Customer Support & Conversational Chat
     {
         "name": "Bangla Wikipedia Telecommunications & Customer Experience",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:টেলিযোগাযোগ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
-        "domain": "Customer Support & Conversational Chat",
+        "domain": "Customer Support & Omnichannel Messaging",
         "sector": 14,
         "is_json_api": True
     },
     # Sector 15: MFS, Microfinance & Grassroots FinTech
     {
-        "name": "Bangla Wikipedia Mobile Banking & FinTech",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:মোবাইল_ব্যাংকিং") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "name": "Prothom Alo (FinTech & Mobile Banking)",
+        "url": "https://www.prothomalo.com/feed",
+        "domain": "MFS, Microfinance & Grassroots FinTech",
+        "sector": 15
+    },
+    {
+        "name": "Bangla Wikipedia Banking & Grassroots Finance",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ব্যাংকিং") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "MFS, Microfinance & Grassroots FinTech",
         "sector": 15,
         "is_json_api": True
     },
     {
-        "name": "Bangla Wikipedia Microcredit & Financial Inclusion",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ক্ষুদ্রঋণ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "name": "Bangla Wikipedia Currency & Financial Inclusion",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:মুদ্রা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "MFS, Microfinance & Grassroots FinTech",
         "sector": 15,
         "is_json_api": True
     },
-    # Sector 16: Mass Media & Digital Journalism
+    # Sector 16: Citizen Digital Services & Smart Governance
+    {
+        "name": "The Daily Star Bangla (Citizen Digital Governance)",
+        "url": "https://bangla.thedailystar.net/rss.xml",
+        "domain": "Citizen Digital Services & Smart Governance",
+        "sector": 16
+    },
+    {
+        "name": "Bangla Wikipedia Government Portals & Public Services",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_সরকারি_সংস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Citizen Digital Services & Smart Governance",
+        "sector": 16,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Digital Systems & Public Portals",
+        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ইন্টারনেট") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "domain": "Citizen Digital Services & Smart Governance",
+        "sector": 16,
+        "is_json_api": True
+    },
+    # Sector 17: Mass Media & Digital Journalism
     {
         "name": "The Business Standard (TBS Bangla Media Dispatch)",
         "url": "https://www.tbsnews.net/bangla/rss.xml",
         "domain": "Mass Media & Digital Journalism",
-        "sector": 16
+        "sector": 17
+    },
+    {
+        "name": "BBC News Bangla (Media & Journalism)",
+        "url": "https://feeds.bbci.co.uk/bengali/rss.xml",
+        "domain": "Mass Media & Digital Journalism",
+        "sector": 17
     },
     {
         "name": "Bangla Wikipedia Journalism & Media Studies",
         "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:সাংবাদিকতা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
         "domain": "Mass Media & Digital Journalism",
-        "sector": 16,
+        "sector": 17,
         "is_json_api": True
     }
 ]
 
-USER_AGENT = "Bhashabid-Bot/2.0 (Open-Source Bengali Linguistic Coprocessor; https://github.com/ashik1291/bhashabid)"
+USER_AGENT = "Bhashabid-Bot/2.0 (Open-Source Bengali Linguistic Coprocessor; https://github.com/ashik1291/bhashabid; contact: ashik1291@github)"
 
 class AutonomousScraper:
     """
@@ -407,6 +490,40 @@ class AutonomousScraper:
                                 "notes": f"Live RSS lead reporting from {name}"
                             })
 
+        except urllib.error.HTTPError as he:
+            if he.code == 429:
+                time.sleep(1.0)
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, timeout=self.timeout) as response:
+                        content_bytes = response.read()
+                    if feed.get("is_json_api"):
+                        data = json.loads(content_bytes.decode("utf-8", errors="ignore"))
+                        pages = data.get("query", {}).get("pages", {})
+                        for pid, pdata in pages.items():
+                            if len(items) >= max_items:
+                                break
+                            title = pdata.get("title", "")
+                            extract = self.sanitize_article_text(pdata.get("extract", ""))
+                            combined = f"{title}. {extract}" if extract else title
+                            if combined and re.search(r"[\u0980-\u09FF]", combined):
+                                sentences = [s.strip() for s in re.split(r"[।\n]+", combined) if len(s.strip()) > 15]
+                                for s in sentences:
+                                    if len(items) >= max_items:
+                                        break
+                                    if self.is_seen(s):
+                                        continue
+                                    self.mark_seen(s)
+                                    items.append({
+                                        "source": name,
+                                        "domain": domain,
+                                        "text": canonicalize_unicode(s),
+                                        "notes": f"Scraped lead sentence from {name} ('{title}')"
+                                    })
+                except Exception as retry_e:
+                    print(f"[Scraper Rate-Limit Notice] {name} rate-limited (HTTP 429). Falling back: {retry_e}")
+            else:
+                print(f"[Scraper Offline Notice] Could not reach {name} (HTTP {he.code}). Skipping feed.")
         except urllib.error.URLError as ue:
             print(f"[Scraper Offline Notice] Could not reach {name} ({ue.reason}). Skipping feed.")
         except Exception as ex:
@@ -457,51 +574,166 @@ class AutonomousScraper:
         print(f"✓ Saved {len(scraped_items)} strictly unique, fresh scraped sentences to inbox: {filepath}")
         return filepath
 
+    def fetch_local_corpus_fallback(self, sector: str, max_items: int = 4) -> List[Dict]:
+        """
+        Tier 3 Fallback: Extracts authentic sentences from verified local corpora
+        (eval/corpora/sources/*.jsonl) matching the sector or its canonical designation.
+        """
+        canon_sec = canonicalize_sector(sector)
+        sources_dir = os.path.join(REPO_ROOT, "eval", "corpora", "sources")
+        if not os.path.isdir(sources_dir):
+            return []
+
+        matched_items = []
+        for root, _, files in os.walk(sources_dir):
+            for file in files:
+                if not file.endswith(".jsonl"):
+                    continue
+                path = os.path.join(root, file)
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        for line in f:
+                            if len(matched_items) >= max_items:
+                                break
+                            line = line.strip()
+                            if not line:
+                                continue
+                            data = json.loads(line)
+                            item_domain = data.get("domain", "")
+                            if canonicalize_sector(item_domain) == canon_sec:
+                                text = data.get("text", "").strip()
+                                if text and not self.is_seen(text):
+                                    self.mark_seen(text)
+                                    matched_items.append({
+                                        "source": f"Local Verified Corpus ({file})",
+                                        "domain": sector,
+                                        "text": canonicalize_unicode(text),
+                                        "notes": data.get("notes", f"Authentic domain standard for {canon_sec}")
+                                    })
+                except Exception:
+                    pass
+                if len(matched_items) >= max_items:
+                    break
+
+        return matched_items
+
     def scrape_targeted_sector_data(
         self,
         target_sectors: List[str],
         max_items_per_sector: int = 4
     ) -> List[Dict]:
         """
-        Gathers fresh data ONLY for the specified target sectors that reached precision.
-        Priority 1: Live RSS & API feeds for each target sector.
-        Priority 2: If live feeds yield no new items (offline / feed blocked / all items seen),
-                    autonomously synthesizes valid, fresh sector challenge data justified
-                    by learning from empirical mistakes (memory/mistakes/ledger.jsonl).
+        Gathers fresh data across the 4-Tier Ingestion & Fallback Pipeline
+        using Stratified Deficit-Balanced Hybrid Ingestion:
+        - Tier 1: Targeted Live RSS Streams (Living, event-driven journalistic vernacular)
+        - Tier 2: Open Knowledge API (Deep encyclopedic & grammatical taxonomy)
+        - Tier 3: Local Verified Benchmark Corpora (eval/corpora/sources/*.jsonl)
+        - Tier 4: Offline Grounded Mistake-Learning Synthesizer (memory/mistakes/ledger.jsonl)
+
+        Enforces proportional 50/50 register stratification when both RSS and API feeds exist,
+        with elastic deficit spillover to prevent starvation or throughput drops.
         """
         from tools.mistake_synthesizer import MistakeLearningSynthesizer
         mistake_synth = MistakeLearningSynthesizer()
 
         all_items = []
-        print(f"\n[Sector-Targeted Autonomous Ingestion] Refreshing {len(target_sectors)} saturated sector(s): {target_sectors}")
+        print(f"\n[Sector-Targeted Stratified Ingestion] Refreshing {len(target_sectors)} sector(s): {target_sectors}")
 
         for sec in target_sectors:
-            sec_matching_feeds = [f for f in self.feeds if f.get("domain") == sec]
-            sec_live_items = []
-            
-            for feed in sec_matching_feeds:
-                items = self.fetch_feed_data(feed, max_items=max_items_per_sector)
-                if items:
-                    sec_live_items.extend(items)
-                    print(f"  ✓ [Live Web Feed] {feed['name']}: Ingested {len(items)} fresh sentences ({sec})")
-                if len(sec_live_items) >= max_items_per_sector:
-                    break
+            canon_sec = canonicalize_sector(sec)
+            sec_items = []
 
-            if sec_live_items:
-                all_items.extend(sec_live_items[:max_items_per_sector])
+            # 1. Identify feeds matching this sector
+            sec_matching_feeds = [f for f in self.feeds if canonicalize_sector(f.get("domain")) == canon_sec]
+            rss_feeds = [f for f in sec_matching_feeds if not f.get("is_json_api")]
+            api_feeds = [f for f in sec_matching_feeds if f.get("is_json_api")]
+
+            # 2. Compute Stratified Quotas (50% RSS / 50% API if both exist)
+            if rss_feeds and api_feeds:
+                target_rss = (max_items_per_sector + 1) // 2
+                target_api = max_items_per_sector - target_rss
+            elif rss_feeds:
+                target_rss = max_items_per_sector
+                target_api = 0
             else:
-                # Fallback to Mistake-Learning Autonomous Synthesis
+                target_rss = 0
+                target_api = max_items_per_sector
+
+            # 3. Harvest Tier 1: Live RSS Streams
+            rss_harvested = []
+            if target_rss > 0:
+                for feed in rss_feeds:
+                    needed = target_rss - len(rss_harvested)
+                    if needed <= 0:
+                        break
+                    items = self.fetch_feed_data(feed, max_items=needed)
+                    if items:
+                        for it in items:
+                            it["domain"] = sec
+                        rss_harvested.extend(items)
+                        print(f"  ✓ [Tier 1: Live RSS] {feed['name']}: Ingested {len(items)} sentences for '{sec}'")
+
+            # 4. Compute Deficit from Tier 1 and Harvest Tier 2: Open Knowledge API
+            rss_deficit = target_rss - len(rss_harvested)
+            effective_target_api = target_api + max(0, rss_deficit)
+
+            api_harvested = []
+            if effective_target_api > 0:
+                for feed in api_feeds:
+                    needed = effective_target_api - len(api_harvested)
+                    if needed <= 0:
+                        break
+                    items = self.fetch_feed_data(feed, max_items=needed)
+                    if items:
+                        for it in items:
+                            it["domain"] = sec
+                        api_harvested.extend(items)
+                        print(f"  ✓ [Tier 2: Open Knowledge API] {feed['name']}: Ingested {len(items)} sentences for '{sec}'")
+
+            # 5. Reverse Spillover: If Tier 2 had a deficit and Tier 1 had unused capacity, try remaining RSS
+            api_deficit = effective_target_api - len(api_harvested)
+            if api_deficit > 0 and rss_feeds:
+                for feed in rss_feeds:
+                    needed = api_deficit
+                    if needed <= 0:
+                        break
+                    items = self.fetch_feed_data(feed, max_items=needed)
+                    if items:
+                        for it in items:
+                            it["domain"] = sec
+                        rss_harvested.extend(items)
+                        api_deficit -= len(items)
+
+            sec_items.extend(rss_harvested)
+            sec_items.extend(api_harvested)
+
+            # 6. Tier 3: Local Authentic Corpora Fallback
+            if len(sec_items) < max_items_per_sector:
+                needed = max_items_per_sector - len(sec_items)
+                corpus_items = self.fetch_local_corpus_fallback(canon_sec, max_items=needed)
+                if corpus_items:
+                    for it in corpus_items:
+                        it["domain"] = sec
+                    sec_items.extend(corpus_items)
+                    print(f"  ✓ [Tier 3: Local Corpora Fallback] Ingested {len(corpus_items)} sentences from local benchmark for '{sec}' ({canon_sec})")
+
+            # 7. Tier 4: Grounded Mistake-Learning Synthesizer Fallback
+            if len(sec_items) < max_items_per_sector:
+                needed = max_items_per_sector - len(sec_items)
                 print(f"  • [Notice] Live feed unavailable for '{sec}'. Engaging Learning from Mistakes Engine...")
                 synth_items = mistake_synth.synthesize_sector_batch(
-                    sector=sec,
-                    count=max_items_per_sector,
+                    sector=canon_sec,
+                    count=needed,
                     exclude_fingerprints=self.seen_fingerprints
                 )
                 if synth_items:
                     for itm in synth_items:
                         self.mark_seen(itm["text"])
-                    all_items.extend(synth_items)
-                    print(f"  ✓ [Mistake-Learning Engine] Synthesized {len(synth_items)} valid, strictly new sentences for '{sec}'.")
+                        itm["domain"] = sec
+                    sec_items.extend(synth_items)
+                    print(f"  ✓ [Tier 4: Mistake-Learning Engine] Synthesized {len(synth_items)} valid, strictly new sentences for '{sec}'.")
+
+            all_items.extend(sec_items[:max_items_per_sector])
 
         return all_items
 
