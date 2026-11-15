@@ -1,0 +1,35 @@
+id: CRD-DFT-063
+title: 'Candidate Rule for Pattern: BMCS'
+domain: Banking & Macroeconomics
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'BMCS' requires standard
+  Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- BMCS-এর সদস্যরা এবং তাঁদের সন্তানদের স্বতঃস্ফূর্ত অংশগ্রহণে সংগীত, নৃত্যসহ বিভিন্ন
+  সাংস্কৃতিক পরিবেশনা পুরো আয়োজনকে করে তোলে আরও বর্ণিল ও উপভোগ্য
+- সার্বিক বিবেচনায় BMCS-এর এ বার্ষিক পারিবারিক মিলনমেলা নিছক একটি সামাজিক বা সাংস্কৃতিক
+  অনুষ্ঠান ছিল না; বরং এটি প্রবাসে বসবাসরত বাংলাদেশি মেরিনার ও তাঁদের পরিবারের সদস্যদের
+  মধ্যে পারস্পরিক সম্পর্ক, সম্প্রীতি ও ভ্রাতৃত্বের বন্ধন আরও সুদৃঢ় করার এক তাৎপর্যপূর্ণ
+  আয়োজন হিসেবে প্রতিফলিত হয়েছে
+- প্রবাসের মাটিতে বাংলাদেশের মেরিটাইম পেশাজীবীদের সম্মিলিত শক্তি, সাফল্য ও ঐক্যের
+  এক উজ্জ্বল দৃষ্টান্ত হয়ে থাকবে BMCS-এর এবারের পারিবারিক মিলনমেলা
+common_llm_error: LLMs emit unadapted English terminology 'BMCS' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Prudential Regulations & Monetary Policy
+- Bangla Academy Financial & Economic Terminology
+- The Business Standard Verified Macroeconomic Feed
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

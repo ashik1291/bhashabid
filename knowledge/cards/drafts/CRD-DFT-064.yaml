@@ -1,0 +1,31 @@
+id: CRD-DFT-064
+title: 'Candidate Rule for Pattern: BMCS, BMCS'
+domain: Tax & Customs
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'BMCS, BMCS' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- অনুষ্ঠানের সমাপনী পর্বে BMCS-এর সাধারণ সম্পাদক শাহরিয়ার আলী গওহর উপস্থিত বিভিন্ন
+  শিপিং কোম্পানির প্রতিনিধিরা, সম্মানিত অতিথি ও বিশিষ্ট ব্যক্তিদের তাঁদের ব্যস্ত সময়
+  থেকে মূল্যবান সময় বের করে BMCS পরিবারের সঙ্গে আনন্দ ভাগ করে নেওয়ার জন্য আন্তরিক
+  ধন্যবাদ ও কৃতজ্ঞতা জানান
+common_llm_error: LLMs emit unadapted English terminology 'BMCS, BMCS' in Bengali
+  contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangla Academy Standard Bengali Grammar
+- Corpus Harvester Anomaly Detector
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

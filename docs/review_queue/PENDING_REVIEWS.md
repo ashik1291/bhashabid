@@ -16,7 +16,7 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue (1 Cards Awaiting Human Review)
+## 📥 Pending Candidate Queue (6 Cards Awaiting Human Review)
 
 ### Draft 1: [CRD-DFT-059] Candidate Rule for Pattern: BCE
 - **File**: `knowledge\cards\drafts\CRD-DFT-059.yaml`
@@ -35,6 +35,113 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 **Quick Action Command**:
 ```bash
 bhashabid review --card CRD-DFT-059 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 2: [CRD-DFT-060] Candidate Rule for Pattern: Pence, Pennies
+- **File**: `knowledge\cards\drafts\CRD-DFT-060.yaml`
+- **Domain**: `MFS, Microfinance & Grassroots FinTech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Pence, Pennies' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Pence (পেন্স) হলো অর্থমূল্য বোঝাতে ব্যবহৃত সাধারণ বহুবচন, আর Pennies (পেনিস) বলতে এক-পেনি মূল্যের পৃথক পৃথক মুদ্রা বোঝায়
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Pence, Pennies' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Currency & Financial Inclusion, Principle P2 Human Provenance Audit Gate, Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines, Microcredit Regulatory Authority (MRA) Rules & Standards, Anti-Money Laundering & Financial Fraud Prevention Protocols
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-060 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 3: [CRD-DFT-061] Candidate Rule for Pattern: Ledger, nano
+- **File**: `knowledge\cards\drafts\CRD-DFT-061.yaml`
+- **Domain**: `MFS, Microfinance & Grassroots FinTech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Ledger, nano' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এখানে দুটি ওয়ালেট এর কথা বলা হলো : i) Ledger nano s: এটি একটি বিটকয়েন সিকিউরিটি কোম্পানি যা প্রচুর সিকিওর বিটকয়েন স্টোরেজ ডিভাইস দেয়
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Ledger, nano' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Currency & Financial Inclusion, Principle P2 Human Provenance Audit Gate, Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines, Microcredit Regulatory Authority (MRA) Rules & Standards, Anti-Money Laundering & Financial Fraud Prevention Protocols
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-061 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 4: [CRD-DFT-062] Candidate Rule for Pattern: Trezor
+- **File**: `knowledge\cards\drafts\CRD-DFT-062.yaml`
+- **Domain**: `MFS, Microfinance & Grassroots FinTech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Trezor' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ ii)Trezor: ট্রেজর একটি হার্ডওয়্যার ওয়ালেট
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Trezor' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Currency & Financial Inclusion, Principle P2 Human Provenance Audit Gate, Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines, Microcredit Regulatory Authority (MRA) Rules & Standards, Anti-Money Laundering & Financial Fraud Prevention Protocols
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-062 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 5: [CRD-DFT-063] Candidate Rule for Pattern: BMCS
+- **File**: `knowledge\cards\drafts\CRD-DFT-063.yaml`
+- **Domain**: `Banking & Macroeconomics` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'BMCS' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ BMCS-এর সদস্যরা এবং তাঁদের সন্তানদের স্বতঃস্ফূর্ত অংশগ্রহণে সংগীত, নৃত্যসহ বিভিন্ন সাংস্কৃতিক পরিবেশনা পুরো আয়োজনকে করে তোলে আরও বর্ণিল ও উপভোগ্য
+  - ✗ সার্বিক বিবেচনায় BMCS-এর এ বার্ষিক পারিবারিক মিলনমেলা নিছক একটি সামাজিক বা সাংস্কৃতিক অনুষ্ঠান ছিল না; বরং এটি প্রবাসে বসবাসরত বাংলাদেশি মেরিনার ও তাঁদের পরিবারের সদস্যদের মধ্যে পারস্পরিক সম্পর্ক, সম্প্রীতি ও ভ্রাতৃত্বের বন্ধন আরও সুদৃঢ় করার এক তাৎপর্যপূর্ণ আয়োজন হিসেবে প্রতিফলিত হয়েছে
+  - ✗ প্রবাসের মাটিতে বাংলাদেশের মেরিটাইম পেশাজীবীদের সম্মিলিত শক্তি, সাফল্য ও ঐক্যের এক উজ্জ্বল দৃষ্টান্ত হয়ে থাকবে BMCS-এর এবারের পারিবারিক মিলনমেলা
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'BMCS' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-063 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 6: [CRD-DFT-064] Candidate Rule for Pattern: BMCS, BMCS
+- **File**: `knowledge\cards\drafts\CRD-DFT-064.yaml`
+- **Domain**: `Tax & Customs` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'BMCS, BMCS' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ অনুষ্ঠানের সমাপনী পর্বে BMCS-এর সাধারণ সম্পাদক শাহরিয়ার আলী গওহর উপস্থিত বিভিন্ন শিপিং কোম্পানির প্রতিনিধিরা, সম্মানিত অতিথি ও বিশিষ্ট ব্যক্তিদের তাঁদের ব্যস্ত সময় থেকে মূল্যবান সময় বের করে BMCS পরিবারের সঙ্গে আনন্দ ভাগ করে নেওয়ার জন্য আন্তরিক ধন্যবাদ ও কৃতজ্ঞতা জানান
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'BMCS, BMCS' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangla Academy Standard Bengali Grammar, Corpus Harvester Anomaly Detector
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-064 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
 ```
 
 ---

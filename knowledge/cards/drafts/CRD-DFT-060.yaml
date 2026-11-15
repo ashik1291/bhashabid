@@ -1,0 +1,30 @@
+id: CRD-DFT-060
+title: 'Candidate Rule for Pattern: Pence, Pennies'
+domain: MFS, Microfinance & Grassroots FinTech
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Pence, Pennies' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- Pence (পেন্স) হলো অর্থমূল্য বোঝাতে ব্যবহৃত সাধারণ বহুবচন, আর Pennies (পেনিস) বলতে
+  এক-পেনি মূল্যের পৃথক পৃথক মুদ্রা বোঝায়
+common_llm_error: LLMs emit unadapted English terminology 'Pence, Pennies' in Bengali
+  contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Currency & Financial Inclusion'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines
+- Microcredit Regulatory Authority (MRA) Rules & Standards
+- Anti-Money Laundering & Financial Fraud Prevention Protocols
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null
