@@ -1,0 +1,30 @@
+id: CRD-DFT-026
+title: 'Candidate Rule for Pattern: Ctrl, Ctrl, Insert'
+domain: Macroeconomics & Banking
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Ctrl, Ctrl, Insert'
+  requires standard Bengali terminology or phonetic transliteration with English in
+  parentheses.
+good_examples: []
+bad_examples:
+- 'Ctrl + C বা Ctrl + Insert: নির্বাচিত লেখা বা ছবি কপি করার জন্য'
+common_llm_error: LLMs emit unadapted English terminology 'Ctrl, Ctrl, Insert' in
+  Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Prudential Regulations & Monetary Policy
+- Bangla Academy Financial & Economic Terminology
+- The Business Standard Verified Macroeconomic Feed
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

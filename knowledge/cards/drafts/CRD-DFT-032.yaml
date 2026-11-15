@@ -1,0 +1,32 @@
+id: CRD-DFT-032
+title: 'Candidate Rule for Pattern: তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক'
+domain: Macroeconomics & Banking
+profile: bd_standard
+register: formal
+rule_summary: Pronominal and verbal honorific concordance mismatch for 'তিনি তাঁর
+  বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে' requires harmonization.
+good_examples:
+- তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করেন
+- সে তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে
+bad_examples:
+- তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে একটি বৈষম্যহীন, গণতান্ত্রিক
+  ও স্বনির্ভর বাংলাদেশ গড়ে তোলার আহ্বান জানান
+common_llm_error: LLMs produce honorific discordance between subject pronoun and verb
+  for 'তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে'.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Prudential Regulations & Monetary Policy
+- Bangla Academy Financial & Economic Terminology
+- The Business Standard Verified Macroeconomic Feed
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
+    human native-speaker sign-off.
+  signature_hash: null

@@ -1,0 +1,32 @@
+id: CRD-DFT-033
+title: 'Candidate Rule for Pattern: তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ'
+domain: Macroeconomics & Banking
+profile: bd_standard
+register: formal
+rule_summary: Pronominal and verbal honorific concordance mismatch for 'তিনি দোকান
+  খোলার সময়সূচি ঘোষণা করাও বন্ধ করে' requires harmonization.
+good_examples:
+- তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করেন
+- সে দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করে
+bad_examples:
+- নভেম্বরের শুরুতে ভিড় সামলাতে বেসরকারি নিরাপত্তারক্ষী নিয়োগ দেওয়া হয় এবং তিনি দোকান
+  খোলার সময়সূচি ঘোষণা করাও বন্ধ করে দিয়েছেন
+common_llm_error: LLMs produce honorific discordance between subject pronoun and verb
+  for 'তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করে'.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (National & Economy)'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Prudential Regulations & Monetary Policy
+- Bangla Academy Financial & Economic Terminology
+- The Business Standard Verified Macroeconomic Feed
+confidence: candidate
+created_date: '2026-11-12'
+last_modified: '2026-11-12'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Pending
+    human native-speaker sign-off.
+  signature_hash: null

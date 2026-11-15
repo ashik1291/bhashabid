@@ -16,45 +16,258 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue
+## 📥 Pending Candidate Queue (10 Cards Awaiting Human Review)
 
-✓ **All caught up! Zero draft cards currently pending review.**
+### Draft 1: [CRD-DFT-024] Candidate Rule for Pattern: ঝোপের চারপাশে পেটাচ্ছেন
+- **File**: `knowledge\cards\drafts\CRD-DFT-024.yaml`
+- **Domain**: `Creative Fiction & Dialogue` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: English calque or passive construction 'ঝোপের চারপাশে পেটাচ্ছেন' requires naturalization into standard Bengali phrasing.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ ঘুরিয়ে-পেঁচিয়ে কথা বলা / মূল প্রসঙ্গ এড়িয়ে যাওয়া
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ আপনি কেন সবসময় ঝোপের চারপাশে পেটাচ্ছেন? এই কাজটি কোনো কেকের টুকরো নয়।
+
+**Common LLM Error**: LLMs emit literal English passive calques or unidiomatic syntax for 'ঝোপের চারপাশে পেটাচ্ছেন'.
+**Sources / Citations**: Corpus Harvest Provenance: Literary Translation Benchmark (Raw LLM), Principle P2 Human Provenance Audit Gate, Bangla Academy Standard Bengali Grammar (প্রমিত বাংলা ভাষার ব্যাকরণ), Bangla Academy Modern Bengali Dictionary (আধুনিক বাংলা অভিধান)
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-024 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
 
 ---
 
-## 🛡️ Active Production Cards (38 Approved in `knowledge/cards/`)
+### Draft 2: [CRD-DFT-025] Candidate Rule for Pattern: Ctrl
+- **File**: `knowledge\cards\drafts\CRD-DFT-025.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Ctrl' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
 
-### Card 1: [CRD-DFT-001] Candidate Rule for Pattern: দ্বারা চালিত
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Ctrl + A: সব তথ্য বা ফন্ট একসঙ্গে নির্বাচন করতে
+  - ✗ Ctrl + X: কোনো ফাইল বা লেখা কাট করে সরিয়ে নিতে
+  - ✗ Ctrl + Y: বাতিল করা কাজ পুনরায় ফিরিয়ে আনতে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Ctrl' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-025 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 3: [CRD-DFT-026] Candidate Rule for Pattern: Ctrl, Ctrl, Insert
+- **File**: `knowledge\cards\drafts\CRD-DFT-026.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Ctrl, Ctrl, Insert' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Ctrl + C বা Ctrl + Insert: নির্বাচিত লেখা বা ছবি কপি করার জন্য
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Ctrl, Ctrl, Insert' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-026 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 4: [CRD-DFT-027] Candidate Rule for Pattern: Ctrl, Shift, Insert
+- **File**: `knowledge\cards\drafts\CRD-DFT-027.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Ctrl, Shift, Insert' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Ctrl + V বা Shift + Insert: কপি করা বস্তু অন্য কোথাও পেস্ট করতে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Ctrl, Shift, Insert' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-027 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 5: [CRD-DFT-028] Candidate Rule for Pattern: techbarta, prothomalo, com, Ctrl
+- **File**: `knowledge\cards\drafts\CRD-DFT-028.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'techbarta, prothomalo, com, Ctrl' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ টেকবার্তার সঙ্গে যোগাযোগ: techbarta@prothomalo.com Ctrl + Z: কাজের ভুল সংশোধনে আগের অবস্থায় ফিরতে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'techbarta, prothomalo, com, Ctrl' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-028 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 6: [CRD-DFT-029] Candidate Rule for Pattern: Windows, key
+- **File**: `knowledge\cards\drafts\CRD-DFT-029.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Windows, key' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Windows key + F1: উইন্ডোজ–সংক্রান্ত সাহায্যের জন্য বিং সার্চ
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Windows, key' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-029 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 7: [CRD-DFT-030] Candidate Rule for Pattern: Alt, Tab
+- **File**: `knowledge\cards\drafts\CRD-DFT-030.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Alt, Tab' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Alt + Tab: সচল একাধিক অ্যাপ বা উইন্ডোর মধ্যে সহজে আনাগোনা করা
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Alt, Tab' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-030 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 8: [CRD-DFT-031] Candidate Rule for Pattern: Shift, Delete
+- **File**: `knowledge\cards\drafts\CRD-DFT-031.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Shift, Delete' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ Shift + Delete: ফাইল রিসাইকেল বিন ছাড়াই স্থায়ীভাবে মুছে ফেলা
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Shift, Delete' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-031 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 9: [CRD-DFT-032] Candidate Rule for Pattern: তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক
+- **File**: `knowledge\cards\drafts\CRD-DFT-032.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Pronominal and verbal honorific concordance mismatch for 'তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে' requires harmonization.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করেন
+  - ✓ সে তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে একটি বৈষম্যহীন, গণতান্ত্রিক ও স্বনির্ভর বাংলাদেশ গড়ে তোলার আহ্বান জানান
+
+**Common LLM Error**: LLMs produce honorific discordance between subject pronoun and verb for 'তিনি তাঁর বক্তব্যে সিপাহি-জনতার ঐতিহাসিক সংহতির চেতনা ধারণ করে'.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-032 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 10: [CRD-DFT-033] Candidate Rule for Pattern: তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ
+- **File**: `knowledge\cards\drafts\CRD-DFT-033.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Pronominal and verbal honorific concordance mismatch for 'তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করে' requires harmonization.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করেন
+  - ✓ সে দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করে
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ নভেম্বরের শুরুতে ভিড় সামলাতে বেসরকারি নিরাপত্তারক্ষী নিয়োগ দেওয়া হয় এবং তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করে দিয়েছেন
+
+**Common LLM Error**: LLMs produce honorific discordance between subject pronoun and verb for 'তিনি দোকান খোলার সময়সূচি ঘোষণা করাও বন্ধ করে'.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-033 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+## 🛡️ Active Production Cards (43 Approved in `knowledge/cards/`)
+
+### Card 1: [CRD-DFT-001] Rule for Naturalizing Passive Calque: 'দ্বারা চালিত' (Driven By)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 2: [CRD-DFT-002] Candidate Rule for Pattern: পড়িয়া
+### Card 2: [CRD-DFT-002] Rule for Sadhu-Cholito Concordance in Pedagogical Prompts: 'পড়িয়া' vs 'পড়ে'
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 3: [CRD-DFT-004] Candidate Rule for Pattern: জিজ্ঞেস করে একটি রুল
+### Card 3: [CRD-DFT-004] Rule for Judicial Idiom in Writ Petitions: 'রুল নিশি জারি' (Issuance of Rule Nisi)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 4: [CRD-DFT-005] Candidate Rule for Pattern: বড় বিপদের সংকেত
+### Card 4: [CRD-DFT-005] Rule for Meteorological Disaster Warning: 'মহাবিপদ সংকেত' (Great Danger Signal)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 5: [CRD-DFT-006] Candidate Rule for Pattern: ঝোপের চারপাশে পেটাচ্ছেন
+### Card 5: [CRD-DFT-006] Rule for English Idiom Naturalization: 'Beat Around the Bush' -> 'ঘুরিয়ে-পেঁচিয়ে কথা বলা'
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 6: [CRD-DFT-007] Candidate Rule for Pattern: অনুপস্থিতিতে দায়িত্বভার পালন
+### Card 6: [CRD-DFT-007] Rule for Absence Substitution & Honorific Concordance in Official Dispatches
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 7: [CRD-DFT-008] Candidate Rule for Pattern: alphabet
+### Card 7: [CRD-DFT-008] Rule for Academic Linguistics: Terminology for 'Alphabet' vs 'Writing Systems'
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
@@ -139,77 +352,102 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 24: [CRD-GRM-001] Sadhu-Cholito Verb Consistency (গুরুচণ্ডালী দোষ পরিহার)
+### Card 24: [CRD-DOM-014] Rule for E-Commerce & Retail Logistics: Order Fulfillment, Cash on Delivery & Returns
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 25: [CRD-DOM-015] Rule for Citizen Digital Services: Public Portals, NID Verification & Civic Registrations
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 26: [CRD-DOM-016] Rule for Customer Support & Conversational Chat: Empathetic, Polite & Natural Tone
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 27: [CRD-DOM-017] Rule for MFS & Grassroots FinTech: Mobile Money, Remittance, Microloans & Fraud Prevention
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 28: [CRD-DOM-018] Rule for Mass Media & Journalism: Headlines, Inverted Pyramid Leads & Attribution
+- **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Bengali Native Speaker)
+**Human Reviewer Decision Box**:
+- [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
+
+### Card 29: [CRD-GRM-001] Sadhu-Cholito Verb Consistency (গুরুচণ্ডালী দোষ পরিহার)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 25: [CRD-GRM-002] Honorific Concordance Across Pronouns and Verbs (আপনি / তুমি / তুই)
+### Card 30: [CRD-GRM-002] Honorific Concordance Across Pronouns and Verbs (আপনি / তুমি / তুই)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 26: [CRD-GRM-003] Bengali Case Markers and Postposition Agreement (কারক ও বিভক্তি)
+### Card 31: [CRD-GRM-003] Bengali Case Markers and Postposition Agreement (কারক ও বিভক্তি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 27: [CRD-GRM-004] Bengali Euphonic Junctions (সন্ধি: স্বরসন্ধি ও ব্যঞ্জনসন্ধি)
+### Card 32: [CRD-GRM-004] Bengali Euphonic Junctions (সন্ধি: স্বরসন্ধি ও ব্যঞ্জনসন্ধি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 28: [CRD-GRM-005] Bengali Compound Formation (সমাস: দ্বন্দ্ব, দ্বিগু, তৎপুরুষ ও কর্মধারয়)
+### Card 33: [CRD-GRM-005] Bengali Compound Formation (সমাস: দ্বন্দ্ব, দ্বিগু, তৎপুরুষ ও কর্মধারয়)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 29: [CRD-NUM-001] Irregular Bengali Cardinal Numbers 0-99 (০-৯৯ অনিয়মিত সংখ্যা)
+### Card 34: [CRD-NUM-001] Irregular Bengali Cardinal Numbers 0-99 (০-৯৯ অনিয়মিত সংখ্যা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 30: [CRD-ORT-001] Unicode NFC Canonicalization and Composite Graphemes (য়, ড়, ঢ়)
+### Card 35: [CRD-ORT-001] Unicode NFC Canonicalization and Composite Graphemes (য়, ড়, ঢ়)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 31: [CRD-ORT-002] Bangla Academy Loanword S-Rule (বিদেশি শব্দে 'স' বনাম 'ষ')
+### Card 36: [CRD-ORT-002] Bangla Academy Loanword S-Rule (বিদেশি শব্দে 'স' বনাম 'ষ')
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 32: [CRD-ORT-003] Regional Orthographic Variations (বাংলাদেশ প্রমিত বনাম পশ্চিমবঙ্গ বানানরীতি)
+### Card 37: [CRD-ORT-003] Regional Orthographic Variations (বাংলাদেশ প্রমিত বনাম পশ্চিমবঙ্গ বানানরীতি)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 33: [CRD-TRN-001] Translation Idioms vs Literal English Calques (ভাবানুবাদ বনাম আক্ষরিক অনুবাদ)
+### Card 38: [CRD-TRN-001] Translation Idioms vs Literal English Calques (ভাবানুবাদ বনাম আক্ষরিক অনুবাদ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 34: [CRD-TRN-002] High Court & Judicial Reporting Formulas (হাইকোর্টের রুল ও রিট মামলার প্রমিত পরিভাষা)
+### Card 39: [CRD-TRN-002] High Court & Judicial Reporting Formulas (হাইকোর্টের রুল ও রিট মামলার প্রমিত পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 35: [CRD-TRN-003] Macroeconomic & Financial News Syntax (অর্থনৈতিক সংবাদ ও বাংলাদেশ ব্যাংক পরিভাষা)
+### Card 40: [CRD-TRN-003] Macroeconomic & Financial News Syntax (অর্থনৈতিক সংবাদ ও বাংলাদেশ ব্যাংক পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 36: [CRD-TRN-004] Sports Vernacular & Cricket Reporting (ক্রিকেট ও ক্রীড়া সংবাদ পরিভাষা)
+### Card 41: [CRD-TRN-004] Sports Vernacular & Cricket Reporting (ক্রিকেট ও ক্রীড়া সংবাদ পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 37: [CRD-TRN-005] Article 102 Constitutional Writs Taxonomy & Drafting (সংবিধানের ১০২ অনুচ্ছেদের রিট মামলার প্রমিত পরিভাষা)
+### Card 42: [CRD-TRN-005] Article 102 Constitutional Writs Taxonomy & Drafting (সংবিধানের ১০২ অনুচ্ছেদের রিট মামলার প্রমিত পরিভাষা)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Lead Native-Speaker Reviewer)
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
 
-### Card 38: [CRD-TRN-006] Proverbs, Idioms & Metaphoric Equivalence (প্রবাদ-প্রবচন, বাগধারা ও রূপকার্থ সমীকরণ)
+### Card 43: [CRD-TRN-006] Proverbs, Idioms & Metaphoric Equivalence (প্রবাদ-প্রবচন, বাগধারা ও রূপকার্থ সমীকরণ)
 - **Status**: `APPROVED` | **Reviewer**: Ashikur Rahman Bhuiyan (Native Bengali Speaker & Project Architect (<ashikur.bhuiyan@brainstation-23.com>))
 **Human Reviewer Decision Box**:
 - [x] **APPROVED** (Verified by Ashikur Rahman Bhuiyan)
