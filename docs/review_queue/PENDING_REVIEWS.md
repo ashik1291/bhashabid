@@ -16,7 +16,7 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue (20 Cards Awaiting Human Review)
+## 📥 Pending Candidate Queue (21 Cards Awaiting Human Review)
 
 ### Draft 1: [CRD-DFT-001] Candidate Rule for Pattern: দ্বারা চালিত
 - **File**: `knowledge\cards\drafts\CRD-DFT-001.yaml`
@@ -391,6 +391,10 @@ bhashabid review --card CRD-DFT-017 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 **Negative Examples (ভ্রান্ত প্রয়োগ)**:
   - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে।
+  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 3313/2026)।
+  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 2392/2026)।
+  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 9828/2026)।
+  - ✗ খোলা জানালার বাইরে সন্ধ্যার হালকা বাতাস বইছিল, তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে (নথি নং 1661/2026)।
 
 **Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি চেয়ার থেকে উঠে দাঁড়িয়ে বললেন যে বিদায় নেওয়ার সময় হয়েছে'.
 **Sources / Citations**: Corpus Harvest Provenance: Learning from Mistakes Engine (Offline Autonomous Synthesis), Principle P2 Human Provenance Audit Gate, Bangla Academy Standard Bengali Grammar (প্রমিত বাংলা ভাষার ব্যাকরণ), Bangla Academy Modern Bengali Dictionary (আধুনিক বাংলা অভিধান)
@@ -413,6 +417,9 @@ bhashabid review --card CRD-DFT-018 --reviewer "Ashikur Rahman Bhuiyan" --affili
 
 **Negative Examples (ভ্রান্ত প্রয়োগ)**:
   - ✗ &nbsp;দুই দশক পর অ্যান্ডি স্যাকস চরিত্রে ফিরেছেন অ্যান
+  - ✗ নদীতে হারিয়েছে তাঁদের ঘর অভিযোজনে কত অর্থায়ন &nbsp; বাংলাদেশের তৃতীয় জাতীয়ভাবে নির্ধারিত অবদান বা এনডিসি ৩.০ অনুযায়ী, অভিযোজনের অগ্রাধিকার বাস্তবায়নে বছরে ৮ দশমিক ৫ বিলিয়ন ডলার প্রয়োজন
+  - ✗ ’ (সহিহ বুখারি, হাদিস: ৫২৩৩)&nbsp; এর শিক্ষা হলো, কোনো দুজনের মনে ভালোবাসা তৈরি হলে তাদের জন্য সবচেয়ে সুন্দর ও নিরাপদ পরিণতি বিয়ে
+  - ✗ ’&nbsp; সাহাবিরা অবাক হয়ে জিজ্ঞেস করলেন, ‘আল্লাহর রাসুল, আমাদের কেউ নিজের চাহিদা পূরণ করবে, আর তাতেও কি সওয়াব হবে?’ নবীজি উত্তর দিলেন, ‘তোমরা বলো তো, যদি সে হারাম পথে তা পূরণ করত, তবে কি তার পাপ হতো না? ঠিক তেমনি সে যখন হালাল পথে তা পূরণ করে, তখন তার জন্য সওয়াব লেখা হয়
 
 **Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'nbsp'.
 **Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
@@ -464,6 +471,28 @@ bhashabid review --card CRD-DFT-020 --reviewer "Ashikur Rahman Bhuiyan" --affili
 **Quick Action Command**:
 ```bash
 bhashabid review --card CRD-DFT-021 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 21: [CRD-DFT-022] Candidate Rule for Pattern: তিনি সেই বিয়ে বাতিল করে
+- **File**: `knowledge\cards\drafts\CRD-DFT-022.yaml`
+- **Domain**: `Macroeconomics & Banking` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Automatically flagged pattern 'তিনি সেই বিয়ে বাতিল করে' requires naturalization to active causal phrasing (e.g. 'বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি সেই বিয়ে বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে সেই বিয়ে বাতিল করে'').
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+  - ✓ বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): 'তিনি সেই বিয়ে বাতিল করেন' অথবা বিকল্প ২ (সাধারণ সর্বনাম): 'সে সেই বিয়ে বাতিল করে'
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ খানসা নবীজির কাছে গিয়ে অভিযোগ করলে তিনি সেই বিয়ে বাতিল করে দেন
+
+**Common LLM Error**: LLMs emit literal calques or non-standard syntax for 'তিনি সেই বিয়ে বাতিল করে'.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (National & Economy), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Prudential Regulations & Monetary Policy, Bangla Academy Financial & Economic Terminology, The Business Standard Verified Macroeconomic Feed
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-022 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
 ```
 
 ---
