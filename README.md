@@ -2,6 +2,7 @@
 
 ### *Deterministic Bengali linguistic coprocessor engine & progressive skill layer with a Supervised Self-Learning Distillation Loop.*
 
+[![Security CI](https://github.com/ashik1291/bhashabid/actions/workflows/security_audit.yml/badge.svg)](https://github.com/ashik1291/bhashabid/actions/workflows/security_audit.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
 [![PyPI: v1.0.1](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/1.0.1/)
