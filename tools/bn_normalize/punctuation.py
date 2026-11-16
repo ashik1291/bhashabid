@@ -12,20 +12,20 @@ URL_OR_EMAIL_PATTERN = re.compile(
 def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str:
     """
     Normalizes punctuation in Bengali text:
-    1. Converts ASCII sentence-ending period (.) to Bengali Dari (।) while strictly preserving:
+    1. Converts ASCII sentence-ending period (.) and ASCII pipe (|) to Bengali Dari (।) while strictly preserving:
        - Decimals (e.g. 3.14 or ৩.১৪)
        - Web URLs (e.g. https://www.tbsnews.net)
        - Email addresses (e.g. info@bangladesh.gov.bd)
        - Alphanumeric domain names and abbreviations (e.g. e.g., i.e., test.com)
+       - Markdown table rows (| col1 | col2 |) and non-Bengali shell/bitwise pipes
     2. Collapses repeated consecutive Dari characters (।। -> ।).
-    3. Standardizes quotation marks to typographical curved quotes.
-    4. Cleans spaces before sentence terminators.
+    3. Enforces standard typographic spacing:
+       - Removes redundant whitespace before punctuation (ভাত খাই । -> ভাত খাই।)
+       - Enforces single whitespace after sentence terminators (।, ॥, !, ?) when followed by words
+    4. Standardizes quotation marks to typographical curved quotes.
     """
     if not text:
         return ""
-
-    # Collapse multiple consecutive Daris
-    text = re.sub(r"[\u0964]{2,}", DARI, text)
 
     # Protect URLs and email addresses using temporary token masking
     masked_items = []
@@ -42,6 +42,25 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
 
     text = URL_OR_EMAIL_PATTERN.sub(_mask_url_or_email, text)
 
+    # 1. Convert ASCII pipe (|) used as Dari in Bengali text (protecting markdown tables and shell/code pipes)
+    if re.search(r"[\u0980-\u09FF]", text):
+        lines = text.split("\n")
+        norm_lines = []
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith("|") and stripped.endswith("|") and stripped.count("|") >= 2:
+                norm_lines.append(line)
+            else:
+                if re.search(r"[\u0980-\u09FF]", line):
+                    line = re.sub(r"(?<=[\u0980-\u09FF])\s*\|+(?=[\s\u0980-\u09FF\n]|$)", DARI, line)
+                    line = re.sub(r"(?<=[\u0980-\u09FF\s])\|+(?=[\s\u0980-\u09FF\n]|$)", DARI, line)
+                norm_lines.append(line)
+        text = "\n".join(norm_lines)
+
+    # 2. Collapse multiple consecutive Daris (।। -> ।)
+    text = re.sub(r"[\u0964]{2,}", DARI, text)
+
+    # 3. Convert ASCII period (.) to Bengali Dari (।) where appropriate
     if convert_period_to_dari and re.search(r"[\u0980-\u09FF]", text):
         # 1. Do not convert if followed by ASCII/Bengali digit (decimals like 3.14, ৩.১৪)
         # 2. Do not convert if between ASCII alphanumeric characters (like site.com, node.js, e.g.)
@@ -66,7 +85,13 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
         text = text.replace(f"__BHASHABID_URL_MASK_{idx}__", original)
 
     # Clean space before sentence ending marks
-    text = re.sub(r"\s+([\u0964!?,;:])", r"\1", text)
+    text = re.sub(r"\s+([\u0964\u0965!?,;:])", r"\1", text)
+
+    # Enforce standard space after sentence terminators (।, ॥, !, ?) when directly followed by word characters
+    terminators = r"[\u0964\u0965!?]"
+    closer_chars = r"[\"'”’\)\}\]]"
+    text = re.sub(f"({terminators})(?!\\s|{terminators}|{closer_chars}|$)", r"\1 ", text)
+    text = re.sub(f"({terminators}{closer_chars}+)(?!\\s|{terminators}|{closer_chars}|$)", r"\1 ", text)
 
     # Standardize ASCII quotes to curved Bengali quotes
     # Opening double quote (preceded by start/space/dash/punctuation, followed by letter)

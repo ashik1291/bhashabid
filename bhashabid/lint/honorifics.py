@@ -1,0 +1,257 @@
+# tools/bn_lint/honorifics.py
+# Honorific Concordance Linter (আপনি / তুমি / তুই) with Bidirectional Repair
+import re
+from .models import LintIssue, LintSeverity
+
+# Boundary helper for Bengali tokens
+B_L = r"(?<![\u0980-\u09FF])"
+B_R = r"(?![\u0980-\u09FF])"
+
+# Verb transformation dictionaries
+FORMAL_TO_FAMILIAR_VERBS = {
+    "করেন": "করো", "যান": "যাও", "বলেন": "বলো", "খান": "খাও",
+    "দেখেন": "দেখো", "নেন": "নাও", "দেন": "দাও", "হোন": "হও",
+    "আসেন": "এসো", "করবেন": "করবে", "যাবেন": "যাবে"
+}
+
+FAMILIAR_TO_FORMAL_VERBS = {
+    "করো": "করেন", "যাও": "যান", "বলো": "বলেন", "খাও": "খান",
+    "দেখো": "দেখেন", "নাও": "নেন", "দাও": "দেন", "হও": "হোন",
+    "এসো": "আসেন", "করবে": "করবেন", "যাবে": "যাবেন"
+}
+
+INTIMATE_TO_FAMILIAR_VERBS = {
+    "করিস": "করো", "যাবি": "যাবে", "বলিস": "বলো", "খাস": "খাও",
+    "দেখিস": "দেখো", "নিস": "নাও", "দিস": "দাও", "করবি": "করবে"
+}
+
+# Third-person verb mappings (তিনি vs সে)
+THIRD_PERSON_ORDINARY_TO_HONORIFIC = {
+    "বলল": "বললেন", "করল": "করলেন", "গেল": "গেলেন", "খেল": "খেলেন",
+    "দেখল": "দেখলেন", "নিল": "নিলেন", "দিল": "দিলেন", "বলে": "বলেন",
+    "করে": "করেন", "যায়": "যান", "খায়": "খান", "দেখে": "দেখেন",
+    "দেয়": "দেন", "নেয়": "নেন",
+    "হলো": "হলেন", "বলবে": "বলবেন", "করবে": "করবেন", "যাবে": "যাবেন",
+    "ছিল": "ছিলেন", "আসে": "আসেন", "এলো": "এলেন", "আসলো": "আসলেন",
+    "আসবে": "আসবেন", "থাকে": "থাকেন", "থাকবে": "থাকবেন", "হয়েছে": "হয়েছেন",
+    "গিয়েছিল": "গিয়েছিলেন", "করেছিল": "করেছিলেন", "বলেছিল": "বলেছিলেন",
+    "এসেছিল": "এসেছিলেন", "হয়েছিল": "হয়েছিলেন", "দেখেছিল": "দেখেছিলেন",
+    "খেয়েছিল": "খেয়েছিলেন", "দিয়েছিল": "দিয়েছিলেন", "নিয়েছিল": "নিয়েছিলেন",
+    "করত": "করতেন", "যেত": "যেতেন", "বলত": "বলতেন", "থাকত": "থাকতেন"
+}
+
+THIRD_PERSON_HONORIFIC_TO_ORDINARY = {
+    v: k for k, v in THIRD_PERSON_ORDINARY_TO_HONORIFIC.items()
+}
+
+# 1. আপনি + informal verbs
+APNI_CLASH_PAT = re.compile(
+    B_L + r"(আপনি|আপনারা)" + B_R +
+    r"((?:(?!(?:আপনি|আপনারা)" + B_R + r")[^।?!,;:\n])*?)" +
+    B_L + r"(করো|যাও|বলো|খাও|দেখো|নাও|দাও|হও|এসো|করিস|যাবি|বলিস|খাস|দেখিস|আসিস)" + B_R
+)
+
+# 2. তুমি + formal or intimate verbs
+TUMI_CLASH_PAT = re.compile(
+    B_L + r"(তুমি|তোমরা)" + B_R +
+    r"((?:(?!(?:তুমি|তোমরা)" + B_R + r")[^।?!,;:\n])*?)" +
+    B_L + r"(আসেন|করেন|যান|বলেন|খান|দেখেন|নেন|দেন|হোন|করবেন|যাবেন|করিস|যাবি|বলিস|খাস|দেখিস)" + B_R
+)
+
+# 3. তুই + formal verbs
+TUI_CLASH_PAT = re.compile(
+    B_L + r"(তুই|তোরা)" + B_R +
+    r"((?:(?!(?:তুই|তোরা)" + B_R + r")[^।?!,;:\n])*?)" +
+    B_L + r"(আসেন|করেন|যান|বলেন|খান|দেখেন|নেন|দেন|হোন|করবেন|যাবেন)" + B_R
+)
+
+# 4. তিনি / তাঁরা + ordinary verbs (e.g. তিনি বলল -> তিনি বললেন OR সে বলল)
+TINI_CLASH_PAT = re.compile(
+    B_L + r"(তিনি|তাঁরা)" + B_R +
+    r"((?:(?!(?:তিনি|তাঁরা)" + B_R + r")[^।?!,;:\n])*?)" +
+    B_L + r"(ছিল|বলল|করল|গেল|খেল|দেখল|নিল|দিল|বলে|করে|যায়|খায়|দেখে|হলো|বলবে|করবে|যাবে|আসে|এলো|আসলো|আসবে|থাকে|থাকবে|হয়েছে|গিয়েছিল|করেছিল|বলেছিল|এসেছিল|হয়েছিল|দেখেছিল|খেয়েছিল|দিয়েছিল|নিয়েছিল|করত|যেত|বলত|থাকত)" + B_R
+)
+
+# 5. সে / তারা + honorific verbs (e.g. সে বললেন -> সে বলল OR তিনি বললেন)
+SE_CLASH_PAT = re.compile(
+    B_L + r"(সে|তারা)" + B_R +
+    r"((?:(?!(?:সে|তারা)" + B_R + r")[^।?!,;:\n])*?)" +
+    B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন)" + B_R
+)
+
+# Universal clause boundary marker: subordinate and coordinate conjunctions
+CLAUSE_BOUNDARY_PAT = re.compile(
+    B_L + r"(যে|যেন|কারণ|যেহেতু|সেহেতু|যখন|তখন|যদি|তবে|তাহলে|কিন্তু|অথবা|বা|যাতে|নইলে)" + B_R
+)
+
+def check_honorific_clash(text: str) -> list[LintIssue]:
+    issues = []
+    lines = text.splitlines()
+
+    for line_idx, line in enumerate(lines, start=1):
+        # 1. Check তুমি clash
+        for m_tumi in TUMI_CLASH_PAT.finditer(line):
+            subj = m_tumi.group(1)
+            middle = m_tumi.group(2)
+            verb = m_tumi.group(3)
+            matched = m_tumi.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            if verb in FORMAL_TO_FAMILIAR_VERBS:
+                correct_familiar_verb = FORMAL_TO_FAMILIAR_VERBS[verb]
+                opt1 = f"{subj}{middle}{correct_familiar_verb}"
+                formal_subj = "আপনি" if subj == "তুমি" else "আপনারা"
+                opt2 = f"{formal_subj}{middle}{verb}"
+                suggestion = f"বিকল্প ১ (ক্রিয়াপদ পরিবর্তন): '{opt1}' অথবা বিকল্প ২ (সর্বনাম পরিবর্তন): '{opt2}'"
+            elif verb in INTIMATE_TO_FAMILIAR_VERBS:
+                correct_familiar_verb = INTIMATE_TO_FAMILIAR_VERBS[verb]
+                opt1 = f"{subj}{middle}{correct_familiar_verb}"
+                intimate_subj = "তুই" if subj == "তুমি" else "তোরা"
+                opt2 = f"{intimate_subj}{middle}{verb}"
+                suggestion = f"বিকল্প ১: '{opt1}' অথবা বিকল্প ২: '{opt2}'"
+            else:
+                suggestion = f"ক্রিয়াপদে যথাযথ বিভক্তি প্রয়োগ করুন।"
+
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-HONORIFIC-TUMI",
+                message=f"সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (সাধারণ) এর সাথে বেমানান ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_tumi.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion=suggestion
+            ))
+
+        # 2. Check আপনি clash
+        for m_apni in APNI_CLASH_PAT.finditer(line):
+            subj = m_apni.group(1)
+            middle = m_apni.group(2)
+            verb = m_apni.group(3)
+            matched = m_apni.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            if verb in FAMILIAR_TO_FORMAL_VERBS:
+                correct_formal_verb = FAMILIAR_TO_FORMAL_VERBS[verb]
+                opt1 = f"{subj}{middle}{correct_formal_verb}"
+                familiar_subj = "তুমি" if subj == "আপনি" else "তোমরা"
+                opt2 = f"{familiar_subj}{middle}{verb}"
+                suggestion = f"বিকল্প ১ (ক্রিয়াপদ পরিবর্তন): '{opt1}' অথবা বিকল্প ২ (সর্বনাম পরিবর্তন): '{opt2}'"
+            else:
+                suggestion = f"ক্রিয়াপদে যথাযথ সম্ভ্রমাত্মক বিভক্তি (-েন) প্রয়োগ করুন।"
+
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-HONORIFIC-APNI",
+                message=f"সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (সম্ভ্রমাত্মক) এর সাথে বেমানান ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_apni.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion=suggestion
+            ))
+
+        # 3. Check তুই clash
+        for m_tui in TUI_CLASH_PAT.finditer(line):
+            subj = m_tui.group(1)
+            matched = m_tui.group(0)
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-HONORIFIC-TUI",
+                message=f"সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (ঘনিষ্ঠ/তুচ্ছার্থ) এর সাথে সম্ভ্রমাত্মক ক্রিয়াপদ ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_tui.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion="ঘনিষ্ঠ রূপে -িস/-বি (যেমন: করিস, যাবি) ব্যবহার করুন।"
+            ))
+
+        # 4. Check তিনি / তাঁরা clash (3rd person honorific pronoun + non-honorific verb)
+        for m_tini in TINI_CLASH_PAT.finditer(line):
+            subj = m_tini.group(1)
+            middle = m_tini.group(2)
+            verb = m_tini.group(3)
+            matched = m_tini.group(0)
+
+            # Linguistic Guard 1: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            # Linguistic Guard 2: Prior honorific verb already exists in middle
+            # e.g. 'তিনি পদ ছাড়েন বলে' -> 'ছাড়েন' is already the main verb matching 'তিনি'.
+            has_prior_hon_verb = any(
+                re.search(rf"(?<![\u0980-\u09FF]){hv}(?![\u0980-\u09FF])", middle)
+                for hv in THIRD_PERSON_HONORIFIC_TO_ORDINARY.keys()
+            )
+            if has_prior_hon_verb:
+                continue
+
+            # Linguistic Guard 3: Non-finite participle in compound or serial verb construction
+            # e.g. 'তিনি বাতিল করে দেন' or 'তিনি বাতিল করে ... বলেন'
+            rest_of_clause = line[m_tini.end():]
+            if verb in ("করে", "হয়ে", "গিয়ে", "এসে", "দেখে", "বলে"):
+                # Check if an honorific finite verb follows in the same clause
+                if any(
+                    re.search(rf"(?<![\u0980-\u09FF]){hv}(?![\u0980-\u09FF])", rest_of_clause)
+                    for hv in THIRD_PERSON_HONORIFIC_TO_ORDINARY.keys()
+                ):
+                    continue
+
+            # Linguistic Guard 4: Quotative complementizer 'বলে' followed by reporting predicate
+            # e.g. 'বলে জানা গেছে', 'বলে মনে করা হয়', 'বলে দাবি করা হয়'
+            if verb == "বলে" and re.search(r"^\s*(?:জানা গেছে|মনে করা|দাবি করা|উল্লেখ করা|প্রকাশ|জানানো)", rest_of_clause):
+                continue
+
+            hon_verb = THIRD_PERSON_ORDINARY_TO_HONORIFIC.get(verb, f"{verb}েন")
+            ord_subj = "সে" if subj == "তিনি" else "তারা"
+            suggestion = f"বিকল্প ১ (সম্ভ্রমাত্মক ক্রিয়াপদ): '{subj}{middle}{hon_verb}' অথবা বিকল্প ২ (সাধারণ সর্বনাম): '{ord_subj}{middle}{verb}'"
+
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-HONORIFIC-TINI",
+                message=f"তৃতীয় পুরুষ সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (সম্ভ্রমাত্মক) এর সাথে সাধারণ ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_tini.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion=suggestion
+            ))
+
+        # 5. Check সে / তারা clash (3rd person ordinary pronoun + honorific verb)
+        for m_se in SE_CLASH_PAT.finditer(line):
+            subj = m_se.group(1)
+            middle = m_se.group(2)
+            verb = m_se.group(3)
+            matched = m_se.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            # Linguistic Guard 5: Demonstrative determiner 'সে' modifying a noun
+            # e.g. 'সে কথা ভাবা দরকার', 'সে সময়', 'সে বিষয়'
+            if subj == "সে" and re.match(r"^\s*(?:কথা|বিষয়|সময়|দিন|বছর|ঘটনা|মুহূর্ত|স্থান|জায়গা|কারণে|ফলে|লোক|ব্যক্তি)(?![\u0980-\u09FF])", middle):
+                continue
+
+            # Linguistic Guard 6: Another honorific subject intervenes in middle
+            # e.g. 'সে কথা ভাবা দরকার বলেও তিনি উল্লেখ করেন' -> subject of 'করেন' is 'তিনি', not 'সে'.
+            if subj == "সে" and re.search(r"(?<![\u0980-\u09FF])(তিনি|তাঁরা|আপনারা)(?![\u0980-\u09FF])", middle):
+                continue
+
+            ord_verb = THIRD_PERSON_HONORIFIC_TO_ORDINARY.get(verb, verb)
+            hon_subj = "তিনি" if subj == "সে" else "তাঁরা"
+            suggestion = f"বিকল্প ১ (সাধারণ ক্রিয়াপদ): '{subj}{middle}{ord_verb}' অথবা বিকল্প ২ (সম্ভ্রমাত্মক সর্বনাম): '{hon_subj}{middle}{verb}'"
+
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-HONORIFIC-SE",
+                message=f"তৃতীয় পুরুষ সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (সাধারণ) এর সাথে সম্ভ্রমাত্মক ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_se.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion=suggestion
+            ))
+
+    return issues

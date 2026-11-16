@@ -151,5 +151,29 @@ class TestBnLint(unittest.TestCase):
         calque_issues = lint_text(calque_text)
         self.assertTrue(any(i.rule_id == "RULE-LINT-CALQUE" for i in calque_issues))
 
+    def test_linter_spelling_integration(self):
+        # Sentence containing misspelled words
+        typo_text = "তিনি শহিদ বেদিতে শ্রদ্ধাঞ্জলী অর্পণ করলেন এবং বুদ্ধিজীবি সমাবেশের কথা বললেন।"
+        
+        # When include_spelling is False (default), standard linting only checks grammar/calques
+        clean_issues = lint_text(typo_text, include_spelling=False)
+        self.assertEqual(len([i for i in clean_issues if i.rule_id == "RULE-LINT-SPELLING"]), 0)
+
+        # When include_spelling is True, offline lexicon flags spelling mistakes
+        spelling_issues = lint_text(typo_text, include_spelling=True)
+        spell_rules = [i for i in spelling_issues if i.rule_id == "RULE-LINT-SPELLING"]
+        self.assertTrue(len(spell_rules) >= 2)
+        words_flagged = [i.matched_text for i in spell_rules]
+        self.assertIn("শ্রদ্ধাঞ্জলী", words_flagged)
+        self.assertIn("বুদ্ধিজীবি", words_flagged)
+
+    def test_standalone_check_spelling(self):
+        from tools.bn_lint import check_spelling
+        text = "তিনি শ্রদ্ধাঞ্জলী জানালেন।"
+        issues = check_spelling(text)
+        self.assertTrue(len(issues) >= 1)
+        self.assertEqual(issues[0].matched_text, "শ্রদ্ধাঞ্জলী")
+        self.assertIn("শ্রদ্ধাঞ্জলি", issues[0].suggestion)
+
 if __name__ == "__main__":
     unittest.main()

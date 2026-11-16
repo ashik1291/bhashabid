@@ -369,7 +369,8 @@ def handle_harvest(args):
 def handle_lint(args):
     try:
         text = resolve_text_or_file(args.text)
-        issues = lint_text(text)
+        include_spelling = getattr(args, "spelling", False)
+        issues = lint_text(text, include_spelling=include_spelling)
         if args.json:
             data = [
                 {
@@ -465,8 +466,9 @@ def main():
     p_rep.set_defaults(func=handle_repair)
 
     # lint
-    p_lint = subparsers.add_parser("lint", help="Lint Bengali text for Guru-chandali, honorifics, and calques")
+    p_lint = subparsers.add_parser("lint", help="Lint Bengali text for Guru-chandali, honorifics, calques, and spelling")
     p_lint.add_argument("text", help="Bengali text string or path to text file")
+    p_lint.add_argument("--spelling", "-s", action="store_true", help="Include offline phonetic spelling checks in lint report")
     p_lint.add_argument("--json", action="store_true", help="Output results in JSON format")
     p_lint.set_defaults(func=handle_lint)
 

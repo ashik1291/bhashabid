@@ -46,11 +46,12 @@ class BhashabidMCPServer:
             },
             {
                 "name": "lint_text",
-                "description": "Lint Bengali text for Guru-chandali (Sadhu-Cholito mixing), honorific clashes, and calques.",
+                "description": "Lint Bengali text for Guru-chandali (Sadhu-Cholito mixing), honorific clashes, calques, and optional spelling mistakes.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "text": {"type": "string", "description": "The Bengali text to lint."}
+                        "text": {"type": "string", "description": "The Bengali text to lint."},
+                        "check_spelling": {"type": "boolean", "default": False, "description": "Whether to include offline phonetic spelling error checks."}
                     },
                     "required": ["text"]
                 }
@@ -150,7 +151,8 @@ class BhashabidMCPServer:
 
         elif name == "lint_text":
             raw_text = arguments.get("text", "")
-            issues = lint_text(raw_text)
+            check_spelling = arguments.get("check_spelling", False)
+            issues = lint_text(raw_text, include_spelling=check_spelling)
             diagnostics = [
                 {
                     "rule_id": issue.rule_id,

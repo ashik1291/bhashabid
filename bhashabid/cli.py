@@ -1,0 +1,579 @@
+# Bhashabid Developer CLI
+import argparse
+import sys
+import os
+import json
+
+from .numbers import (
+    number_to_bangla_words,
+    format_lakh_crore,
+    format_currency_words,
+    fraction_to_bangla_words,
+    to_classical_ordinal,
+    to_date_ordinal,
+    StyleProfile
+)
+from .normalize import normalize
+from .lint import lint_text
+
+def resolve_text_or_file(text_arg: str) -> str:
+    if os.path.isfile(text_arg):
+        with open(text_arg, "r", encoding="utf-8") as f:
+            return f.read()
+    return text_arg
+
+def handle_number(args):
+    try:
+        val_str = args.value.strip()
+        fmt = getattr(args, "format", "words")
+        if getattr(args, "currency", False):
+            fmt = "currency"
+        elif getattr(args, "fraction", False):
+            fmt = "fraction"
+        elif getattr(args, "ordinal", False):
+            fmt = "ordinal"
+        elif getattr(args, "date_ordinal", False):
+            fmt = "date_ordinal"
+        elif getattr(args, "grouped", False):
+            fmt = "grouped"
+        elif getattr(args, "command", "") == "format-number" and fmt == "words":
+            fmt = "grouped"
+
+        if fmt == "grouped":
+            print(format_lakh_crore(val_str))
+        elif fmt == "currency":
+            amount = float(val_str)
+            print(format_currency_words(amount))
+        elif fmt == "fraction":
+            val = float(val_str)
+            print(fraction_to_bangla_words(val))
+        elif fmt == "ordinal":
+            n = int(val_str)
+            print(to_classical_ordinal(n))
+        elif fmt == "date_ordinal":
+            d = int(val_str)
+            print(to_date_ordinal(d))
+        else:
+            profile = StyleProfile(hundred_style=args.hundred_style)
+            if "." in val_str:
+                from .numbers.decimals import decimal_to_bangla_words
+                print(decimal_to_bangla_words(val_str, profile=profile))
+            else:
+                n = int(val_str)
+                print(number_to_bangla_words(n, profile=profile))
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
+def handle_normalize(args):
+    try:
+        text = resolve_text_or_file(args.text)
+        res = normalize(text, profile=args.profile)
+        print(res)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
+def handle_repair(args):
+    try:
+        from .normalize.repair import repair_text
+        import difflib
+        text = resolve_text_or_file(args.text)
+        repaired, fixes = repair_text(text, profile=args.profile)
+
+        if getattr(args, "diff", False):
+            diff = difflib.unified_diff(
+                text.splitlines(keepends=True),
+                repaired.splitlines(keepends=True),
+                fromfile="original",
+                tofile="repaired"
+            )
+            diff_text = "".join(diff)
+            if not diff_text:
+                print("✓ কোনো পরিবর্তন প্রয়োজন নেই (No changes needed).")
+            else:
+                print(diff_text)
+            return 0
+
+        if getattr(args, "json", False):
+            import json
+            print(json.dumps({
+                "original": text,
+                "repaired": repaired,
+                "fixes_count": len(fixes),
+                "fixes": fixes
+            }, ensure_ascii=False, indent=2))
+        else:
+            print(repaired)
+            if fixes and getattr(args, "verbose", False):
+                print("\n[Applied Fixes]:")
+                for f in fixes:
+                    print(f"  - {f['description']}")
+
+        if getattr(args, "write", False) and os.path.isfile(args.text):
+            with open(args.text, "w", encoding="utf-8") as f:
+                f.write(repaired)
+            print(f"\n[Saved]: Changes successfully written to {args.text}")
+
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Repair Error: {e}\n")
+        return 1
+
+def handle_prosody(args):
+    try:
+        from .prosody import scan_line, verify_payar
+        text = resolve_text_or_file(args.text)
+        if args.verify_payar:
+            res = verify_payar(text)
+            print(f"পয়ার ছন্দ যাচাই: {'শুদ্ধ (VALID)' if res.is_valid_payar else 'ভগ্ন (INVALID)'}")
+            print(f"পর্ব ১ (৮ মাত্রা): {res.part1_morae} | পর্ব ২ (৬ মাত্রা): {res.part2_morae} | মোট: {res.total_morae}")
+            print(f"বিশ্লেষণ: {res.explanation}")
+        else:
+            res = scan_line(text, metre_system=args.metre)
+            print(f"ছন্দোরীতি: {res.metre_system}")
+            print(f"মোট মাত্রাসংখ্যা: {res.total_morae} | মোট দলসংখ্যা: {res.total_syllables} (মুক্তদল: {res.open_syllables}, রুদ্ধদল: {res.closed_syllables})")
+            print(f"পর্ব বিন্যাস: {res.word_mora_breakdown}")
+            print(f"ছন্দোলিপি সংকেত: {res.scansion_notation}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
+def handle_spellcheck(args):
+    try:
+        from .normalize.lexicon import get_default_lexicon
+        text = resolve_text_or_file(args.text)
+        lex = get_default_lexicon()
+        issues = lex.audit_text(text)
+        if getattr(args, "json", False):
+            import json
+            print(json.dumps({
+                "issues_count": len(issues),
+                "issues": issues
+            }, ensure_ascii=False, indent=2))
+        else:
+            if not issues:
+                print("✓ কোনো সম্ভাব্য বানান বিভ্রাট পাওয়া যায়নি (No spelling issues found).")
+            else:
+                print(f"শনাক্তকৃত সম্ভাব্য বানান সমস্যা: {len(issues)} টি")
+                print("=" * 60)
+                for item in issues:
+                    suggs = ", ".join(item["suggestions"])
+                    print(f"- শব্দ: '{item['word']}' -> সম্ভাব্য শুদ্ধ রূপ: {suggs}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Spellcheck Error: {e}\n")
+        return 1
+
+def handle_writ(args):
+    try:
+        from .legal import determine_writ_type, generate_writ_prayer, CONSTITUTIONAL_PROVISIONS
+        wtype = determine_writ_type(args.remedy)
+        prov = CONSTITUTIONAL_PROVISIONS.get(wtype, "")
+        prayers = generate_writ_prayer(wtype, args.subject, args.authority)
+        print(f"=== সাংবিধানিক রিট পরামর্শ (Article 102) ===")
+        print(f"রিটের প্রকৃতি: {wtype.value}")
+        print(f"সংবিধানিক অনুচ্ছেদ: {prov}")
+        print(f"\nপ্রার্থিত প্রতিকার (Operative Prayers):")
+        for idx, p in enumerate(prayers, start=1):
+            print(f" {idx}. {p}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
+def handle_review(args):
+    try:
+        from .human_reviewer import apply_human_review, list_pending_reviews
+        if getattr(args, "list", False):
+            pending = list_pending_reviews()
+            print("=" * 80)
+            print("BHASHABID PRINCIPLE P2: PENDING HUMAN REVIEW QUEUE")
+            print("=" * 80)
+            if not pending:
+                print("No candidate cards currently pending review.")
+            else:
+                for idx, c in enumerate(pending, start=1):
+                    print(f"[{idx}] {c['id']} — {c['title']} ({c['domain']})")
+                    print(f"    Summary: {c['summary']}")
+                    print(f"    Created: {c['created_date']}")
+                    print("-" * 80)
+            return 0
+
+        reviewer_name = (args.reviewer or "Ashikur Rahman Bhuiyan (@ashik1291)").strip()
+        reviewer_affiliation = (args.affiliation or "Native Bengali Speaker & Project Architect (@ashik1291)").strip()
+
+        if not args.card:
+            sys.stderr.write("Review Error: --card is required for sign-off. Use --list to view pending cards.\n")
+            return 1
+
+        apply_human_review(
+            card_id=args.card,
+            reviewer_name=reviewer_name,
+            reviewer_affiliation=reviewer_affiliation,
+            action=args.action,
+            notes=args.notes
+        )
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Review Error: {e}\n")
+        return 1
+
+def handle_practice(args):
+    try:
+        from .daily_practice_runner import run_practice_cycle
+        run_practice_cycle(
+            duration_minutes=args.duration_minutes,
+            rounds=args.rounds,
+            domain_filter=args.domain,
+            continuous=args.continuous,
+            auto_commit=getattr(args, "commit", False) or getattr(args, "push", False),
+            auto_push=getattr(args, "push", False)
+        )
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Practice Runner Error: {e}\n")
+        return 1
+
+def handle_install_skill(args):
+    try:
+        from .skill_installer import install_skill
+        msg = install_skill(target=args.target, workspace_dir=args.workspace, with_mcp=not getattr(args, "no_mcp", False))
+        print(msg)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Skill Installer Error: {e}\n")
+        return 1
+
+def handle_install_mcp(args):
+    try:
+        from .skill_installer import install_mcp
+        msg = install_mcp(target=args.target, workspace_dir=args.workspace)
+        print(msg)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"MCP Installer Error: {e}\n")
+        return 1
+
+def handle_uninstall_skill(args):
+    try:
+        from .skill_installer import uninstall_skill
+        msg = uninstall_skill(target=args.target, workspace_dir=args.workspace, with_mcp=not getattr(args, "keep_mcp", False))
+        print(msg)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Skill Uninstaller Error: {e}\n")
+        return 1
+
+def handle_uninstall_mcp(args):
+    try:
+        from .skill_installer import uninstall_mcp
+        msg = uninstall_mcp(target=args.target, workspace_dir=args.workspace)
+        print(msg)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"MCP Uninstaller Error: {e}\n")
+        return 1
+
+def handle_status(args):
+    try:
+        from .skill_installer import format_status_report
+        print(format_status_report())
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Status Error: {e}\n")
+        return 1
+
+def handle_distill(args):
+    try:
+        from .skill_distiller import run_distillation
+        run_distillation()
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Distillation Error: {e}\n")
+        return 1
+
+def handle_synthesize_cards(args):
+    try:
+        from .corpus_harvester import CorpusHarvester
+        from .card_synthesizer import CardSynthesizer
+        harvester = CorpusHarvester(corpora_dir=getattr(args, "dir", None))
+        harvester.harvest_all_sources()
+        anomalies = []
+        for s in harvester.harvested:
+            if s.category in ["ANOMALY_CANDIDATE", "CANARY_TRAPPED"]:
+                for f in s.flaws:
+                    f.setdefault("domain", s.domain)
+                    f.setdefault("source", s.source)
+                    f.setdefault("raw_text", s.raw_text)
+                    anomalies.append(f)
+        flat_anomalies = anomalies
+        synthesizer = CardSynthesizer()
+        created = synthesizer.cluster_and_synthesize_anomalies(flat_anomalies)
+        print(f"✓ Synthesized {len(created)} candidate knowledge cards in knowledge/cards/drafts/")
+        for c in created:
+            print(f"  - {c}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Card Synthesizer Error: {e}\n")
+        return 1
+
+def handle_mcp(args):
+    try:
+        from .mcp_server.server import BhashabidMCPServer
+        srv = BhashabidMCPServer()
+        srv.run_stdio()
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"MCP Server Error: {e}\n")
+        return 1
+
+def handle_harvest(args):
+    try:
+        from .corpus_harvester import CorpusHarvester
+        
+        # If --scrape is requested, fetch fresh live articles into eval/corpora/inbox/ first
+        if getattr(args, "scrape", False):
+            from .autonomous_scraper import AutonomousScraper
+            scraper = AutonomousScraper()
+            scraper.scrape_and_save_to_inbox(max_items_per_feed=3)
+
+        harvester = CorpusHarvester(corpora_dir=args.dir)
+        if args.file:
+            results = harvester.harvest_file(args.file)
+            print(f"Audited {len(results)} sentences from {args.file}")
+        else:
+            stats = harvester.harvest_all_sources()
+            print("=" * 60)
+            print("BHASHABID REAL-WORLD CORPUS HARVESTER & AUDITOR")
+            print("=" * 60)
+            print(f"Sources Scanned:       {stats['sources_scanned']}")
+            print(f"Total Sentences:       {stats['total_sentences']}")
+            print(f"Clean Benchmark:       {stats['benchmark_clean']} (100% Valid Native Bengali)")
+            print(f"Canary Trapped:        {stats['canary_trapped']} (Flaws Caught)")
+            print(f"Anomalies Flagged:     {stats['anomalies']}")
+            print(f"Total Flaws Trapped:   {stats['flaws_detected']}")
+            print("=" * 60)
+
+        if args.report:
+            out_p = harvester.export_summary_report(None if args.report == "default" else args.report)
+            print(f"Audit report saved to: {out_p}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Harvester Error: {e}\n")
+        return 1
+
+def handle_lint(args):
+    try:
+        text = resolve_text_or_file(args.text)
+        include_spelling = getattr(args, "spelling", False)
+        issues = lint_text(text, include_spelling=include_spelling)
+        if args.json:
+            data = [
+                {
+                    "rule_id": i.rule_id,
+                    "message": i.message,
+                    "line": i.line,
+                    "col": i.col,
+                    "severity": i.severity.value,
+                    "matched": i.matched_text,
+                    "suggestion": i.suggestion
+                }
+                for i in issues
+            ]
+            print(json.dumps(data, ensure_ascii=False, indent=2))
+        else:
+            if not issues:
+                print("✓ কোনো ব্যাকরণগত বা বানানজনিত ত্রুটি পাওয়া যায়নি (No issues found).")
+            else:
+                print(f"ত্রুটি পাওয়া গেছে ({len(issues)} issues found):")
+                for i in issues:
+                    print(f" - [{i.severity.value.upper()}] লাইন {i.line}, কলাম {i.col}: {i.message}")
+                    if i.suggestion:
+                        print(f"   পরামর্শ: {i.suggestion}")
+        return 1 if any(i.severity.value == "error" for i in issues) else 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
+def handle_ledger(args):
+    try:
+        from .learning_benchmark_ledger import LearningBenchmarkLedger
+        ledger = LearningBenchmarkLedger()
+        if getattr(args, "report", False):
+            path = ledger.export_research_report()
+            print(f"Research learning ledger exported to: {path}")
+        d = ledger.data
+        total_sents = d["cumulative_sentences_practiced"]
+        total_flaws = d["cumulative_flaws_trapped"]
+        overall_prec = round((1.0 - (total_flaws / max(1, d["cumulative_checks_evaluated"]))) * 100, 2)
+        print("=" * 70)
+        print("BHASHABID EMPIRICAL LEARNING BENCHMARK LEDGER")
+        print("=" * 70)
+        print(f"Cumulative Sessions:        {d['cumulative_practice_sessions']}")
+        print(f"Cumulative Practice Rounds: {d['cumulative_rounds_completed']}")
+        print(f"Total Sentences Practiced:  {total_sents:,}")
+        print(f"Linguistic Checks Evaluated:{d['cumulative_checks_evaluated']:,}")
+        print(f"Anomalies / Flaws Trapped:  {total_flaws:,}")
+        print(f"Dynamic Batches Ingested:   {d['cumulative_fresh_batches_ingested']}")
+        print(f"System Precision:           {overall_prec}%")
+        print("-" * 70)
+        print("11-SECTOR DISTRIBUTION:")
+        for idx, (sec, cnt) in enumerate(d["sector_sentence_distribution"].items(), start=1):
+            print(f" {idx:2d}. {sec:36s} : {cnt:,} sentences")
+        print("=" * 70)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Ledger Error: {e}\n")
+        return 1
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="bhashabid",
+        description="Bhashabid (ভাষাবিদ) — Open-Source Bengali Linguistic Coprocessor CLI"
+    )
+    subparsers = parser.add_subparsers(dest="command", help="Subcommand to execute")
+
+    # number (alias: format-number)
+    p_num = subparsers.add_parser("number", aliases=["format-number"], help="Convert numbers to Bengali words or formatted digits")
+    p_num.add_argument("value", help="Number value (e.g. 99, 1234567, 3.14, 50.25)")
+    p_num.add_argument("--format", choices=["words", "grouped", "currency", "fraction", "ordinal", "date_ordinal"], default="words")
+    p_num.add_argument("--currency", action="store_true", help="Format as Bengali currency words (টাকা/পয়সা)")
+    p_num.add_argument("--fraction", action="store_true", help="Format as Bengali fraction words (দেড়, আড়াই, সাড়ে...)")
+    p_num.add_argument("--ordinal", action="store_true", help="Format as Bengali classical ordinal words (প্রথম, দ্বিতীয়...)")
+    p_num.add_argument("--date-ordinal", dest="date_ordinal", action="store_true", help="Format as Bengali calendar date ordinal words (১লা, ২রা...)")
+    p_num.add_argument("--grouped", action="store_true", help="Format with South Asian lakh/crore commas")
+    p_num.add_argument("--hundred-style", choices=["শত", "শো", "শ"], default="শত")
+    p_num.set_defaults(func=handle_number)
+
+    # normalize
+    p_norm = subparsers.add_parser("normalize", help="Normalize Unicode NFC, punctuation, and loanwords")
+    p_norm.add_argument("text", help="Bengali text string or path to text file")
+    p_norm.add_argument("--profile", default="bd_standard", choices=["bd_standard", "wb_standard"])
+    p_norm.set_defaults(func=handle_normalize)
+
+    # repair
+    p_rep = subparsers.add_parser("repair", help="Automatically repair and normalize Bengali text flaws")
+    p_rep.add_argument("text", help="Bengali text string or path to text file")
+    p_rep.add_argument("--profile", default="bd_standard", choices=["bd_standard", "wb_standard"])
+    p_rep.add_argument("--json", action="store_true", help="Output results in JSON format")
+    p_rep.add_argument("--verbose", "-v", action="store_true", help="Show applied repair explanations")
+    p_rep.add_argument("--diff", action="store_true", help="Show unified diff of proposed changes without altering file")
+    p_rep.add_argument("--write", "-w", action="store_true", help="Write repaired text in-place to the target file")
+    p_rep.set_defaults(func=handle_repair)
+
+    # lint
+    p_lint = subparsers.add_parser("lint", help="Lint Bengali text for Guru-chandali, honorifics, calques, and spelling")
+    p_lint.add_argument("text", help="Bengali text string or path to text file")
+    p_lint.add_argument("--spelling", "-s", action="store_true", help="Include offline phonetic spelling checks in lint report")
+    p_lint.add_argument("--json", action="store_true", help="Output results in JSON format")
+    p_lint.set_defaults(func=handle_lint)
+
+    # spellcheck
+    p_spell = subparsers.add_parser("spellcheck", help="Offline phonetic spellchecking and typo detection")
+    p_spell.add_argument("text", help="Bengali text string or path to a text file")
+    p_spell.add_argument("--json", action="store_true", help="Output results in JSON format")
+    p_spell.set_defaults(func=handle_spellcheck)
+
+    # prosody
+    p_prosody = subparsers.add_parser("prosody", help="Analyze Bengali poetic metre, scansion, and Payar conformity")
+    p_prosody.add_argument("text", help="Bengali verse line")
+    p_prosody.add_argument("--metre", choices=["aksharbritta", "matrabritta", "dalabritta"], default="aksharbritta")
+    p_prosody.add_argument("--verify-payar", action="store_true", help="Verify 14-akshar Payar metre (8+6)")
+    p_prosody.set_defaults(func=handle_prosody)
+
+    # writ
+    p_writ = subparsers.add_parser("writ", help="Generate Article 102 High Court constitutional writ prayers")
+    p_writ.add_argument("--remedy", required=True, help="Remedy sought (e.g. detention, illegal order, public office)")
+    p_writ.add_argument("--subject", required=True, help="Subject matter of the grievance")
+    p_writ.add_argument("--authority", default="সংশ্লিষ্ট কর্তৃপক্ষ (Concerned Authority)", help="Respondent authority name (default: সংশ্লিষ্ট কর্তৃপক্ষ)")
+    p_writ.set_defaults(func=handle_writ)
+
+    # review
+    p_rev = subparsers.add_parser("review", help="Human native-speaker review sign-off tool (Principle P2)")
+    p_rev.add_argument("--list", action="store_true", help="List all candidate cards awaiting human review")
+    p_rev.add_argument("--card", default=None, help="Card ID to sign off, e.g. CRD-DFT-001")
+    p_rev.add_argument("--reviewer", default="Ashikur Rahman Bhuiyan (@ashik1291)", help="Full name or handle of reviewer (default: Ashikur Rahman Bhuiyan (@ashik1291))")
+    p_rev.add_argument("--affiliation", default="Native Bengali Speaker & Project Architect (@ashik1291)", help="Reviewer qualification or affiliation")
+    p_rev.add_argument("--action", default="approve", choices=["approve", "reject"])
+    p_rev.add_argument("--notes", default="Verified and approved by human native speaker.")
+    p_rev.set_defaults(func=handle_review)
+
+    # practice
+    p_prac = subparsers.add_parser("practice", help="Run automated multi-domain practice and learning cycle")
+    p_prac.add_argument("--rounds", type=int, default=1, help="Number of complete practice rounds (default: 1)")
+    p_prac.add_argument("--duration-minutes", "--duration", "--minutes", "-minutes", "-m", dest="duration_minutes", type=float, default=150.0, help="Window for continuous mode (default: 150 min)")
+    p_prac.add_argument("--domain", default=None, help="Filter to specific domain")
+    p_prac.add_argument("--continuous", action="store_true", help="Run continuously for duration-minutes (soak test mode)")
+    p_prac.add_argument("--commit", action="store_true", help="Automatically commit post-practice updates locally")
+    p_prac.add_argument("--push", action="store_true", help="Automatically commit and push post-practice updates")
+    p_prac.set_defaults(func=handle_practice)
+
+    # install-skill
+    p_ins = subparsers.add_parser("install-skill", help="Install Bhashabid skill with all references to Antigravity, Claude, or Cursor")
+    p_ins.add_argument("--target", choices=["antigravity", "claude", "cursor", "all"], default="all", help="Target AI environment")
+    p_ins.add_argument("--workspace", default=None, help="Target workspace path (default: current directory)")
+    p_ins.add_argument("--no-mcp", action="store_true", help="Skip automatic MCP server configuration")
+    p_ins.set_defaults(func=handle_install_skill)
+
+    # install-mcp
+    p_ins_mcp = subparsers.add_parser("install-mcp", help="Install Bhashabid Model Context Protocol (MCP) server configuration into Cursor, Claude, or Antigravity")
+    p_ins_mcp.add_argument("--target", choices=["cursor", "claude", "antigravity", "all"], default="all", help="Target AI environment")
+    p_ins_mcp.add_argument("--workspace", default=None, help="Target workspace path (default: current directory)")
+    p_ins_mcp.set_defaults(func=handle_install_mcp)
+
+    # uninstall-skill
+    p_unins = subparsers.add_parser("uninstall-skill", help="Uninstall Bhashabid skill and reference guides from Antigravity, Claude, or Cursor")
+    p_unins.add_argument("--target", choices=["antigravity", "claude", "cursor", "all"], default="all", help="Target AI environment")
+    p_unins.add_argument("--workspace", default=None, help="Target workspace path (default: current directory)")
+    p_unins.add_argument("--keep-mcp", action="store_true", help="Keep MCP server configurations intact while removing skills")
+    p_unins.set_defaults(func=handle_uninstall_skill)
+
+    # uninstall-mcp
+    p_unins_mcp = subparsers.add_parser("uninstall-mcp", help="Remove Bhashabid Model Context Protocol (MCP) server configuration from Cursor, Claude, or Antigravity")
+    p_unins_mcp.add_argument("--target", choices=["cursor", "claude", "antigravity", "all"], default="all", help="Target AI environment")
+    p_unins_mcp.add_argument("--workspace", default=None, help="Target workspace path (default: current directory)")
+    p_unins_mcp.set_defaults(func=handle_uninstall_mcp)
+
+    # status
+    p_stat = subparsers.add_parser("status", help="Show Bhashabid global installation & health status across detected AI IDEs")
+    p_stat.set_defaults(func=handle_status)
+
+    # distill
+    p_dist = subparsers.add_parser("distill", help="Distill approved knowledge cards into skills and verify token budgets")
+    p_dist.set_defaults(func=handle_distill)
+
+    # synthesize-cards
+    p_synth = subparsers.add_parser("synthesize-cards", help="Synthesize candidate knowledge cards from harvested anomalies")
+    p_synth.add_argument("--dir", default=None, help="Directory containing .jsonl corpora")
+    p_synth.set_defaults(func=handle_synthesize_cards)
+
+    # mcp
+    p_mcp = subparsers.add_parser("mcp", help="Run Model Context Protocol (MCP) JSON-RPC stdio server")
+    p_mcp.set_defaults(func=handle_mcp)
+
+    # harvest
+    p_harv = subparsers.add_parser("harvest", help="Ingest and audit real-world corpora from news feeds, circulars, and textbooks")
+    p_harv.add_argument("--dir", default=None, help="Directory containing .jsonl corpora (default: eval/corpora/sources)")
+    p_harv.add_argument("--file", default=None, help="Specific file to harvest and audit")
+    p_harv.add_argument("--scrape", action="store_true", help="Autonomously scrape live RSS feeds from TBS, Daily Star, Prothom Alo, and Wikipedia")
+    p_harv.add_argument("--report", nargs="?", const="default", default=None, help="Generate markdown audit report")
+    p_harv.set_defaults(func=handle_harvest)
+
+    # ledger
+    p_ledger = subparsers.add_parser("ledger", help="Display empirical learning ledger & multi-sector benchmark")
+    p_ledger.add_argument("--report", action="store_true", help="Export research report markdown file")
+    p_ledger.set_defaults(func=handle_ledger)
+
+    args = parser.parse_args()
+    if not args.command:
+        parser.print_help()
+        return 0
+
+    return args.func(args)
+
+if __name__ == "__main__":
+    sys.exit(main())

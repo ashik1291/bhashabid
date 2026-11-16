@@ -50,6 +50,26 @@ class TestBnNormalize(unittest.TestCase):
         # Collapse duplicate Daris
         self.assertEqual(normalize_punctuation("তিনি বললেন।।"), "তিনি বললেন।")
 
+    def test_ascii_pipe_and_spacing_normalization(self):
+        # Avro/Bijoy ASCII pipe typing normalized to Dari
+        self.assertEqual(normalize_punctuation("আমি আজ সচিবালয়ে যাব |"), "আমি আজ সচিবালয়ে যাব।")
+        self.assertEqual(normalize_punctuation("তিনি গেলেন|তিনি ফিরলেন"), "তিনি গেলেন। তিনি ফিরলেন")
+        self.assertEqual(normalize_punctuation("আজ কি বৃষ্টি হবে?না, হবে না."), "আজ কি বৃষ্টি হবে? না, হবে না।")
+        
+        # Space after Dari followed by closing quote
+        self.assertEqual(
+            normalize_punctuation('তিনি বললেন, "ভাত খাব।"তারপরে ঘুমালেন.'),
+            'তিনি বললেন, “ভাত খাব।” তারপরে ঘুমালেন।'
+        )
+
+        # Markdown tables must be preserved without pipe-to-dari mutation
+        table = "| নাম | পদবি |\n| করিম | সচিব |"
+        self.assertEqual(normalize_punctuation(table), table)
+
+        # Non-Bengali shell pipes or bitwise operators preserved
+        self.assertEqual(normalize_punctuation("cat file.txt | grep foo"), "cat file.txt | grep foo")
+        self.assertEqual(normalize_punctuation("flags = a | b"), "flags = a | b")
+
     def test_url_and_email_preservation_in_punctuation(self):
         url_text = "ওয়েবসাইট ভিজিট করুন https://www.tbsnews.net সাইটে."
         expected_url = "ওয়েবসাইট ভিজিট করুন https://www.tbsnews.net সাইটে।"

@@ -69,6 +69,13 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("কোনো ব্যাকরণগত বা বানানজনিত ত্রুটি পাওয়া যায়নি", out)
 
+    def test_cli_lint_with_spelling(self):
+        code, out, _ = self.run_cli(["lint", "তিনি শ্রদ্ধাঞ্জলী জানালেন।", "--spelling", "--json"])
+        self.assertEqual(code, 0)
+        data = json.loads(out)
+        self.assertTrue(any(item["rule_id"] == "RULE-LINT-SPELLING" for item in data))
+        self.assertTrue(any(item["matched"] == "শ্রদ্ধাঞ্জলী" for item in data))
+
     def test_cli_install_and_uninstall(self):
         import tempfile
         with tempfile.TemporaryDirectory() as tmpdir:

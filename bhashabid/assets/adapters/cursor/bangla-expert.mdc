@@ -1,0 +1,37 @@
+---
+description: Bengali Promito Cholito, anti-calque, and statutory legal invariants
+globs: *
+alwaysApply: true
+---
+
+# Bhashabid Linguistic Invariants (বাংলা নির্দেশিকা)
+
+When generating or editing Bengali:
+
+1. **Bangla Academy Orthography**:
+   - Foreign loanwords use 'স'/'স্ট' (স্টেশন, পোস্ট); never 'ষ'/'ষ্ট'.
+   - Desi/foreign words take short 'ি' (পাখি, হাতি, সরকারি).
+   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
+
+2. **Numerals & South Asian Grouping**:
+   - Commas: ১২,৩৪,৫৬৭ (never 1,234,567). Decimals use dot: ৩.১৪ (never ৩।১৪).
+   - Words: ৯৯ = নিরানব্বই, ৭৫ = পঁচাত্তর. Percentages in prose: শতাংশ (never % এ).
+
+3. **Zero Guru-chandali & Concordance**:
+   - Modern Promito Cholito only. Never mix Sadhu forms (হইবে, যদ্দারা, তাহাদিগকে).
+   - Concordance: তারা ... করেছিল vs তাঁরা ... করেছিলেন.
+
+4. **High Court Legal Drafting (Art 102)**:
+   - Parties: আবেদনকারী (Petitioner), বিবাদীগণ (Respondents); never 'উত্তরদাতাগণ'.
+   - Statutory terms: পরমাদেশ (Mandamus), রুল নিশি, আইনগত কর্তৃত্ববহির্ভূত, স্থিতাবস্থা.
+
+5. **Anti-Calque & Pure Output**:
+   - Avoid English passives ('দ্বারা চালিত'). Use natural active voice.
+   - Deliver clean official documents without trailing meta-commentary or rule justifications.
+
+## Progressive References (in .cursor/bangla-references/)
+- ecommerce_fintech_civic.md: E-commerce settlement, ticketing (TCK), FinTech, civic.
+- official_letters.md: Admin petitions, secretariat memo hierarchy.
+- journalism_domains.md: Macroeconomics, central bank reporting, sports.
+- academic_legal_medical.md: Research, deeds, health, agronomy, NCTB.
+- constitutional_writs.md: Article 102 writ taxonomy and prayers.

@@ -24,16 +24,16 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["bhashabid*", "tools*"]
+include = ["bhashabid*"]
+exclude = ["tools*", "eval*", "knowledge*", "scratch*", "memory*"]
 
 [tool.setuptools.package-data]
-"tools" = ["assets/**/*", "assets/*"]
-"bhashabid" = ["assets/**/*", "assets/*"]
+"bhashabid" = ["assets/**/*", "assets/*", "py.typed"]
 
 [project.urls]
 "Homepage" = "https://github.com/ashik1291/bhashabid"
 "Bug Tracker" = "https://github.com/ashik1291/bhashabid/issues"
 
 [project.scripts]
-bhashabid = "tools.cli:main"
-bhashabid-mcp = "tools.mcp_server.server:main"
+bhashabid = "bhashabid.cli:main"
+bhashabid-mcp = "bhashabid.mcp.server:main"
