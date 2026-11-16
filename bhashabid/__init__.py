@@ -23,6 +23,16 @@ from .numbers import (
     to_ascii_digits
 )
 from .prosody import scan_line, verify_payar
+from .legal import (
+    WritType,
+    determine_writ_type,
+    generate_writ_prayer,
+    DeedType,
+    DeedSchedule,
+    format_deed_schedule,
+    generate_encumbrance_free_clause,
+    generate_saf_kabala_clause
+)
 
 __version__ = "1.0.1"
 
@@ -62,5 +72,13 @@ __all__ = [
     "verify_payar",
     "get_default_lexicon",
     "bengali_edit_distance",
+    "WritType",
+    "determine_writ_type",
+    "generate_writ_prayer",
+    "DeedType",
+    "DeedSchedule",
+    "format_deed_schedule",
+    "generate_encumbrance_free_clause",
+    "generate_saf_kabala_clause",
     "__version__"
 ]

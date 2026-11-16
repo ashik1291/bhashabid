@@ -11,6 +11,18 @@ from tools.bn_lint import lint_text, LintSeverity
 
 class TestBnLint(unittest.TestCase):
 
+    def test_quoted_dialogue_boundary_preservation(self):
+        # Dialogue within quotes must NOT clash with narrative subject outside quotes
+        text_dialogue = 'সে বলল "আপনি কাল সকালে আসবেন।"'
+        issues = lint_text(text_dialogue)
+        self.assertEqual(len([i for i in issues if "HONORIFIC" in i.rule_id]), 0, "Quoted speech must not clash across quote boundaries")
+
+        # But internal clash within quotes MUST still be flagged
+        text_internal = 'সে বলল "তুমি কাল আসেন।"'
+        internal_issues = [i for i in lint_text(text_internal) if "HONORIFIC" in i.rule_id]
+        self.assertEqual(len(internal_issues), 1)
+        self.assertEqual(internal_issues[0].rule_id, "RULE-LINT-HONORIFIC-TUMI")
+
     def test_clean_text_no_issues(self):
         text = "তিনি প্রতিদিন সকালে বিদ্যালয়ে যান এবং পাঠদান করেন।"
         issues = lint_text(text)

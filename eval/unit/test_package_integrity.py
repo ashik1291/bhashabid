@@ -16,6 +16,16 @@ from bhashabid.legal import generate_writ_prayer
 
 class TestPackageIntegrity(unittest.TestCase):
 
+    def test_legal_conveyancing_exports(self):
+        self.assertTrue(hasattr(bhashabid, "format_deed_schedule"))
+        self.assertTrue(hasattr(bhashabid, "generate_saf_kabala_clause"))
+        self.assertTrue(hasattr(bhashabid, "generate_encumbrance_free_clause"))
+        sch = bhashabid.DeedSchedule(
+            district="ঢাকা", subregistry="তেজগাঁও", mouza="বাড্ডা", jl_number="১২",
+            khatian_type="আরএস", khatian_number="১", dag_number="২", land_class="নাল", area="৫ শতক"
+        )
+        self.assertIn("তফশিল", bhashabid.format_deed_schedule(sch))
+
     def test_top_level_exports(self):
         self.assertTrue(hasattr(bhashabid, "repair"))
         self.assertTrue(hasattr(bhashabid, "normalize"))

@@ -39,6 +39,17 @@ class TestBnNormalize(unittest.TestCase):
         self.assertNotIn(decomposed_yo, result)
         self.assertTrue(is_nfc_normalized(result))
 
+    def test_stray_post_vowel_nukta_reordering(self):
+        # ড + া + ় (Nukta typed after vowel sign) must reorder and precompose to ড়া (U+09DC + U+09BE)
+        post_vowel_rra = "\u09A1\u09BE\u09BC"
+        expected = "\u09DC\u09BE"
+        self.assertEqual(canonicalize_unicode(post_vowel_rra), expected)
+
+        # য + ো + ় (Nukta typed after vowel sign ও-কার) -> য়ো (U+09DF + U+09CB)
+        post_vowel_yo = "\u09AF\u09CB\u09BC"
+        expected_yo = "\u09DF\u09CB"
+        self.assertEqual(canonicalize_unicode(post_vowel_yo), expected_yo)
+
     def test_dari_punctuation_and_decimals(self):
         # ASCII period at end of sentence to Dari
         self.assertEqual(normalize_punctuation("তিনি বাড়ি গেলেন."), "তিনি বাড়ি গেলেন।")

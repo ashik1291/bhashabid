@@ -52,6 +52,34 @@ class TestProsodyAndLegal(unittest.TestCase):
         self.assertGreaterEqual(len(prayers), 2)
         self.assertTrue(any("আইনগত কর্তৃত্ববহির্ভূত" in p for p in prayers))
 
+    def test_civil_conveyancing_deeds(self):
+        from tools.bn_legal import DeedType, DeedSchedule, format_deed_schedule, generate_encumbrance_free_clause, generate_saf_kabala_clause
+        sch = DeedSchedule(
+            district="ঢাকা",
+            subregistry="তেজগাঁও",
+            mouza="বাড্ডা",
+            jl_number="১২",
+            khatian_type="আরএস",
+            khatian_number="৪৫৬",
+            dag_number="৭৮৯",
+            land_class="নাল",
+            area="৫ শতাংশ",
+            boundaries={"north": "রহিমের জমি", "south": "সরকারি রাস্তা", "east": "করিমের বাড়ি", "west": "খাল"}
+        )
+        formatted = format_deed_schedule(sch)
+        self.assertIn("তফশিল সম্পত্তি পরিচয়", formatted)
+        self.assertIn("খতিয়ান (আরএস): ৪৫৬", formatted)
+        self.assertIn("দাগ নম্বর: ৭৮৯", formatted)
+
+        encumbrance = generate_encumbrance_free_clause("১ম পক্ষ বিক্রেতা")
+        self.assertIn("দায়মুক্ত", encumbrance)
+        self.assertIn("ঋণভার", encumbrance)
+
+        clause = generate_saf_kabala_clause("১ম পক্ষ বিক্রেতা", "২য় পক্ষ ক্রেতা", "বিশ লাখ টাকা", sch)
+        self.assertIn("সাফ-কবলা", clause)
+        self.assertIn("মৌজা বাড্ডা", clause)
+        self.assertIn("বিশ লাখ টাকা", clause)
+
     def test_p2_provenance_audit(self):
         stats = audit_provenance()
         self.assertEqual(len(stats["p2_violations"]), 0)

@@ -47,6 +47,9 @@ def canonicalize_unicode(text: str) -> str:
     # General NFC pass
     text = unicodedata.normalize("NFC", text)
 
+    # Reorder stray Nukta typed after dependent vowel sign (e.g. ড + া + ় -> ড + ় + া -> ড়া)
+    text = re.sub(r"([অ-হ])([া-ৌ]+)(়)", r"\1\3\2", text)
+
     # Convert decomposed nukta sequences to canonical atomic codepoints
     text = text.replace(DECOMPOSED_YO, CHAR_YO)
     text = text.replace(DECOMPOSED_RRA, CHAR_RRA)

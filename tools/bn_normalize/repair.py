@@ -237,4 +237,36 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
             "description": f"Concorded 3rd-person ordinary '{subj}' with verb '{ord_verb}'"
         })
 
+    # (c) APNI + informal verb -> APNI + formal verb
+    for m in list(APNI_CLASH_PAT.finditer(current_text)):
+        subj = m.group(1)
+        middle = m.group(2)
+        verb = m.group(3)
+        formal_verb = FAMILIAR_TO_FORMAL_VERBS.get(verb, f"{verb}েন")
+        old_clause = m.group(0)
+        new_clause = f"{subj}{middle}{formal_verb}"
+        current_text = current_text.replace(old_clause, new_clause, 1)
+        applied_fixes.append({
+            "category": "HONORIFIC_CONCORDANCE",
+            "before": old_clause,
+            "after": new_clause,
+            "description": f"Concorded 2nd-person formal '{subj}' with verb '{formal_verb}'"
+        })
+
+    # (d) TUMI + formal or intimate verb -> TUMI + familiar verb
+    for m in list(TUMI_CLASH_PAT.finditer(current_text)):
+        subj = m.group(1)
+        middle = m.group(2)
+        verb = m.group(3)
+        fam_verb = FORMAL_TO_FAMILIAR_VERBS.get(verb, verb)
+        old_clause = m.group(0)
+        new_clause = f"{subj}{middle}{fam_verb}"
+        current_text = current_text.replace(old_clause, new_clause, 1)
+        applied_fixes.append({
+            "category": "HONORIFIC_CONCORDANCE",
+            "before": old_clause,
+            "after": new_clause,
+            "description": f"Concorded 2nd-person familiar '{subj}' with verb '{fam_verb}'"
+        })
+
     return current_text, applied_fixes

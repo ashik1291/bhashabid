@@ -54,6 +54,18 @@ class TestRepairEngine(unittest.TestCase):
         self.assertTrue(any(f["category"] == "HONORIFIC_CONCORDANCE" for f in fixes_se))
         self.assertEqual(len(lint_text(repaired_se)), 0)
 
+        # Apni (formal) + familiar verb
+        raw_apni = "আপনি কাজটি করো।"
+        repaired_apni, fixes_apni = repair_text(raw_apni)
+        self.assertIn("আপনি কাজটি করেন", repaired_apni)
+        self.assertTrue(any(f["category"] == "HONORIFIC_CONCORDANCE" for f in fixes_apni))
+
+        # Tumi (familiar) + formal verb
+        raw_tumi = "তুমি সিদ্ধান্ত নেন।"
+        repaired_tumi, fixes_tumi = repair_text(raw_tumi)
+        self.assertIn("তুমি সিদ্ধান্ত নাও", repaired_tumi)
+        self.assertTrue(any(f["category"] == "HONORIFIC_CONCORDANCE" for f in fixes_tumi))
+
     def test_idempotence_and_clean_text(self):
         clean_text = "তিনি প্রতিদিন সকালে বিদ্যালয়ে যান এবং পাঠদান করেন।"
         repaired, fixes = repair_text(clean_text)
