@@ -1,0 +1,39 @@
+id: CRD-DFT-059
+title: 'Historical Era Standardization: Rendering ''BCE'' as ''খ্রিস্টপূর্বাব্দ'''
+domain: MFS, Microfinance & Grassroots FinTech
+profile: bd_standard
+register: formal
+rule_summary: Unadapted Latin historical abbreviation 'BCE' (Before Common Era) in
+  running Bengali text must be rendered using standard Bengali 'খ্রিস্টপূর্ব' or 'খ্রিস্টপূর্বাব্দ'
+  (with BCE in parentheses if technically required), avoiding raw unadapted Latin
+  characters.
+good_examples:
+- প্রচলিত মুদ্রা হিসেবে অর্থমুদ্রাই মানব সভ্যতায় প্রায় খ্রিস্টপূর্ব ১০,০০০ অব্দ থেকেই
+  বিস্তার লাভ করতে শুরু করে।
+- খ্রিস্টপূর্ব পঞ্চম শতকে প্রাচীন গ্রিস ও ভারতীয় উপমহাদেশে ধাতব মুদ্রার ব্যাপক প্রচলন
+  শুরু হয়।
+- সিন্ধু সভ্যতার প্রত্নতাত্ত্বিক নিদর্শনগুলো প্রায় ২৫০০ খ্রিস্টপূর্বাব্দের (BCE)
+  সমৃদ্ধ নগরায়নের পরিচয় বহন করে।
+bad_examples:
+- প্রচলিত মুদ্রা রূপে অর্থমুদ্রাই মানব সভ্যতায় প্রায় ১০,০০০ BCE থেকেই প্রভুত্ব বিস্তার
+  করতে শুরু করে
+- সভ্যতাটি ২৫০০ BCE তে গড়ে উঠেছিল।
+common_llm_error: LLMs emit unadapted English terminology 'BCE' in Bengali contexts
+  instead of standard Bengali 'খ্রিস্টপূর্বাব্দ' or 'খ্রিস্টপূর্ব'.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Currency & Financial Inclusion'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines
+- Microcredit Regulatory Authority (MRA) Rules & Standards
+- Anti-Money Laundering & Financial Fraud Prevention Protocols
+confidence: reviewed
+created_date: '2026-11-15'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-16'
+  status: APPROVED
+  notes: 'Standardized historical chronology notation: unadapted ''BCE'' -> ''খ্রিস্টপূর্ব''
+    / ''খ্রিস্টপূর্বাব্দ'' with authentic positive exemplars.'
+  signature_hash: sha256:c1c9608cc54136af

@@ -15,14 +15,14 @@ sources:
 - Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines
 - Microcredit Regulatory Authority (MRA) Rules & Standards
 - Anti-Money Laundering & Financial Fraud Prevention Protocols
-confidence: candidate
+confidence: rejected
 created_date: '2026-11-16'
 last_modified: '2026-11-16'
 review:
-  reviewer_name: null
-  reviewer_affiliation: null
-  reviewed_date: null
-  status: PENDING_HUMAN_REVIEW
-  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
-    human linguistic review and authentic positive Bengali exemplars (good_examples).
-  signature_hash: null
+  reviewer_name: Ashikur Rahman Bhuiyan
+  reviewer_affiliation: Native Bengali Speaker & Project Architect (@ashik1291)
+  reviewed_date: '2026-11-16'
+  status: REJECTED
+  notes: Valid proper technical hardware brand name (Trezor); commercial cryptocurrency
+    hardware wallet.
+  signature_hash: sha256:59cdfbd1dce407e1

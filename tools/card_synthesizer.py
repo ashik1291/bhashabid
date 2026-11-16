@@ -173,26 +173,66 @@ SCRAPING_NOISE_TOKENS = HTML_NOISE_TOKENS | {
     "pdf", "sms", "otp", "nid", "tin", "bin", "url", "api", "app", "web", "sim", "bdt", "usd", "eur",
     "atm", "pos", "ram", "rom", "cpu", "gpu", "wifi", "qr", "pin", "jpg", "jpeg", "png", "zip", "mp3", "mp4",
     "mbps", "kbps", "gb", "mb", "tb", "ghz", "khz", "mhz", "fps", "dpi", "px", "rem", "em", "doc", "docx", "xls", "xlsx",
-    "tck", "inv", "ref", "id", "seq"
+    "tck", "inv", "ref", "id", "seq",
+    # Hardware wallets, brand names, and peripheral models
+    "ledger", "trezor", "nano", "bitbox", "keepkey", "yubikey", "safepal", "ellipal", "coolwallet", "metamask", "phantom"
 }
 
-def is_scraping_noise(matched: str) -> bool:
-    """Detects if a matched anomaly string is web scraping noise, HTML entities, Roman numerals, or serial codes."""
+def is_scraping_noise(matched: str, raw_context: str = "") -> bool:
+    """
+    Detects if a matched anomaly string is web scraping noise, HTML entities,
+    Roman numerals, hardware/brand names, proper acronyms, or already explained in Bengali parentheses.
+    """
     m = (matched or "").strip()
     if not m:
         return True
+
+    # Token-set deduplication (e.g. 'BMCS, BMCS' -> 'BMCS')
+    sub_tokens = [t.strip().lower() for t in re.split(r"[,;]+", m) if t.strip()]
+    if not sub_tokens:
+        return True
+
+    # HTML entity check (e.g. '&nbsp;', '&#39;', '&quot;')
+    clean_html = re.sub(r"[&;#]+", "", m).lower()
+    if clean_html in HTML_NOISE_TOKENS or re.match(r"^&[a-zA-Z0-9#]+;$", m):
+        return True
+
+    # Check against known noise and brand tokens
     if m.lower() in SCRAPING_NOISE_TOKENS:
         return True
-    tokens = [t.strip().lower() for t in m.split(",") if t.strip()]
-    if tokens and all(t in SCRAPING_NOISE_TOKENS for t in tokens):
+    if all(t in SCRAPING_NOISE_TOKENS for t in sub_tokens):
         return True
-    # Serial tracking code or model code (e.g. TCK-942, INV-104, CRD-001)
+
+    # Serial tracking code or model code (e.g. TCK-942, INV-104, CRD-001, Nano S, Model T)
     if re.match(r"^[A-Za-z]{2,6}[-_]?\d+$", m):
         return True
+    if re.search(r"\b(model\s+[a-z0-9]+|nano\s+[a-z0-9]+)\b", m, re.I):
+        return True
+
     # Roman numeral check (e.g. XXIII, VIII)
     clean_num = re.sub(r"[\s,]+", "", m)
     if clean_num and re.match(r"^[IVXLCDMivxlcdm]+$", clean_num):
         return True
+
+    # Parenthetical transliteration check:
+    # If the text already has parenthetical Bengali (e.g. 'Pence (পেন্স)' or 'পেন্স (Pence)')
+    if raw_context:
+        for tok in sub_tokens:
+            if len(tok) >= 2:
+                # English followed by Bengali in parentheses: Word (বাংলা)
+                if re.search(rf"{re.escape(tok)}\s*\([^\)]*[\u0980-\u09FF]+", raw_context, re.IGNORECASE):
+                    return True
+                # Bengali followed by English in parentheses: বাংলা (Word)
+                if re.search(rf"[\u0980-\u09FF]+\s*\([^\)]*{re.escape(tok)}", raw_context, re.IGNORECASE):
+                    return True
+
+        # Proper uppercase acronyms with Bengali enclitic inflections (e.g. BMCS-এর, UNESCO-র, WHO-এর)
+        for raw_tok in re.split(r"[,;\s]+", m):
+            raw_tok = raw_tok.strip()
+            if re.fullmatch(r"[A-Z]{2,6}", raw_tok):
+                if re.search(rf"\b{re.escape(raw_tok)}-(?:এর|র|কে|তে|য়|এ)\b", raw_context):
+                    return True
+
     return False
 
 def get_domain_standards(domain: str) -> List[str]:
@@ -247,6 +287,37 @@ class CardSynthesizer:
         norm_pattern = pattern.strip().lower()
         norm_title = title.strip().lower()
 
+        # Token set for the incoming pattern (e.g. 'bmcs, bmcs' -> {'bmcs'})
+        p_tokens = set(re.findall(r"[a-z0-9\u0980-\u09ff]+", norm_pattern))
+
+        def card_matches(c: Dict) -> bool:
+            c_title = (c.get("title") or "").strip().lower()
+            c_summary = (c.get("rule_summary") or "").strip().lower()
+
+            # Exact or substring match
+            if norm_pattern in c_title or norm_pattern in c_summary or norm_title == c_title:
+                return True
+
+            # Pattern substring of card title or card pattern extracted from title
+            # e.g. title: "Candidate Rule for Pattern: BMCS" -> pat: "bmcs"
+            pat_match = re.search(r"pattern:\s*([^'\"]+)", c_title)
+            if pat_match:
+                extracted_pat = pat_match.group(1).strip().lower()
+                if extracted_pat and (extracted_pat in norm_pattern or extracted_pat in p_tokens):
+                    return True
+
+            # Token overlap check (if all significant tokens in pattern exist in title/summary)
+            sig_tokens = [tok for tok in p_tokens if len(tok) > 1]
+            if sig_tokens and all(tok in c_title or tok in c_summary for tok in sig_tokens):
+                return True
+
+            # Also check bad_examples in card for identical anomaly string
+            bads = [str(b).lower() for b in c.get("bad_examples", []) or []]
+            if any(norm_pattern in b for b in bads):
+                return True
+
+            return False
+
         # 1. Check production cards
         for f in glob.glob(os.path.join(CARDS_DIR, "*.yaml")):
             try:
@@ -254,9 +325,7 @@ class CardSynthesizer:
                     c = yaml.safe_load(yf)
                 if not c or not isinstance(c, dict):
                     continue
-                c_title = (c.get("title") or "").strip().lower()
-                c_summary = (c.get("rule_summary") or "").strip().lower()
-                if norm_pattern in c_title or norm_pattern in c_summary or norm_title == c_title:
+                if card_matches(c):
                     return (f, c, "production")
             except Exception:
                 continue
@@ -268,9 +337,7 @@ class CardSynthesizer:
                     c = yaml.safe_load(yf)
                 if not c or not isinstance(c, dict):
                     continue
-                c_title = (c.get("title") or "").strip().lower()
-                c_summary = (c.get("rule_summary") or "").strip().lower()
-                if norm_pattern in c_title or norm_pattern in c_summary or norm_title == c_title:
+                if card_matches(c):
                     return (f, c, "rejected")
             except Exception:
                 continue
@@ -282,9 +349,7 @@ class CardSynthesizer:
                     c = yaml.safe_load(yf)
                 if not c or not isinstance(c, dict):
                     continue
-                c_title = (c.get("title") or "").strip().lower()
-                c_summary = (c.get("rule_summary") or "").strip().lower()
-                if norm_pattern in c_title or norm_pattern in c_summary or norm_title == c_title:
+                if card_matches(c):
                     return (f, c, "draft")
             except Exception:
                 continue
@@ -365,11 +430,17 @@ class CardSynthesizer:
             if len(items) >= 1:
                 first = items[0]
                 rule_id = first.get("rule_id", "ANOMALY-GENERAL")
-                matched = first.get("matched", first.get("raw_text", "Unknown"))
+                raw_text = first.get("raw_text", "")
+                matched = first.get("matched", raw_text or "Unknown")
+                # Deduplicate repeated comma-separated tokens (e.g. "BMCS, BMCS" -> "BMCS")
+                if matched:
+                    deduped_tokens = list(dict.fromkeys([t.strip() for t in re.split(r"[,;]+", matched) if t.strip()]))
+                    if deduped_tokens:
+                        matched = ", ".join(deduped_tokens)
                 domain = first.get("domain", "translation")
                 
-                # Filter out HTML entity remnants, Roman numerals, and empty noise
-                if is_scraping_noise(matched):
+                # Filter out HTML entity remnants, Roman numerals, hardware brands, parenthetical terms, and empty noise
+                if is_scraping_noise(matched, raw_context=raw_text):
                     continue
 
                 title = f"Candidate Rule for Pattern: {matched[:40]}"
