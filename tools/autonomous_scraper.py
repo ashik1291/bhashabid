@@ -492,7 +492,7 @@ class AutonomousScraper:
                 if len(cleaned) > 30 and re.search(r"[\u0980-\u09FF]", cleaned):
                     if not re.search(r"[।?!]", cleaned) or len(cleaned.split()) < 5:
                         continue
-                    if re.search(r"(?:ক্লিক করুন|বিজ্ঞাপন|আরও পড়ুন|শেয়ার করুন|সর্বশেষ|মূলপাতা|লগইন|সাবস্ক্রাইব)", cleaned):
+                    if re.search(r"(?:ক্লিক করুন|বিজ্ঞাপন|আরও পড়ুন|শেয়ার করুন|সর্বশেষ|মূলপাতা|লগইন|সাবস্ক্রাইব|All rights reserved|EMAIL US|FOLLOW US|Privacy Policy|Contact us|Sitemap|Most Read|Related News|Copyright)", cleaned, re.IGNORECASE):
                         continue
                     clean_paras.append(cleaned)
 
