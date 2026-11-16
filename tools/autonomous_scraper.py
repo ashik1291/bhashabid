@@ -479,6 +479,11 @@ class AutonomousScraper:
             with urllib.request.urlopen(req, timeout=3.5) as resp:  # nosec B310
                 html_text = resp.read().decode("utf-8", errors="ignore")
 
+            # Pre-clean script, style, and iframe tags to prevent JavaScript leakage into Bengali corpora
+            html_text = re.sub(r"<script[^>]*>.*?</script>", "", html_text, flags=re.DOTALL | re.IGNORECASE)
+            html_text = re.sub(r"<style[^>]*>.*?</style>", "", html_text, flags=re.DOTALL | re.IGNORECASE)
+            html_text = re.sub(r"<iframe[^>]*>.*?</iframe>", "", html_text, flags=re.DOTALL | re.IGNORECASE)
+
             paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", html_text, flags=re.DOTALL)
             clean_paras = []
             for p in paragraphs:

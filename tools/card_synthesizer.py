@@ -197,6 +197,10 @@ def is_scraping_noise(matched: str, raw_context: str = "") -> bool:
     if clean_html in HTML_NOISE_TOKENS or re.match(r"^&[a-zA-Z0-9#]+;$", m):
         return True
 
+    # JavaScript and DOM snippet leakage check (e.g. addEventListener, document, window, dropdown, oauth)
+    if re.search(r"\b(addEventListener|document|window|function|const|var|let|dropdown|oauth|href|html)\b", m, re.IGNORECASE):
+        return True
+
     # Check against known noise and brand tokens
     if m.lower() in SCRAPING_NOISE_TOKENS:
         return True
