@@ -185,6 +185,42 @@ def handle_writ(args):
         sys.stderr.write(f"Error: {e}\n")
         return 1
 
+def handle_deed(args):
+    try:
+        from .bn_legal import (
+            generate_saf_kabala_clause,
+            generate_encumbrance_free_clause,
+            format_deed_schedule,
+            DeedSchedule
+        )
+        if args.type == "saf-kabala":
+            clause = generate_saf_kabala_clause(
+                vendor_name=args.vendor,
+                purchaser_name=args.purchaser,
+                consideration_bengali=args.taka
+            )
+            print("=== সাফ-কবলা হস্তান্তর দফাদলিল (Saf-Kabala Conveyance Clause) ===")
+            print(clause)
+        elif args.type == "encumbrance":
+            clause = generate_encumbrance_free_clause()
+            print("=== দায়মুক্তি ও নির্ভেজাল ঘোষণা দফাদলিল (Encumbrance-Free Warranty Clause) ===")
+            print(clause)
+        elif args.type == "schedule":
+            sch = DeedSchedule(
+                district=args.district or "",
+                thana=args.thana or "",
+                mouza=args.mouza or "",
+                jl_no=args.jl or "",
+                khatian_no=args.khatian or "",
+                dag_no=args.dag or "",
+                land_area=args.area or ""
+            )
+            print(format_deed_schedule(sch))
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
 def handle_review(args):
     try:
         from .human_reviewer import apply_human_review, list_pending_reviews
@@ -491,6 +527,21 @@ def main():
     p_writ.add_argument("--subject", required=True, help="Subject matter of the grievance")
     p_writ.add_argument("--authority", default="সংশ্লিষ্ট কর্তৃপক্ষ (Concerned Authority)", help="Respondent authority name (default: সংশ্লিষ্ট কর্তৃপক্ষ)")
     p_writ.set_defaults(func=handle_writ)
+
+    # deed
+    p_deed = subparsers.add_parser("deed", help="Generate statutory Bengali civil conveyancing clauses and schedules")
+    p_deed.add_argument("--type", choices=["saf-kabala", "encumbrance", "schedule"], default="saf-kabala", help="Type of conveyancing instrument clause")
+    p_deed.add_argument("--vendor", default="বিক্রেতা", help="Vendor / transferor name (বিক্রেতা)")
+    p_deed.add_argument("--purchaser", default="ক্রেতা", help="Purchaser / transferee name (ক্রেতা)")
+    p_deed.add_argument("--taka", type=float, default=0.0, help="Consideration amount in BDT (পণমূল্য)")
+    p_deed.add_argument("--district", default="", help="District name (জেলা)")
+    p_deed.add_argument("--thana", default="", help="Police station / Upazila (থানা)")
+    p_deed.add_argument("--mouza", default="", help="Mouza name (মৌজা)")
+    p_deed.add_argument("--jl", default="", help="J.L. Number (জে. এল. নং)")
+    p_deed.add_argument("--khatian", default="", help="Khatian Number (খতিয়ান নং)")
+    p_deed.add_argument("--dag", default="", help="Plot / Dag Number (দাগ নং)")
+    p_deed.add_argument("--area", default="", help="Land area and classification (জমির শ্রেণি ও পরিমাণ)")
+    p_deed.set_defaults(func=handle_deed)
 
     # review
     p_rev = subparsers.add_parser("review", help="Human native-speaker review sign-off tool (Principle P2)")

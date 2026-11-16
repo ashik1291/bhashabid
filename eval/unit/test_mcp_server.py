@@ -62,5 +62,36 @@ class TestMCPServer(unittest.TestCase):
         self.assertGreater(res["issue_count"], 0)
         self.assertEqual(res["issues"][0]["rule_id"], "RULE-LINT-HONORIFIC-APNI")
 
+    def test_call_generate_deed_clause(self):
+        res_saf = self.server.call_tool("generate_deed_clause", {
+            "deed_type": "saf_kabala",
+            "vendor_name": "করিম উদ্দিন",
+            "purchaser_name": "রহিম মিয়া",
+            "consideration_taka": 500000
+        })
+        self.assertEqual(res_saf["deed_type"], "saf_kabala")
+        self.assertIn("করিম উদ্দিন", res_saf["clause"])
+        self.assertIn("রহিম মিয়া", res_saf["clause"])
+        self.assertIn("পাঁচ লাখ টাকা", res_saf["clause"])
+
+        res_enc = self.server.call_tool("generate_deed_clause", {
+            "deed_type": "encumbrance_free"
+        })
+        self.assertEqual(res_enc["deed_type"], "encumbrance_free")
+        self.assertIn("দায়মুক্ত ও নির্ভেজাল", res_enc["clause"])
+
+        res_sch = self.server.call_tool("generate_deed_clause", {
+            "deed_type": "schedule",
+            "district": "ঢাকা",
+            "thana": "গুলশান",
+            "mouza": "বাড্ডা",
+            "jl_no": "১২",
+            "dag_no": "৪৫০",
+            "land_area": "১০ শতাংশ"
+        })
+        self.assertEqual(res_sch["deed_type"], "schedule")
+        self.assertIn("তফশিল", res_sch["schedule_text"])
+        self.assertIn("মৌজা: বাড্ডা", res_sch["schedule_text"])
+
 if __name__ == "__main__":
     unittest.main()

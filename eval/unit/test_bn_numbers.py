@@ -133,5 +133,10 @@ class TestBnNumbers(unittest.TestCase):
         self.assertEqual(format_date_bangla(2026, 3, 26), "২৬শে মার্চ, ২০২৬")
         self.assertEqual(format_date_bangla(1971, 12, 16), "১৬ই ডিসেম্বর, ১৯৭১")
 
+    def test_bongabdo_date_formatting(self):
+        from tools.bn_numbers.dates import format_date_bongabdo
+        self.assertEqual(format_date_bongabdo(1433, 1, 1), "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
+        self.assertEqual(format_date_bongabdo(1378, 9, 1), "১লা পৌষ, ১৩৭৮ বঙ্গাব্দ")
+
 if __name__ == "__main__":
     unittest.main()

@@ -18,6 +18,11 @@ GREGORIAN_MONTHS_BN = [
     "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
 ]
 
+BENGALI_MONTHS = [
+    "", "বৈশাখ", "জ্যৈষ্ঠ", "আষাঢ়", "শ্রাবণ", "ভাদ্র",
+    "আশ্বিন", "কার্তিক", "অগ্রহায়ণ", "পৌষ", "মাঘ", "ফাল্গুন", "চৈত্র"
+]
+
 def format_date_bangla(year: int, month: int, day: int) -> str:
     """
     Format a Gregorian date with Bengali month name, date suffix, and Bengali year digits.
@@ -27,3 +32,14 @@ def format_date_bangla(year: int, month: int, day: int) -> str:
     month_str = GREGORIAN_MONTHS_BN[month] if 1 <= month <= 12 else str(month)
     year_str = to_bangla_digits(year)
     return f"{day_str} {month_str}, {year_str}"
+
+def format_date_bongabdo(year: int, month: int, day: int) -> str:
+    """
+    Format a traditional Bengali calendar date (বঙ্গাব্দ) with Bengali month name,
+    date ordinal suffix, and Bengali year digits.
+    Example: (1433, 1, 1) -> "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
+    """
+    day_str = DATE_ORDINALS.get(day, f"{to_bangla_digits(day)}ই")
+    month_str = BENGALI_MONTHS[month] if 1 <= month <= 12 else str(month)
+    year_str = to_bangla_digits(year)
+    return f"{day_str} {month_str}, {year_str} বঙ্গাব্দ"

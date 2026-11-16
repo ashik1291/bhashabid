@@ -34,6 +34,9 @@ class TestPackageIntegrity(unittest.TestCase):
         self.assertTrue(hasattr(bhashabid, "format_number"))
         self.assertTrue(hasattr(bhashabid, "scan_line"))
         self.assertTrue(hasattr(bhashabid, "verify_payar"))
+        self.assertTrue(hasattr(bhashabid, "format_date_bangla"))
+        self.assertTrue(hasattr(bhashabid, "format_date_bongabdo"))
+        self.assertTrue(hasattr(bhashabid, "BENGALI_MONTHS"))
 
     def test_normalize_execution(self):
         res = bhashabid.normalize("তিনি রেলষ্টেশনে গেলেন |")
@@ -48,6 +51,8 @@ class TestPackageIntegrity(unittest.TestCase):
         self.assertIn("দশ হাজার", words)
         grouped = bhashabid.format_number(10000000)
         self.assertEqual(grouped, "১,০০,০০,০০০")
+        bongabdo = bhashabid.format_date_bongabdo(1433, 1, 1)
+        self.assertEqual(bongabdo, "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
 
     def test_prosody_execution(self):
         line = "মহাভারতের কথা অমৃত সমান"

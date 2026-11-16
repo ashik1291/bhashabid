@@ -187,5 +187,22 @@ class TestBnLint(unittest.TestCase):
         self.assertEqual(issues[0].matched_text, "শ্রদ্ধাঞ্জলী")
         self.assertIn("শ্রদ্ধাঞ্জলি", issues[0].suggestion)
 
+    def test_lexicon_audit_span_accuracy_with_codeswitching(self):
+        from tools.bn_normalize.lexicon import get_default_lexicon
+        lex = get_default_lexicon()
+        # Code-switched alphanumeric hyphenated term before a misspelled word
+        text = "আমাদের K8s-ক্লাস্টারে একটি অনাকাঙ্ক্ষিত শ্রদ্ধাঞ্জলী পরিলক্ষিত হয়েছে।"
+        issues = lex.audit_text(text)
+        self.assertTrue(len(issues) >= 1)
+        for issue in issues:
+            s_start, s_end = issue["span"]
+            extracted = text[s_start:s_end]
+            self.assertEqual(extracted, issue["word"], f"Span offset mismatch: extracted '{extracted}' != word '{issue['word']}'")
+
+    def test_guru_chandali_dict_keys_cleanliness(self):
+        from tools.bn_lint.guru_chandali import SADHU_MARKERS
+        for k in SADHU_MARKERS.keys():
+            self.assertEqual(k, k.strip(), f"Guru-chandali key '{k}' has leading/trailing whitespace")
+
 if __name__ == "__main__":
     unittest.main()

@@ -104,6 +104,28 @@ class BhashabidMCPServer:
                     },
                     "required": ["text"]
                 }
+            },
+            {
+                "name": "generate_deed_clause",
+                "description": "Generate standard statutory Bengali civil conveyancing clauses (Saf-Kabala, Encumbrance-Free, Deed Schedule).",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "deed_type": {"type": "string", "enum": ["saf_kabala", "encumbrance_free", "schedule"], "description": "Type of deed clause to generate."},
+                        "vendor_name": {"type": "string", "description": "Vendor / transferor name (বিক্রেতা)."},
+                        "purchaser_name": {"type": "string", "description": "Purchaser / transferee name (ক্রেতা)."},
+                        "consideration_taka": {"type": "number", "description": "Total consideration amount in BDT (পণমূল্য)."},
+                        "district": {"type": "string", "description": "District name (জেলা)."},
+                        "thana": {"type": "string", "description": "Police Station / Upazila (থানা)."},
+                        "mouza": {"type": "string", "description": "Mouza name (মৌজা)."},
+                        "jl_no": {"type": "string", "description": "J.L. Number (জে. এল. নং)."},
+                        "khatian_no": {"type": "string", "description": "Khatian Number (খতিয়ান নং)."},
+                        "dag_no": {"type": "string", "description": "Plot / Dag Number (দাগ নং)."},
+                        "land_area": {"type": "string", "description": "Land area and class (জমির শ্রেণি ও পরিমাণ)."},
+                        "boundaries": {"type": "object", "description": "Boundaries dictionary (চৌহদ্দি): north, south, east, west."}
+                    },
+                    "required": ["deed_type"]
+                }
             }
         ]
 
@@ -226,6 +248,39 @@ class BhashabidMCPServer:
                 "issues_count": len(issues),
                 "issues": issues
             }
+
+        elif name == "generate_deed_clause":
+            from ..legal import (
+                generate_saf_kabala_clause,
+                generate_encumbrance_free_clause,
+                format_deed_schedule,
+                DeedSchedule
+            )
+            dtype = arguments.get("deed_type", "saf_kabala")
+            if dtype == "saf_kabala":
+                vname = arguments.get("vendor_name", "বিক্রেতা")
+                pname = arguments.get("purchaser_name", "ক্রেতা")
+                taka = float(arguments.get("consideration_taka", 0))
+                clause = generate_saf_kabala_clause(vname, pname, taka)
+                return {"deed_type": "saf_kabala", "clause": clause}
+            elif dtype == "encumbrance_free":
+                clause = generate_encumbrance_free_clause()
+                return {"deed_type": "encumbrance_free", "clause": clause}
+            elif dtype == "schedule":
+                sch = DeedSchedule(
+                    district=arguments.get("district", ""),
+                    thana=arguments.get("thana", ""),
+                    mouza=arguments.get("mouza", ""),
+                    jl_no=arguments.get("jl_no", ""),
+                    khatian_no=arguments.get("khatian_no", ""),
+                    dag_no=arguments.get("dag_no", ""),
+                    land_area=arguments.get("land_area", ""),
+                    boundaries=arguments.get("boundaries")
+                )
+                text = format_deed_schedule(sch)
+                return {"deed_type": "schedule", "schedule_text": text}
+            else:
+                raise ValueError(f"Unknown deed_type: {dtype}")
 
         else:
             raise ValueError(f"Unknown tool: {name}")

@@ -4,7 +4,7 @@ from .words import number_to_bangla_words, StyleProfile
 from .decimals import decimal_to_bangla_words
 from .fractions import fraction_to_bangla_words
 from .currency import format_currency_words
-from .dates import format_date_bangla
+from .dates import format_date_bangla, format_date_bongabdo, BENGALI_MONTHS
 from .ordinals import to_classical_ordinal, to_date_ordinal
 
 __all__ = [
@@ -17,6 +17,8 @@ __all__ = [
     "fraction_to_bangla_words",
     "format_currency_words",
     "format_date_bangla",
+    "format_date_bongabdo",
+    "BENGALI_MONTHS",
     "to_classical_ordinal",
     "to_date_ordinal",
 ]

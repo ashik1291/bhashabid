@@ -39,7 +39,18 @@ NATVA_SHATVA_ROOTS = [
     ("পুনঃরূপ", "পুনরূপ"),
 ]
 
-# 3. Tatbhava / Desi / Foreign words that must take short-vowel 'ি' (হ্রস্ব-ইকার) under modern orthography
+# 3. Tatsama Dual-Vowel Invariants (Bangla Academy Rule 1.01: যেসব তৎসম শব্দে ই/ঈ বা উ/ঊ উভয়ই প্রযোজ্য, সে ক্ষেত্রে হ্রস্বস্বর)
+TATSAMA_DUAL_VOWEL_ROOTS = [
+    ("শ্রেণী", "শ্রেণি"),
+    ("পদবী", "পদবি"),
+    ("পল্লী", "পল্লি"),
+    ("সূচী", "সূচি"),
+    ("ধূলী", "ধূলি"),
+    ("উর্ণা", "উর্না"),
+    ("কিংবদন্তী", "কিংবদন্তি"),
+]
+
+# 4. Tatbhava / Desi / Foreign words that must take short-vowel 'ি' (হ্রস্ব-ইকার) under modern orthography
 TATBHAVA_SHORT_VOWEL_ROOTS = [
     ("পাখী", "পাখি"),
     ("হাতী", "হাতি"),
@@ -150,19 +161,23 @@ def normalize_orthography(text: str, profile: str = "bd_standard") -> str:
         for bad_stem, good_stem in NATVA_SHATVA_ROOTS:
             text = text.replace(bad_stem, good_stem)
 
-        # 3. Tatbhava short-vowel replacements
+        # 3. Tatsama dual-vowel short vowel replacements (Rule 1.01)
+        for bad_stem, good_stem in TATSAMA_DUAL_VOWEL_ROOTS:
+            text = text.replace(bad_stem, good_stem)
+
+        # 4. Tatbhava short-vowel replacements
         for bad_stem, good_stem in TATBHAVA_SHORT_VOWEL_ROOTS:
             text = text.replace(bad_stem, good_stem)
 
-        # 4. Affix, Sandhi & Invariants replacements
+        # 5. Affix, Sandhi & Invariants replacements
         for bad_stem, good_stem in AFFIX_AND_SANDHI_ROOTS:
             text = text.replace(bad_stem, good_stem)
 
-        # 5. Reph gemination elimination
+        # 6. Reph gemination elimination
         for bad_stem, good_stem in REPH_GEMINATION_ROOTS:
             text = text.replace(bad_stem, good_stem)
 
-        # 6. Word boundary separations
+        # 7. Word boundary separations
         for pat, good in COMPILED_WORD_BOUNDARIES:
             text = pat.sub(good, text)
 

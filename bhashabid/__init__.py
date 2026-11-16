@@ -20,7 +20,10 @@ from .numbers import (
     to_classical_ordinal,
     to_date_ordinal,
     to_bangla_digits,
-    to_ascii_digits
+    to_ascii_digits,
+    format_date_bangla,
+    format_date_bongabdo,
+    BENGALI_MONTHS
 )
 from .prosody import scan_line, verify_payar
 from .legal import (
@@ -68,6 +71,9 @@ __all__ = [
     "to_date_ordinal",
     "to_bangla_digits",
     "to_ascii_digits",
+    "format_date_bangla",
+    "format_date_bongabdo",
+    "BENGALI_MONTHS",
     "scan_line",
     "verify_payar",
     "get_default_lexicon",

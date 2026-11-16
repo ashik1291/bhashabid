@@ -89,5 +89,30 @@ class TestCLI(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertIn("successfully removed", out)
 
+    def test_cli_deed_generation(self):
+        code_saf, out_saf, _ = self.run_cli([
+            "deed", "--type", "saf-kabala",
+            "--vendor", "করিম উদ্দিন",
+            "--purchaser", "রহিম মিয়া",
+            "--taka", "500000"
+        ])
+        self.assertEqual(code_saf, 0)
+        self.assertIn("সাফ-কবলা হস্তান্তর", out_saf)
+        self.assertIn("করিম উদ্দিন", out_saf)
+        self.assertIn("পাঁচ লাখ টাকা", out_saf)
+
+        code_enc, out_enc, _ = self.run_cli(["deed", "--type", "encumbrance"])
+        self.assertEqual(code_enc, 0)
+        self.assertIn("দায়মুক্তি ও নির্ভেজাল ঘোষণা", out_enc)
+
+        code_sch, out_sch, _ = self.run_cli([
+            "deed", "--type", "schedule",
+            "--district", "ঢাকা",
+            "--mouza", "বাড্ডা"
+        ])
+        self.assertEqual(code_sch, 0)
+        self.assertIn("তফশিল", out_sch)
+        self.assertIn("বাড্ডা", out_sch)
+
 if __name__ == "__main__":
     unittest.main()

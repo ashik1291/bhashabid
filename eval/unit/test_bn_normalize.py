@@ -113,6 +113,12 @@ class TestBnNormalize(unittest.TestCase):
         expected = "গাছের ডালে পাখি গান গায় এবং বনে হাতি হাঁটে।"
         self.assertEqual(normalize_orthography(text), expected)
 
+    def test_tatsama_dual_vowel_standardization(self):
+        # Bangla Academy Rule 1.01: Dual-valid Tatsama words must take short-vowel 'ি'
+        text = "প্রথম শ্রেণীর কর্মকর্তার পদবী পরিবর্তন করে পল্লী উন্নয়ন বোর্ডের কার্যসূচী নির্ধারণ করা হলো।"
+        expected = "প্রথম শ্রেণির কর্মকর্তার পদবি পরিবর্তন করে পল্লি উন্নয়ন বোর্ডের কার্যসূচি নির্ধারণ করা হলো।"
+        self.assertEqual(normalize_orthography(text), expected)
+
     def test_whitespace_compaction(self):
         text = "তিনি    বাড়ি   গেলেন।\n\nনতুন   দিন   শুরু   হলো।"
         expected = canonicalize_unicode("তিনি বাড়ি গেলেন।\n\nনতুন দিন শুরু হলো।")

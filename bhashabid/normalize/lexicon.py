@@ -216,9 +216,9 @@ class BengaliOfflineLexicon:
         Audits a Bengali text and flags potential typos with phonetic suggestions.
         Safely ignores code-switched alphanumeric hybrid compounds (e.g. K8s-ভিত্তিক, API-এর).
         """
-        # Pre-filter out English alphanumeric hyphenated terms
-        clean_text = re.sub(r"[A-Za-z0-9]+-(?:[\u0980-\u09FF]+)", " ", text)
-        clean_text = re.sub(r"[A-Za-z0-9]+", " ", clean_text)
+        # Pre-filter out English alphanumeric hyphenated terms while preserving exact character coordinate spans
+        clean_text = re.sub(r"[A-Za-z0-9]+-(?:[\u0980-\u09FF]+)", lambda m: " " * len(m.group(0)), text)
+        clean_text = re.sub(r"[A-Za-z0-9]+", lambda m: " " * len(m.group(0)), clean_text)
 
         issues = []
         tokens = re.finditer(r"[\u0980-\u09FF]+", clean_text)
