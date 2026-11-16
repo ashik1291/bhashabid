@@ -1,0 +1,29 @@
+id: CRD-DFT-083
+title: 'Candidate Rule for Pattern: PANIC'
+domain: Education & NCTB Pedagogy
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'PANIC' requires standard
+  Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- গায়ে লেখা ‘DON’T PANIC’, নাম্বার ৪২! স্টারশিপের এই পরীক্ষামূলক যাত্রায় আরেকটি মজার
+  ব্যাপার ছিল
+- মহাকাশযানটির গায়ে বড় করে লেখা ছিল ‘DON’T PANIC’
+common_llm_error: LLMs emit unadapted English terminology 'PANIC' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy)'
+- Principle P2 Human Provenance Audit Gate
+- National Curriculum and Textbook Board (NCTB) Standard Bengali
+- Ministry of Education Pedagogical Guidelines
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

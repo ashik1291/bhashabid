@@ -1,29 +1,29 @@
 {
   "version": "1.0.0",
   "first_initialized": "2026-11-12T16:22:27.685447",
-  "last_updated": "2026-11-16T18:43:14.065890",
-  "cumulative_practice_sessions": 29,
-  "cumulative_rounds_completed": 5218,
-  "cumulative_sentences_practiced": 532049,
-  "cumulative_checks_evaluated": 795007,
-  "cumulative_flaws_trapped": 98364,
-  "cumulative_fresh_batches_ingested": 1345,
+  "last_updated": "2026-11-16T20:04:02.238772",
+  "cumulative_practice_sessions": 31,
+  "cumulative_rounds_completed": 5261,
+  "cumulative_sentences_practiced": 537782,
+  "cumulative_checks_evaluated": 803148,
+  "cumulative_flaws_trapped": 98966,
+  "cumulative_fresh_batches_ingested": 1359,
   "sector_sentence_distribution": {
-    "Constitutional Law & Writs": 41798,
-    "Macroeconomics & Banking": 70406,
-    "Healthcare & Epidemiology": 38801,
-    "Administrative Governance & Memos": 57978,
-    "Creative Fiction & Dialogue": 48350,
-    "Classical Poetry & Prosody": 34718,
-    "Academic Research & Methodology": 38752,
-    "Land Registry & Deeds": 30664,
-    "Agronomy & Disaster Management": 53556,
-    "ICT & Software Engineering": 41939,
-    "Education & NCTB Pedagogy": 38790,
-    "Consumer E-Commerce & Retail Logistics": 9184,
-    "Customer Support & Conversational Chat": 9188,
-    "Mass Media & Digital Journalism": 9163,
-    "Translation & Calque Naturalization": 8762
+    "Constitutional Law & Writs": 42170,
+    "Macroeconomics & Banking": 71246,
+    "Healthcare & Epidemiology": 39165,
+    "Administrative Governance & Memos": 58650,
+    "Creative Fiction & Dialogue": 48815,
+    "Classical Poetry & Prosody": 35054,
+    "Academic Research & Methodology": 39112,
+    "Land Registry & Deeds": 31036,
+    "Agronomy & Disaster Management": 54088,
+    "ICT & Software Engineering": 42287,
+    "Education & NCTB Pedagogy": 39134,
+    "Consumer E-Commerce & Retail Logistics": 9372,
+    "Customer Support & Conversational Chat": 9376,
+    "Mass Media & Digital Journalism": 9335,
+    "Translation & Calque Naturalization": 8942
   },
   "confidence_milestones": [
     {
@@ -12130,6 +12130,132 @@
       "batch_size": 131,
       "status": "CONFIDENT_BATCH_MASTERED",
       "new_batch_ingested": "scraped_batch_2026_11_16_184205.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:35:05.947175",
+      "round": 3,
+      "saturation_score": 0.9808,
+      "clean_precision": 0.9808,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_193505.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:37:26.555349",
+      "round": 6,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_193726.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:39:42.256847",
+      "round": 9,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_193942.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:41:51.629829",
+      "round": 12,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_194151.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:43:48.866061",
+      "round": 15,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_194348.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:45:51.623353",
+      "round": 18,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_194551.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:48:06.830432",
+      "round": 21,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_194806.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:50:23.900027",
+      "round": 24,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_195023.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:52:38.509965",
+      "round": 27,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_195238.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:54:52.052751",
+      "round": 30,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_195451.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:57:02.390606",
+      "round": 33,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_195702.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T19:59:16.425226",
+      "round": 36,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_195916.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T20:01:12.713945",
+      "round": 39,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_200112.jsonl"
+    },
+    {
+      "timestamp": "2026-11-16T20:03:16.131458",
+      "round": 42,
+      "saturation_score": 0.9771,
+      "clean_precision": 0.9771,
+      "batch_size": 131,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_16_200315.jsonl"
     }
   ]
 }

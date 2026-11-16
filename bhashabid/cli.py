@@ -3,6 +3,7 @@ import argparse
 import sys
 import os
 import json
+from pathlib import Path
 
 from .numbers import (
     number_to_bangla_words,
@@ -263,6 +264,9 @@ def handle_practice(args):
         try:
             from .daily_practice_runner import run_practice_cycle
         except ImportError:
+            repo_root = Path(__file__).resolve().parent.parent
+            if str(repo_root) not in sys.path:
+                sys.path.insert(0, str(repo_root))
             from tools.daily_practice_runner import run_practice_cycle
         run_practice_cycle(
             duration_minutes=args.duration_minutes,
