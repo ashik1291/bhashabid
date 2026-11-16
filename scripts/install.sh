@@ -96,6 +96,40 @@ echo "--- Environment & Tool Capability Status ---"
 if command -v python3 &>/dev/null || command -v python &>/dev/null; then
   PY_BIN="$(command -v python3 || command -v python)"
   echo "[✓] Python Detected: ${PY_BIN}"
+
+  # Configure MCP servers if python is present
+  "${PY_BIN}" -c "
+import json, os, sys
+from pathlib import Path
+
+home = Path.home()
+entry = {'command': sys.executable, 'args': ['-m', 'bhashabid.mcp']}
+
+targets = [
+    home / '.cursor' / 'mcp.json',
+    home / '.gemini' / 'config' / 'mcp_config.json',
+    home / '.gemini' / 'antigravity' / 'mcp_servers.json',
+    home / 'Library' / 'Application Support' / 'Claude' / 'claude_desktop_config.json',
+    home / '.config' / 'Claude' / 'claude_desktop_config.json'
+]
+
+for p in targets:
+    try:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        data = {'mcpServers': {}}
+        if p.exists():
+            try:
+                data = json.loads(p.read_text(encoding='utf-8-sig'))
+            except Exception:
+                pass
+        if 'mcpServers' not in data or not isinstance(data['mcpServers'], dict):
+            data['mcpServers'] = {}
+        data['mcpServers']['bhashabid'] = entry
+        p.write_text(json.dumps(data, indent=2), encoding='utf-8')
+        print(f'    • MCP configured: {p}')
+    except Exception as e:
+        pass
+" 2>/dev/null || true
 else
   echo "[!] Python Not Detected on this machine."
   echo "    • Skill Mode: FULLY ACTIVE ✓ (AI directly applies Bangla Academy standards,"

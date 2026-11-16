@@ -156,6 +156,22 @@ if ($PythonCmd) {
             [System.IO.File]::WriteAllText($agMcpPath, $agJsonStr, $utf8NoBom)
             Write-Host "    • Antigravity MCP configured: $agMcpPath" -ForegroundColor DarkGray
         }
+
+        # Claude Desktop MCP
+        $ClaudeMcp = "$HomeDir/AppData/Roaming/Claude/claude_desktop_config.json"
+        if (Test-Path (Split-Path -Parent $ClaudeMcp)) {
+            $ClaudeJson = if (Test-Path $ClaudeMcp) {
+                $content = Get-Content $ClaudeMcp -Raw
+                if ($content.Trim()) { $content | ConvertFrom-Json } else { [PSCustomObject]@{ mcpServers = [PSCustomObject]@{} } }
+            } else {
+                [PSCustomObject]@{ mcpServers = [PSCustomObject]@{} }
+            }
+            if (-not $ClaudeJson.mcpServers) { $ClaudeJson | Add-Member -MemberType NoteProperty -Name "mcpServers" -Value ([PSCustomObject]@{}) }
+            $ClaudeJson.mcpServers | Add-Member -MemberType NoteProperty -Name "bhashabid" -Value $McpEntry -Force
+            $claudeJsonStr = $ClaudeJson | ConvertTo-Json -Depth 5
+            [System.IO.File]::WriteAllText($ClaudeMcp, $claudeJsonStr, $utf8NoBom)
+            Write-Host "    • Claude Desktop MCP configured: $ClaudeMcp" -ForegroundColor DarkGray
+        }
     } catch {
         Write-Host "    Notice: MCP configuration skipped: $($_.Exception.Message)" -ForegroundColor DarkGray
     }
