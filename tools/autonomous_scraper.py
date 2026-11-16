@@ -25,6 +25,15 @@ from tools.domain_taxonomy import canonicalize_sector, CANONICAL_SECTORS, get_se
 # Persistent hash cache to guarantee zero duplicate sentence ingestion across practice cycles
 FINGERPRINTS_PATH = os.path.join(REPO_ROOT, "state", "scraped_fingerprints.json")
 
+def make_wiki_api_url(category_name: str, limit: int = 50) -> str:
+    """Helper to build high-yield, full-extract MediaWiki API query URLs for Bengali Wikipedia."""
+    encoded_cat = urllib.parse.quote(category_name)
+    return (
+        f"https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers"
+        f"&gcmtitle={encoded_cat}&gcmnamespace=0&gcmlimit={limit}&gcmsort=sortkey"
+        f"&prop=extracts&exintro=1&exlimit=max&explaintext=1&format=json"
+    )
+
 # Authoritative live RSS and open API feeds covering all 17 professional sectors of Bhashabid
 DEFAULT_FEEDS = [
     # Sector 1: Constitutional Law & Writs
@@ -36,7 +45,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Bangladesh Case Law & Jurisprudence",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_আইন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_আইন"),
+        "domain": "Constitutional Law & Writs",
+        "sector": 1,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Bangladesh Constitution & Governance",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_সংবিধান"),
         "domain": "Constitutional Law & Writs",
         "sector": 1,
         "is_json_api": True
@@ -56,7 +72,7 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Macroeconomics & Central Banking",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_অর্থনীতি") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_অর্থনীতি"),
         "domain": "Macroeconomics & Banking",
         "sector": 2,
         "is_json_api": True
@@ -70,7 +86,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Clinical Medicine & Epidemiology",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:চিকিৎসাবিজ্ঞান") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:চিকিৎসাবিজ্ঞান"),
+        "domain": "Healthcare & Epidemiology",
+        "sector": 3,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Public Health & Epidemiology",
+        "url": make_wiki_api_url("Category:জনস্বাস্থ্য"),
         "domain": "Healthcare & Epidemiology",
         "sector": 3,
         "is_json_api": True
@@ -84,7 +107,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Public Administration",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:জনপ্রশাসন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:জনপ্রশাসন"),
+        "domain": "Administrative Governance & Memos",
+        "sector": 4,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Bangladesh Government Agencies",
+        "url": make_wiki_api_url("Category:বাংলাদেশ_সরকার"),
         "domain": "Administrative Governance & Memos",
         "sector": 4,
         "is_json_api": True
@@ -98,7 +128,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Bengali Literature & Fiction",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলা_সাহিত্য") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলা_সাহিত্য"),
+        "domain": "Creative Fiction & Spoken Dialogue",
+        "sector": 5,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Bengali Novels & Prose",
+        "url": make_wiki_api_url("Category:বাংলা_উপন্যাস"),
         "domain": "Creative Fiction & Spoken Dialogue",
         "sector": 5,
         "is_json_api": True
@@ -106,14 +143,21 @@ DEFAULT_FEEDS = [
     # Sector 6: Classical Poetry & Prosody
     {
         "name": "Bangla Wikipedia Poetry & Classical Verse",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলা_কবিতা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলা_কবিতা"),
         "domain": "Classical Poetry & Prosody",
         "sector": 6,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Classical Literature & Metrics",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাঙালি_কবি") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাঙালি_কবি"),
+        "domain": "Classical Poetry & Prosody",
+        "sector": 6,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Bengali Metres & Prosody",
+        "url": make_wiki_api_url("Category:ছন্দ"),
         "domain": "Classical Poetry & Prosody",
         "sector": 6,
         "is_json_api": True
@@ -121,14 +165,21 @@ DEFAULT_FEEDS = [
     # Sector 7: Academic Research & Methodology
     {
         "name": "Bangla Wikipedia Linguistics & Academic Research",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ভাষাবিজ্ঞান") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:ভাষাবিজ্ঞান"),
         "domain": "Academic Research & Methodology",
         "sector": 7,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Bengali Grammar & Philology",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলা_ব্যাকরণ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলা_ব্যাকরণ"),
+        "domain": "Academic Research & Methodology",
+        "sector": 7,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Research Methodology & Linguistics",
+        "url": make_wiki_api_url("Category:গবেষণা_পদ্ধতি"),
         "domain": "Academic Research & Methodology",
         "sector": 7,
         "is_json_api": True
@@ -136,14 +187,21 @@ DEFAULT_FEEDS = [
     # Sector 8: Land Registry & Deeds
     {
         "name": "Bangla Wikipedia Land Law & Property Registry",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:সম্পত্তি_আইন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:সম্পত্তি_আইন"),
         "domain": "Land Registry & Deeds",
         "sector": 8,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Legal Framework & Conveyancing",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:আইন") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:আইন"),
+        "domain": "Land Registry & Deeds",
+        "sector": 8,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Land Administration in Bangladesh",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_ভূমি_ব্যবস্থাপনা"),
         "domain": "Land Registry & Deeds",
         "sector": 8,
         "is_json_api": True
@@ -157,7 +215,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Agriculture & Agronomy",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_কৃষি") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_কৃষি"),
+        "domain": "Agronomy & Disaster Management",
+        "sector": 9,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Disaster Risk Management",
+        "url": make_wiki_api_url("Category:দুর্যোগ_ব্যবস্থাপনা"),
         "domain": "Agronomy & Disaster Management",
         "sector": 9,
         "is_json_api": True
@@ -171,14 +236,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Information Technology & Computing",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:তথ্য_প্রযুক্তি") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:তথ্য_প্রযুক্তি"),
         "domain": "ICT & Software Engineering",
         "sector": 10,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Computer Science & Software",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:কম্পিউটার_বিজ্ঞান") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:কম্পিউটার_বিজ্ঞান"),
         "domain": "ICT & Software Engineering",
         "sector": 10,
         "is_json_api": True
@@ -192,7 +257,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Education & Pedagogy",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:শিক্ষা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:শিক্ষা"),
+        "domain": "Education & NCTB Pedagogy",
+        "sector": 11,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Education in Bangladesh",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_শিক্ষা_ব্যবস্থা"),
         "domain": "Education & NCTB Pedagogy",
         "sector": 11,
         "is_json_api": True
@@ -206,14 +278,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Translation Studies & Lexicography",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:অনুবাদ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:অনুবাদ"),
         "domain": "Translation & Calque Naturalization",
         "sector": 12,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Proverbs & Cultural Idioms",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:প্রবাদ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:প্রবাদ"),
         "domain": "Translation & Calque Naturalization",
         "sector": 12,
         "is_json_api": True
@@ -227,14 +299,21 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia E-Commerce & Retail",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ই-বাণিজ্য") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:ই-বাণিজ্য"),
         "domain": "Consumer E-Commerce & Retail Logistics",
         "sector": 13,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Postal & Courier Logistics",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ডাক_ব্যবস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:ডাক_ব্যবস্থা"),
+        "domain": "Consumer E-Commerce & Retail Logistics",
+        "sector": 13,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Retail & Consumer Markets",
+        "url": make_wiki_api_url("Category:খুচরা_বিক্রয়"),
         "domain": "Consumer E-Commerce & Retail Logistics",
         "sector": 13,
         "is_json_api": True
@@ -248,7 +327,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Telecommunications & Customer Experience",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:টেলিযোগাযোগ") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:টেলিযোগাযোগ"),
+        "domain": "Customer Support & Omnichannel Messaging",
+        "sector": 14,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Customer Service & Relations",
+        "url": make_wiki_api_url("Category:গ্রাহক_সেবা"),
         "domain": "Customer Support & Omnichannel Messaging",
         "sector": 14,
         "is_json_api": True
@@ -261,15 +347,21 @@ DEFAULT_FEEDS = [
         "sector": 15
     },
     {
+        "name": "The Business Standard (TBS Bangla Banking & FinTech)",
+        "url": "https://www.tbsnews.net/bangla/rss.xml",
+        "domain": "MFS, Microfinance & Grassroots FinTech",
+        "sector": 15
+    },
+    {
         "name": "Bangla Wikipedia Banking & Grassroots Finance",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ব্যাংকিং") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:ব্যাংকিং"),
         "domain": "MFS, Microfinance & Grassroots FinTech",
         "sector": 15,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Currency & Financial Inclusion",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:মুদ্রা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:মুদ্রা"),
         "domain": "MFS, Microfinance & Grassroots FinTech",
         "sector": 15,
         "is_json_api": True
@@ -283,14 +375,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Government Portals & Public Services",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:বাংলাদেশের_সরকারি_সংস্থা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:বাংলাদেশের_সরকারি_সংস্থা"),
         "domain": "Citizen Digital Services & Smart Governance",
         "sector": 16,
         "is_json_api": True
     },
     {
         "name": "Bangla Wikipedia Digital Systems & Public Portals",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:ইন্টারনেট") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:ইন্টারনেট"),
         "domain": "Citizen Digital Services & Smart Governance",
         "sector": 16,
         "is_json_api": True
@@ -310,7 +402,14 @@ DEFAULT_FEEDS = [
     },
     {
         "name": "Bangla Wikipedia Journalism & Media Studies",
-        "url": "https://bn.wikipedia.org/w/api.php?action=query&generator=categorymembers&gcmtitle=" + urllib.parse.quote("Category:সাংবাদিকতা") + "&gcmnamespace=0&gcmlimit=12&prop=extracts&exintro=1&explaintext=1&format=json",
+        "url": make_wiki_api_url("Category:সাংবাদিকতা"),
+        "domain": "Mass Media & Digital Journalism",
+        "sector": 17,
+        "is_json_api": True
+    },
+    {
+        "name": "Bangla Wikipedia Mass Media & Press",
+        "url": make_wiki_api_url("Category:গণমাধ্যম"),
         "domain": "Mass Media & Digital Journalism",
         "sector": 17,
         "is_json_api": True
@@ -339,6 +438,7 @@ class AutonomousScraper:
         os.makedirs(self.inbox_dir, exist_ok=True)
         self.fingerprints_path = fingerprints_path or FINGERPRINTS_PATH
         self.seen_fingerprints = self._load_fingerprints()
+        self._article_cache = {}  # In-memory full news cache to prevent duplicate HTTP requests
 
     def _load_fingerprints(self) -> set:
         """Loads previously seen sentence hashes to prevent duplicate re-ingestion."""
@@ -346,7 +446,12 @@ class AutonomousScraper:
             try:
                 with open(self.fingerprints_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
-                    return set(data.get("fingerprints", []))
+                    fps = data.get("fingerprints", [])
+                    # Rolling FIFO window of the latest 25,000 fingerprints: protects against
+                    # intra-session duplication while permitting ongoing rotating news cycle updates.
+                    if len(fps) > 30000:
+                        fps = fps[-25000:]
+                    return set(fps)
             except Exception as e:
                 # Corrupted state guard: create timestamped backup to prevent wiping historical cache
                 backup_path = f"{self.fingerprints_path}.corrupted.{int(time.time())}.bak"
@@ -356,6 +461,41 @@ class AutonomousScraper:
                 except Exception:
                     pass
         return set()
+
+    def fetch_full_article_content(self, link: str) -> str:
+        """
+        Fetches the complete news article text from the web page link,
+        extracting all authentic body paragraphs (<p>) rather than just the RSS headline.
+        Employs strict in-memory caching and a tight 3.5s timeout for maximum efficiency.
+        """
+        if not link or not link.startswith(("http://", "https://")):
+            return ""
+        clean_link = link.split("?")[0]
+        if clean_link in self._article_cache:
+            return self._article_cache[clean_link]
+
+        try:
+            req = urllib.request.Request(link, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=3.5) as resp:  # nosec B310
+                html_text = resp.read().decode("utf-8", errors="ignore")
+
+            paragraphs = re.findall(r"<p[^>]*>(.*?)</p>", html_text, flags=re.DOTALL)
+            clean_paras = []
+            for p in paragraphs:
+                cleaned = self.sanitize_article_text(p)
+                # Must be a substantial Bengali paragraph with punctuation and at least 5 words
+                if len(cleaned) > 30 and re.search(r"[\u0980-\u09FF]", cleaned):
+                    if not re.search(r"[।?!]", cleaned) or len(cleaned.split()) < 5:
+                        continue
+                    if re.search(r"(?:ক্লিক করুন|বিজ্ঞাপন|আরও পড়ুন|শেয়ার করুন|সর্বশেষ|মূলপাতা|লগইন|সাবস্ক্রাইব)", cleaned):
+                        continue
+                    clean_paras.append(cleaned)
+
+            full_text = " । ".join(clean_paras)
+            self._article_cache[clean_link] = full_text
+            return full_text
+        except Exception:
+            return ""
 
     def save_fingerprints(self):
         """Persists seen sentence fingerprints to disk with atomic write."""
@@ -404,7 +544,7 @@ class AutonomousScraper:
         return " ".join(clean.split())
 
     def fetch_feed_data(self, feed: Dict, max_items: int = 4) -> List[Dict]:
-        """Fetches and parses a single RSS or API feed with network resilience."""
+        """Fetches and parses a single RSS or API feed with network resilience and full article extraction."""
         url = feed["url"]
         name = feed["name"]
         domain = feed["domain"]
@@ -429,7 +569,12 @@ class AutonomousScraper:
                 try:
                     data = json.loads(content_bytes.decode("utf-8", errors="ignore"))
                     pages = data.get("query", {}).get("pages", {})
-                    for pid, pdata in pages.items():
+                    page_list = list(pages.values())
+                    # Shuffle page order so every cycle samples distinct articles across the category
+                    import random
+                    random.shuffle(page_list)
+
+                    for pdata in page_list:
                         if len(items) >= max_items:
                             break
                         title = pdata.get("title", "")
@@ -448,7 +593,7 @@ class AutonomousScraper:
                                     "source": name,
                                     "domain": domain,
                                     "text": canonicalize_unicode(s),
-                                    "notes": f"Scraped lead sentence from {name} ('{title}')"
+                                    "notes": f"Scraped full lead & body from {name} ('{title}')"
                                 })
                 except Exception as je:
                     print(f"Notice: JSON API parse note for {name}: {je}")
@@ -473,14 +618,33 @@ class AutonomousScraper:
                 for it in raw_items:
                     if len(items) >= max_items:
                         break
-                    title_elem = it.find("title") or it.find("{http://purl.org/rss/1.0/}title")
-                    desc_elem = it.find("description") or it.find("{http://purl.org/rss/1.0/}description")
+                    title_elem = it.find("title")
+                    if title_elem is None:
+                        title_elem = it.find("{http://purl.org/rss/1.0/}title")
+
+                    desc_elem = it.find("description")
+                    if desc_elem is None:
+                        desc_elem = it.find("{http://purl.org/rss/1.0/}description")
+
                     content_elem = it.find("{http://purl.org/rss/1.0/modules/content/}encoded")
+                    link_elem = it.find("link")
+                    if link_elem is None:
+                        link_elem = it.find("{http://purl.org/rss/1.0/}link")
 
-                    title_text = self.sanitize_article_text(title_elem.text if title_elem is not None else "")
-                    body_text = self.sanitize_article_text(content_elem.text if content_elem is not None and content_elem.text else (desc_elem.text if desc_elem is not None else ""))
+                    title_text = self.sanitize_article_text(title_elem.text if title_elem is not None and title_elem.text else "")
+                    body_text = self.sanitize_article_text(content_elem.text if content_elem is not None and content_elem.text else (desc_elem.text if desc_elem is not None and desc_elem.text else ""))
 
-                    combined = f"{title_text} {body_text}".strip()
+                    # Full News Extraction: fetch full article body from link if available
+                    link_url = (link_elem.text if link_elem is not None and link_elem.text else "").strip()
+                    full_body = ""
+                    if link_url:
+                        full_body = self.fetch_full_article_content(link_url)
+
+                    if full_body:
+                        combined = f"{title_text} । {full_body}"
+                    else:
+                        combined = f"{title_text} {body_text}".strip()
+
                     # Only accept items containing actual Bengali graphemes
                     if re.search(r"[\u0980-\u09FF]", combined):
                         # Split into clean, non-trivial sentences (> 15 chars)
@@ -495,7 +659,7 @@ class AutonomousScraper:
                                 "source": name,
                                 "domain": domain,
                                 "text": canonicalize_unicode(s),
-                                "notes": f"Live RSS lead reporting from {name}"
+                                "notes": f"Live RSS full article reporting from {name}"
                             })
 
         except urllib.error.HTTPError as he:
@@ -730,7 +894,7 @@ class AutonomousScraper:
             # 7. Tier 4: Grounded Mistake-Learning Synthesizer Fallback
             if len(sec_items) < max_items_per_sector:
                 needed = max_items_per_sector - len(sec_items)
-                print(f"  • [Notice] Live feed unavailable for '{sec}'. Engaging Learning from Mistakes Engine...")
+                print(f"  • [Notice] Tier 1-3 sources fully saturated for current window in '{sec}'. Engaging Tier 4 Mistake Synthesizer...")
                 synth_items = mistake_synth.synthesize_sector_batch(
                     sector=canon_sec,
                     count=needed,
