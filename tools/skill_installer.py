@@ -5,24 +5,36 @@ import sys
 import shutil
 import json
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
-REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+PACKAGE_DIR = Path(__file__).parent.parent / "bhashabid"
+REPO_ROOT = Path(__file__).parent.parent
 
 def get_source_skill_dir() -> Path:
-    p = Path(REPO_ROOT) / "skills" / "bangla-expert"
-    if p.exists() and (p / "SKILL.md").exists():
-        return p
-    p_assets = Path(__file__).parent / "assets" / "skills" / "bangla-expert"
-    if p_assets.exists() and (p_assets / "SKILL.md").exists():
-        return p_assets
-    import importlib.util
-    spec = importlib.util.find_spec("skills")
-    if spec and spec.submodule_search_locations:
-        p_pkg = Path(spec.submodule_search_locations[0]) / "bangla-expert"
-        if p_pkg.exists():
-            return p_pkg
-    raise FileNotFoundError("Could not locate source 'skills/bangla-expert' directory.")
+    # 1. Check repo root
+    p_repo = REPO_ROOT / "skills" / "bangla-expert"
+    if p_repo.exists() and (p_repo / "SKILL.md").exists():
+        return p_repo
+    # 2. Check packaged assets directory
+    p_pkg = PACKAGE_DIR / "assets" / "skills" / "bangla-expert"
+    if p_pkg.exists() and (p_pkg / "SKILL.md").exists():
+        return p_pkg
+    p_tools = REPO_ROOT / "tools" / "assets" / "skills" / "bangla-expert"
+    if p_tools.exists() and (p_tools / "SKILL.md").exists():
+        return p_tools
+    raise FileNotFoundError("Could not locate source 'skills/bangla-expert' directory in package assets or repository.")
+
+def get_cursorrules_path() -> Path:
+    p_repo = REPO_ROOT / "adapters" / "cursor" / ".cursorrules"
+    if p_repo.exists():
+        return p_repo
+    p_pkg = PACKAGE_DIR / "assets" / "adapters" / "cursor" / ".cursorrules"
+    if p_pkg.exists():
+        return p_pkg
+    p_tools = REPO_ROOT / "tools" / "assets" / "adapters" / "cursor" / ".cursorrules"
+    if p_tools.exists():
+        return p_tools
+    raise FileNotFoundError("Could not locate source '.cursorrules' in package assets or repository.")
 
 def detect_environments() -> Dict[str, Dict[str, Any]]:
     """
@@ -57,20 +69,13 @@ def detect_environments() -> Dict[str, Dict[str, Any]]:
     # 3. Claude (Desktop / Code)
     claude_found = False
     claude_hint = ""
-    claude_cfg = None
-    if sys.platform == "win32" and appdata:
-        claude_cfg = appdata / "Claude" / "claude_desktop_config.json"
-    elif sys.platform == "darwin":
-        claude_cfg = home / "Library" / "Application Support" / "Claude" / "claude_desktop_config.json"
-    else:
-        claude_cfg = home / ".config" / "Claude" / "claude_desktop_config.json"
-
+    claude_cfg = get_claude_desktop_config_path()
     if (home / ".claude").exists():
         claude_found = True
         claude_hint = str(home / ".claude")
-    elif claude_cfg and claude_cfg.parent.exists():
+    elif claude_cfg and claude_cfg.exists():
         claude_found = True
-        claude_hint = str(claude_cfg.parent)
+        claude_hint = str(claude_cfg)
     elif shutil.which("claude") is not None:
         claude_found = True
         claude_hint = "claude CLI on PATH"
@@ -78,31 +83,27 @@ def detect_environments() -> Dict[str, Dict[str, Any]]:
     return {
         "cursor": {"detected": cursor_found, "hint": cursor_hint},
         "antigravity": {"detected": ag_found, "hint": ag_hint},
-        "claude": {"detected": claude_found, "hint": claude_hint, "config": claude_cfg}
+        "claude": {"detected": claude_found, "hint": claude_hint}
     }
 
-def get_claude_desktop_config_path() -> Path:
+def get_claude_desktop_config_path() -> Optional[Path]:
     home = Path.home()
-    if sys.platform == "win32":
-        appdata = os.environ.get("APPDATA")
-        return Path(appdata) / "Claude" / "claude_desktop_config.json" if appdata else home / ".config" / "Claude" / "claude_desktop_config.json"
+    appdata = Path(os.environ.get("APPDATA", "")) if os.environ.get("APPDATA") else None
+    if sys.platform == "win32" and appdata:
+        return appdata / "Claude" / "claude_desktop_config.json"
     elif sys.platform == "darwin":
         return home / "Library" / "Application Support" / "Claude" / "claude_desktop_config.json"
-    return home / ".config" / "Claude" / "claude_desktop_config.json"
+    else:
+        return home / ".config" / "Claude" / "claude_desktop_config.json"
 
 def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
-    """
-    Installs Bhashabid MCP server configuration globally for detected environments.
-    """
     home = Path.home()
-    repo_path = str(Path(REPO_ROOT).resolve()).replace("\\", "/")
     python_exe = sys.executable.replace("\\", "/")
     env_info = detect_environments()
 
     mcp_entry = {
         "command": python_exe,
-        "args": ["-m", "tools.mcp_server"],
-        "cwd": repo_path
+        "args": ["-m", "bhashabid.mcp"]
     }
 
     configured = []
@@ -129,24 +130,28 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
         else:
             skipped.append("Cursor (Not detected)")
 
-    # 2. Antigravity Global MCP (~/.gemini/antigravity/mcp_servers.json)
+    # 2. Antigravity Global MCP (Sync to ~/.gemini/config/mcp_config.json AND ~/.gemini/antigravity/mcp_servers.json)
     if target in ["antigravity", "all"]:
         if target == "antigravity" or env_info["antigravity"]["detected"]:
-            ag_mcp = home / ".gemini" / "antigravity" / "mcp_servers.json"
-            os.makedirs(ag_mcp.parent, exist_ok=True)
-            ag_data = {"mcpServers": {}}
-            if ag_mcp.exists():
-                try:
-                    with open(ag_mcp, "r", encoding="utf-8") as f:
-                        ag_data = json.load(f)
-                except Exception:
-                    ag_data = {"mcpServers": {}}
-            if "mcpServers" not in ag_data:
-                ag_data["mcpServers"] = {}
-            ag_data["mcpServers"]["bhashabid"] = mcp_entry
-            with open(ag_mcp, "w", encoding="utf-8") as f:
-                json.dump(ag_data, f, indent=2, ensure_ascii=False)
-            configured.append(f"Antigravity: {ag_mcp}")
+            ag_mcp_paths = [
+                home / ".gemini" / "config" / "mcp_config.json",
+                home / ".gemini" / "antigravity" / "mcp_servers.json"
+            ]
+            for ag_mcp in ag_mcp_paths:
+                os.makedirs(ag_mcp.parent, exist_ok=True)
+                ag_data = {"mcpServers": {}}
+                if ag_mcp.exists():
+                    try:
+                        with open(ag_mcp, "r", encoding="utf-8") as f:
+                            ag_data = json.load(f)
+                    except Exception:
+                        ag_data = {"mcpServers": {}}
+                if "mcpServers" not in ag_data:
+                    ag_data["mcpServers"] = {}
+                ag_data["mcpServers"]["bhashabid"] = mcp_entry
+                with open(ag_mcp, "w", encoding="utf-8") as f:
+                    json.dump(ag_data, f, indent=2, ensure_ascii=False)
+                configured.append(f"Antigravity: {ag_mcp}")
         else:
             skipped.append("Antigravity (Not detected)")
 
@@ -154,20 +159,21 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
     if target in ["claude", "all"]:
         claude_cfg = get_claude_desktop_config_path()
         if target == "claude" or (claude_cfg and claude_cfg.parent.exists()) or env_info["claude"]["detected"]:
-            os.makedirs(claude_cfg.parent, exist_ok=True)
-            data = {"mcpServers": {}}
-            if claude_cfg.exists():
-                try:
-                    with open(claude_cfg, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                except Exception:
-                    data = {"mcpServers": {}}
-            if "mcpServers" not in data:
-                data["mcpServers"] = {}
-            data["mcpServers"]["bhashabid"] = mcp_entry
-            with open(claude_cfg, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            configured.append(f"Claude Desktop: {claude_cfg}")
+            if claude_cfg:
+                os.makedirs(claude_cfg.parent, exist_ok=True)
+                data = {"mcpServers": {}}
+                if claude_cfg.exists():
+                    try:
+                        with open(claude_cfg, "r", encoding="utf-8") as f:
+                            data = json.load(f)
+                    except Exception:
+                        data = {"mcpServers": {}}
+                if "mcpServers" not in data:
+                    data["mcpServers"] = {}
+                data["mcpServers"]["bhashabid"] = mcp_entry
+                with open(claude_cfg, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                configured.append(f"Claude Desktop: {claude_cfg}")
         else:
             skipped.append("Claude Desktop (Not detected)")
 
@@ -200,10 +206,6 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
     return msg
 
 def verify_skill_safety(src_dir: Path) -> bool:
-    """
-    Security Gate: Verifies that the skill source directory contains only safe declarative
-    markdown/documentation files and zero executable binaries, scripts, or hooks.
-    """
     banned_extensions = {".exe", ".dll", ".so", ".sh", ".bat", ".cmd", ".ps1", ".vbs", ".bin"}
     for f in src_dir.rglob("*"):
         if f.is_file():
@@ -220,9 +222,6 @@ def verify_skill_safety(src_dir: Path) -> bool:
     return True
 
 def install_skill(target: str = "all", workspace_dir: str = None, with_mcp: bool = True) -> str:
-    """
-    Installs Bhashabid skill files and reference guides globally for detected environments.
-    """
     src_dir = get_source_skill_dir()
     verify_skill_safety(src_dir)
     home = Path.home()
@@ -230,37 +229,42 @@ def install_skill(target: str = "all", workspace_dir: str = None, with_mcp: bool
     dest_paths = []
     skipped = []
 
-    # 1. Cursor Global Rules (~/.cursor/rules/bangla-expert.mdc and ~/.cursor/bangla-references)
+    # 1. Cursor Global Rules
     if target in ["cursor", "all"]:
         if target == "cursor" or env_info["cursor"]["detected"]:
             cur_global_rules = home / ".cursor" / "rules"
             os.makedirs(cur_global_rules, exist_ok=True)
-            src_rule = Path(REPO_ROOT) / "adapters" / "cursor" / ".cursorrules"
-            if not src_rule.exists():
-                src_rule = Path(__file__).parent / "assets" / "adapters" / "cursor" / ".cursorrules"
-            if src_rule.exists():
+            try:
+                src_rule = get_cursorrules_path()
                 shutil.copy(src_rule, cur_global_rules / "bangla-expert.mdc")
+            except Exception:
+                pass
 
             cur_global_refs = home / ".cursor" / "bangla-references"
             os.makedirs(cur_global_refs, exist_ok=True)
-            shutil.copytree(src_dir / "references", cur_global_refs, dirs_exist_ok=True)
+            if (src_dir / "references").exists():
+                shutil.copytree(src_dir / "references", cur_global_refs, dirs_exist_ok=True)
 
             dest_paths.append(f"Cursor (Global Rule): {cur_global_rules / 'bangla-expert.mdc'}")
             dest_paths.append(f"Cursor (References):  {cur_global_refs}")
         else:
             skipped.append("Cursor (Not detected)")
 
-    # 2. Antigravity Global Skills (~/.gemini/antigravity/skills/bangla-expert)
+    # 2. Antigravity Global Skills
     if target in ["antigravity", "all"]:
         if target == "antigravity" or env_info["antigravity"]["detected"]:
-            ag_global = home / ".gemini" / "antigravity" / "skills" / "bangla-expert"
-            os.makedirs(ag_global, exist_ok=True)
-            shutil.copytree(src_dir, ag_global, dirs_exist_ok=True)
-            dest_paths.append(f"Antigravity (Global Skill): {ag_global}")
+            ag_paths = [
+                home / ".gemini" / "config" / "skills" / "bhashabid",
+                home / ".gemini" / "antigravity" / "skills" / "bangla-expert"
+            ]
+            for ag_dest in ag_paths:
+                os.makedirs(ag_dest, exist_ok=True)
+                shutil.copytree(src_dir, ag_dest, dirs_exist_ok=True)
+                dest_paths.append(f"Antigravity (Global Skill): {ag_dest}")
         else:
             skipped.append("Antigravity (Not detected)")
 
-    # 3. Claude Global Skills (~/.claude/skills/bangla-expert)
+    # 3. Claude Global Skills
     if target in ["claude", "all"]:
         if target == "claude" or env_info["claude"]["detected"]:
             cl_global = home / ".claude" / "skills" / "bangla-expert"
@@ -270,20 +274,23 @@ def install_skill(target: str = "all", workspace_dir: str = None, with_mcp: bool
         else:
             skipped.append("Claude (Not detected)")
 
-    # 4. Optional Workspace Directory (Only if explicitly passed via --workspace)
+    # 4. Optional Workspace Directory
     if workspace_dir:
         ws = Path(workspace_dir)
         cur_rules = ws / ".cursor" / "rules"
         os.makedirs(cur_rules, exist_ok=True)
-        src_rule = Path(REPO_ROOT) / "adapters" / "cursor" / ".cursorrules"
-        if src_rule.exists():
+        try:
+            src_rule = get_cursorrules_path()
             shutil.copy(src_rule, ws / ".cursorrules")
             shutil.copy(src_rule, cur_rules / "bangla-expert.mdc")
-        shutil.copytree(src_dir / "references", ws / ".cursor" / "bangla-references", dirs_exist_ok=True)
+        except Exception:
+            pass
+        if (src_dir / "references").exists():
+            shutil.copytree(src_dir / "references", ws / ".cursor" / "bangla-references", dirs_exist_ok=True)
         dest_paths.append(f"Workspace ({ws.name}): {cur_rules / 'bangla-expert.mdc'}")
         dest_paths.append(f"Workspace ({ws.name}): {ws / '.cursorrules'}")
 
-    msg = f"✓ Bhashabid skill and all {len(list((src_dir / 'references').glob('*.md')))} reference guides successfully installed to:\n"
+    msg = f"✓ Bhashabid skill successfully installed to:\n"
     for dp in dest_paths:
         msg += f"  - {dp}\n"
 
@@ -299,23 +306,17 @@ def install_skill(target: str = "all", workspace_dir: str = None, with_mcp: bool
     return msg
 
 def uninstall_mcp(target: str = "all", workspace_dir: str = None) -> str:
-    """
-    Removes Bhashabid MCP server configuration after scanning detected environments.
-    """
     home = Path.home()
     env_info = detect_environments()
     removed_from = []
     skipped = []
 
-    # 1. Cursor Global MCP (~/.cursor/mcp.json)
+    # 1. Cursor Global MCP
     if target in ["cursor", "all"]:
         if target == "cursor" or env_info["cursor"]["detected"]:
             targets = [home / ".cursor" / "mcp.json"]
             if workspace_dir:
                 targets.append(Path(workspace_dir) / ".cursor" / "mcp.json")
-            else:
-                targets.append(Path.cwd() / ".cursor" / "mcp.json")
-
             for mcp_file in targets:
                 if mcp_file.exists():
                     try:
@@ -349,21 +350,25 @@ def uninstall_mcp(target: str = "all", workspace_dir: str = None) -> str:
         else:
             skipped.append("Claude Desktop (Not detected)")
 
-    # 3. Antigravity MCP (~/.gemini/antigravity/mcp_servers.json)
+    # 3. Antigravity MCP
     if target in ["antigravity", "all"]:
         if target == "antigravity" or env_info["antigravity"]["detected"]:
-            ag_mcp = home / ".gemini" / "antigravity" / "mcp_servers.json"
-            if ag_mcp.exists():
-                try:
-                    with open(ag_mcp, "r", encoding="utf-8") as f:
-                        ag_data = json.load(f)
-                    if "mcpServers" in ag_data and "bhashabid" in ag_data["mcpServers"]:
-                        del ag_data["mcpServers"]["bhashabid"]
-                        with open(ag_mcp, "w", encoding="utf-8") as f:
-                            json.dump(ag_data, f, indent=2, ensure_ascii=False)
-                        removed_from.append(f"Antigravity MCP: {ag_mcp}")
-                except Exception:
-                    pass
+            ag_mcp_paths = [
+                home / ".gemini" / "config" / "mcp_config.json",
+                home / ".gemini" / "antigravity" / "mcp_servers.json"
+            ]
+            for ag_mcp in ag_mcp_paths:
+                if ag_mcp.exists():
+                    try:
+                        with open(ag_mcp, "r", encoding="utf-8") as f:
+                            ag_data = json.load(f)
+                        if "mcpServers" in ag_data and "bhashabid" in ag_data["mcpServers"]:
+                            del ag_data["mcpServers"]["bhashabid"]
+                            with open(ag_mcp, "w", encoding="utf-8") as f:
+                                json.dump(ag_data, f, indent=2, ensure_ascii=False)
+                            removed_from.append(f"Antigravity MCP: {ag_mcp}")
+                    except Exception:
+                        pass
         else:
             skipped.append("Antigravity (Not detected)")
 
@@ -383,9 +388,6 @@ def uninstall_mcp(target: str = "all", workspace_dir: str = None) -> str:
     return msg
 
 def uninstall_skill(target: str = "all", workspace_dir: str = None, with_mcp: bool = True) -> str:
-    """
-    Uninstalls Bhashabid skill files and reference guides after scanning detected environments.
-    """
     home = Path.home()
     workspace = Path(workspace_dir) if workspace_dir else Path.cwd()
     env_info = detect_environments()
@@ -404,26 +406,16 @@ def uninstall_skill(target: str = "all", workspace_dir: str = None, with_mcp: bo
             if cur_global_refs.exists():
                 shutil.rmtree(cur_global_refs, ignore_errors=True)
                 removed_paths.append(f"Cursor (References):  {cur_global_refs}")
-
-            # Check home ~/.cursorrules
-            if (home / ".cursorrules").exists():
-                try:
-                    c = (home / ".cursorrules").read_text(encoding="utf-8")
-                    if "Bangla Academy" in c or "bhashabid" in c:
-                        (home / ".cursorrules").unlink(missing_ok=True)
-                        removed_paths.append(f"Cursor (~/.cursorrules): {home / '.cursorrules'}")
-                except Exception:
-                    pass
         else:
             skipped.append("Cursor (Not detected)")
 
     # 2. Antigravity
     if target in ["antigravity", "all"]:
         if target == "antigravity" or env_info["antigravity"]["detected"]:
-            ag_global = home / ".gemini" / "antigravity" / "skills" / "bangla-expert"
-            if ag_global.exists():
-                shutil.rmtree(ag_global, ignore_errors=True)
-                removed_paths.append(f"Antigravity (Global Skill): {ag_global}")
+            for ag_dir in [home / ".gemini" / "config" / "skills" / "bhashabid", home / ".gemini" / "antigravity" / "skills" / "bangla-expert"]:
+                if ag_dir.exists():
+                    shutil.rmtree(ag_dir, ignore_errors=True)
+                    removed_paths.append(f"Antigravity (Global Skill): {ag_dir}")
         else:
             skipped.append("Antigravity (Not detected)")
 
@@ -437,7 +429,7 @@ def uninstall_skill(target: str = "all", workspace_dir: str = None, with_mcp: bo
         else:
             skipped.append("Claude (Not detected)")
 
-    # 4. Workspace Cleanups (if any legacy files exist in workspace)
+    # 4. Workspace Cleanups
     for p in [workspace / ".cursorrules", workspace / ".cursor" / "rules" / "bangla-expert.mdc"]:
         if p.exists():
             try:
@@ -469,9 +461,6 @@ def uninstall_skill(target: str = "all", workspace_dir: str = None, with_mcp: bo
     return msg
 
 def verify_installation() -> Dict[str, Any]:
-    """
-    Verifies that Bhashabid is properly installed and active across detected environments.
-    """
     home = Path.home()
     env_info = detect_environments()
     status = {}
@@ -489,7 +478,7 @@ def verify_installation() -> Dict[str, Any]:
         has_mcp = False
         if cur_mcp.exists():
             try:
-                data = json.load(open(cur_mcp, "r", encoding="utf-8"))
+                data = json.load(open(cur_mcp, "r", encoding="utf-8-sig"))
                 has_mcp = "bhashabid" in data.get("mcpServers", {})
             except Exception:
                 pass
@@ -509,16 +498,23 @@ def verify_installation() -> Dict[str, Any]:
     ag_active = False
     ag_details = []
     if env_info["antigravity"]["detected"]:
-        ag_skill = home / ".gemini" / "antigravity" / "skills" / "bangla-expert" / "SKILL.md"
-        ag_mcp = home / ".gemini" / "antigravity" / "mcp_servers.json"
-        has_skill = ag_skill.exists()
+        ag_skill1 = home / ".gemini" / "antigravity" / "skills" / "bangla-expert" / "SKILL.md"
+        ag_skill2 = home / ".gemini" / "config" / "skills" / "bhashabid" / "SKILL.md"
+        has_skill = ag_skill1.exists() or ag_skill2.exists()
+
+        ag_mcp1 = home / ".gemini" / "antigravity" / "mcp_servers.json"
+        ag_mcp2 = home / ".gemini" / "config" / "mcp_config.json"
         has_mcp = False
-        if ag_mcp.exists():
-            try:
-                data = json.load(open(ag_mcp, "r", encoding="utf-8"))
-                has_mcp = "bhashabid" in data.get("mcpServers", {})
-            except Exception:
-                pass
+        for ag_mcp in [ag_mcp1, ag_mcp2]:
+            if ag_mcp.exists():
+                try:
+                    data = json.load(open(ag_mcp, "r", encoding="utf-8-sig"))
+                    if "bhashabid" in data.get("mcpServers", {}):
+                        has_mcp = True
+                        break
+                except Exception:
+                    pass
+
         ag_active = has_skill
         ag_details.append(f"Global Skill: {'✓' if has_skill else '✗'}")
         ag_details.append(f"MCP Server: {'✓' if has_mcp else '✗'}")
@@ -539,7 +535,7 @@ def verify_installation() -> Dict[str, Any]:
         has_mcp = False
         if claude_cfg and claude_cfg.exists():
             try:
-                data = json.load(open(claude_cfg, "r", encoding="utf-8"))
+                data = json.load(open(claude_cfg, "r", encoding="utf-8-sig"))
                 has_mcp = "bhashabid" in data.get("mcpServers", {})
             except Exception:
                 pass
@@ -570,18 +566,3 @@ def format_status_report() -> str:
                 lines.append(f"     • {d}")
     lines.append("=" * 65)
     return "\n".join(lines)
-
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description="Install, Uninstall, or Verify Bhashabid Global Skill & MCP")
-    parser.add_argument("--action", choices=["install", "uninstall", "status"], default="install")
-    parser.add_argument("--target", choices=["antigravity", "claude", "cursor", "all"], default="all")
-    parser.add_argument("--workspace", default=None, help="Target workspace path (optional; default is purely global)")
-    parser.add_argument("--no-mcp", action="store_true", help="Skip MCP server configuration")
-    args = parser.parse_args()
-    if args.action == "status":
-        print(format_status_report())
-    elif args.action == "uninstall":
-        print(uninstall_skill(args.target, args.workspace, with_mcp=not args.no_mcp))
-    else:
-        print(install_skill(args.target, args.workspace, with_mcp=not args.no_mcp))

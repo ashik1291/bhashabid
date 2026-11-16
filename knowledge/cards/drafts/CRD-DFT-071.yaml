@@ -1,0 +1,30 @@
+id: CRD-DFT-071
+title: 'Candidate Rule for Pattern: New, Collegiate'
+domain: Corporate & Tech
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'New, Collegiate'
+  requires standard Bengali terminology or phonetic transliteration with English in
+  parentheses.
+good_examples: []
+bad_examples:
+- New Collegiate ডিকশনারীর মতে “রোবট হচ্ছে একটি স্বয়ংক্রিয় ব্যবস্থা যা মানুষ যেভাবে
+  কাজ করতে পারে সেভাবে কাজ করে অথবা এর কাজ দেখে মনে হয় এর বুদ্ধিমত্তা আছে
+common_llm_error: LLMs emit unadapted English terminology 'New, Collegiate' in Bengali
+  contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Information Technology & Computing'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards
+- Open-Source Bengali Localization Best Practices
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

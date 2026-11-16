@@ -16,9 +16,389 @@ Constitutional Rule: **Principle P2 (Human Native Provenance Required)**
 
 ---
 
-## 📥 Pending Candidate Queue
+## 📥 Pending Candidate Queue (18 Cards Awaiting Human Review)
 
-✓ **All caught up! Zero draft cards currently pending review.**
+### Draft 1: [CRD-DFT-065] Candidate Rule for Pattern: Dhanvantari
+- **File**: `knowledge\cards\drafts\CRD-DFT-065.yaml`
+- **Domain**: `Healthcare & Medicine` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Dhanvantari' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ আয়ুর্বেদ দিবসের উদ্দেশ্য হল জনগণকে ভারতের প্রাচীনতম চিকিৎসা পদ্ধতি আয়ুর্বেদ (Ayurveda) Dhanvantari সম্পর্কে সচেতন করা
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Dhanvantari' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Clinical Medicine & Epidemiology, Principle P2 Human Provenance Audit Gate, Bangla Academy Medical Science Dictionary (চিকিৎসাবিজ্ঞান পরিভাষা), Directorate General of Health Services (DGHS) Bangladesh
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-065 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 2: [CRD-DFT-066] Candidate Rule for Pattern: PWSBH
+- **File**: `knowledge\cards\drafts\CRD-DFT-066.yaml`
+- **Domain**: `MFS, Microfinance & Grassroots FinTech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'PWSBH' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ PWSBH মুসলমানদের হজ ( মক্কায় তীর্থযাত্রার) খরচ বাঁচানোর জন্য একটি সংস্থা হিসাবে প্রতিষ্ঠিত হয়েছিল
+  - ✗ ১৯৬৯ সালে PWSBH পেবাজাত উরুসান হাজীর সাথে একত্রিত হয়ে লেম্বাগা উরুসান ডান তাবং হাজী (বর্তমানে লেম্বাগা তাবুং হাজী নামে পরিচিত) গঠিত হয়
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'PWSBH' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Banking & Grassroots Finance, Principle P2 Human Provenance Audit Gate, Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines, Microcredit Regulatory Authority (MRA) Rules & Standards, Anti-Money Laundering & Financial Fraud Prevention Protocols
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-066 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 3: [CRD-DFT-067] Candidate Rule for Pattern: Collateral
+- **File**: `knowledge\cards\drafts\CRD-DFT-067.yaml`
+- **Domain**: `Mass Media & Digital Journalism` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Collateral' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এপ্রিল, ২০১০ সালে উইকিলিকস ২০০৭ সালের ভিডিও চিত্রে আমেরিকার সেনাবাহিনী কর্তৃক ইরাকের সাধারণ নাগরিকদের হত্যার ঘটনা প্রকাশ করে যাতে বলা হয় Collateral সুপরিকল্পিত হত্যাযজ্ঞ হিসেবে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Collateral' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Mass Media & Press, Principle P2 Human Provenance Audit Gate, Bangladesh Press Council Code of Ethics & Stylebook, Press Institute of Bangladesh (PIB) Media Reporting Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-067 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 4: [CRD-DFT-068] Candidate Rule for Pattern: coordination
+- **File**: `knowledge\cards\drafts\CRD-DFT-068.yaml`
+- **Domain**: `Sports Vernacular` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'coordination' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এতে ৪,০০,০০০ ইরাক যুদ্ধের coordination নির্দেশনা দলিল ছিল, যা প্রধান প্রধান বাণিজ্যিক গণমাধ্যম সংস্থায় লুকায়িত ছিল
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'coordination' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Mass Media & Press, Principle P2 Human Provenance Audit Gate, Bangla Academy Standard Bengali Grammar, Corpus Harvester Anomaly Detector
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-068 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 5: [CRD-DFT-069] Candidate Rule for Pattern: KDAK, Franko, Corad, RCA, Grorge, Clark
+- **File**: `knowledge\cards\drafts\CRD-DFT-069.yaml`
+- **Domain**: `Customer Support & Conversational Chat` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'KDAK, Franko, Corad, RCA, Grorge, Clark' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ সম্প্রচার বিষয়টা এসেছিল কৃষি ক্ষেত্রের মাঠে বীজ বপণের ধারণা থেকে; হয়ত KDAK এর পরিচালক Franko Corad নয়ত RCA এর ইতিহাসবেত্তা Grorge Clark ১৯২০ সালের দিকে এই নতুন কাজ "এক থেকে অনেক" যোগাযোগের পার্থক্য করেন
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'KDAK, Franko, Corad, RCA, Grorge, Clark' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Telecommunications & Customer Experience, Principle P2 Human Provenance Audit Gate, Bangla Academy Conversational Polite Register Standards, Telecom & Omnichannel Customer Experience Quality Benchmarks
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-069 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 6: [CRD-DFT-070] Candidate Rule for Pattern: Abnormal, intellect, Malcontent, liberal
+- **File**: `knowledge\cards\drafts\CRD-DFT-070.yaml`
+- **Domain**: `Science & Encyclopedic` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Abnormal, intellect, Malcontent, liberal' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ আবার Abnormal intellect = Malcontent liberal
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Abnormal, intellect, Malcontent, liberal' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research, Principle P2 Human Provenance Audit Gate, Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards, Open-Source Bengali Localization Best Practices
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-070 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 7: [CRD-DFT-071] Candidate Rule for Pattern: New, Collegiate
+- **File**: `knowledge\cards\drafts\CRD-DFT-071.yaml`
+- **Domain**: `Corporate & Tech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'New, Collegiate' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ New Collegiate ডিকশনারীর মতে “রোবট হচ্ছে একটি স্বয়ংক্রিয় ব্যবস্থা যা মানুষ যেভাবে কাজ করতে পারে সেভাবে কাজ করে অথবা এর কাজ দেখে মনে হয় এর বুদ্ধিমত্তা আছে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'New, Collegiate' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Information Technology & Computing, Principle P2 Human Provenance Audit Gate, Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards, Open-Source Bengali Localization Best Practices
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-071 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 8: [CRD-DFT-072] Candidate Rule for Pattern: Toram
+- **File**: `knowledge\cards\drafts\CRD-DFT-072.yaml`
+- **Domain**: `Land Registry & Deeds` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Toram' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ টর্ট. টর্ট এর উদ্ভব মূলত ল্যাটিন শব্দ Toram থেকে, যার অর্থ দাঁড়ায় ভুল, অর্থাৎ যে দেওয়ানি ভুল আমল যোগ্য
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Toram' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Legal Framework & Conveyancing, Principle P2 Human Provenance Audit Gate, Transfer of Property Act 1882 & Registration Act 1908, Ministry of Land Official Saf-Kabala Deed Conveyancing Protocol
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-072 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 9: [CRD-DFT-073] Candidate Rule for Pattern: Login
+- **File**: `knowledge\cards\drafts\CRD-DFT-073.yaml`
+- **Domain**: `Education & NCTB Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Login' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ সোমবার, ১৬ নভেম্বর ২০২৬ Login বন্ধুদের লেখা কার্যক্রম ফিচার খেলা ক্যারিয়ার মনোবন্ধু ফটো ফিচার বন্ধুসভা সম্পর্কে কার্যক্রম আর্মি আইবিএর আয়োজনে সাভার বন্ধুসভা লেখা: জয়নুল আবেদীন প্রকাশ: ১৬ নভেম্বর ২০২৬, ০৮: ৩৩ বন্ধুসভা জাতীয় পরিচালনা পর্ষদের সভাপতি জাফর সাদিকের সঙ্গে সাভার বন্ধুসভার বন্ধুরা ছবি: বন্ধুসভা আর্মি আইবিএ লিটারেচার অ্যান্ড ডিবেটিং ক্লাবের ন্যাশনাল ইভেন্টে কমিউনিটি পার্টনার হিসেবে অংশগ্রহণ করেছে সাভার বন্ধুসভা
+  - ✗ সোমবার, ১৬ নভেম্বর ২০২৬ Login গল্প কবিতা কমিকস সাক্ষাৎকার খেলা ফিচার বিনোদন জীবনযাপন চিঠিপত্র আরও আরও প্যারালাল ইউনিভার্স লেখা: অদৃতা সরকার আপডেট: ১৬ নভেম্বর ২০২৬, ০৯: ৩৬ অলংকরণ: সব্যসাচী চাকমা মহাবিশ্বের কোথাও হয়তো এমন একটা সমান্তরাল জগৎ আছে, যেখানে প্রতিদিন সকাল সাতটায় একদল মানুষকে বাধ্যতামূলকভাবে এক রহস্যময় গেট দিয়ে প্রবেশ করতে হয়
+  - ✗ সোমবার, ১৬ নভেম্বর ২০২৬ Login গল্প কবিতা কমিকস সাক্ষাৎকার খেলা ফিচার বিনোদন জীবনযাপন চিঠিপত্র আরও ফিচার ইলন মাস্কের স্পেসএক্স মহাকাশ থেকে ফিরে আসা রকেট ধরে ফেলল কিআ প্রতিবেদক প্রকাশ: ১৬ নভেম্বর ২০২৬, ০৯: ৫৮ উৎক্ষেপণ টাওয়ারের দুটি বিশাল যান্ত্রিক বাহু সেটিকে ধরে ফেলে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Login' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy), Principle P2 Human Provenance Audit Gate, National Curriculum and Textbook Board (NCTB) Standard Bengali, Ministry of Education Pedagogical Guidelines
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-073 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 10: [CRD-DFT-074] Candidate Rule for Pattern: BBC, World, Service, News, not, share, s
+- **File**: `knowledge\cards\drafts\CRD-DFT-074.yaml`
+- **Domain**: `Judicial & High Court` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'BBC, World, Service, News, not, share, sell, info' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ লাইভ , ২১শে জানুয়ারি থেকে শুরু হবে পাঁচ ধাপে ইউনিয়ন পরিষদ নির্বাচন নেতানিয়াহুর 'জাতীয় ঐক্যের সরকার' গঠনের প্রস্তাব প্রত্যাখ্যান করলেন আইজেনকোট ৪ ঘন্টা আগে নির্বাচিত খবর শেখ হাসিনার দেশে ফেরার বিষয়টি দিল্লি যেভাবে দেখছে ১২ নভেম্বর ২০২৬ BBC World Service অ্যাপ-এর নতুন ঠিকানায় স্বাগতম ২৯ অক্টোবর ২০২৬ ডিসেম্বরে শেখ হাসিনার দেশে ফেরা নিয়ে আগ্রহ-সন্দেহ-অবিশ্বাস ৫ নভেম্বর ২০২৬ সোনিয়ার স্মৃতিকথা : রাজনীতির আড়ালে কেমন ছিল গান্ধী পরিবারের জীবন? ১১ নভেম্বর ২০২৬ টানা পাঁচ মাস বিদ্যুৎ নেই বাংলাদেশের ৩৫টি গ্রামে, কারণ কী? ১৩ নভেম্বর ২০২৬ পাঠকপ্রিয় খবর ১ গোপালগঞ্জে পরিস্থিতি থমথমে, জনমনে আতঙ্ক ২ লাইভ ২১শে জানুয়ারি থেকে শুরু হবে পাঁচ ধাপে ইউনিয়ন পরিষদ নির্বাচন ৩ পত্রিকা: 'আওয়ামী লীগের সঙ্গে সংশ্লিষ্টতার অভিযোগে নজরদারিতে ২২ হাজার পুলিশ সদস্য' ৪ ৫০টি বিশ্ববিদ্যালয়ে চালু হচ্ছে তৃতীয় ভাষা, চাকরির সুযোগ কতটা? ৫ নেতানিয়াহুর 'জাতীয় ঐক্যের সরকার' গঠনের প্রস্তাব প্রত্যাখ্যান করলেন আইজেনকোট BBC News, বাংলা বিবিসির ওপর কেন আপনি আস্থা রাখতে পারেন ব্যবহারের শর্তাবলী বিবিসি সম্পর্কে প্রিভেসি নীতি কুকিজ বিবিসির সাথে যোগাযোগ করুন অন্যান্য ভাষায় বিবিসির সংবাদ Do not share or sell my info © 2026 বিবিসি
+  - ✗ লাইভ , ২১শে জানুয়ারি থেকে শুরু হবে পাঁচ ধাপে ইউনিয়ন পরিষদ নির্বাচন নেতানিয়াহুর 'জাতীয় ঐক্যের সরকার' গঠনের প্রস্তাব প্রত্যাখ্যান করলেন আইজেনকোট ৫ ঘন্টা আগে নির্বাচিত খবর শেখ হাসিনার দেশে ফেরার বিষয়টি দিল্লি যেভাবে দেখছে ১২ নভেম্বর ২০২৬ BBC World Service অ্যাপ-এর নতুন ঠিকানায় স্বাগতম ২৯ অক্টোবর ২০২৬ ডিসেম্বরে শেখ হাসিনার দেশে ফেরা নিয়ে আগ্রহ-সন্দেহ-অবিশ্বাস ৫ নভেম্বর ২০২৬ সোনিয়ার স্মৃতিকথা : রাজনীতির আড়ালে কেমন ছিল গান্ধী পরিবারের জীবন? ১১ নভেম্বর ২০২৬ টানা পাঁচ মাস বিদ্যুৎ নেই বাংলাদেশের ৩৫টি গ্রামে, কারণ কী? ১৩ নভেম্বর ২০২৬ পাঠকপ্রিয় খবর ১ গোপালগঞ্জে পরিস্থিতি থমথমে, জনমনে আতঙ্ক ২ লাইভ ২১শে জানুয়ারি থেকে শুরু হবে পাঁচ ধাপে ইউনিয়ন পরিষদ নির্বাচন ৩ পত্রিকা: 'আওয়ামী লীগের সঙ্গে সংশ্লিষ্টতার অভিযোগে নজরদারিতে ২২ হাজার পুলিশ সদস্য' ৪ ৫০টি বিশ্ববিদ্যালয়ে চালু হচ্ছে তৃতীয় ভাষা, চাকরির সুযোগ কতটা? ৫ নেতানিয়াহুর 'জাতীয় ঐক্যের সরকার' গঠনের প্রস্তাব প্রত্যাখ্যান করলেন আইজেনকোট BBC News, বাংলা বিবিসির ওপর কেন আপনি আস্থা রাখতে পারেন ব্যবহারের শর্তাবলী বিবিসি সম্পর্কে প্রিভেসি নীতি কুকিজ বিবিসির সাথে যোগাযোগ করুন অন্যান্য ভাষায় বিবিসির সংবাদ Do not share or sell my info © 2026 বিবিসি
+  - ✗ লাইভ , ২১শে জানুয়ারি থেকে শুরু হবে পাঁচ ধাপে ইউনিয়ন পরিষদ নির্বাচন নেতানিয়াহুর 'জাতীয় ঐক্যের সরকার' গঠনের প্রস্তাব প্রত্যাখ্যান করলেন আইজেনকোট ৫ ঘন্টা আগে নির্বাচিত খবর শেখ হাসিনার দেশে ফেরার বিষয়টি দিল্লি যেভাবে দেখছে ১২ নভেম্বর ২০২৬ BBC World Service অ্যাপ-এর নতুন ঠিকানায় স্বাগতম ২৯ অক্টোবর ২০২৬ ডিসেম্বরে শেখ হাসিনার দেশে ফেরা নিয়ে আগ্রহ-সন্দেহ-অবিশ্বাস ৫ নভেম্বর ২০২৬ সোনিয়ার স্মৃতিকথা : রাজনীতির আড়ালে কেমন ছিল গান্ধী পরিবারের জীবন? ১১ নভেম্বর ২০২৬ টানা পাঁচ মাস বিদ্যুৎ নেই বাংলাদেশের ৩৫টি গ্রামে, কারণ কী? ১৩ নভেম্বর ২০২৬ পাঠকপ্রিয় খবর ১ গোপালগঞ্জে পরিস্থিতি থমথমে, জনমনে আতঙ্ক ২ লাইভ ২১শে জানুয়ারি থেকে শুরু হবে পাঁচ ধাপে ইউনিয়ন পরিষদ নির্বাচন ৩ পত্রিকা: 'আওয়ামী লীগের সঙ্গে সংশ্লিষ্টতার অভিযোগে নজরদারিতে ২২ হাজার পুলিশ সদস্য' ৪ নেতানিয়াহুর 'জাতীয় ঐক্যের সরকার' গঠনের প্রস্তাব প্রত্যাখ্যান করলেন আইজেনকোট ৫ ৫০টি বিশ্ববিদ্যালয়ে চালু হচ্ছে তৃতীয় ভাষা, চাকরির সুযোগ কতটা? BBC News, বাংলা বিবিসির ওপর কেন আপনি আস্থা রাখতে পারেন ব্যবহারের শর্তাবলী বিবিসি সম্পর্কে প্রিভেসি নীতি কুকিজ বিবিসির সাথে যোগাযোগ করুন অন্যান্য ভাষায় বিবিসির সংবাদ Do not share or sell my info © 2026 বিবিসি
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'BBC, World, Service, News, not, share, sell, info' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: BBC News Bangla (Judicial & Legal), Principle P2 Human Provenance Audit Gate, Constitution of the People's Republic of Bangladesh (Article 102), Supreme Court of Bangladesh Judicial Precedents, Bangla Academy Law Dictionary
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-074 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 11: [CRD-DFT-075] Candidate Rule for Pattern: Spondias, pinnaata, Kurz
+- **File**: `knowledge\cards\drafts\CRD-DFT-075.yaml`
+- **Domain**: `Disaster Early Warning` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Spondias, pinnaata, Kurz' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এর বৈজ্ঞানিক নাম Spondias pinnaata Kurz. (বা Spondias mombin), পরিবার: (Anacardiaceae)৷
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Spondias, pinnaata, Kurz' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Agriculture & Agronomy, Principle P2 Human Provenance Audit Gate, Ministry of Agriculture & Department of Agricultural Extension (DAE), Disaster Management Bureau Standing Orders on Disaster (SOD)
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-075 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 12: [CRD-DFT-076] Candidate Rule for Pattern: Silver, haired, congenial, scum, Louise,
+- **File**: `knowledge\cards\drafts\CRD-DFT-076.yaml`
+- **Domain**: `Science & Encyclopedic` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Silver, haired, congenial, scum, Louise, clever, and, charming' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ অ্যানাগ্রামের উদাহরণ দেয়া যেতে পারে: Silver-haired congenial scum বাক্যটিকে পুনর্বিন্যস্ত করে লিখা যায় Louise is clever and charming
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Silver, haired, congenial, scum, Louise, clever, and, charming' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research, Principle P2 Human Provenance Audit Gate, Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards, Open-Source Bengali Localization Best Practices
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-076 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 13: [CRD-DFT-077] Candidate Rule for Pattern: everta
+- **File**: `knowledge\cards\drafts\CRD-DFT-077.yaml`
+- **Domain**: `Agronomy & Crop Protection` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'everta' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ পকর্ন তৈরির জন্য ব্যবহৃত ভূট্টা-এর একটি বিশেষ প্রকার everta, একটি বিশেষ ধরনের ফ্লিন্ট ভুট্টা, এসবের মধ্যে সবচেয়ে প্রচলিত
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'everta' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Agriculture & Agronomy, Principle P2 Human Provenance Audit Gate, Ministry of Agriculture & Department of Agricultural Extension (DAE), Disaster Management Bureau Standing Orders on Disaster (SOD)
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-077 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 14: [CRD-DFT-078] Candidate Rule for Pattern: Jif
+- **File**: `knowledge\cards\drafts\CRD-DFT-078.yaml`
+- **Domain**: `Science & Encyclopedic` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'Jif' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ যেমন:- সম্প্রতি গ্রাফিকস ইন্টারচেঞ্জ ফরমেটের (GIF) আবিষ্কারক Gifকে Jif উচ্চারণ করতে বলেছেন
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'Jif' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research, Principle P2 Human Provenance Audit Gate, Bangladesh Computer Council (BCC) Bengali Computing & Unicode Standards, Open-Source Bengali Localization Best Practices
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-078 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 15: [CRD-DFT-079] Candidate Rule for Pattern: forensic, linguistics
+- **File**: `knowledge\cards\drafts\CRD-DFT-079.yaml`
+- **Domain**: `Academic Research & Methodology` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'forensic, linguistics' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ আদালতি ভাষাবিজ্ঞানের তিনটি প্রধান ব্যাবহারিক এলাকা আছে: লিখিত আইন বা বিধির ভাষা অনুধাবন অপরাধ অনুসন্ধান ও বিচার পদ্ধতিতে ভাষার ব্যবহার অনুধাবন ভাষাগত প্রমাণ ভাষাবিজ্ঞানী ইয়ান সোয়ার্তিক ১৯৬৮ সালে প্রথমবারের মত আদালতি ভাষাবিজ্ঞান বা forensic linguistics পরিভাষাটি ব্যবহার করেন
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'forensic, linguistics' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research, Principle P2 Human Provenance Audit Gate, Bangla Academy Linguistic Research Methodology Guidelines, Linguistic Society of Bangladesh Peer-Reviewed Standards
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-079 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 16: [CRD-DFT-080] Candidate Rule for Pattern: result, bou
+- **File**: `knowledge\cards\drafts\CRD-DFT-080.yaml`
+- **Domain**: `MFS, Microfinance & Grassroots FinTech` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'result, bou' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ বাউবি ২০২৬ সালের এইচএসসি পরীক্ষার চূড়ান্ত ফল বিশ্ববিদ্যালয়ের ওয়েবসাইট result.bou.ac.bd-এ পাওয়া যাবে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'result, bou' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (FinTech & Mobile Banking), Principle P2 Human Provenance Audit Gate, Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines, Microcredit Regulatory Authority (MRA) Rules & Standards, Anti-Money Laundering & Financial Fraud Prevention Protocols
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-080 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 17: [CRD-DFT-081] Candidate Rule for Pattern: PBStudent
+- **File**: `knowledge\cards\drafts\CRD-DFT-081.yaml`
+- **Domain**: `Education & Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'PBStudent' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ এসএমএসের মাধ্যমে ফলাফল জানতে: গ্রামীণফোন (GP): মেসেজ অপশনে PBStudent ID (উদাহরণ: PB BOU 19011010048) লিখে ১৬৫৫৪ নম্বরে পাঠাতে হবে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'PBStudent' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy), Principle P2 Human Provenance Audit Gate, National Curriculum and Textbook Board (NCTB) Standard Bengali, Ministry of Education Pedagogical Guidelines
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-081 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
+
+---
+
+### Draft 18: [CRD-DFT-082] Candidate Rule for Pattern: BOUStudent
+- **File**: `knowledge\cards\drafts\CRD-DFT-082.yaml`
+- **Domain**: `Education & Pedagogy` | **Profile**: `bd_standard` | **Register**: `formal`
+- **Confidence Tier**: `candidate` (**Awaiting Human Sign-off**)
+- **Rule Summary**: Foreign terminology or unquoted Latin-script word 'BOUStudent' requires standard Bengali terminology or phonetic transliteration with English in parentheses.
+
+**Positive Examples (শুদ্ধ প্রয়োগ)**:
+
+**Negative Examples (ভ্রান্ত প্রয়োগ)**:
+  - ✗ টেলিটক: BOUStudent ID (উদাহরণ: BOU 19011010048) লিখে ২২৭৭৭ নম্বরে পাঠাতে হবে
+  - ✗ রবি ও বাংলালিংক: BOUStudent ID (উদাহরণ: BOU 19011010048) লিখে ২২৭৭৭ নম্বরে পাঠাতে হবে
+
+**Common LLM Error**: LLMs emit unadapted English terminology 'BOUStudent' in Bengali contexts.
+**Sources / Citations**: Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy), Principle P2 Human Provenance Audit Gate, National Curriculum and Textbook Board (NCTB) Standard Bengali, Ministry of Education Pedagogical Guidelines
+
+**Quick Action Command**:
+```bash
+bhashabid review --card CRD-DFT-082 --reviewer "Ashikur Rahman Bhuiyan" --affiliation "Lead Architect" --action approve
+```
 
 ---
 

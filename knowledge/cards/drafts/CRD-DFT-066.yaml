@@ -1,0 +1,31 @@
+id: CRD-DFT-066
+title: 'Candidate Rule for Pattern: PWSBH'
+domain: MFS, Microfinance & Grassroots FinTech
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'PWSBH' requires standard
+  Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- PWSBH মুসলমানদের হজ ( মক্কায় তীর্থযাত্রার) খরচ বাঁচানোর জন্য একটি সংস্থা হিসাবে
+  প্রতিষ্ঠিত হয়েছিল
+- ১৯৬৯ সালে PWSBH পেবাজাত উরুসান হাজীর সাথে একত্রিত হয়ে লেম্বাগা উরুসান ডান তাবং হাজী
+  (বর্তমানে লেম্বাগা তাবুং হাজী নামে পরিচিত) গঠিত হয়
+common_llm_error: LLMs emit unadapted English terminology 'PWSBH' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Banking & Grassroots Finance'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines
+- Microcredit Regulatory Authority (MRA) Rules & Standards
+- Anti-Money Laundering & Financial Fraud Prevention Protocols
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

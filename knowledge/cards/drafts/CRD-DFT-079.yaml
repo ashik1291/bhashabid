@@ -1,0 +1,32 @@
+id: CRD-DFT-079
+title: 'Candidate Rule for Pattern: forensic, linguistics'
+domain: Academic Research & Methodology
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'forensic, linguistics'
+  requires standard Bengali terminology or phonetic transliteration with English in
+  parentheses.
+good_examples: []
+bad_examples:
+- 'আদালতি ভাষাবিজ্ঞানের তিনটি প্রধান ব্যাবহারিক এলাকা আছে: লিখিত আইন বা বিধির ভাষা
+  অনুধাবন অপরাধ অনুসন্ধান ও বিচার পদ্ধতিতে ভাষার ব্যবহার অনুধাবন ভাষাগত প্রমাণ ভাষাবিজ্ঞানী
+  ইয়ান সোয়ার্তিক ১৯৬৮ সালে প্রথমবারের মত আদালতি ভাষাবিজ্ঞান বা forensic linguistics
+  পরিভাষাটি ব্যবহার করেন'
+common_llm_error: LLMs emit unadapted English terminology 'forensic, linguistics'
+  in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Linguistics & Academic Research'
+- Principle P2 Human Provenance Audit Gate
+- Bangla Academy Linguistic Research Methodology Guidelines
+- Linguistic Society of Bangladesh Peer-Reviewed Standards
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

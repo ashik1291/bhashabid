@@ -260,7 +260,10 @@ def handle_review(args):
 
 def handle_practice(args):
     try:
-        from .daily_practice_runner import run_practice_cycle
+        try:
+            from .daily_practice_runner import run_practice_cycle
+        except ImportError:
+            from tools.daily_practice_runner import run_practice_cycle
         run_practice_cycle(
             duration_minutes=args.duration_minutes,
             rounds=args.rounds,
@@ -359,7 +362,7 @@ def handle_synthesize_cards(args):
 
 def handle_mcp(args):
     try:
-        from .mcp_server.server import BhashabidMCPServer
+        from .mcp.server import BhashabidMCPServer
         srv = BhashabidMCPServer()
         srv.run_stdio()
         return 0

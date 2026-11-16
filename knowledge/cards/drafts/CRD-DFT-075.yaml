@@ -1,0 +1,29 @@
+id: CRD-DFT-075
+title: 'Candidate Rule for Pattern: Spondias, pinnaata, Kurz'
+domain: Disaster Early Warning
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Spondias, pinnaata,
+  Kurz' requires standard Bengali terminology or phonetic transliteration with English
+  in parentheses.
+good_examples: []
+bad_examples:
+- 'এর বৈজ্ঞানিক নাম Spondias pinnaata Kurz. (বা Spondias mombin), পরিবার: (Anacardiaceae)৷'
+common_llm_error: LLMs emit unadapted English terminology 'Spondias, pinnaata, Kurz'
+  in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Agriculture & Agronomy'
+- Principle P2 Human Provenance Audit Gate
+- Ministry of Agriculture & Department of Agricultural Extension (DAE)
+- Disaster Management Bureau Standing Orders on Disaster (SOD)
+confidence: candidate
+created_date: '2026-11-16'
+last_modified: '2026-11-16'
+review:
+  reviewer_name: null
+  reviewer_affiliation: null
+  reviewed_date: null
+  status: PENDING_HUMAN_REVIEW
+  notes: Candidate card synthesized by Bhashabid Autonomous Learning Loop. Requires
+    human linguistic review and authentic positive Bengali exemplars (good_examples).
+  signature_hash: null

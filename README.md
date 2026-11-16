@@ -18,14 +18,39 @@
 
 ---
 
-## ⚡ Quickstart (1-Minute Setup)
+## ⚡ Installation & Quickstart (Zero-Python & Python Options)
 
-Install globally from [PyPI](https://pypi.org/project/bhashabid/):
+Choose the setup that fits your workflow:
+
+### Option A: Zero-Python 1-Click Skill Installation (Antigravity, Cursor, Claude)
+> **No Python required!** Automatically installs the declarative skill, Bangla Academy rules, and 9 domain references into your AI IDEs:
+
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/ashik1291/bhashabid/main/scripts/install.ps1 | iex
+```
+
+**macOS / Linux (Bash):**
+```bash
+curl -fsSL https://raw.githubusercontent.com/ashik1291/bhashabid/main/scripts/install.sh | bash
+```
+
+*What this does automatically:*
+- Configures **Google Antigravity** (`~/.gemini/config/skills/bhashabid`)
+- Configures **Cursor IDE** (`~/.cursor/rules/bangla-expert.mdc` & `~/.cursor/bangla-references/`)
+- Configures **Claude Desktop / Code** (`~/.claude/skills/bangla-expert`)
+- Automatically links the MCP Server if Python 3.10+ is detected.
+
+---
+
+### Option B: Python Engine & CLI (`pip install bhashabid`)
+> For offline zero-token CLI processing, sub-millisecond pipelines, and custom Python microservices:
+
 ```bash
 pip install bhashabid
 ```
 
-### Python SDK (`import bhashabid`)
+#### Python SDK (`import bhashabid`)
 ```python
 import bhashabid
 
@@ -40,12 +65,13 @@ suggestions = bhashabid.spellcheck("আবিস্কার")
 # 3. Statutory South Asian Currency & Number Formatting
 print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
 print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
+print(bhashabid.format_date_bongabdo(1433, 1, 1))   # "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
 
 # 4. Static Honorific & Calque Linter
 issues = bhashabid.lint("তারা সেই অর্থ ফেরত দিয়েছিলেন।")
 ```
 
-### Command Line Interface (CLI)
+#### Command Line Interface (CLI)
 ```bash
 # In-place safe file repair with colored unified diff
 bhashabid repair article.txt --diff --write
@@ -55,7 +81,20 @@ bhashabid number 99 --format words                  # Output: নিরানব
 
 # Offline spellcheck across 78,000 words
 bhashabid spellcheck "আবিস্কার"
+
+# Generate statutory civil conveyancing deeds & writ prayers
+bhashabid deed --type saf-kabala --vendor "করিম উদ্দিন" --purchaser "রহিম মিয়া" --taka 500000
+bhashabid writ --remedy detention --subject "অবৈধ আটক" --authority "পুলিশ কমিশনার"
+
+# Check global IDE integration health
+bhashabid status
 ```
+
+---
+
+### Option C: Web & Mobile AI Chat (ChatGPT, Gemini Web, Claude Web)
+If you don't use an AI code editor, copy and paste our pre-compiled prompt once into **ChatGPT Custom Instructions**, **Claude Projects**, or **Gemini System Instructions**:
+👉 **[View Standalone Web Instructions (STANDALONE_ALL_IN_ONE.md)](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
 
 ---
 
