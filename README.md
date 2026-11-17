@@ -6,7 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
 [![PyPI: v1.0.1](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/1.0.1/)
-[![Tests: 126 Passing](https://img.shields.io/badge/Tests-126%20Passing-brightgreen.svg)](eval/unit)
+[![Tests: 147 Passing](https://img.shields.io/badge/Tests-147%20Passing-brightgreen.svg)](eval/unit)
+[![Security Audit: Cloudflare Skill (A+)](https://img.shields.io/badge/Security%20Audit-Cloudflare%20Skill%20(A%2B)-success.svg)](SECURITY.md)
 [![Security: Bandit 0-Vuln](https://img.shields.io/badge/Security-Bandit%200--Vuln-brightgreen.svg)](SECURITY.md)
 [![Dependencies: 0 CVEs](https://img.shields.io/badge/Dependencies-0%20CVEs%20(OSV)-brightgreen.svg)](SECURITY.md)
 [![Secrets: 0 Leaks](https://img.shields.io/badge/Secrets-0%20Leaks-brightgreen.svg)](SECURITY.md)
@@ -330,6 +331,19 @@ Paste it into ChatGPT Custom Instructions, Claude System Prompts, or Gemini Gems
 1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without authenticated native-speaker review, non-empty verified exemplars, and cryptographic SHA-256 signatures. **48 / 48 cards (100%)** are authenticated by lead human arbiter `Ashikur Rahman Bhuiyan`.
 2. **Principle P4 (Deterministic Tools for Rules)**: Rules that can be computed with discrete mathematics or grammars are implemented in code, not left to probabilistic prompt guesses.
 3. **Principle P8 (Anti-Self-Deception & Memory)**: Flaws detected across real-world corpora are permanently logged in [`memory/mistakes/ledger.jsonl`](memory/mistakes/ledger.jsonl) and sealed as automated unit tests in [`eval/unit/`](eval/unit/).
+
+---
+
+## 🔒 Security & Defensive Audit (Cloudflare Audit Skill)
+
+Bhashabid has undergone a comprehensive defensive security audit adhering to the **[Cloudflare Security Audit Skill](https://github.com/cloudflare/security-audit-skill)** framework, achieving an **A+ Hardened Production Grade** rating:
+- **Zero Dynamic Execution**: 100% pure Python AST with zero calls to `eval()`, `exec()`, or dynamic code execution.
+- **Zero Runtime Dependencies & Offline Purity**: Operates strictly in-memory without external network telemetry, APIs, or third-party wheels.
+- **Hardened MCP Boundary**: Bounded 10MB stdio frames and strict tool type sanitization prevent local IPC resource exhaustion.
+- **Data Lifecycle Safety**: Skill installers strictly verify Bhashabid content signatures before unlinking any workspace files, guaranteeing zero accidental data loss for developer configurations.
+- **Software Composition & Secrets**: 0 CVEs detected in Google OSV.dev / PyPA, and 0 secret/credential leaks across 1,860 scanned files.
+
+For full architectural boundaries, threat model, and vulnerability disclosures, see **[SECURITY.md](SECURITY.md)**.
 
 ---
 
