@@ -515,6 +515,63 @@ def handle_ledger(args):
         sys.stderr.write(f"Ledger Error: {e}\n")
         return 1
 
+def handle_literary_audit(args):
+    try:
+        from .creative import audit_literary_text
+        text = resolve_text_or_file(args.text)
+        res = audit_literary_text(text, archetype=getattr(args, "archetype", "general"))
+        if getattr(args, "json", False):
+            print(json.dumps(res, ensure_ascii=False, indent=2))
+        else:
+            print("=" * 60)
+            print(f"BHASHABID LITERARY & POETIC AUDIT [{res['status']}] (Score: {res['score']}/100)")
+            print("=" * 60)
+            if not res["issues"]:
+                print("✓ কোনো শারীরবৃত্তীয় বিভ্রান্তি বা লিপ্যন্তর বিচ্যুতি পাওয়া যায়নি।")
+            else:
+                for idx, iss in enumerate(res["issues"], 1):
+                    print(f" {idx}. [{iss['type']}] {iss['message']}")
+                    if iss.get("suggestion"):
+                        print(f"    পরামর্শ: {iss['suggestion']}")
+            print("=" * 60)
+        return 0 if res["status"] in ("PASS", "WARNING") else 1
+    except Exception as e:
+        sys.stderr.write(f"Literary Audit Error: {e}\n")
+        return 1
+
+def handle_literary_prompt(args):
+    try:
+        from .creative import generate_literary_prompt
+        text = resolve_text_or_file(args.text)
+        prompt = generate_literary_prompt(
+            text,
+            author=getattr(args, "author", None),
+            genre_or_archetype=getattr(args, "archetype", "auto"),
+            rhymed=getattr(args, "rhyme", False)
+        )
+        print(prompt)
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Literary Prompt Error: {e}\n")
+        return 1
+
+def handle_lapidary(args):
+    try:
+        from .creative import lookup_lapidary, LAPIDARY_MAP
+        term = args.term.strip().lower()
+        res = lookup_lapidary(term)
+        if res:
+            print(f"{term} -> {', '.join(res)}")
+        else:
+            print(f"No direct lapidary entry for '{term}'.")
+            matches = [k for k in LAPIDARY_MAP if term in k]
+            if matches:
+                print(f"Did you mean: {', '.join(matches[:5])}")
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Lapidary Error: {e}\n")
+        return 1
+
 def main():
     parser = argparse.ArgumentParser(
         prog="bhashabid",
@@ -674,6 +731,26 @@ def main():
     p_ledger = subparsers.add_parser("ledger", help="Display empirical learning ledger & multi-sector benchmark")
     p_ledger.add_argument("--report", action="store_true", help="Export research report markdown file")
     p_ledger.set_defaults(func=handle_ledger)
+
+    # literary-audit
+    p_lit_audit = subparsers.add_parser("literary-audit", help="Audit literary and poetic Bengali text for anatomical realism and gemstone naturalization")
+    p_lit_audit.add_argument("text", help="Text or file path to audit")
+    p_lit_audit.add_argument("--archetype", default="general", choices=["general", "a", "imagist", "b", "romantic", "c", "realist"], help="Authorial archetype")
+    p_lit_audit.add_argument("--json", action="store_true", help="Output JSON format")
+    p_lit_audit.set_defaults(func=handle_literary_audit)
+
+    # literary-prompt
+    p_lit_prompt = subparsers.add_parser("literary-prompt", help="Generate self-sufficient 5-laws literary translation prompt for any author")
+    p_lit_prompt.add_argument("text", help="Source literary text or file path")
+    p_lit_prompt.add_argument("--author", default=None, help="Author name (e.g. 'Marianne Moore', 'Jibanananda Das')")
+    p_lit_prompt.add_argument("--archetype", default="auto", help="Style archetype (e.g. 'imagist', 'romantic')")
+    p_lit_prompt.add_argument("--rhyme", action="store_true", help="Enforce classical Bengali metrical rhyme")
+    p_lit_prompt.set_defaults(func=handle_literary_prompt)
+
+    # lapidary
+    p_lap = subparsers.add_parser("lapidary", help="Lookup classical Bengali equivalents for minerals, gems, and nature terms")
+    p_lap.add_argument("term", help="English or Bengali term to look up (e.g. 'amethyst', 'amber')")
+    p_lap.set_defaults(func=handle_lapidary)
 
     args = parser.parse_args()
     if not args.command:

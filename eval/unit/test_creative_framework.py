@@ -62,5 +62,42 @@ class TestCreativeFramework(unittest.TestCase):
         self.assertIn("অভিপ্রায় / সংকল্প", content)
         self.assertIn("NEVER wings/ডানা", content)
 
+    def test_python_lapidary_engine(self):
+        from bhashabid.creative import lookup_lapidary
+        res = lookup_lapidary("amethyst")
+        self.assertIsNotNone(res)
+        self.assertIn("রক্তনীলমণি", res)
+        res_amber = lookup_lapidary("amber")
+        self.assertIn("পিঙ্গল-আভ", res_amber)
+
+    def test_python_literary_audit_catches_anatomical_hallucination(self):
+        from bhashabid.creative import audit_literary_text
+        flawed = "জেলিফিশটি তার ডানা মেলে উড়ে গেল এবং এর রঙ ছিল অ্যাম্বার-রঙা অ্যামেথিস্ট।"
+        report = audit_literary_text(flawed)
+        self.assertEqual(report["status"], "FAIL")
+        types = [iss["type"] for iss in report["issues"]]
+        self.assertIn("ANATOMICAL_HALLUCINATION", types)
+        self.assertIn("TRANSLITERATION_SURRENDER", types)
+
+    def test_python_prompt_engine_generates_5_laws(self):
+        from bhashabid.creative import generate_literary_prompt
+        prompt = generate_literary_prompt(
+            "An amber-colored amethyst Inhabits it",
+            author="Marianne Moore",
+            genre_or_archetype="imagist"
+        )
+        self.assertIn("THE 5 UNIVERSAL META-LAWS", prompt)
+        self.assertIn("Law 1: The Three Dimensions of Transduction", prompt)
+        self.assertIn("Law 3: Biological Realism & Lapidary Equivalence", prompt)
+        self.assertIn("Marianne Moore", prompt)
+
+    def test_mcp_creative_tools(self):
+        from bhashabid.mcp.server import BhashabidMCPServer
+        server = BhashabidMCPServer()
+        lap_res = server.call_tool("lookup_lapidary", {"term": "turquoise"})
+        self.assertIn("ফিরোজা", lap_res["equivalents"])
+        audit_res = server.call_tool("audit_literary_text", {"text": "জেলিফিশের ডানা"})
+        self.assertEqual(audit_res["result"]["status"], "WARNING")
+
 if __name__ == "__main__":
     unittest.main()

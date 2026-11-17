@@ -138,6 +138,43 @@ class BhashabidMCPServer:
                     },
                     "required": ["date"]
                 }
+            },
+            {
+                "name": "audit_literary_text",
+                "description": "Deterministic literary, poetic, and creative translation quality audit. Detects biological/anatomical hallucinations (e.g. invented wings on marine life), gemstone transliteration surrenders, and metric padding.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "text": {"type": "string", "description": "The literary Bengali text to audit."},
+                        "archetype": {"type": "string", "enum": ["general", "imagist", "romantic", "realist"], "default": "general", "description": "Authorial style archetype."}
+                    },
+                    "required": ["text"]
+                }
+            },
+            {
+                "name": "lookup_lapidary",
+                "description": "Look up authentic classical Bengali literary equivalents for precious gems, minerals, and anatomical nature terms.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "term": {"type": "string", "description": "English mineral, gem, or anatomical term (e.g. 'amethyst', 'amber', 'slough', 'jellyfish bell')."}
+                    },
+                    "required": ["term"]
+                }
+            },
+            {
+                "name": "generate_literary_prompt",
+                "description": "Generate a self-sufficient, 5-laws literary translation prompt for any world poet or author.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "source_text": {"type": "string", "description": "The source literary text to translate."},
+                        "author": {"type": "string", "description": "Author or poet name."},
+                        "archetype": {"type": "string", "default": "auto", "description": "Authorial style archetype."},
+                        "rhymed": {"type": "boolean", "default": False, "description": "Whether to enforce Bengali classical metrical rhyme."}
+                    },
+                    "required": ["source_text"]
+                }
             }
         ]
 
@@ -321,6 +358,27 @@ class BhashabidMCPServer:
                     }
             except Exception as e:
                 return {"error": f"Failed to format date: {e}"}
+
+        elif name == "audit_literary_text":
+            from ..creative import audit_literary_text
+            txt = str(arguments.get("text", ""))
+            arch = str(arguments.get("archetype", "general"))
+            return {"result": audit_literary_text(txt, archetype=arch)}
+
+        elif name == "lookup_lapidary":
+            from ..creative import lookup_lapidary
+            term = str(arguments.get("term", ""))
+            res = lookup_lapidary(term)
+            return {"term": term, "equivalents": list(res) if res else []}
+
+        elif name == "generate_literary_prompt":
+            from ..creative import generate_literary_prompt
+            src = str(arguments.get("source_text", ""))
+            author = arguments.get("author")
+            arch = str(arguments.get("archetype", "auto"))
+            rhymed = bool(arguments.get("rhymed", False))
+            prompt = generate_literary_prompt(src, author=author, genre_or_archetype=arch, rhymed=rhymed)
+            return {"result": prompt}
 
         else:
             raise ValueError(f"Unknown tool: {name}")

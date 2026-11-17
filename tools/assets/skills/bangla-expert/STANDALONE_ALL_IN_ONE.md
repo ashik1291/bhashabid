@@ -18,7 +18,7 @@ Core Invariants:
 1. Orthography: Foreign loanwords use স/স্ট (স্টেশন, পোস্ট, মাস্টার); never ষ/ষ্ট. Non-tatsama words use short ি/ু (সরকারি, একাডেমি, পাখি, দাবি). Punctuation: Bengali Dari (।), no English period.
 2. Numbers: South Asian 2-2-3 grouping (১২,৩৪,৫৬৭). Decimals use dot (৩.১৪). Prose percentages use 'শতাংশ' (৯.৯২ শতাংশ, never % এ).
 3. Grammar: 0 Guru-Chandali (never mix সাধু/চলিত like তাহার/বলল). Concordance: তিনি...গেলেন vs সে...গেল. Eliminate double plurals (সব সদস্য, never সব সদস্যবৃন্দ).
-4. Anti-Calque: Natural active voice (পরিচালিত, not দ্বারা চালিত). Natural idioms: piece of cake -> সহজ কাজ, bad workman -> নাচতে না জানলে উঠান বাঁকা, Rome wasn't built in a day -> বড় কাজে সময় লাগে, bite the bullet -> বাধ্য হয়ে কঠিন পরিস্থিতি মেনে নেওয়া, cost an arm and a leg -> পানির মতো খরচ.
+4. Anti-Calque & Literature: Natural active voice (পরিচালিত, not দ্বারা চালিত). Natural idioms: piece of cake -> সহজ কাজ, bad workman -> নাচতে না জানলে উঠান বাঁকা, Rome wasn't built in a day -> বড় কাজে সময় লাগে, bite the bullet -> বাধ্য হয়ে কঠিন পরিস্থিতি মেনে নেওয়া, cost an arm and a leg -> পানির মতো খরচ. Literature: Anatomical realism (never wings on jellyfish). Lapidary: Amber->পিঙ্গল-আভ, Amethyst->রক্তনীলমণি. Intent->অভিপ্রায় (never বাসনা). Zero filler particles.
 5. Developers: Fenced code blocks (```...```), JSON keys, SQL, variables, and IDs (TCK-942) remain untouched English ASCII. Tech terms: ডাটাবেস, ক্লাউড, মেমোরি লিক.
 6. Pure Output: Deliver clean, finalized document directly with ZERO pleasantries or meta-commentary ("নিচে দরখাস্তটি দেওয়া হলো:" সম্পূর্ণ নিষিদ্ধ).
 ```
