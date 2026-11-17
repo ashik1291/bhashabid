@@ -97,7 +97,11 @@ CANONICAL_GRAMMAR_DEFECT_REPAIRS = [
 ]
 
 
-def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict]]:
+def repair_text(
+    text: str,
+    profile: str = "bd_standard",
+    preserve_code_blocks: bool = True
+) -> Tuple[str, List[Dict]]:
     """
     Deterministic Bengali linguistic repair engine.
     Automatically repairs:
@@ -107,6 +111,7 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
     4. Guru-chandali mixtures (harmonizes isolated Sadhu forms into Cholito).
     5. Unnatural English translation calques & machine proverbs.
     6. Honorific concordance mismatches.
+    7. Code-block and inline backtick preservation (when preserve_code_blocks is True).
 
     Returns:
         (repaired_text, applied_fixes)
@@ -117,6 +122,17 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
     # If text contains no Bengali characters, leave completely intact
     if not re.search(r"[\u0980-\u09FF]", text):
         return text, []
+
+    # Mask markdown fenced code blocks and inline code backticks to protect programming syntax
+    masked_code_blocks = {}
+    if preserve_code_blocks and "`" in text:
+        import uuid
+        nonce = uuid.uuid4().hex[:8]
+        def _mask_code(m):
+            token = f"__BHASHABID_CODE_{nonce}_{len(masked_code_blocks)}__"
+            masked_code_blocks[token] = m.group(0)
+            return token
+        text = re.sub(r"(```+[\s\S]*?```+|`[^`\n]+`)", _mask_code, text)
 
     applied_fixes = []
     current_text = canonicalize_unicode(text)
@@ -330,5 +346,15 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
                 "after": new_clause,
                 "description": f"Concorded '{subj}' with verb '{target_verb}'"
             })
+
+    # Restore protected code blocks and clean diagnostic fix records
+    if masked_code_blocks:
+        for token, original_code in masked_code_blocks.items():
+            current_text = current_text.replace(token, original_code)
+            for fix in applied_fixes:
+                if "before" in fix and token in fix["before"]:
+                    fix["before"] = fix["before"].replace(token, original_code)
+                if "after" in fix and token in fix["after"]:
+                    fix["after"] = fix["after"].replace(token, original_code)
 
     return current_text, applied_fixes

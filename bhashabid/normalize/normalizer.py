@@ -20,7 +20,8 @@ def normalize(
     profile: str = "bd_standard",
     fix_punctuation: bool = True,
     normalize_loanwords: bool = True,
-    clean_spaces: bool = True
+    clean_spaces: bool = True,
+    preserve_code_blocks: bool = True
 ) -> str:
     """
     Master pipeline for Bengali text normalization.
@@ -29,9 +30,21 @@ def normalize(
     2. Bangla Academy orthography normalization (if requested).
     3. Punctuation standardization (Dari replacement & quote curving).
     4. Whitespace compaction.
+    5. Safe preservation of fenced and inline code blocks (when preserve_code_blocks is True).
     """
     if not text:
         return ""
+
+    # Mask markdown fenced code blocks and inline code backticks to protect programming syntax
+    masked_code_blocks = {}
+    if preserve_code_blocks and "`" in text:
+        import uuid
+        nonce = uuid.uuid4().hex[:8]
+        def _mask_code(m):
+            token = f"__BHASHABID_CODE_{nonce}_{len(masked_code_blocks)}__"
+            masked_code_blocks[token] = m.group(0)
+            return token
+        text = re.sub(r"(```+[\s\S]*?```+|`[^`\n]+`)", _mask_code, text)
 
     # 1. Unicode Canonicalization
     text = canonicalize_unicode(text)
@@ -47,6 +60,11 @@ def normalize(
     # 4. Whitespace
     if clean_spaces:
         text = clean_whitespace(text)
+
+    # Restore protected code blocks
+    if masked_code_blocks:
+        for token, original_code in masked_code_blocks.items():
+            text = text.replace(token, original_code)
 
     return text
 

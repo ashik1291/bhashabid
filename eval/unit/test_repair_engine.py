@@ -219,5 +219,32 @@ class TestRepairEngine(unittest.TestCase):
         self.assertIn("রুল নিশি জারি করেছেন।", res["repaired"])
         self.assertGreater(res["fixes_count"], 0)
 
+    def test_markdown_code_block_preservation(self):
+        raw_markdown = (
+            "# ডেভেলপার নির্দেশিকা\n\n"
+            "নিচের ফাংশনটি দেখুন:\n"
+            "```python\n"
+            "def compute_mask():\n"
+            '    # এই কাজটা কোনো কেকের টুকরো নয়\n'
+            '    flag = "টেস্ট" | 0x01\n'
+            "    return flag\n"
+            "```\n\n"
+            'বাহিরের বাংলা লেখা: এই কাজটা কোনো কেকের টুকরো নয়। এছাড়াও `user_name = "করিম"` ভেরিয়েবল দেখুন।'
+        )
+        repaired, fixes = repair_text(raw_markdown)
+        # 1. Code block internal syntax must remain 100% byte-for-byte identical
+        self.assertIn('def compute_mask():\n    # এই কাজটা কোনো কেকের টুকরো নয়\n    flag = "টেস্ট" | 0x01\n    return flag', repaired)
+        # 2. Inline code span must remain identical
+        self.assertIn('`user_name = "করিম"`', repaired)
+        # 3. Outer prose must be properly naturalized
+        self.assertIn("বাহিরের বাংলা লেখা: এই কাজটা কোনো সহজ কাজ নয়।", repaired)
+
+    def test_mcp_server_markdown_code_safety(self):
+        server = BhashabidMCPServer()
+        raw = "```python\nval = 1 | 2\n```\nএই কাজটা কোনো কেকের টুকরো নয়."
+        res = server.call_tool("repair_text", {"text": raw})
+        self.assertIn("val = 1 | 2", res["repaired"])
+        self.assertIn("সহজ কাজ নয়।", res["repaired"])
+
 if __name__ == "__main__":
     unittest.main()

@@ -124,5 +124,25 @@ class TestBnNormalize(unittest.TestCase):
         expected = canonicalize_unicode("তিনি বাড়ি গেলেন।\n\nনতুন দিন শুরু হলো।")
         self.assertEqual(normalize(text), expected)
 
+    def test_normalize_preserves_markdown_code_blocks(self):
+        text = (
+            "# হেডার\n\n"
+            "এখানে কোড:\n"
+            "```python\n"
+            "def test():\n"
+            '    x = "মান" | 1\n'
+            "    return x\n"
+            "```\n\n"
+            'বাইরের টেক্সট: তিনি   রেলষ্টেশনে   গেলেন. `code_val = "টেস্ট"` ভেরিয়েবল।'
+        )
+        res = normalize(text)
+        # Internal code indentation and symbols must remain untouched
+        self.assertIn('def test():\n    x = "মান" | 1\n    return x', res)
+        # Inline code must remain untouched
+        self.assertIn('`code_val = "টেস্ট"`', res)
+        # Outside Bengali should be normalized
+        self.assertIn("রেলস্টেশনে", res)
+        self.assertIn("গেলেন।", res)
+
 if __name__ == "__main__":
     unittest.main()
