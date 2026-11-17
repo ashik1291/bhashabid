@@ -36,33 +36,42 @@ class TestSelfImprovingPipeline(unittest.TestCase):
             self.assertIn("যত গর্জে তত বর্ষে না", data["good_examples"])
 
     def test_card_synthesizer_anti_deception_exemplar_gate(self):
-        """Principle P2 & Anti-Deception: Anomalies lacking authentic positive exemplars or consisting of raw-English tokens must never be drafted."""
-        with tempfile.TemporaryDirectory() as tmpdir:
-            synth = CardSynthesizer(drafts_dir=tmpdir)
+        """Principle P2 & Anti-Deception: Anomalies lacking authentic positive exemplars or consisting of raw-English tokens must be auto-rejected into negative learning memory."""
+        with tempfile.TemporaryDirectory() as tmpdir, tempfile.TemporaryDirectory() as rej_dir:
+            synth = CardSynthesizer(drafts_dir=tmpdir, rejected_dir=rej_dir)
             
-            # Anomaly 1: Raw English token anomaly
+            # Anomaly 1: Raw English token anomaly (auto-rejected to negative memory)
             raw_eng_anomaly = [{
                 "rule_id": "RULE-ANOMALY-RAW-ENGLISH",
-                "matched": "Dhanvantari",
-                "raw_text": "ভারতের প্রাচীনতম চিকিৎসা পদ্ধতি আয়ুর্বেদ Dhanvantari সম্পর্কে সচেতন করা",
+                "matched": "NovelRawTokenXYZ",
+                "raw_text": "ভারতের প্রাচীনতম চিকিৎসা পদ্ধতি আয়ুর্বেদ NovelRawTokenXYZ সম্পর্কে সচেতন করা",
                 "suggestion": "Foreign terminology requires standard Bengali terminology.",
                 "domain": "Healthcare & Medicine"
             }]
             created_eng = synth.cluster_and_synthesize_anomalies(raw_eng_anomaly)
-            self.assertEqual(len(created_eng), 0, "Raw English token anomaly must be rejected from drafting")
+            self.assertEqual(len(created_eng), 0, "Raw English token anomaly must not be queued as draft")
+            
+            # Verify it was archived in negative memory (rejected directory)
+            import glob
+            rej_cards = glob.glob(os.path.join(rej_dir, "*.yaml"))
+            self.assertEqual(len(rej_cards), 1, "Must be archived in negative learning memory")
+            with open(rej_cards[0], "r", encoding="utf-8") as rf:
+                rej_data = yaml.safe_load(rf)
+            self.assertEqual(rej_data["confidence"], "rejected")
+            self.assertEqual(rej_data["review"]["status"], "REJECTED")
 
             # Anomaly 2: Anomaly where suggestion is a meta-instruction without positive exemplars
             meta_inst_anomaly = [{
                 "rule_id": "RULE-ANOMALY-CALQUE",
-                "matched": "দ্বারা চালিত",
-                "raw_text": "প্রকল্পটি বৈদেশিক অর্থ দ্বারা চালিত।",
+                "matched": "কাল্পনিক অপরীক্ষিত ক্যাল্ক",
+                "raw_text": "প্রকল্পটি বৈদেশিক কাল্পনিক অপরীক্ষিত ক্যাল্ক।",
                 "suggestion": "প্রমিত বাংলায় স্বাভাবিকভাবে পুনর্লিখন করুন।",
                 "domain": "translation"
             }]
             created_meta = synth.cluster_and_synthesize_anomalies(meta_inst_anomaly)
-            self.assertEqual(len(created_meta), 0, "Anomaly lacking positive exemplars must be rejected from drafting")
-
-            # Anomaly 3: Valid anomaly with concrete paired Bengali exemplar
+            self.assertEqual(len(created_meta), 0, "Anomaly lacking positive exemplars must not be queued as draft")
+            
+            # Anomaly 3: Valid anomaly with concrete paired Bengali exemplar (queued for human review)
             valid_anomaly = [{
                 "rule_id": "RULE-ANOMALY-CALQUE",
                 "matched": "অযৌক্তিক কৃত্রিম ক্যাল্ক",

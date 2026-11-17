@@ -253,10 +253,11 @@ class CardSynthesizer:
     clusters recurring failure patterns, and drafts structured candidate knowledge cards for human review.
     """
 
-    def __init__(self, drafts_dir: Optional[str] = None):
+    def __init__(self, drafts_dir: Optional[str] = None, rejected_dir: Optional[str] = None):
         self.drafts_dir = drafts_dir or DRAFTS_DIR
+        self.rejected_dir = rejected_dir or REJECTED_DIR
         os.makedirs(self.drafts_dir, exist_ok=True)
-        os.makedirs(REJECTED_DIR, exist_ok=True)
+        os.makedirs(self.rejected_dir, exist_ok=True)
 
     @staticmethod
     def get_existing_card_ids() -> set:
@@ -412,6 +413,71 @@ class CardSynthesizer:
 
         return out_path
 
+    def synthesize_rejected_from_anomaly(
+        self,
+        title: str,
+        domain: str,
+        register: str,
+        rule_summary: str,
+        bad_examples: List[str],
+        good_examples: List[str],
+        common_llm_error: str,
+        sources: List[str],
+        rejection_reason: str,
+        draft_id: Optional[str] = None
+    ) -> str:
+        """
+        Auto-archives non-viable or ungrounded candidate anomalies directly into
+        knowledge/cards/rejected/ as negative learning memory.
+        Prevents queue pollution for human reviewers while retaining complete learning telemetry.
+        """
+        import hashlib
+        bads = list(dict.fromkeys([b.strip() for b in bad_examples if b and b.strip()]))
+        goods = list(dict.fromkeys([g.strip() for g in good_examples if g and g.strip()]))
+
+        cid = draft_id or self.get_next_draft_id()
+        card_data = {
+            "id": cid,
+            "title": title,
+            "domain": domain,
+            "profile": "bd_standard",
+            "register": register,
+            "rule_summary": rule_summary,
+            "good_examples": goods,
+            "bad_examples": bads,
+            "common_llm_error": common_llm_error,
+            "sources": sources,
+            "confidence": "rejected",
+            "created_date": datetime.now().strftime("%Y-%m-%d"),
+            "last_modified": datetime.now().strftime("%Y-%m-%d"),
+            "review": {
+                "reviewer_name": "Bhashabid Autonomous Anti-Deception Gate (Principle P2)",
+                "reviewer_affiliation": "Automated Exemplar Completeness & Linguistic Viability Filter",
+                "reviewed_date": datetime.now().strftime("%Y-%m-%d"),
+                "status": "REJECTED",
+                "notes": rejection_reason,
+                "signature_hash": None
+            }
+        }
+        core = {
+            "id": cid,
+            "title": title,
+            "rule_summary": rule_summary,
+            "good_examples": goods,
+            "bad_examples": bads,
+            "common_llm_error": common_llm_error,
+            "sources": sources
+        }
+        content_str = yaml.dump(core, sort_keys=True, allow_unicode=True)
+        sig_hash = hashlib.sha256(content_str.encode("utf-8")).hexdigest()[:16]
+        card_data["review"]["signature_hash"] = f"sha256:{sig_hash}"
+
+        out_path = os.path.join(self.rejected_dir, f"{cid}.yaml")
+        with open(out_path, "w", encoding="utf-8") as f:
+            yaml.dump(card_data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+
+        return out_path
+
     def cluster_and_synthesize_anomalies(self, anomalies: List[Dict]) -> List[str]:
         """
         Clusters a list of harvested anomalies and generates draft cards.
@@ -445,10 +511,6 @@ class CardSynthesizer:
                 
                 # Filter out HTML entity remnants, Roman numerals, hardware brands, parenthetical terms, and empty noise
                 if is_scraping_noise(matched, raw_context=raw_text):
-                    continue
-
-                # Filter out isolated raw-English words/acronyms; individual Latin tokens do not constitute grammatical rules
-                if "RAW-ENGLISH" in rule_id or re.match(r"^[A-Za-z0-9\s,._\-&'/]+$", matched):
                     continue
 
                 title = f"Candidate Rule for Pattern: {matched[:40]}"
@@ -501,6 +563,27 @@ class CardSynthesizer:
                         created.append(filepath)
                         continue
 
+                # Auto-reject isolated raw-English words or Latin tokens directly into negative memory
+                is_raw_english = ("RAW-ENGLISH" in rule_id) or bool(re.match(r"^[A-Za-z0-9\s,._\-&'/]+$", matched))
+                if is_raw_english:
+                    domain_standards = get_domain_standards(domain)
+                    verified_sources = [
+                        f"Corpus Harvest Provenance: {first.get('source', 'Authoritative Bengali Corpus')}",
+                        "Principle P2 Human Provenance Audit Gate"
+                    ] + domain_standards
+                    self.synthesize_rejected_from_anomaly(
+                        title=title,
+                        domain=domain,
+                        register="formal",
+                        rule_summary=f"Foreign terminology or unquoted Latin-script word '{matched}' requires standard Bengali terminology or phonetic transliteration with English in parentheses.",
+                        bad_examples=[it.get("raw_text", matched) for it in items[:3]],
+                        good_examples=[],
+                        common_llm_error=f"LLMs emit unadapted English terminology '{matched}' in Bengali contexts.",
+                        sources=verified_sources,
+                        rejection_reason="Auto-rejected by Principle P2 Quality Gate: isolated foreign token / scraping artifact; does not represent a generalizable grammatical invariant. Preserved in negative learning memory to prevent re-synthesis."
+                    )
+                    continue
+
                 cid = self.get_next_draft_id()
                 reg = "formal"
                 
@@ -532,19 +615,31 @@ class CardSynthesizer:
                         if ex not in goods and len(goods) < 5:
                             goods.append(ex)
 
-                # PRINCIPLE P2 & ANTI-DECEPTION GATE:
-                # A candidate card MUST contain authentic, concrete Bengali positive exemplars (goods)
-                # and negative error contrast (bads). If goods is empty, human reviewers cannot know
-                # what to review or approve, and the card is mathematically guaranteed to be rejected.
-                # Do not pollute the human review queue with ungrounded drafts.
-                if not goods or not bads:
-                    continue
-
                 domain_standards = get_domain_standards(domain)
                 verified_sources = [
                     f"Corpus Harvest Provenance: {first.get('source', 'Authoritative Bengali Corpus')}",
                     "Principle P2 Human Provenance Audit Gate"
                 ] + domain_standards
+
+                # PRINCIPLE P2 & ANTI-DECEPTION GATE:
+                # A candidate card MUST contain authentic, concrete Bengali positive exemplars (goods)
+                # and negative error contrast (bads). If goods is empty, human reviewers cannot know
+                # what to review or approve, and the card is mathematically guaranteed to be rejected.
+                # Auto-archive to knowledge/cards/rejected/ as negative learning memory so the system
+                # never forgets or ignores the pattern, while keeping the human queue 100% clean.
+                if not goods or not bads:
+                    self.synthesize_rejected_from_anomaly(
+                        title=title,
+                        domain=domain,
+                        register=reg,
+                        rule_summary=rule_sum,
+                        bad_examples=bads,
+                        good_examples=goods,
+                        common_llm_error=llm_err,
+                        sources=verified_sources,
+                        rejection_reason="Auto-rejected by Principle P2 Anti-Deception Gate: lacks authentic paired Bengali positive exemplars (goods). Preserved in negative learning memory."
+                    )
+                    continue
 
                 p = self.synthesize_draft_from_anomaly(
                     title=title,
