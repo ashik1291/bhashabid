@@ -246,5 +246,19 @@ class TestRepairEngine(unittest.TestCase):
         self.assertIn("val = 1 | 2", res["repaired"])
         self.assertIn("সহজ কাজ নয়।", res["repaired"])
 
+    def test_expanded_bilingual_idioms_repair(self):
+        cases = [
+            ("রোম একদিনে তৈরি হয়নি।", "বড় কাজে সময় ও ধৈর্য লাগে"),
+            ("তিনি বললেন সততা হলো সেরা নীতি।", "সততাই সর্বোত্তম পন্থা"),
+            ("কাজ শব্দের চেয়ে জোরে কথা বলে।", "কথার চেয়ে কাজের মূল্য বেশি"),
+            ("যা চকচক করে সবই সোনা নয়।", "চকচক করলেই সোনা হয় না"),
+            ("খালি পাত্র বেশি শব্দ করে।", "অসারের তর্জন-গর্জন সার")
+        ]
+        for raw, expected in cases:
+            repaired, fixes = repair_text(raw)
+            self.assertIn(expected, repaired)
+            self.assertGreater(len(fixes), 0)
+            self.assertEqual(len(lint_text(repaired)), 0, f"Residual defects in repaired idiom: {repaired}")
+
 if __name__ == "__main__":
     unittest.main()

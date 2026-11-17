@@ -33,6 +33,11 @@ class TestBengaliOfflineLexicon(unittest.TestCase):
         self.assertTrue(self.lex.is_known("বাংলাদেশ"))
         self.assertTrue(self.lex.is_known("মনোযোগ"))
         self.assertTrue(self.lex.is_known("পুরস্কার"))
+        self.assertTrue(self.lex.is_known("সাংবিধানিক"))
+        self.assertTrue(self.lex.is_known("মূল্যস্ফীতি"))
+        self.assertTrue(self.lex.is_known("বালাইনাশক"))
+        self.assertTrue(self.lex.is_known("অর্থনীতি"))
+        self.assertTrue(self.lex.is_known("প্রকৌশল"))
         self.assertFalse(self.lex.is_known("মনযোগ"))
         self.assertFalse(self.lex.is_known("পুরষ্কার"))
 

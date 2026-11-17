@@ -39,9 +39,39 @@ RAW_UNNATURAL_CALQUES = [
 ]
 
 # Canonicalize all patterns at module load time to guarantee zero nukta mismatch
+def _load_bilingual_idioms():
+    import os
+    import json
+    dev_asset = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "idioms", "bilingual_idioms.json")
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    pkg_asset = os.path.join(base_dir, "bhashabid", "assets", "idioms", "bilingual_idioms.json")
+    for p in [dev_asset, pkg_asset]:
+        if os.path.isfile(p):
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    items = json.load(f)
+                    return [
+                        (B_L + it["calque_pattern"] + B_R, it["flawed_calque"], it["natural_bengali"])
+                        for it in items
+                    ]
+            except Exception:
+                pass
+    return None
+
+_LOADED_ITEMS = _load_bilingual_idioms()
+
+# Start with RAW_UNNATURAL_CALQUES to guarantee 100% backward compatibility
+ACTIVE_CALQUES = list(RAW_UNNATURAL_CALQUES)
+if _LOADED_ITEMS:
+    existing_labels = {label for _, label, _ in RAW_UNNATURAL_CALQUES}
+    for pat, label, sugg in _LOADED_ITEMS:
+        if label not in existing_labels:
+            ACTIVE_CALQUES.append((pat, label, sugg))
+            existing_labels.add(label)
+
 UNNATURAL_CALQUES = [
     (canonicalize_unicode(pat), canonicalize_unicode(label), canonicalize_unicode(sugg))
-    for pat, label, sugg in RAW_UNNATURAL_CALQUES
+    for pat, label, sugg in ACTIVE_CALQUES
 ]
 
 # Master compiled Trie Regex using named groups for O(1) rule dispatch

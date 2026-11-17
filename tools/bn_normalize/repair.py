@@ -41,7 +41,30 @@ def _fix_similarity_moto(match):
     return f"{word} মতো"
 
 # Deterministic canonical calque repairs (replaces unnatural machine translations with standard Bengali)
-CANONICAL_CALQUE_REPAIRS = [
+def _load_canonical_calque_repairs():
+    import os
+    import json
+    dev_asset = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "idioms", "bilingual_idioms.json")
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    pkg_asset = os.path.join(base_dir, "bhashabid", "assets", "idioms", "bilingual_idioms.json")
+    for p in [dev_asset, pkg_asset]:
+        if os.path.isfile(p):
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    items = json.load(f)
+                    repairs = []
+                    for it in items:
+                        pat_str = B_L + it.get("repair_pattern", it["calque_pattern"]) + B_R
+                        primary = it["natural_bengali"].split(" / ")[0].strip()
+                        repairs.append((re.compile(canonicalize_unicode(pat_str)), canonicalize_unicode(primary)))
+                    return repairs
+            except Exception:
+                pass
+    return None
+
+_LOADED_REPAIRS = _load_canonical_calque_repairs()
+
+RAW_CANONICAL_CALQUE_REPAIRS = [
     # Causal / passive calques
     (re.compile(B_L + r"দ্বারা\s+সভাপতিত্ব[\u0980-\u09FF]*" + B_R), "সভাপতিত্বে অনুষ্ঠিত"),
     (re.compile(B_L + r"দ্বারা\s+সরবরাহ[\u0980-\u09FF]*" + B_R), "সরবরাহকৃত"),
@@ -71,6 +94,8 @@ CANONICAL_CALQUE_REPAIRS = [
     (re.compile(B_L + r"অধিক\s+রাঁধুনি\s+ঝোল\s+নষ্ট\s+করে" + B_R), "অধিক সন্ন্যাসীতে গাজন নষ্ট"),
     (re.compile(B_L + r"একটি\s+পাথর\s+দিয়ে\s+দুটি\s+পাখি\s+মারা" + B_R), "এক ঢিলে দুই পাখি মারা")
 ]
+
+CANONICAL_CALQUE_REPAIRS = _LOADED_REPAIRS if _LOADED_REPAIRS else RAW_CANONICAL_CALQUE_REPAIRS
 
 # Deterministic grammatical pleonasms and ungrammatical affix repairs (অপপ্রয়োগ ও বাহুল্য বর্জন)
 CANONICAL_GRAMMAR_DEFECT_REPAIRS = [

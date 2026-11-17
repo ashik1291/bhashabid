@@ -81,11 +81,31 @@ When the context touches any of these domains, apply its verified institutional 
     - Machine idiom calques must be mapped to authentic cultural equivalents:
       * *A bad workman blames his tools* ➔ `নাচতে না জানলে উঠান বাঁকা`
       * *Beat around the bush* ➔ `ঘুরিয়ে-পেঁচিয়ে কথা বলা`
-      * *Piece of cake* ➔ `খুব সহজ কাজ` / `পানির মতো সহজ` (প্রসঙ্গ সাপেক্ষে; খাদ্য বোঝাতে 'কেকের টুকরো' অপরিবর্তিত থাকবে)
+      * *Piece of cake* ➔ `সহজ কাজ` / `পানির মতো সহজ` (প্রসঙ্গ সাপেক্ষে; খাদ্য বোঝাতে 'কেকের টুকরো' অপরিবর্তিত থাকবে)
       * *Barking dogs seldom bite* ➔ `যত গর্জে তত বর্ষে না`
       * *Too many cooks spoil the broth* ➔ `অধিক সন্ন্যাসীতে গাজন নষ্ট`
       * *Kill two birds with one stone* ➔ `এক ঢিলে দুই পাখি মারা`
       * *Spill the beans* ➔ `গোপন তথ্য ফাঁস করা` / `হাঁড়ি ভেঙে দেওয়া`
+      * *Bite the bullet* ➔ `বাধ্য হয়ে কঠিন পরিস্থিতি মেনে নেওয়া`
+      * *Barking up the wrong tree* ➔ `ভুল জায়গায় চেষ্টা করা` / `ভুল ব্যক্তিকে দোষারোপ করা`
+      * *Cost an arm and a leg* ➔ `অগাধ খরচ` / `পানির মতো টাকা খরচ হওয়া`
+      * *Burn the midnight oil* ➔ `রাত জেগে কঠোর পরিশ্রম করা`
+      * *Hit the nail on the head* ➔ `আসল কথাটি বলা` / `মোক্ষম কথা বলা`
+      * *Cut corners* ➔ `কাজে ফাঁকি দেওয়া` / `নিয়মের ব্যত্যয় ঘটানো`
+      * *Actions speak louder than words* ➔ `কথার চেয়ে কাজের মূল্য বেশি`
+      * *Rome wasn't built in a day* ➔ `বড় কাজে সময় ও ধৈর্য লাগে`
+      * *Honesty is the best policy* ➔ `সততাই সর্বোত্তম পন্থা`
+      * *Look before you leap* ➔ `ভাবিয়া করিও কাজ`
+      * *Where there is a will, there is a way* ➔ `ইচ্ছা থাকলে উপায় হয়`
+      * *Strike while the iron is hot* ➔ `ঝোপ বুঝে কোপ মারা`
+      * *All that glitters is not gold* ➔ `চকচক করলেই সোনা হয় না`
+      * *A stitch in time saves nine* ➔ `সময়ের এক ফোঁড় অসময়ের দশ ফোঁড়`
+      * *Out of the frying pan into the fire* ➔ `জলে কুমির ডাঙায় বাঘ`
+      * *A bird in the hand is worth two in the bush* ➔ `হাতের কাছের জিনিসই শ্রেষ্ঠ` / `গাছে কাঁঠাল গোঁফে তেল নয়`
+      * *Tip of the iceberg* ➔ `হিমশৈলের চূড়া মাত্র`
+      * *Caught red-handed* ➔ `হাতে-নাতে ধরা পড়া`
+      * *Once in a blue moon* ➔ `ডুমুরের ফুল` / `কদাচিৎ`
+      * *Full catalog of 105+ idioms*: See `references/bilingual_idioms.json`.
 13. **Consumer E-Commerce & Retail Logistics**:
     - Terminology: `অর্ডার ট্র্যাকিং`, `হোম ডেলিভারি`, `রিটার্ন ও রিফান্ড নীতি`, `মূল্য পরিশোধ`, `এসক্রো সুরক্ষা`. Avoid hybrid Banglish verbs ('ডেলিভারি হয়ে গিয়েছে' ➔ 'ডেলিভারি সম্পন্ন হয়েছে').
 14. **Customer Support & Omnichannel Messaging**:

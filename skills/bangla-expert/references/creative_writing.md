@@ -35,6 +35,13 @@
   - `Burn the midnight oil` ➔ **`রাত জেগে পরিশ্রম করা`** (Never: "মধ্যরাতের তেল পোড়ানো")
   - `A stitch in time saves nine` ➔ **`সময়ের এক ফোঁড় অসময়ের দশ ফোঁড়`**
   - `Make hay while the sun shines` ➔ **`ঝোপ বুঝে কোপ মারা`**
+  - `Rome wasn't built in a day` ➔ **`বড় কাজে সময় ও ধৈর্য লাগে`**
+  - `Honesty is the best policy` ➔ **`সততাই সর্বোত্তম পন্থা`**
+  - `Look before you leap` ➔ **`ভাবিয়া করিও কাজ`**
+  - `Where there is a will, there is a way` ➔ **`ইচ্ছা থাকলে উপায় হয়`**
+  - `Out of the frying pan into the fire` ➔ **`জলে কুমির ডাঙায় বাঘ`**
+  - `All that glitters is not gold` ➔ **`চকচক করলেই সোনা হয় না`**
+  - *(Full structured catalog of 105+ bilingual idioms available in `references/bilingual_idioms.json`)*
 
 ## 4. Poetic Metaphors, Imagery & Figurative Diction (কাব্যিক রূপক ও চিত্রকল্প)
 - **Figurative Tri-layer**:
