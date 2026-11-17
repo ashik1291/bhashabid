@@ -1,7 +1,8 @@
 # Bengali date formatting and day ordinals
+import re
 from datetime import date
-from typing import Tuple
-from .digits import to_bangla_digits
+from typing import Tuple, Union, Optional
+from .digits import to_bangla_digits, to_ascii_digits
 
 # Day suffixes according to traditional Bengali practice
 # ১লা, ২রা, ৩রা, ৪ঠা, ৫ই ... ১৮ই, ১৯শে ... ৩১শে
@@ -29,10 +30,43 @@ def is_gregorian_leap_year(year: int) -> bool:
     """Returns True if the given Gregorian year is a leap year."""
     return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
 
-def gregorian_to_bongabdo(year: int, month: int, day: int) -> Tuple[int, int, int]:
+def _parse_date_args(
+    year_or_date: Union[int, str, date],
+    month: Optional[int] = None,
+    day: Optional[int] = None
+) -> Tuple[int, int, int]:
     """
-    Converts a Gregorian date (year, month, day) to the revised Bengali calendar (বঙ্গাব্দ)
+    Normalizes date input arguments from multiple formats:
+    - (year: int, month: int, day: int)
+    - (date_obj: datetime.date)
+    - (date_str: str, e.g. '2026-04-14', '2026/04/14', or '১৪-০৪-২০২৬')
+    """
+    if isinstance(year_or_date, date):
+        return year_or_date.year, year_or_date.month, year_or_date.day
+
+    if isinstance(year_or_date, str):
+        cleaned = to_ascii_digits(year_or_date.strip())
+        parts = re.split(r"[-/.]", cleaned)
+        if len(parts) == 3:
+            if len(parts[0]) == 4:  # YYYY-MM-DD
+                return int(parts[0]), int(parts[1]), int(parts[2])
+            elif len(parts[2]) == 4:  # DD-MM-YYYY
+                return int(parts[2]), int(parts[1]), int(parts[0])
+
+    if month is not None and day is not None:
+        return int(to_ascii_digits(str(year_or_date))), int(to_ascii_digits(str(month))), int(to_ascii_digits(str(day)))
+
+    raise ValueError(f"Invalid date arguments: year_or_date={year_or_date}, month={month}, day={day}")
+
+def gregorian_to_bongabdo(
+    year_or_date: Union[int, str, date],
+    month: Optional[int] = None,
+    day: Optional[int] = None
+) -> Tuple[int, int, int]:
+    """
+    Converts a Gregorian date to the revised Bengali calendar (বঙ্গাব্দ)
     adopted by the Bangla Academy and Government of Bangladesh (2019 revision).
+    Accepts (year, month, day), a datetime.date object, or an ISO date string ('YYYY-MM-DD').
     Returns (byear, bmonth, bday).
 
     Bengali Calendar rules:
@@ -44,6 +78,7 @@ def gregorian_to_bongabdo(year: int, month: int, day: int) -> Tuple[int, int, in
     - April 14 to Dec 31: Bangabda = Gregorian - 593.
     - Jan 1 to April 13: Bangabda = Gregorian - 594.
     """
+    year, month, day = _parse_date_args(year_or_date, month, day)
     target = date(year, month, day)
 
     if (month, day) >= (4, 14):
@@ -83,24 +118,38 @@ def gregorian_to_bongabdo(year: int, month: int, day: int) -> Tuple[int, int, in
 
     return (byear, 12, 30)
 
-def format_date_bangla(year: int, month: int, day: int) -> str:
+def format_date_bangla(
+    year_or_date: Union[int, str, date],
+    month: Optional[int] = None,
+    day: Optional[int] = None
+) -> str:
     """
     Format a Gregorian date with Bengali month name, date suffix, and Bengali year digits.
+    Accepts (year, month, day), a datetime.date object, or an ISO date string ('YYYY-MM-DD').
     Example: (2026, 3, 26) -> "২৬শে মার্চ, ২০২৬"
+    Example: "2026-03-26" -> "২৬শে মার্চ, ২০২৬"
     """
+    year, month, day = _parse_date_args(year_or_date, month, day)
     day_str = DATE_ORDINALS.get(day, f"{to_bangla_digits(day)}ই")
     month_str = GREGORIAN_MONTHS_BN[month] if 1 <= month <= 12 else str(month)
     year_str = to_bangla_digits(year)
     return f"{day_str} {month_str}, {year_str}"
 
-def format_date_bongabdo(year: int, month: int, day: int, from_gregorian: bool = False) -> str:
+def format_date_bongabdo(
+    year_or_date: Union[int, str, date],
+    month: Optional[int] = None,
+    day: Optional[int] = None,
+    from_gregorian: bool = False
+) -> str:
     """
     Format a traditional Bengali calendar date (বঙ্গাব্দ) with Bengali month name,
     date ordinal suffix, and Bengali year digits.
+    Accepts (year, month, day), a datetime.date object, or an ISO date string ('YYYY-MM-DD').
     If from_gregorian is True or year >= 1800, automatically converts from Gregorian date.
     Example: (1433, 1, 1) -> "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
-    Example: (2026, 4, 14, from_gregorian=True) -> "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
+    Example: "2026-04-14" -> "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
     """
+    year, month, day = _parse_date_args(year_or_date, month, day)
     if from_gregorian or year >= 1800:
         year, month, day = gregorian_to_bongabdo(year, month, day)
 

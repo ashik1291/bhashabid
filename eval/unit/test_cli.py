@@ -139,5 +139,19 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(code1, code2)
         self.assertEqual(out1, out2)
 
+    def test_cli_date_formatting(self):
+        code1, out1, _ = self.run_cli(["date", "2026-03-26"])
+        self.assertEqual(code1, 0)
+        self.assertEqual(out1, "২৬শে মার্চ, ২০২৬")
+
+        code2, out2, _ = self.run_cli(["date", "2026-04-14", "--bongabdo"])
+        self.assertEqual(code2, 0)
+        self.assertEqual(out2, "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
+
+        # Test CLI parity across bhashabid.cli and tools.cli
+        code_p1, out_p1, _ = self.run_cli(["date", "2026-04-14", "--bongabdo"], module="tools.cli")
+        self.assertEqual(code2, code_p1)
+        self.assertEqual(out2, out_p1)
+
 if __name__ == "__main__":
     unittest.main()

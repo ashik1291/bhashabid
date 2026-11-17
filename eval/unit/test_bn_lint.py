@@ -238,7 +238,12 @@ class TestBnLint(unittest.TestCase):
             ("আমরা গতকাল ঢাকা গেলেন।", "RULE-LINT-PERSON-AMI"),
             ("আমি ভাত খেলেন।", "RULE-LINT-PERSON-AMI"),
             ("তুমি কাজটি করলাম।", "RULE-LINT-PERSON-TUMI"),
-            ("আপনি ভাত খেলাম।", "RULE-LINT-PERSON-TUMI")
+            ("আপনি ভাত খেলাম।", "RULE-LINT-PERSON-APNI"),
+            ("আপনি চিঠি লিখলাম।", "RULE-LINT-PERSON-APNI"),
+            ("সে কাজটি করলাম।", "RULE-LINT-PERSON-SE"),
+            ("তারা চিঠি লিখলাম।", "RULE-LINT-PERSON-SE"),
+            ("তিনি চিঠি লিখলাম।", "RULE-LINT-PERSON-TINI"),
+            ("আমি চিঠি লিখলেন।", "RULE-LINT-PERSON-AMI")
         ]
         for s, expected_rule in clashing_sentences:
             issues = [i for i in lint_text(s) if "PERSON" in i.rule_id]
@@ -249,7 +254,8 @@ class TestBnLint(unittest.TestCase):
         safe_sentences = [
             "আমি জানি তিনি আসবেন।",
             "আমি বাজারে যাব কিন্তু তিনি যাবেন না।",
-            "আমি চাই আপনি কাজটি করবেন।"
+            "আমি চাই আপনি কাজটি করবেন।",
+            "সে বলল যে তিনি কাজটি করবেন।"
         ]
         for s in safe_sentences:
             issues = [i for i in lint_text(s) if "PERSON" in i.rule_id]
@@ -274,6 +280,16 @@ class TestBnLint(unittest.TestCase):
         # Sandhi defect
         issues_sandhi = lint_text("উপরি-উক্ত বিষয়ের পরিবর্তে উপরোক্ত লিখল।")
         self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-SANDHI" for i in issues_sandhi))
+
+        # Day name, word boundary, pronoun orthography
+        issues_robibar = lint_text("আগামী রবিবার ব্যাংক বন্ধ থাকবে।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-DAY-NAME" for i in issues_robibar))
+
+        issues_echara = lint_text("এছাড়া অন্যান্য সিদ্ধান্ত বাস্তবায়িত হবে।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-WORD-BOUNDARY" for i in issues_echara))
+
+        issues_karo = lint_text("কারো কারো মতে এটি ঠিক নয়।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-PRONOUN-ORTHOGRAPHY" for i in issues_karo))
 
 if __name__ == "__main__":
     unittest.main()

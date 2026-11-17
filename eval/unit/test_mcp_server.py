@@ -93,5 +93,15 @@ class TestMCPServer(unittest.TestCase):
         self.assertIn("তফশিল", res_sch["schedule_text"])
         self.assertIn("মৌজা: বাড্ডা", res_sch["schedule_text"])
 
+    def test_call_format_date(self):
+        res_greg = self.server.call_tool("format_date", {"date": "2026-03-26"})
+        self.assertEqual(res_greg["formatted"], "২৬শে মার্চ, ২০২৬")
+        self.assertEqual(res_greg["calendar"], "gregorian")
+
+        res_bong = self.server.call_tool("format_date", {"date": "2026-04-14", "calendar": "bongabdo"})
+        self.assertEqual(res_bong["formatted"], "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
+        self.assertEqual(res_bong["calendar"], "bongabdo")
+        self.assertEqual(res_bong["bongabdo_year"], 1433)
+
 if __name__ == "__main__":
     unittest.main()

@@ -134,6 +134,10 @@ class TestBnNumbers(unittest.TestCase):
     def test_date_formatting(self):
         self.assertEqual(format_date_bangla(2026, 3, 26), "২৬শে মার্চ, ২০২৬")
         self.assertEqual(format_date_bangla(1971, 12, 16), "১৬ই ডিসেম্বর, ১৯৭১")
+        # Flexible string and date object inputs
+        from datetime import date
+        self.assertEqual(format_date_bangla("2026-03-26"), "২৬শে মার্চ, ২০২৬")
+        self.assertEqual(format_date_bangla(date(1971, 12, 16)), "১৬ই ডিসেম্বর, ১৯৭১")
 
     def test_bongabdo_date_formatting(self):
         # Native Bangabda year formatting
@@ -144,6 +148,11 @@ class TestBnNumbers(unittest.TestCase):
         # Pahela Baishakh
         self.assertEqual(gregorian_to_bongabdo(2026, 4, 14), (1433, 1, 1))
         self.assertEqual(format_date_bongabdo(2026, 4, 14), "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
+        # String and date inputs
+        from datetime import date
+        self.assertEqual(gregorian_to_bongabdo("2026-04-14"), (1433, 1, 1))
+        self.assertEqual(format_date_bongabdo("2026-04-14"), "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
+        self.assertEqual(format_date_bongabdo(date(2026, 4, 14)), "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
 
         # Last day of Chaitra
         self.assertEqual(gregorian_to_bongabdo(2026, 4, 13), (1432, 12, 30))

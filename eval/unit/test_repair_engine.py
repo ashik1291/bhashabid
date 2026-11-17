@@ -81,6 +81,27 @@ class TestRepairEngine(unittest.TestCase):
         self.assertTrue(any(f["category"] == "PERSON_CONCORDANCE" for f in fixes_tumi))
         self.assertEqual(len(lint_text(repaired_tumi)), 0)
 
+        # Apni + 1st person verb -> Apni + formal verb
+        raw_apni = "আপনি চিঠি লিখলাম।"
+        repaired_apni, fixes_apni = repair_text(raw_apni)
+        self.assertIn("আপনি চিঠি লিখলেন।", repaired_apni)
+        self.assertTrue(any(f["category"] == "PERSON_CONCORDANCE" for f in fixes_apni))
+        self.assertEqual(len(lint_text(repaired_apni)), 0)
+
+        # Se / Tara + 1st person verb -> Se / Tara + ordinary verb
+        raw_se = "সে কাজটি করলাম।"
+        repaired_se, fixes_se = repair_text(raw_se)
+        self.assertIn("সে কাজটি করল।", repaired_se)
+        self.assertTrue(any(f["category"] == "PERSON_CONCORDANCE" for f in fixes_se))
+        self.assertEqual(len(lint_text(repaired_se)), 0)
+
+        # Tini + 1st person verb -> Tini + honorific verb
+        raw_tini = "তিনি কাজটি করলাম।"
+        repaired_tini, fixes_tini = repair_text(raw_tini)
+        self.assertIn("তিনি কাজটি করলেন।", repaired_tini)
+        self.assertTrue(any(f["category"] == "PERSON_CONCORDANCE" for f in fixes_tini))
+        self.assertEqual(len(lint_text(repaired_tini)), 0)
+
     def test_grammar_defect_repairs(self):
         # Double plurals
         repaired_dp, _ = repair_text("সব ছাত্রগণ ক্লাসে উপস্থিত ছিল।")
@@ -96,6 +117,15 @@ class TestRepairEngine(unittest.TestCase):
         repaired_affix, _ = repair_text("তারা একত্রিত হয়ে সিদ্ধান্ত নিল।")
         self.assertEqual(repaired_affix, "তারা একত্র হয়ে সিদ্ধান্ত নিল।")
         self.assertEqual(len(lint_text(repaired_affix)), 0)
+
+        # Day name, word boundary, pronoun
+        repaired_rob, _ = repair_text("আগামী রবিবার ব্যাংক বন্ধ থাকবে।")
+        self.assertEqual(repaired_rob, "আগামী রোববার ব্যাংক বন্ধ থাকবে।")
+        self.assertEqual(len(lint_text(repaired_rob)), 0)
+
+        repaired_ech, _ = repair_text("এছাড়া অন্যান্য সিদ্ধান্ত বাস্তবায়িত হবে।")
+        self.assertEqual(repaired_ech, "এ ছাড়া অন্যান্য সিদ্ধান্ত বাস্তবায়িত হবে।")
+        self.assertEqual(len(lint_text(repaired_ech)), 0)
 
     def test_idempotence_and_clean_text(self):
         clean_text = "তিনি প্রতিদিন সকালে বিদ্যালয়ে যান এবং পাঠদান করেন।"

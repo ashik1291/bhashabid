@@ -46,6 +46,22 @@ CONCORDANCE_PATS = [
      "যেসব \\1 সেগুলোর সমাধান")
 ]
 
+# 6. Orthographic & Stylistic Standard Invariants
+STANDARD_CONVENTION_PATS = [
+    (re.compile(B_L + r"রবিবার" + B_R),
+     "RULE-GRAMMAR-DAY-NAME",
+     "গণমাধ্যম ও প্রমিত চলিত রীতি: 'রবিবার' এর চেয়ে 'রোববার' প্রমিত।",
+     "রোববার"),
+    (re.compile(B_L + r"কারো\s+কারো" + B_R),
+     "RULE-GRAMMAR-PRONOUN-ORTHOGRAPHY",
+     "বাংলা একাডেমি প্রমিত বানানরীতি: সর্বনামে 'কারো কারো' এর স্থলে 'কারও কারও' ব্যবহার্য।",
+     "কারও কারও"),
+    (re.compile(B_L + r"এছাড়া" + B_R),
+     "RULE-GRAMMAR-WORD-BOUNDARY",
+     "বাংলা একাডেমি পদ পৃথকীকরণ রীতি: 'এছাড়া' এর পরিবর্তে পৃথক পদ হিসেবে 'এ ছাড়া' লেখা বাঞ্ছনীয়।",
+     "এ ছাড়া")
+]
+
 def check_grammar_defects(text: str) -> list[LintIssue]:
     issues = []
     lines = text.splitlines()
@@ -126,6 +142,19 @@ def check_grammar_defects(text: str) -> list[LintIssue]:
                     severity=LintSeverity.INFO,
                     matched_text=m.group(0),
                     suggestion=f"বচন সংগতিশীল রূপ: '{fixed}'"
+                ))
+
+        # 6. Standard Orthographic & Lexical Conventions
+        for pat, rule_id, msg, sugg in STANDARD_CONVENTION_PATS:
+            for m in pat.finditer(line):
+                issues.append(LintIssue(
+                    rule_id=rule_id,
+                    message=msg,
+                    line=line_idx,
+                    col=m.start() + 1,
+                    severity=LintSeverity.INFO,
+                    matched_text=m.group(0),
+                    suggestion=f"প্রমিত রূপ: '{sugg}'"
                 ))
 
     return issues

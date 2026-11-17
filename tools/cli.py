@@ -66,6 +66,26 @@ def handle_number(args):
         sys.stderr.write(f"Error: {e}\n")
         return 1
 
+def handle_date(args):
+    try:
+        val = args.value.strip()
+        if val.lower() == "today":
+            from datetime import date
+            t = date.today()
+            val = f"{t.year}-{t.month:02d}-{t.day:02d}"
+        from .bn_numbers.dates import format_date_bangla, format_date_bongabdo, gregorian_to_bongabdo
+        if args.bongabdo:
+            print(format_date_bongabdo(val, from_gregorian=True))
+        elif args.convert:
+            y, m, d = gregorian_to_bongabdo(val)
+            print(f"{y}-{m:02d}-{d:02d}")
+        else:
+            print(format_date_bangla(val))
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Error: {e}\n")
+        return 1
+
 def handle_normalize(args):
     try:
         text = resolve_text_or_file(args.text)
@@ -484,6 +504,13 @@ def main():
     p_num.add_argument("--grouped", action="store_true", help="Format with South Asian lakh/crore commas")
     p_num.add_argument("--hundred-style", choices=["শত", "শো", "শ"], default="শত")
     p_num.set_defaults(func=handle_number)
+
+    # date
+    p_date = subparsers.add_parser("date", help="Format and convert Gregorian dates to Bengali and Bangabda calendar")
+    p_date.add_argument("value", help="Date string (e.g. 2026-04-14, 2026-03-26, or 'today')")
+    p_date.add_argument("--bongabdo", "-b", action="store_true", help="Format as traditional Bengali calendar date (বঙ্গাব্দ)")
+    p_date.add_argument("--convert", "-c", action="store_true", help="Convert to numeric Bangabda date (YYYY-MM-DD)")
+    p_date.set_defaults(func=handle_date)
 
     # normalize
     p_norm = subparsers.add_parser("normalize", help="Normalize Unicode NFC, punctuation, and loanwords")

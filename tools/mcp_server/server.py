@@ -126,6 +126,18 @@ class BhashabidMCPServer:
                     },
                     "required": ["deed_type"]
                 }
+            },
+            {
+                "name": "format_date",
+                "description": "Format Gregorian calendar dates into standard Bengali date strings or convert to official Bangabda (বঙ্গাব্দ) calendar (Bangla Academy 2019 revision).",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "date": {"type": "string", "description": "ISO date string ('YYYY-MM-DD') or Bengali date string."},
+                        "calendar": {"type": "string", "enum": ["gregorian", "gregorian_bangla", "bongabdo"], "default": "gregorian", "description": "Target calendar: 'gregorian' (২৬শে মার্চ, ২০২৬) or 'bongabdo' (১৪৩৩ বঙ্গাব্দ)."}
+                    },
+                    "required": ["date"]
+                }
             }
         ]
 
@@ -284,6 +296,31 @@ class BhashabidMCPServer:
                     "deed_type": dtype,
                     "error": f"Unknown deed_type '{dtype}'. Allowed: 'saf_kabala', 'encumbrance_free', 'schedule'."
                 }
+
+        elif name == "format_date":
+            raw_date = str(arguments.get("date", "")).strip()
+            calendar_type = arguments.get("calendar", "gregorian")
+            try:
+                from ..bn_numbers.dates import format_date_bangla, format_date_bongabdo, gregorian_to_bongabdo
+                if calendar_type in ("bongabdo", "bangabda"):
+                    formatted = format_date_bongabdo(raw_date, from_gregorian=True)
+                    y, m, d = gregorian_to_bongabdo(raw_date)
+                    return {
+                        "input": raw_date,
+                        "calendar": "bongabdo",
+                        "formatted": formatted,
+                        "bongabdo_year": y,
+                        "bongabdo_components": {"year": y, "month": m, "day": d}
+                    }
+                else:
+                    formatted = format_date_bangla(raw_date)
+                    return {
+                        "input": raw_date,
+                        "calendar": "gregorian",
+                        "formatted": formatted
+                    }
+            except Exception as e:
+                return {"error": f"Failed to format date: {e}"}
 
         else:
             raise ValueError(f"Unknown tool: {name}")
