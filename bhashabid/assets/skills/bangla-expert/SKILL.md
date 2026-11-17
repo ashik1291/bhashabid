@@ -1,38 +1,49 @@
 ---
 name: bangla-expert
-description: Bengali linguistic coprocessor (Bangla Academy, anti-calque, statutory legal rules)
+description: Bengali linguistic coprocessor (Bangla Academy, anti-calque, statutory legal rules, and 17-sector taxonomy)
 ---
 
 # Bengali Linguistic Coprocessor (Bhashabid)
 
-1. **Bangla Academy Orthography**:
-   - Foreign loanwords use 'স'/'স্ট' (স্টেশন, পোস্ট); never 'ষ'/'ষ্ট'.
-   - Desi/foreign words take short 'ি' (পাখি, হাতি, সরকারি).
+1. **Bangla Academy Orthography & Canonical NFC**:
+   - Foreign loanwords use 'স'/'স্ট' (স্টেশন, পোস্ট, মাস্টার); never 'ষ'/'ষ্ট'.
+   - Desi/foreign words take short 'ি' (পাখি, হাতি, দাবি, সরকারি, একাডেমি).
    - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
 
-2. **Numerals & Grouping**:
-   - Commas: ১২,৩৪,৫৬৭. Decimals use dot: ৩.১৪ (never ৩।১৪).
-   - Words: ৯৯ = নিরানব্বই, ৭৫ = পঁচাত্তর. Percentages in prose: শতাংশ (never % এ).
+2. **Numerals, Grouping & Punctuation**:
+   - South Asian commas: ১২,৩৪,৫৬৭. Decimals use dot: ৩.১৪ (never ৩।১৪).
+   - Numbers in words: ৯৯ = নিরানব্বই, ৭৫ = পঁচাত্তর. Prose percentages use 'শতাংশ' (never % এ).
+   - Sentence completion: Terminate with Bengali Dari (।), never ASCII period.
 
 3. **Zero Guru-chandali & Concordance**:
-   - Modern Promito Cholito only. Never mix Sadhu forms (হইবে, যদ্দারা, তাহাদিগকে).
-   - Concordance: তারা ... করেছিল vs তাঁরা ... করেছিলেন.
+   - Modern Promito Cholito only. Zero mixing of Sadhu forms (হইবে, যদ্দারা, তাহাদিগকে).
+   - Concordance: তিনি...গেলেন vs সে...গেল; তারা...করেছিল vs তাঁরা...করেছিলেন. No double plurals (সব সদস্য, never সব সদস্যবৃন্দ).
 
-4. **Legal & Writs Drafting (Art 102)**:
-   - Parties: আবেদনকারী (Petitioner), বিবাদীগণ (Respondents); never 'উত্তরদাতাগণ'.
-   - Statutory terms: পরমাদেশ (Mandamus), রুল নিশি, আইনগত কর্তৃত্ববহির্ভূত, স্থিতাবস্থা.
-
-5. **Anti-Calque & Pure Output**:
+4. **Expanded Anti-Calque & Idiom Engine**:
    - Avoid mechanical English passives ('দ্বারা চালিত'). Use natural active voice.
-   - Deliver clean official documents without trailing meta-commentary or rule justifications.
+   - Naturalize English idioms to Bengali cultural equivalents (piece of cake -> সহজ কাজ, bad workman -> নাচতে না জানলে উঠান বাঁকা, bite the bullet -> কঠিন পরিস্থিতি মেনে নেওয়া). Full 105-idiom dataset: `references/bilingual_idioms.json`.
 
-## Progressive References (references/)
-- ecommerce_fintech_civic.md: E-commerce settlement, ticketing (TCK), FinTech, civic.
-- numerals.md: 0-99 words, fractions, dates, currency.
-- orthography.md: Bangla Academy spelling, loanwords, NFC.
-- grammar_registers.md: Sadhu/Cholito tables, honorifics.
-- journalism_domains.md: Legal show-cause, macroeconomics, sports.
-- official_letters.md: Admin petitions, secretariat hierarchy.
-- creative_writing.md: Dialogue tags, fiction, proverbs, idioms.
-- academic_legal_medical.md: Research, deeds, health, agronomy, NCTB.
-- constitutional_writs.md: Article 102 writ taxonomy and prayers.
+5. **Developer & Technical Rules**:
+   - Preserve programming code blocks (```...```), JSON keys, SQL queries, regex, and identifiers in untouched ASCII English. Technical loanwords: ডাটাবেস, ক্লাউড, মেমোরি লিক.
+
+6. **Output Delivery**:
+   - Deliver clean, publication-grade text directly with ZERO meta-commentary or conversational filler.
+
+## Progressive Reference Directory (references/)
+For specialized domain tasks across all 17 sectors, consult these progressive references:
+- **bilingual_idioms.json**: 105 high-frequency bilingual idioms & proverbs mapping.
+- **academic_legal_medical.md**: Deeds (সাব-কবলা), health (উপসর্গ vs লক্ষণ), agronomy, NCTB pedagogy.
+- **constitutional_writs.md**: Article 102 High Court writ taxonomy (Mandamus, Rule Nisi, Ultra Vires).
+- **official_letters.md**: Secretariat memos, government petitions, administrative hierarchy.
+- **ecommerce_fintech_civic.md**: MFS (bKash/Nagad), e-commerce logistics, civic digital services.
+- **journalism_domains.md**: Neutral news attribution, macroeconomics (SLR, CRR, নীতি সুদহার).
+- **creative_writing.md**: Living spoken dialogue, narrative action tags, literary registers.
+- **numerals.md**: 0–99 cardinal words, currency in words, fractions, dates.
+- **orthography.md**: Bangla Academy spelling rules, foreign loanword normalization, NFC.
+- **grammar_registers.md**: Sadhu/Cholito concordance tables, honorifics, pleonasms.
+
+## Zero-Install Web Prompts (STANDALONE_ALL_IN_ONE.md)
+When working outside IDEs, use the Three-Tier token architecture in `STANDALONE_ALL_IN_ONE.md`:
+- **Tier 1 (Nano Prompt)**: <160 tokens / <1,100 chars (fits ChatGPT 1,500-char limit).
+- **Tier 2 (Sector Modules)**: Plug-and-play domain modules across all 17 sectors.
+- **Tier 3 (Complete Prompt)**: Full architectural reference in a single copyable block.
