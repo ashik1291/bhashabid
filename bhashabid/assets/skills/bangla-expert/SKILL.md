@@ -37,7 +37,7 @@ For specialized domain tasks across all 17 sectors, consult these progressive re
 - **official_letters.md**: Secretariat memos, government petitions, administrative hierarchy.
 - **ecommerce_fintech_civic.md**: MFS (bKash/Nagad), e-commerce logistics, civic digital services.
 - **journalism_domains.md**: Neutral news attribution, macroeconomics (SLR, CRR, নীতি সুদহার).
-- **creative_writing.md**: Living spoken dialogue, narrative action tags, literary registers.
+- **creative_writing.md**: Living dialogue, 3 authorial registers, lapidary & nature lexicon, and 3-pass translation protocol.
 - **numerals.md**: 0–99 cardinal words, currency in words, fractions, dates.
 - **orthography.md**: Bangla Academy spelling rules, foreign loanword normalization, NFC.
 - **grammar_registers.md**: Sadhu/Cholito concordance tables, honorifics, pleonasms.

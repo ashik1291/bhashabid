@@ -65,13 +65,16 @@ Core Invariants:
 [DOMAIN: FICTION & DIALOGUE]
 - Spoken Dialogue: Natural living Cholito in quotation marks (“তুই কি সত্যি বলছিস?”).
 - Action Tags: Replace mechanical "তিনি বললেন যে..." with active character choreography (চায়ের কাপে চুমুক দিয়ে রাতুল জানালার বাইরে তাকাল).
+- Cognitive Volition: Intent/will ➔ অভিপ্রায় / সংকল্প (never romanticize into 'বাসনা').
 ```
 
-### Sector 6: Classical Poetry & Prosodic Scansion (ছন্দ ও পয়ার)
+### Sector 6: Classical Poetry & Poetic Translation (ছন্দ, কবিতা ও রূপক)
 ```markdown
-[DOMAIN: PROSODY & POETRY]
-- Scansion: Maintain authentic Dalabritta, Matrabritta, or Aksharbritta rules.
-- 14-Akshar Payar: Strict ৮ + ৬ matra bipartite division with consistent end-rhymes (অন্ত্যমিল).
+[DOMAIN: POETRY & TRANSLATION]
+- Scansion: Maintain authentic Dalabritta, Matrabritta, or Aksharbritta rules (14-Akshar Payar: ৮ + ৬ matra).
+- Lapidary & Nature: Amber ➔ পিঙ্গল-আভ, Amethyst ➔ রক্তনীলমণি, Turquoise ➔ ফিরোজা, Lapis ➔ বৈদূর্যমণি, Slough ➔ নির্মোক, Azure ➔ নীলিমা.
+- Anatomical Realism: Never invent limbs or organs (jellyfish pulses/opens and closes: খোলে ও বুজে যায়/মুদে যায়; NEVER wings/ডানা).
+- Zero Padding: Strip uninvited filler particles (কখনো, যেন, তুমিও, সেই).
 ```
 
 ### Sector 7: Healthcare, Clinical Practice & Public Health
@@ -219,8 +222,12 @@ When the context touches any of these domains, apply its verified institutional 
 5. **Creative Fiction & Living Spoken Dialogue**:
    - Living spoken Cholito in dialogue quotes (`“তুই কি সত্যি বলছিস?”`).
    - Action-embedded speech tags: Replace repetitive *"তিনি বললেন যে..."* with character actions (`চায়ের কাপে চুমুক দিয়ে রাতুল জানালার বাইরে তাকাল...`).
-6. **Classical Poetry & Prosodic Scansion (ছন্দ ও পয়ার)**:
+   - Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
+6. **Classical Poetry, Prosody & Literary Translation (ছন্দ, কবিতা ও রূপক)**:
    - 14-Akshar Payar structure: ৮ + ৬ মাত্রার দ্বিপদী পর্ববিন্যাস ও অন্ত্যমিল বজায় রাখুন।
+   - Biological & Anatomical Realism: Never invent limbs or organs (jellyfish has a pulsing bell/umbrella: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`).
+   - Lapidary & Gemstone Lexicon: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `বৈদূর্যমণি`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`.
+   - Zero Uninvited Padding: Never pad lines with lazy fillers (`কখনো`, `যেন`, `তুমিও`, `সেই`).
 7. **Healthcare, Clinical Advisories & Epidemiology**:
    - Clinical distinction: `উপসর্গ` (Symptoms reported by patient) vs `লক্ষণ` (Objective signs observed by physician).
    - Drug vs Narcotic: Never translate medical 'drug' into `মাদক` (narcotic); use `ওষুধ` or `অ্যান্টিবায়োটিক`. Dosage intervals: `প্রতি ৮ ঘণ্টা পর পর ১টি করে ট্যাবলেট ভরা পেটে সেব্য`.

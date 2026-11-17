@@ -16,7 +16,7 @@
   - `সূচিপত্র` (Table of Contents)
   - `অধ্যায়` (Chapter)
   - `পাদটীকা / টীকা` (Footnotes / Annotations)
-  - `পরিশিষ্ট` (Appendix)
+  - `পরিশिष्ट` (Appendix)
   - `গ্রন্থপঞ্জি` (Bibliography)
 - **Transitions (সংযোগকারী পদ)**:
   - Affirmative: `বস্তুত`, `বস্তুতপক্ষে`, `বলা বাহুল্য`
@@ -53,3 +53,81 @@
   - "Cold feet" ➔ **`ভয়ে পিছিয়ে যাওয়া / দ্বিধায় ভোগা`** (Never: "ঠান্ডা পা")
 - **Evocative Bengali Nature Imagery**:
   - `হেমন্তের বিষণ্ণ কুয়াশা`, `শ্রাবণের অঝোর বারিধারা`, `কালবৈশাখীর উন্মাতাল ঝড়`, `গোধূলির স্বর্ণাভা`।
+
+---
+
+## 5. Authorial Register Archetypes (কবির স্বর ও রীতি সংরক্ষণ)
+Literary translation requires identifying and strictly maintaining the author's stylistic register:
+
+| Archetype | Representative Authors | Mandatory Linguistic Invariants | Strict Prohibitions |
+| :--- | :--- | :--- | :--- |
+| **Archetype A: Imagist / Minimalist / Scientific** | Marianne Moore, Ezra Pound, William Carlos Williams, late Jibanananda | • Stark, laconic visual nouns.<br>• Preserve exact enjambment & lineation.<br>• Verbs of physical mechanics (*খোলে, বুজে যায়*). | ❌ Zero decorative particles (`কখনো`, `যেন`, `তুমিও`, `সেই`).<br>❌ Zero emotional padding. |
+| **Archetype B: Romantic / Symbolist / Classical** | Keats, Baudelaire, early Jibanananda, Tagore, Michael Madhusudan | • Classical Sanskritized/Perso-Arabic resonant compounds.<br>• Sensory richness & cosmic expanse (*নীলিমা, বিশীর্ণ নির্মোক*). | ❌ Flat conversational slang.<br>❌ Mechanical unbundling of compounds. |
+| **Archetype C: Realist Fiction / Living Dialogue** | Hemingway, Manik Bandopadhyay, Humayun Ahmed, Akhtaruzzaman Elias | • Action-embedded speech tags.<br>• Living spoken colloquial Cholito in dialogue.<br>• Earthy, muscular physical verbs. | ❌ Repetitive *"তিনি বললেন"* attributions.<br>❌ Bookish Sadhu-tinged dialogue. |
+
+---
+
+## 6. Biological, Physical & Lapidary Equivalence Tables
+
+### A. Precious Minerals, Gemstones & Colors (রত্ন ও বর্ণমালা)
+| English Source | ❌ Flawed Raw LLM Calque | ✓ Bhashabid Authentic Literary Bengali |
+| :--- | :--- | :--- |
+| **Amber-colored** | অ্যাম্বার-রঙা | **পিঙ্গল-আভ** / **মধুরঙা** / **তৃণমণি-দ্যুতি** |
+| **Amethyst** | অ্যামেথিস্ট | **রক্তনীলমণি** / **নীলমণি** |
+| **Lapis Lazuli** | লাপিস লাজুলি | **বৈদূর্যমণি** / **নীলা** |
+| **Turquoise** | টারকোয়েজ | **ফিরোজা** / **পেরোজ** |
+| **Jade** | জেড | **সূর্যকান্ত** / **মার্জান** |
+| **Mother-of-pearl** | মাদার অব পার্ল | **শুক্তিমুক্তা** / **ঝিনুকের দীপ্তি** |
+| **Conch-white** | শঙ্খের মতো সাদা | **শঙ্খশুভ্র** |
+
+### B. Zoological, Anatomical & Marine Locomotion (প্রাণী ও সামুদ্রিক শরীরতত্ত্ব)
+| English Source | ❌ Flawed Raw LLM Calque | ✓ Bhashabid Authentic Literary Bengali |
+| :--- | :--- | :--- |
+| **Pulsing bell of jellyfish** | জেলিফিশের ঘণ্টা নড়াচড়া | **জেলিফিশের স্পন্দিত ছত্র** |
+| **It opens and it closes** | সে ডানা মেলে ও বন্ধ করে | **সে খোলে, আর সে বুজে যায় / মুদে যায়** |
+| **Tentacles** | হাত বা পা | **কর্ষিকা** |
+| **Slough / Cast-off skin** | পুরোনো চামড়া | **নির্মোক** / **পরিত্যক্ত খোলস** |
+| **Worm / Larva** | পোকা | **কীট** |
+
+### C. Classical Poetic Equivalents (ধ্রুপদী ও চিত্রকল্পের ব্যঞ্জনা)
+| English Source | ❌ Flawed Raw LLM Calque | ✓ Bhashabid Authentic Literary Bengali |
+| :--- | :--- | :--- |
+| **The Azure** | নীল বিস্তার | **নীলিমা** / **সুনীল নভোমণ্ডল** |
+| **Mendicants** | ভিক্ষুকের দল | **ভিক্ষুদল** (তপস্বী বা সন্ন্যাসীসম অর্থে) / **পরিব্রাজক** |
+| **Hunter-pierced** | শিকারির তীরে বিদ্ধ | **ব্যাধবিদ্ধ** |
+| **Blood-script** | রক্তের লেখা | **রুধিরলিপিকা** / **রক্তলিপি** |
+| **City of sorcery** | জাদুকরী শহর | **জাদুপুর** / **মায়াপুরী** |
+
+---
+
+## 7. Negative Invariants for Literary Translation
+
+1. **Rule of Anatomical Realism (শারীরবৃত্তীয় সততা)**:
+   - Never invent limbs, organs, or locomotion mechanisms that do not exist in the source organism.
+   - *Jellyfish*: Pulsing bell/umbrella (`ছত্র`), expansion & contraction (`খোলে ও মুদে যায়/বুজে যায়`), tentacles (`কর্ষিকা`). **Strictly forbidden**: `ডানা মেলা` (spreading wings), `পা` (legs).
+   - *Snake/Larva*: Slough/ecdysis (`নির্মোক / খোলস`). **Strictly forbidden**: `গাছের ছাল` (tree bark) or generic `ত্বক`.
+2. **Rule of Cognitive Intent vs. Romantic Longing (অভিপ্রায় বনাম বাসনা)**:
+   - Intellectual resolution, scientific intent, or cold volition (*intent, will, resolve*) must be translated into cognitive Bengali: `অভিপ্রায়`, `সংকল্প`, `ইচ্ছা`.
+   - **Strictly forbidden**: Converting cold intent into romantic yearning (`বাসনা`, `প্রেমের ব্যাকুলতা`, `হৃদয়ের আকুলতা`).
+3. **Rule of Zero Uninvited Particles (অনাহূত পদ বর্জন)**:
+   - Never insert padding words (`কখনো`, `তুমিও`, `সেই`, `যেন`, `একটি`) simply to make the line feel "fluent" unless strictly required by metrical scansion (ছন্দ).
+   - *Visible, invisible* $\rightarrow$ `দৃশ্য, অদৃশ্য` (Never: `দৃশ্যমান, কখনো অদৃশ্য`).
+4. **Rule of Non-Surrender on Compounds**:
+   - Never surrender on mineral, flora, or fauna compounds by simply transliterating English words (`অ্যাম্বার-রঙা অ্যামেথিস্ট` নিষিদ্ধ; `পিঙ্গল-আভ রক্তনীলমণি` বাধ্যতামূলক).
+
+---
+
+## 8. The 3-Pass Cognitive Guided Process (ত্রি-স্তরীয় রূপান্তর প্রক্রিয়া)
+
+When translating poetry or high literature into Bengali, follow this internal sequence:
+
+1. **Pass 1: Register & Anatomical Audit (বিশ্লেষণ পর্ব)**:
+   - Classify source register into **Archetype A (Imagist)**, **Archetype B (Romantic/Classical)**, or **Archetype C (Realist)**.
+   - Map all biological, physical, and sensory actors. Lock in anatomical realism (no invented wings or limbs).
+2. **Pass 2: Aesthetic Naturalization (রূপান্তর পর্ব)**:
+   - Apply lapidary, flora, fauna, and cultural idiom mappings.
+   - Preserve original line enjambment, line-break pauses, and internal rhythmic cadence.
+3. **Pass 3: Negative Invariant Purge (শোধন পর্ব)**:
+   - Verify zero uninvited padding particles (`কখনো`, `তুমিও`, `সেই`).
+   - Verify zero transliteration surrenders.
+   - Deliver pristine, finalized literary Bengali directly with zero conversational preambles.

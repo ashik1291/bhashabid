@@ -1,0 +1,66 @@
+# eval/unit/test_creative_framework.py
+# Unit Tests for Bhashabid Pioneer Literary & Poetic Translation Framework
+
+import unittest
+import os
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+
+class TestCreativeFramework(unittest.TestCase):
+
+    def setUp(self):
+        self.ref_file = REPO_ROOT / "skills" / "bangla-expert" / "references" / "creative_writing.md"
+        self.standalone_file = REPO_ROOT / "skills" / "bangla-expert" / "STANDALONE_ALL_IN_ONE.md"
+        self.assertTrue(self.ref_file.exists(), f"Missing {self.ref_file}")
+        self.assertTrue(self.standalone_file.exists(), f"Missing {self.standalone_file}")
+
+    def test_authorial_register_archetypes_present(self):
+        content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("Archetype A: Imagist / Minimalist / Scientific", content)
+        self.assertIn("Archetype B: Romantic / Symbolist / Classical", content)
+        self.assertIn("Archetype C: Realist Fiction / Living Dialogue", content)
+        self.assertIn("Marianne Moore", content)
+        self.assertIn("Jibanananda", content)
+
+    def test_lapidary_gemstone_equivalents(self):
+        content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("পিঙ্গল-আভ", content)
+        self.assertIn("রক্তনীলমণি", content)
+        self.assertIn("বৈদূর্যমণি", content)
+        self.assertIn("ফিরোজা", content)
+        self.assertIn("শঙ্খশুভ্র", content)
+        self.assertIn("নির্মোক", content)
+
+    def test_biological_anatomical_integrity_invariants(self):
+        content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("Rule of Anatomical Realism", content)
+        self.assertIn("ছত্র", content)
+        self.assertIn("বুজে যায়", content)
+        self.assertIn("কর্ষিকা", content)
+        self.assertIn("ডানা মেলা", content)  # Listed under strictly forbidden
+
+    def test_cognitive_volition_and_negative_invariants(self):
+        content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("Rule of Cognitive Intent vs. Romantic Longing", content)
+        self.assertIn("অভিপ্রায়", content)
+        self.assertIn("সংকল্প", content)
+        self.assertIn("বাসনা", content)  # Listed under forbidden drift
+        self.assertIn("Rule of Zero Uninvited Particles", content)
+
+    def test_three_pass_cognitive_process(self):
+        content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("The 3-Pass Cognitive Guided Process", content)
+        self.assertIn("Pass 1: Register & Anatomical Audit", content)
+        self.assertIn("Pass 2: Aesthetic Naturalization", content)
+        self.assertIn("Pass 3: Negative Invariant Purge", content)
+
+    def test_standalone_prompt_literary_invariants(self):
+        content = self.standalone_file.read_text(encoding="utf-8")
+        self.assertIn("রক্তনীলমণি", content)
+        self.assertIn("পিঙ্গল-আভ", content)
+        self.assertIn("অভিপ্রায় / সংকল্প", content)
+        self.assertIn("NEVER wings/ডানা", content)
+
+if __name__ == "__main__":
+    unittest.main()
