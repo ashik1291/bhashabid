@@ -223,11 +223,12 @@ When the context touches any of these domains, apply its verified institutional 
    - Living spoken Cholito in dialogue quotes (`“তুই কি সত্যি বলছিস?”`).
    - Action-embedded speech tags: Replace repetitive *"তিনি বললেন যে..."* with character actions (`চায়ের কাপে চুমুক দিয়ে রাতুল জানালার বাইরে তাকাল...`).
    - Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
-6. **Classical Poetry, Prosody & Literary Translation (ছন্দ, কবিতা ও রূপক)**:
-   - 14-Akshar Payar structure: ৮ + ৬ মাত্রার দ্বিপদী পর্ববিন্যাস ও অন্ত্যমিল বজায় রাখুন।
-   - Biological & Anatomical Realism: Never invent limbs or organs (jellyfish has a pulsing bell/umbrella: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`).
-   - Lapidary & Gemstone Lexicon: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `বৈদূর্যমণি`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`.
-   - Zero Uninvited Padding: Never pad lines with lazy fillers (`কখনো`, `যেন`, `তুমিও`, `সেই`).
+6. **Classical Poetry, Prosody & Literary Translation (সাহিত্যিক অনুবাদের পঞ্চসূত্র)**:
+   - Law 1 (Transduction): অভিধা (Direct physical sense), লক্ষণা (Cultural metaphor grounding), ব্যঞ্জনা (Resonant emotional aura).
+   - Law 2 (Tone-Matrix): Archetype A (Minimalist/Imagist - zero padding particles), Archetype B (Romantic/Symbolist - elevated compounds), Archetype C (Realist - living dialogue & muscular verbs).
+   - Law 3 (Anatomical & Lapidary Realism): Never invent limbs or organs (jellyfish pulses: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`). Lapidary: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `বৈদূর্যমণি`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`. Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
+   - Law 4 (Anti-Calque Syntax): Dissolve passive English structures into active Bengali; use expressive compound verbs (sank ➔ তলিয়ে গেল; faded ➔ মিলিয়ে গেল).
+   - Law 5 (Prosodic Cadence): 14-Akshar Payar (৮ + ৬ মাত্রার অন্ত্যমিল), Matrabritta, or organic free verse with zero padding particles (`কখনো`, `যেন`, `তুমিও`, `সেই`).
 7. **Healthcare, Clinical Advisories & Epidemiology**:
    - Clinical distinction: `উপসর্গ` (Symptoms reported by patient) vs `লক্ষণ` (Objective signs observed by physician).
    - Drug vs Narcotic: Never translate medical 'drug' into `মাদক` (narcotic); use `ওষুধ` or `অ্যান্টিবায়োটিক`. Dosage intervals: `প্রতি ৮ ঘণ্টা পর পর ১টি করে ট্যাবলেট ভরা পেটে সেব্য`.

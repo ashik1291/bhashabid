@@ -56,7 +56,15 @@
 
 ---
 
-## 5. Authorial Register Archetypes (কবির স্বর ও রীতি সংরক্ষণ)
+## 5. The 5 Universal Meta-Laws of Literary Translation (সাহিত্যিক অনুবাদের পঞ্চসূত্র)
+
+### Law 1: The Three Dimensions of Transduction (ভাবানুবাদের ত্রিমাত্রা)
+Every literary translation must preserve:
+- **অভিধা (Direct Sense)**: Preserve physical actions, chronology, actors, and objects with 100% fidelity.
+- **লক্ষণা (Figurative Grounding)**: Ground metaphors, body parts, and cultural tropes into native Bengali idioms.
+- **ব্যঞ্জনা (Resonant Aura)**: Transmit the original author's exact atmospheric tone (melancholia, ecstasy, existential dread).
+
+### Law 2: Authorial Tone-Matrix Alignment (কবির স্বর ও রীতি সংরক্ষণ)
 Literary translation requires identifying and strictly maintaining the author's stylistic register:
 
 | Archetype | Representative Authors | Mandatory Linguistic Invariants | Strict Prohibitions |
@@ -64,6 +72,26 @@ Literary translation requires identifying and strictly maintaining the author's 
 | **Archetype A: Imagist / Minimalist / Scientific** | Marianne Moore, Ezra Pound, William Carlos Williams, late Jibanananda | • Stark, laconic visual nouns.<br>• Preserve exact enjambment & lineation.<br>• Verbs of physical mechanics (*খোলে, বুজে যায়*). | ❌ Zero decorative particles (`কখনো`, `যেন`, `তুমিও`, `সেই`).<br>❌ Zero emotional padding. |
 | **Archetype B: Romantic / Symbolist / Classical** | Keats, Baudelaire, early Jibanananda, Tagore, Michael Madhusudan | • Classical Sanskritized/Perso-Arabic resonant compounds.<br>• Sensory richness & cosmic expanse (*নীলিমা, বিশীর্ণ নির্মোক*). | ❌ Flat conversational slang.<br>❌ Mechanical unbundling of compounds. |
 | **Archetype C: Realist Fiction / Living Dialogue** | Hemingway, Manik Bandopadhyay, Humayun Ahmed, Akhtaruzzaman Elias | • Action-embedded speech tags.<br>• Living spoken colloquial Cholito in dialogue.<br>• Earthy, muscular physical verbs. | ❌ Repetitive *"তিনি বললেন"* attributions.<br>❌ Bookish Sadhu-tinged dialogue. |
+
+### Law 3: Biological Realism & Lapidary Equivalence (রূপক ও বাস্তবতার অভেদ নীতি)
+1. **Rule of Anatomical Realism (শারীরবৃত্তীয় সততা)**:
+   - Never invent limbs, organs, or locomotion mechanisms not present in the source organism.
+   - *Jellyfish*: Pulsing bell/umbrella (`ছত্র`), expansion & contraction (`খোলে ও মুদে যায়/বুজে যায়`), tentacles (`কর্ষিকা`). **Strictly forbidden**: `ডানা মেলা` (spreading wings), `পা` (legs).
+   - *Snake/Larva*: Slough/ecdysis (`নির্মোক / খোলস`). **Strictly forbidden**: `গাছের ছাল` (tree bark) or generic `ত্বক`.
+2. **Rule of Cognitive Intent vs. Romantic Longing (অভিপ্রায় বনাম বাসনা)**:
+   - Intellectual resolution, scientific intent, or cold volition (*intent, will, resolve*) must be translated into cognitive Bengali: `অভিপ্রায়`, `সংকল্প`, `ইচ্ছা`.
+   - **Strictly forbidden**: Converting cold intent into romantic yearning (`বাসনা`, `প্রেমের ব্যাকুলতা`, `হৃদয়ের আকুলতা`).
+3. **Rule of Non-Surrender on Compounds**:
+   - Never surrender on mineral, flora, or fauna compounds by simply transliterating English words (`অ্যাম্বার-রঙা অ্যামেথিস্ট` নিষিদ্ধ; `পিঙ্গল-আভ রক্তনীলমণি` বাধ্যতামূলক).
+
+### Law 4: Anti-Calque Syntactic Re-Ordering (বাংলা পদক্রমের স্বাধীনতা)
+- **Passive Dissolution**: Dissolve passive English structures ("was driven by", "it was decided that") into active Bengali energy.
+- **Expressive Compound Verbs (যৌগিক ক্রিয়া)**: Naturalize flat English verbs with rich Bengali compound verbs (*sank* ➔ *তলিয়ে গেল / ডুবে গেল*; *faded* ➔ *মিলিয়ে গেল / মুছে গেল*; *opened* ➔ *খুলে গেল / মেলে ধরল*).
+
+### Law 5: Prosody, Rhythm & Cadence Lock (ছন্দ ও লয় নিয়ন্ত্রণ)
+- **Lyrical / Metrical Verse**: Strictly maintain designated classical Bengali meters: **মাত্রাবৃত্ত**, **দলবৃত্ত / স্বরবৃত্ত**, or **অক্ষরবৃত্ত / পয়ার** (৮ + ৬ বা ৮ + ৮ মাত্রা).
+- **Free Verse / Prose Poetry (মুক্তক)**: Preserve breath units (*শ্বাসাঘাত ও পঙ্ক্তিচ্ছেদ*) and acoustic vowel resonance.
+- **Rule of Zero Uninvited Particles (অনাহূত পদ বর্জন)**: Never insert padding words (`কখনো`, `তুমিও`, `সেই`, `যেন`, `একটি`) to artificially smooth a line.
 
 ---
 

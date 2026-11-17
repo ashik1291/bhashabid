@@ -99,5 +99,20 @@ class TestCreativeFramework(unittest.TestCase):
         audit_res = server.call_tool("audit_literary_text", {"text": "জেলিফিশের ডানা"})
         self.assertEqual(audit_res["result"]["status"], "WARNING")
 
+    def test_all_five_universal_meta_laws_codified(self):
+        ref_content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("Law 1: The Three Dimensions of Transduction", ref_content)
+        self.assertIn("Law 2: Authorial Tone-Matrix Alignment", ref_content)
+        self.assertIn("Law 3: Biological Realism & Lapidary Equivalence", ref_content)
+        self.assertIn("Law 4: Anti-Calque Syntactic Re-Ordering", ref_content)
+        self.assertIn("Law 5: Prosody, Rhythm & Cadence Lock", ref_content)
+
+        standalone_content = self.standalone_file.read_text(encoding="utf-8")
+        self.assertIn("Law 1 (Transduction)", standalone_content)
+        self.assertIn("Law 2 (Tone-Matrix)", standalone_content)
+        self.assertIn("Law 3 (Anatomical & Lapidary Realism)", standalone_content)
+        self.assertIn("Law 4 (Anti-Calque Syntax)", standalone_content)
+        self.assertIn("Law 5 (Prosodic Cadence)", standalone_content)
+
 if __name__ == "__main__":
     unittest.main()
