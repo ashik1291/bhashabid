@@ -183,5 +183,53 @@ class TestSecurityPosture(unittest.TestCase):
             with self.assertRaises(PermissionError):
                 verify_skill_safety(tmppath)
 
+    def test_uninstaller_preserves_unrelated_workspace_cursorrules(self):
+        """Uninstaller must not delete user's custom .cursorrules unless signed by Bhashabid (BHASHABID-VULN-001)."""
+        import tempfile
+        from pathlib import Path
+        from tools.skill_installer import uninstall_skill
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir)
+            custom_rule = tmppath / ".cursorrules"
+            custom_rule.write_text("# Project Custom Rules\nindent: 2\nstrict: true", encoding="utf-8")
+
+            # 1. Unrelated .cursorrules must be preserved when workspace_dir is default/None
+            uninstall_skill(target="cursor", workspace_dir=None, with_mcp=False)
+            self.assertTrue(custom_rule.exists(), "Unrelated custom .cursorrules was mistakenly deleted!")
+
+            # 2. Even when workspace_dir points to project, unsigned file must be strictly preserved
+            uninstall_skill(target="cursor", workspace_dir=str(tmppath), with_mcp=False)
+            self.assertTrue(custom_rule.exists(), "Unsigned custom .cursorrules was deleted even when workspace_dir was passed!")
+
+            # 3. Signed Bhashabid rule should be cleanly removed on uninstall
+            custom_rule.write_text("# Bhashabid Bangla Rules\n* Follow Bangla Academy rules", encoding="utf-8")
+            uninstall_skill(target="cursor", workspace_dir=str(tmppath), with_mcp=False)
+            self.assertFalse(custom_rule.exists(), "Signed Bhashabid rule should be removed on uninstall.")
+
+    def test_mcp_max_frame_bytes_guard(self):
+        """MCP Server stdio loop must reject frames exceeding max_frame_bytes (BHASHABID-VULN-002)."""
+        import io
+        import sys
+        import json
+
+        oversized_payload = "A" * 100 + "\n"
+        stdin_mock = io.StringIO(oversized_payload)
+        stdout_mock = io.StringIO()
+
+        orig_stdin = sys.stdin
+        orig_stdout = sys.stdout
+        try:
+            sys.stdin = stdin_mock
+            sys.stdout = stdout_mock
+            # Run with low max_frame_bytes to trigger bound
+            self.mcp.run_stdio(max_frame_bytes=50)
+            output = stdout_mock.getvalue()
+            self.assertIn("-32600", output)
+            self.assertIn("Payload Too Large", output)
+        finally:
+            sys.stdin = orig_stdin
+            sys.stdout = orig_stdout
+
 if __name__ == "__main__":
     unittest.main()

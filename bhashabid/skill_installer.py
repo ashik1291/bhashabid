@@ -436,14 +436,32 @@ def uninstall_skill(target: str = "all", workspace_dir: str = None, with_mcp: bo
         else:
             skipped.append("Claude (Not detected)")
 
-    # 4. Workspace Cleanups
-    for p in [workspace / ".cursorrules", workspace / ".cursor" / "rules" / "bangla-expert.mdc"]:
-        if p.exists():
+    # 4. Workspace Cleanups (Safe signature-checked unlink to protect user configuration)
+    ws_expert_mdc = workspace / ".cursor" / "rules" / "bangla-expert.mdc"
+    if ws_expert_mdc.exists():
+        try:
+            ws_expert_mdc.unlink(missing_ok=True)
+            removed_paths.append(f"Workspace Rule: {ws_expert_mdc}")
+        except Exception:
+            pass
+
+    ws_cursorrules = workspace / ".cursorrules"
+    if ws_cursorrules.exists():
+        should_remove = False
+        # Strictly verify signature to protect pre-existing project .cursorrules from accidental deletion
+        try:
+            content = ws_cursorrules.read_text(encoding="utf-8-sig", errors="ignore")
+            if "bhashabid" in content.lower() or "bangla-expert" in content.lower():
+                should_remove = True
+        except Exception:
+            pass
+        if should_remove:
             try:
-                p.unlink(missing_ok=True)
-                removed_paths.append(f"Workspace Rule: {p}")
+                ws_cursorrules.unlink(missing_ok=True)
+                removed_paths.append(f"Workspace Rule: {ws_cursorrules}")
             except Exception:
                 pass
+
     if (workspace / ".cursor" / "bangla-references").exists():
         shutil.rmtree(workspace / ".cursor" / "bangla-references", ignore_errors=True)
         removed_paths.append(f"Workspace References: {workspace / '.cursor' / 'bangla-references'}")

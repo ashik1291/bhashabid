@@ -285,13 +285,29 @@ class BhashabidMCPServer:
         else:
             raise ValueError(f"Unknown tool: {name}")
 
-    def run_stdio(self):
+    def run_stdio(self, max_frame_bytes: int = 10 * 1024 * 1024):
         """
         Runs standard JSON-RPC 2.0 stdio server loop for Model Context Protocol (MCP) clients
         (Claude Desktop, Cursor, Antigravity, Windsurf).
+        Guards against unbounded line allocations by enforcing max_frame_bytes (default: 10MB).
         """
         import sys
-        for raw_line in sys.stdin:
+        while True:
+            raw_line = sys.stdin.readline(max_frame_bytes)
+            if not raw_line:
+                break
+            if len(raw_line) >= max_frame_bytes and not raw_line.endswith("\n"):
+                # Consume until next newline to realign stream
+                sys.stdin.readline()
+                err_resp = {
+                    "jsonrpc": "2.0",
+                    "id": None,
+                    "error": {"code": -32600, "message": "Payload Too Large: JSON-RPC frame exceeds maximum size limit (10MB)"}
+                }
+                sys.stdout.write(json.dumps(err_resp, ensure_ascii=False) + "\n")
+                sys.stdout.flush()
+                continue
+
             raw_line = raw_line.strip()
             if not raw_line:
                 continue
