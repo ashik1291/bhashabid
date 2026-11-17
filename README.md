@@ -6,13 +6,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
 [![PyPI: v1.0.1](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/1.0.1/)
-[![Tests: 147 Passing](https://img.shields.io/badge/Tests-147%20Passing-brightgreen.svg)](eval/unit)
+[![Tests: 153 Passing](https://img.shields.io/badge/Tests-153%20Passing-brightgreen.svg)](eval/unit)
 [![Security Audit: Cloudflare Skill (A+)](https://img.shields.io/badge/Security%20Audit-Cloudflare%20Skill%20(A%2B)-success.svg)](SECURITY.md)
 [![Security: Bandit 0-Vuln](https://img.shields.io/badge/Security-Bandit%200--Vuln-brightgreen.svg)](SECURITY.md)
 [![Dependencies: 0 CVEs](https://img.shields.io/badge/Dependencies-0%20CVEs%20(OSV)-brightgreen.svg)](SECURITY.md)
 [![Secrets: 0 Leaks](https://img.shields.io/badge/Secrets-0%20Leaks-brightgreen.svg)](SECURITY.md)
 [![Supply Chain: Sigstore Attested](https://img.shields.io/badge/Supply%20Chain-Sigstore%20Attested-blue.svg)](SECURITY.md)
-[![P2 Provenance: 49 Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-49%2F49%20Cards%20Reviewed-blueviolet.svg)](knowledge/cards)
+[![P2 Provenance: 50 Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-50%2F50%20Cards%20Reviewed-blueviolet.svg)](knowledge/cards)
 [![Core Skill Token Budget: 298 BPE](https://img.shields.io/badge/Core%20Budget-298%20%2F%20390%20Tokens-success.svg)](skills/bangla-expert/SKILL.md)
 
 > **Bhashabid** (ভাষাবিদ) is the **first-ever open-source Bengali language coprocessor engine** featuring a **constitutionally supervised self-learning loop**. Operating as an external cognitive and deterministic coprocessor without retraining model weights, it continuously harvests real-world anomalies, synthesizes candidate rules, and distills high-level invariants under human verification (Principle P2) and a strict < 390 token ceiling—systematically elevating the accuracy, orthography, and native fluency of AI-generated Bengali across **17 specialized professional sectors**.
@@ -221,8 +221,8 @@ Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Eve
 
 | Verification Suite | Target | Observed Result | Status |
 | :--- | :---: | :---: | :---: |
-| **Automated Unit & Regression Suite** | 100% Pass | **117 / 117 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-117%2F117%20Pass-brightgreen.svg) |
-| **Principle P2 Provenance Integrity** | 100% Signed | **48 / 48 Cards Reviewed** | ![P2](https://img.shields.io/badge/P2%20Provenance-48%2F48%20Reviewed-blueviolet.svg) |
+| **Automated Unit & Regression Suite** | 100% Pass | **153 / 153 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-153%2F153%20Pass-brightgreen.svg) |
+| **Principle P2 Provenance Integrity** | 100% Signed | **50 / 50 Cards Reviewed** | ![P2](https://img.shields.io/badge/P2%20Provenance-50%2F50%20Reviewed-blueviolet.svg) |
 | **Core Skill Token Footprint** | < 390 Tokens | **298 True BPE Tokens** (`cl100k_base`) | ![Tokens](https://img.shields.io/badge/BPE%20Tokens-298%20%2F%20390-success.svg) |
 | **Invariant Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles / Summaries / Examples** | ![Duplicates](https://img.shields.io/badge/Duplicates-0-brightgreen.svg) |
 | **Irregular Number Precision (0–99)** | 100.0% | **100.0% Deterministic Match** | ![Numbers](https://img.shields.io/badge/Numeral%20Accuracy-100%25-brightgreen.svg) |
@@ -328,7 +328,7 @@ Paste it into ChatGPT Custom Instructions, Claude System Prompts, or Gemini Gems
 
 ## 🛡️ Constitutional Governance (Principle P2 & P8)
 
-1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without authenticated native-speaker review, non-empty verified exemplars, and cryptographic SHA-256 signatures. **48 / 48 cards (100%)** are authenticated by lead human arbiter `Ashikur Rahman Bhuiyan`.
+1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without authenticated native-speaker review, non-empty verified exemplars, and cryptographic SHA-256 signatures. **50 / 50 cards (100%)** are authenticated by lead human arbiter `Ashikur Rahman Bhuiyan` (with 19 candidate cards in `knowledge/cards/drafts/` queued for review).
 2. **Principle P4 (Deterministic Tools for Rules)**: Rules that can be computed with discrete mathematics or grammars are implemented in code, not left to probabilistic prompt guesses.
 3. **Principle P8 (Anti-Self-Deception & Memory)**: Flaws detected across real-world corpora are permanently logged in [`memory/mistakes/ledger.jsonl`](memory/mistakes/ledger.jsonl) and sealed as automated unit tests in [`eval/unit/`](eval/unit/).
 

@@ -166,13 +166,13 @@ class BhashabidMCPServer:
                 return {"result": "", "error": f"Invalid numeric input '{raw_val}': {str(ve)}"}
 
         elif name == "normalize_text":
-            raw_text = arguments.get("text", "")
+            raw_text = arguments.get("text") or ""
             profile = arguments.get("profile", "bd_standard")
             res = normalize(raw_text, profile=profile)
             return {"result": res}
 
         elif name == "lint_text":
-            raw_text = arguments.get("text", "")
+            raw_text = arguments.get("text") or ""
             check_spelling = arguments.get("check_spelling", False)
             issues = lint_text(raw_text, include_spelling=check_spelling)
             diagnostics = [
@@ -191,7 +191,7 @@ class BhashabidMCPServer:
 
         elif name == "repair_text":
             from ..normalize.repair import repair_text
-            raw_text = arguments.get("text", "")
+            raw_text = arguments.get("text") or ""
             profile = arguments.get("profile", "bd_standard")
             repaired, fixes = repair_text(raw_text, profile=profile)
             return {
@@ -203,7 +203,7 @@ class BhashabidMCPServer:
 
         elif name == "prosody_scan":
             from ..prosody import scan_line, verify_payar
-            raw_text = arguments.get("text", "")
+            raw_text = arguments.get("text") or ""
             metre = arguments.get("metre", "aksharbritta")
             if arguments.get("verify_payar", False):
                 res = verify_payar(raw_text)
@@ -228,9 +228,9 @@ class BhashabidMCPServer:
 
         elif name == "generate_writ_prayer":
             from ..legal import determine_writ_type, generate_writ_prayer, CONSTITUTIONAL_PROVISIONS
-            rem = arguments.get("remedy", "")
-            subj = arguments.get("subject", "")
-            auth = arguments.get("authority", "")
+            rem = arguments.get("remedy") or ""
+            subj = arguments.get("subject") or ""
+            auth = arguments.get("authority") or ""
             wtype = determine_writ_type(rem)
             prayers = generate_writ_prayer(wtype, subj, auth)
             return {
@@ -241,7 +241,7 @@ class BhashabidMCPServer:
 
         elif name == "spellcheck_text":
             from ..normalize.lexicon import get_default_lexicon
-            raw_text = arguments.get("text", "")
+            raw_text = arguments.get("text") or ""
             lex = get_default_lexicon()
             issues = lex.audit_text(raw_text)
             return {
@@ -280,7 +280,10 @@ class BhashabidMCPServer:
                 text = format_deed_schedule(sch)
                 return {"deed_type": "schedule", "schedule_text": text}
             else:
-                raise ValueError(f"Unknown deed_type: {dtype}")
+                return {
+                    "deed_type": dtype,
+                    "error": f"Unknown deed_type '{dtype}'. Allowed: 'saf_kabala', 'encumbrance_free', 'schedule'."
+                }
 
         else:
             raise ValueError(f"Unknown tool: {name}")

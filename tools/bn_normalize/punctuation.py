@@ -57,10 +57,8 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
                 norm_lines.append(line)
         text = "\n".join(norm_lines)
 
-    # 2. Collapse multiple consecutive Daris (।। -> ।)
-    text = re.sub(r"[\u0964]{2,}", DARI, text)
-
-    # 3. Convert ASCII period (.) to Bengali Dari (।) where appropriate
+    # 2. Convert ASCII period (.) to Bengali Dari (।) where appropriate (protecting ellipsis and decimals)
+    text = re.sub(r"\.{3,}", "…", text)
     if convert_period_to_dari and re.search(r"[\u0980-\u09FF]", text):
         # 1. Do not convert if followed by ASCII/Bengali digit (decimals like 3.14, ৩.১৪)
         # 2. Do not convert if between ASCII alphanumeric characters (like site.com, node.js, e.g.)
@@ -79,6 +77,9 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
             return DARI
 
         text = re.sub(r"\.", _replace_period, text)
+
+    # 3. Collapse multiple consecutive Daris (।। -> ।)
+    text = re.sub(r"[\u0964]{2,}", DARI, text)
 
     # Restore protected URLs and email addresses
     for idx, original in enumerate(masked_items):

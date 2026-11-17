@@ -37,12 +37,20 @@ THIRD_PERSON_ORDINARY_TO_HONORIFIC = {
     "গিয়েছিল": "গিয়েছিলেন", "করেছিল": "করেছিলেন", "বলেছিল": "বলেছিলেন",
     "এসেছিল": "এসেছিলেন", "হয়েছিল": "হয়েছিলেন", "দেখেছিল": "দেখেছিলেন",
     "খেয়েছিল": "খেয়েছিলেন", "দিয়েছিল": "দিয়েছিলেন", "নিয়েছিল": "নিয়েছিলেন",
-    "করত": "করতেন", "যেত": "যেতেন", "বলত": "বলতেন", "থাকত": "থাকতেন"
+    "করত": "করতেন", "যেত": "যেতেন", "বলত": "বলতেন", "থাকত": "থাকতেন",
+    "ফিরল": "ফিরলেন", "বসল": "বসলেন", "উঠল": "উঠলেন", "লিখল": "লিখলেন",
+    "পড়ল": "পড়লেন", "ডাকল": "ডাকলেন", "হাসল": "হাসলেন", "শুনল": "শুনলেন",
+    "আনল": "আনলেন", "পাঠাল": "পাঠালেন", "জানাল": "জানালেন", "চাইল": "চাইলেন"
 }
 
 THIRD_PERSON_HONORIFIC_TO_ORDINARY = {
     v: k for k, v in THIRD_PERSON_ORDINARY_TO_HONORIFIC.items()
 }
+
+# Regular productive Bengali honorific inflectional verbal suffixes
+HONORIFIC_FINITE_VERB_PAT = re.compile(
+    r"(?<![\u0980-\u09FF])[\u0980-\u09FF]+?(?:লেন|তেন|বেন|েন|ছেন|ছিলেন|েছেন)(?![\u0980-\u09FF])"
+)
 
 # 1. আপনি + informal verbs
 APNI_CLASH_PAT = re.compile(
@@ -69,14 +77,14 @@ TUI_CLASH_PAT = re.compile(
 TINI_CLASH_PAT = re.compile(
     B_L + r"(তিনি|তাঁরা)" + B_R +
     r"((?:(?!(?:তিনি|তাঁরা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(ছিল|বলল|করল|গেল|খেল|দেখল|নিল|দিল|বলে|করে|যায়|খায়|দেখে|হলো|বলবে|করবে|যাবে|আসে|এলো|আসলো|আসবে|থাকে|থাকবে|হয়েছে|গিয়েছিল|করেছিল|বলেছিল|এসেছিল|হয়েছিল|দেখেছিল|খেয়েছিল|দিয়েছিল|নিয়েছিল|করত|যেত|বলত|থাকত)" + B_R
+    B_L + r"(ছিল|বলল|করল|গেল|খেল|দেখল|নিল|দিল|বলে|করে|যায়|খায়|দেখে|হলো|বলবে|করবে|যাবে|আসে|এলো|আসলো|আসবে|থাকে|থাকবে|হয়েছে|গিয়েছিল|করেছিল|বলেছিল|এসেছিল|হয়েছিল|দেখেছিল|খেয়েছিল|দিয়েছিল|নিয়েছিল|করত|যেত|বলত|থাকত|ফিরল|বসল|উঠল|লিখল|পড়ল|ডাকল|হাসল|শুনল|আনল|পাঠাল|জানাল|চাইল)" + B_R
 )
 
 # 5. সে / তারা + honorific verbs (e.g. সে বললেন -> সে বলল OR তিনি বললেন)
 SE_CLASH_PAT = re.compile(
     B_L + r"(সে|তারা)" + B_R +
     r"((?:(?!(?:সে|তারা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন)" + B_R
+    B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন|ফিরলেন|বসলেন|উঠলেন|লিখলেন|পড়লেন|ডাকলেন|হাসলেন|শুনলেন|আনলেন|পাঠালেন|জানালেন|চাইলেন)" + B_R
 )
 
 # Universal clause boundary marker: subordinate and coordinate conjunctions
@@ -190,14 +198,15 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
                 continue
 
             # Linguistic Guard 3: Non-finite participle in compound or serial verb construction
-            # e.g. 'তিনি বাতিল করে দেন' or 'তিনি বাতিল করে ... বলেন'
+            # e.g. 'তিনি বাতিল করে দেন' or 'তিনি বাতিল করে ... বলেন' or 'তিনি কাজটি শেষ করে বাড়ি ফিরলেন'
             rest_of_clause = line[m_tini.end():]
             if verb in ("করে", "হয়ে", "গিয়ে", "এসে", "দেখে", "বলে"):
-                # Check if an honorific finite verb follows in the same clause
-                if any(
+                # Check if an honorific finite verb follows in the same clause (dictionary or inflectional suffix)
+                has_hon_verb = any(
                     re.search(rf"(?<![\u0980-\u09FF]){hv}(?![\u0980-\u09FF])", rest_of_clause)
                     for hv in THIRD_PERSON_HONORIFIC_TO_ORDINARY.keys()
-                ):
+                ) or bool(HONORIFIC_FINITE_VERB_PAT.search(rest_of_clause))
+                if has_hon_verb:
                     continue
 
             # Linguistic Guard 4: Quotative complementizer 'বলে' followed by reporting predicate

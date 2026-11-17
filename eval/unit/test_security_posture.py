@@ -231,5 +231,25 @@ class TestSecurityPosture(unittest.TestCase):
             sys.stdin = orig_stdin
             sys.stdout = orig_stdout
 
+    def test_mcp_null_inputs_and_invalid_deed_robustness(self):
+        """MCP server must handle null inputs and unknown deed types safely without unhandled crashes."""
+        # 1. Null text inputs
+        res_prosody = self.mcp.call_tool("prosody_scan", {"text": None})
+        self.assertEqual(res_prosody.get("total_morae"), 0)
+
+        res_spell = self.mcp.call_tool("spellcheck_text", {"text": None})
+        self.assertEqual(res_spell.get("issues_count"), 0)
+
+        res_norm = self.mcp.call_tool("normalize_text", {"text": None})
+        self.assertEqual(res_norm.get("result"), "")
+
+        res_lint = self.mcp.call_tool("lint_text", {"text": None})
+        self.assertEqual(res_lint.get("issue_count"), 0)
+
+        # 2. Invalid deed type should return structured error, not crash server
+        res_deed = self.mcp.call_tool("generate_deed_clause", {"deed_type": "malicious_injection_type"})
+        self.assertIn("error", res_deed)
+        self.assertIn("Unknown deed_type", res_deed["error"])
+
 if __name__ == "__main__":
     unittest.main()

@@ -3,6 +3,7 @@ import argparse
 import sys
 import os
 import json
+import importlib
 from pathlib import Path
 
 from .numbers import (
@@ -16,6 +17,24 @@ from .numbers import (
 )
 from .normalize import normalize
 from .lint import lint_text
+
+def _load_dev_module(mod_name: str):
+    """
+    Dynamically loads developer learning-loop tools from the source repository
+    or package if available.
+    """
+    try:
+        return importlib.import_module(f"bhashabid.{mod_name}")
+    except ImportError:
+        repo_root = Path(__file__).resolve().parent.parent
+        if str(repo_root) not in sys.path:
+            sys.path.insert(0, str(repo_root))
+        try:
+            return importlib.import_module(f"tools.{mod_name}")
+        except ImportError as e:
+            raise ImportError(
+                f"Developer module '{mod_name}' is available when running within the source repository or when development tools are present. ({e})"
+            ) from e
 
 def resolve_text_or_file(text_arg: str) -> str:
     if os.path.isfile(text_arg):
@@ -224,7 +243,9 @@ def handle_deed(args):
 
 def handle_review(args):
     try:
-        from .human_reviewer import apply_human_review, list_pending_reviews
+        hr_mod = _load_dev_module("human_reviewer")
+        apply_human_review = hr_mod.apply_human_review
+        list_pending_reviews = hr_mod.list_pending_reviews
         if getattr(args, "list", False):
             pending = list_pending_reviews()
             print("=" * 80)
@@ -261,13 +282,8 @@ def handle_review(args):
 
 def handle_practice(args):
     try:
-        try:
-            from .daily_practice_runner import run_practice_cycle
-        except ImportError:
-            repo_root = Path(__file__).resolve().parent.parent
-            if str(repo_root) not in sys.path:
-                sys.path.insert(0, str(repo_root))
-            from tools.daily_practice_runner import run_practice_cycle
+        pr_mod = _load_dev_module("daily_practice_runner")
+        run_practice_cycle = pr_mod.run_practice_cycle
         run_practice_cycle(
             duration_minutes=args.duration_minutes,
             rounds=args.rounds,
@@ -332,7 +348,8 @@ def handle_status(args):
 
 def handle_distill(args):
     try:
-        from .skill_distiller import run_distillation
+        sd_mod = _load_dev_module("skill_distiller")
+        run_distillation = sd_mod.run_distillation
         run_distillation()
         return 0
     except Exception as e:
@@ -341,8 +358,10 @@ def handle_distill(args):
 
 def handle_synthesize_cards(args):
     try:
-        from .corpus_harvester import CorpusHarvester
-        from .card_synthesizer import CardSynthesizer
+        ch_mod = _load_dev_module("corpus_harvester")
+        cs_mod = _load_dev_module("card_synthesizer")
+        CorpusHarvester = ch_mod.CorpusHarvester
+        CardSynthesizer = cs_mod.CardSynthesizer
         harvester = CorpusHarvester(corpora_dir=getattr(args, "dir", None))
         harvester.harvest_all_sources()
         anomalies = []
@@ -376,11 +395,13 @@ def handle_mcp(args):
 
 def handle_harvest(args):
     try:
-        from .corpus_harvester import CorpusHarvester
+        ch_mod = _load_dev_module("corpus_harvester")
+        CorpusHarvester = ch_mod.CorpusHarvester
         
         # If --scrape is requested, fetch fresh live articles into eval/corpora/inbox/ first
         if getattr(args, "scrape", False):
-            from .autonomous_scraper import AutonomousScraper
+            as_mod = _load_dev_module("autonomous_scraper")
+            AutonomousScraper = as_mod.AutonomousScraper
             scraper = AutonomousScraper()
             scraper.scrape_and_save_to_inbox(max_items_per_feed=3)
 
@@ -444,7 +465,8 @@ def handle_lint(args):
 
 def handle_ledger(args):
     try:
-        from .learning_benchmark_ledger import LearningBenchmarkLedger
+        lbl_mod = _load_dev_module("learning_benchmark_ledger")
+        LearningBenchmarkLedger = lbl_mod.LearningBenchmarkLedger
         ledger = LearningBenchmarkLedger()
         if getattr(args, "report", False):
             path = ledger.export_research_report()
@@ -532,7 +554,7 @@ def main():
     p_writ = subparsers.add_parser("writ", help="Generate Article 102 High Court constitutional writ prayers")
     p_writ.add_argument("--remedy", required=True, help="Remedy sought (e.g. detention, illegal order, public office)")
     p_writ.add_argument("--subject", required=True, help="Subject matter of the grievance")
-    p_writ.add_argument("--authority", default="সংশ্লিষ্ট কর্তৃপক্ষ (Concerned Authority)", help="Respondent authority name (default: সংশ্লিষ্ট কর্তৃপক্ষ)")
+    p_writ.add_argument("--authority", "--respondent", dest="authority", default="সংশ্লিষ্ট কর্তৃপক্ষ (Concerned Authority)", help="Respondent authority name (default: সংশ্লিষ্ট কর্তৃপক্ষ)")
     p_writ.set_defaults(func=handle_writ)
 
     # deed

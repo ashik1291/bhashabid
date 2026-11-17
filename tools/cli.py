@@ -525,7 +525,7 @@ def main():
     p_writ = subparsers.add_parser("writ", help="Generate Article 102 High Court constitutional writ prayers")
     p_writ.add_argument("--remedy", required=True, help="Remedy sought (e.g. detention, illegal order, public office)")
     p_writ.add_argument("--subject", required=True, help="Subject matter of the grievance")
-    p_writ.add_argument("--authority", default="সংশ্লিষ্ট কর্তৃপক্ষ (Concerned Authority)", help="Respondent authority name (default: সংশ্লিষ্ট কর্তৃপক্ষ)")
+    p_writ.add_argument("--authority", "--respondent", dest="authority", default="সংশ্লিষ্ট কর্তৃপক্ষ (Concerned Authority)", help="Respondent authority name (default: সংশ্লিষ্ট কর্তৃপক্ষ)")
     p_writ.set_defaults(func=handle_writ)
 
     # deed

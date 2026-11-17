@@ -204,5 +204,32 @@ class TestBnLint(unittest.TestCase):
         for k in SADHU_MARKERS.keys():
             self.assertEqual(k, k.strip(), f"Guru-chandali key '{k}' has leading/trailing whitespace")
 
+    def test_non_finite_participle_false_positive_elimination(self):
+        # Non-finite participles (করে, দেখে, বলে, গিয়ে) followed by honorific main verbs
+        # must NOT be falsely flagged as concordance errors.
+        valid_sentences = [
+            "তিনি কাজটি শেষ করে বাড়ি ফিরলেন।",
+            "তিনি দৃশ্যটি দেখে হেসে উঠলেন।",
+            "তিনি কথাটি বলে সভায় বসলেন।",
+            "তিনি বাজারে গিয়ে মাছ কিনবেন।",
+            "তিনি চিঠি লিখে ডাকঘরে পাঠালেন।"
+        ]
+        for s in valid_sentences:
+            issues = [i for i in lint_text(s) if "HONORIFIC" in i.rule_id]
+            self.assertEqual(len(issues), 0, f"False positive honorific clash on valid sentence: '{s}'")
+
+    def test_expanded_third_person_concordance(self):
+        # Ordinary verbs outside the hardcoded 36-verb list must be trapped when clashing with তিনি
+        clashing_sentences = [
+            "তিনি বাড়ি ফিরল।",
+            "তিনি চেয়ারে বসল।",
+            "তিনি চিঠি লিখল।",
+            "সে বাড়ি ফিরলেন।",
+            "তারা ডাকলেন।"
+        ]
+        for s in clashing_sentences:
+            issues = [i for i in lint_text(s) if "HONORIFIC" in i.rule_id]
+            self.assertGreater(len(issues), 0, f"Failed to trap honorific clash on: '{s}'")
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,10 +1,13 @@
 # tools/verify_provenance.py
 # Audits knowledge cards against Principle P2 Provenance Integrity
 import os
+import sys
 import glob
 import yaml
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
 
 def audit_provenance() -> dict:
     cards_dir = os.path.join(REPO_ROOT, "knowledge", "cards")

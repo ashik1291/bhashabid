@@ -9,8 +9,8 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 class TestCLI(unittest.TestCase):
 
-    def run_cli(self, args: list[str]) -> tuple[int, str, str]:
-        cmd = [sys.executable, "-m", "tools.cli"] + args
+    def run_cli(self, args: list[str], module: str = "bhashabid.cli") -> tuple[int, str, str]:
+        cmd = [sys.executable, "-m", module] + args
         p = subprocess.run(
             cmd,
             cwd=REPO_ROOT,
@@ -113,6 +113,31 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(code_sch, 0)
         self.assertIn("তফশিল", out_sch)
         self.assertIn("বাড্ডা", out_sch)
+
+    def test_cli_writ_respondent_flag(self):
+        code, out, _ = self.run_cli([
+            "writ", "--remedy", "detention", "--subject", "করিম",
+            "--respondent", "স্বরাষ্ট্র মন্ত্রণালয়"
+        ])
+        self.assertEqual(code, 0)
+        self.assertIn("হেবিয়াস কর্পাস", out)
+        self.assertIn("স্বরাষ্ট্র মন্ত্রণালয়", out)
+
+    def test_cli_review_list_and_ledger(self):
+        code_rev, out_rev, _ = self.run_cli(["review", "--list"])
+        self.assertEqual(code_rev, 0)
+        self.assertIn("PENDING HUMAN REVIEW QUEUE", out_rev)
+
+        code_led, out_led, _ = self.run_cli(["ledger"])
+        self.assertEqual(code_led, 0)
+        self.assertIn("BHASHABID EMPIRICAL LEARNING BENCHMARK LEDGER", out_led)
+
+    def test_cli_tools_package_parity(self):
+        # Verify bhashabid.cli and tools.cli produce identical number word conversions
+        code1, out1, _ = self.run_cli(["number", "99"], module="bhashabid.cli")
+        code2, out2, _ = self.run_cli(["number", "99"], module="tools.cli")
+        self.assertEqual(code1, code2)
+        self.assertEqual(out1, out2)
 
 if __name__ == "__main__":
     unittest.main()
