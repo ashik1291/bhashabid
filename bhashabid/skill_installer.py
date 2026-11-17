@@ -509,8 +509,9 @@ def verify_installation() -> Dict[str, Any]:
                 pass
 
         cursor_active = has_rule and has_refs
+        cur_ref_count = len(list(cur_refs.glob("*.*"))) if has_refs else 0
         cursor_details.append(f"Global Rules: {'✓' if has_rule else '✗'}")
-        cursor_details.append(f"References ({len(list(cur_refs.glob('*.md'))) if has_refs else 0} guides): {'✓' if has_refs else '✗'}")
+        cursor_details.append(f"References ({cur_ref_count} guides & datasets): {'✓' if has_refs else '✗'}")
         cursor_details.append(f"MCP Server: {'✓' if has_mcp else '✗'}")
 
     status["cursor"] = {
@@ -527,6 +528,11 @@ def verify_installation() -> Dict[str, Any]:
         ag_skill2 = home / ".gemini" / "config" / "skills" / "bhashabid" / "SKILL.md"
         has_skill = ag_skill1.exists() or ag_skill2.exists()
 
+        ag_refs1 = home / ".gemini" / "antigravity" / "skills" / "bangla-expert" / "references"
+        ag_refs2 = home / ".gemini" / "config" / "skills" / "bhashabid" / "references"
+        ag_refs = ag_refs2 if ag_refs2.exists() else ag_refs1
+        ag_ref_count = len(list(ag_refs.glob("*.*"))) if ag_refs.exists() else 0
+
         ag_mcp1 = home / ".gemini" / "antigravity" / "mcp_servers.json"
         ag_mcp2 = home / ".gemini" / "config" / "mcp_config.json"
         has_mcp = False
@@ -542,6 +548,7 @@ def verify_installation() -> Dict[str, Any]:
 
         ag_active = has_skill
         ag_details.append(f"Global Skill: {'✓' if has_skill else '✗'}")
+        ag_details.append(f"References ({ag_ref_count} guides & datasets): {'✓' if ag_ref_count > 0 else '✗'}")
         ag_details.append(f"MCP Server: {'✓' if has_mcp else '✗'}")
 
     status["antigravity"] = {
@@ -555,6 +562,9 @@ def verify_installation() -> Dict[str, Any]:
     claude_details = []
     if env_info["claude"]["detected"]:
         cl_skill = home / ".claude" / "skills" / "bangla-expert" / "SKILL.md"
+        cl_refs = home / ".claude" / "skills" / "bangla-expert" / "references"
+        cl_ref_count = len(list(cl_refs.glob("*.*"))) if cl_refs.exists() else 0
+
         claude_cfg = get_claude_desktop_config_path()
         has_skill = cl_skill.exists()
         has_mcp = False
@@ -566,6 +576,7 @@ def verify_installation() -> Dict[str, Any]:
                 pass
         claude_active = has_skill
         claude_details.append(f"Global Skill: {'✓' if has_skill else '✗'}")
+        claude_details.append(f"References ({cl_ref_count} guides & datasets): {'✓' if cl_ref_count > 0 else '✗'}")
         claude_details.append(f"Desktop MCP: {'✓' if has_mcp else '✗'}")
 
     status["claude"] = {
