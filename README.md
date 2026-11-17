@@ -94,8 +94,12 @@ bhashabid status
 ---
 
 ### Option C: Web & Mobile AI Chat (ChatGPT, Gemini Web, Claude Web)
-If you don't use an AI code editor, copy and paste our pre-compiled prompt once into **ChatGPT Custom Instructions**, **Claude Projects**, or **Gemini System Instructions**:
-👉 **[View Standalone Web Instructions (STANDALONE_ALL_IN_ONE.md)](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
+If you don't use an AI code editor or CLI, choose the tier that fits your token budget from our standalone instruction system:
+- ⚡ **Tier 1 (Nano Prompt)**: Ultra-dense (<160 tokens / <1,100 chars), strictly engineered to fit within **ChatGPT's 1,500-character Custom Instructions limit**.
+- 🧩 **Tier 2 (Modular Prompts)**: Plug-and-play domain modules (~350–500 tokens) for Law/Writs, Banking, Admin Petitions, NCTB Pedagogy, Healthcare, Agronomy, and Software.
+- 📚 **Tier 3 (Architectural Reference)**: Full 17-sector taxonomy and 105+ idiom mapping table for large context windows (Claude 200k, Gemini 1M).
+
+👉 **[View Three-Tier Instructions (STANDALONE_ALL_IN_ONE.md)](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
 
 ---
 
@@ -318,11 +322,13 @@ bhashabid-mcp
 - `bhashabid_prosody`: Classical scansion (Dalabritta, Matrabritta, Aksharbritta) and 14-akshar Payar validation.
 - `generate_writ_prayer`: Drafts Article 102 High Court constitutional writ prayers in statutory Bengali.
 
-### 5. Standalone All-In-One Prompt (ChatGPT, Claude Web, Gemini Web, DeepSeek)
-If you are using a web browser interface and cannot install files, copy the single self-contained prompt:
+### 5. Standalone Three-Tier Prompt System (ChatGPT, Claude Web, Gemini Web, DeepSeek)
+If you are using a web browser interface or third-party client and cannot install Python packages, use our three-tier prompt system:
 👉 **[`skills/bangla-expert/STANDALONE_ALL_IN_ONE.md`](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
 
-Paste it into ChatGPT Custom Instructions, Claude System Prompts, or Gemini Gems to immediately eliminate machine-translation calques.
+- **Tier 1 (Nano Prompt)**: Copy and paste directly into **ChatGPT Custom Instructions** (fits cleanly within the 1,500-char limit) or mobile apps.
+- **Tier 2 (Domain Modules)**: Prepend Tier 1 and attach your sector module (Legal, Banking, Petitions, NCTB, Medical, Agriculture, Tech) into Claude Projects or Custom GPTs.
+- **Tier 3 (Full Reference)**: Load the full taxonomy and 105+ idiom mapping table into foundation model system prompts.
 
 ---
 
