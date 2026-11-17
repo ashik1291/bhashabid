@@ -447,6 +447,10 @@ class CardSynthesizer:
                 if is_scraping_noise(matched, raw_context=raw_text):
                     continue
 
+                # Filter out isolated raw-English words/acronyms; individual Latin tokens do not constitute grammatical rules
+                if "RAW-ENGLISH" in rule_id or re.match(r"^[A-Za-z0-9\s,._\-&'/]+$", matched):
+                    continue
+
                 title = f"Candidate Rule for Pattern: {matched[:40]}"
                 
                 # DUPLICATE GUARD CHECK
@@ -527,6 +531,14 @@ class CardSynthesizer:
                     for ex in exemplars:
                         if ex not in goods and len(goods) < 5:
                             goods.append(ex)
+
+                # PRINCIPLE P2 & ANTI-DECEPTION GATE:
+                # A candidate card MUST contain authentic, concrete Bengali positive exemplars (goods)
+                # and negative error contrast (bads). If goods is empty, human reviewers cannot know
+                # what to review or approve, and the card is mathematically guaranteed to be rejected.
+                # Do not pollute the human review queue with ungrounded drafts.
+                if not goods or not bads:
+                    continue
 
                 domain_standards = get_domain_standards(domain)
                 verified_sources = [

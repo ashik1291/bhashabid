@@ -35,6 +35,44 @@ class TestSelfImprovingPipeline(unittest.TestCase):
             self.assertEqual(data["review"]["status"], "PENDING_HUMAN_REVIEW")
             self.assertIn("যত গর্জে তত বর্ষে না", data["good_examples"])
 
+    def test_card_synthesizer_anti_deception_exemplar_gate(self):
+        """Principle P2 & Anti-Deception: Anomalies lacking authentic positive exemplars or consisting of raw-English tokens must never be drafted."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            synth = CardSynthesizer(drafts_dir=tmpdir)
+            
+            # Anomaly 1: Raw English token anomaly
+            raw_eng_anomaly = [{
+                "rule_id": "RULE-ANOMALY-RAW-ENGLISH",
+                "matched": "Dhanvantari",
+                "raw_text": "ভারতের প্রাচীনতম চিকিৎসা পদ্ধতি আয়ুর্বেদ Dhanvantari সম্পর্কে সচেতন করা",
+                "suggestion": "Foreign terminology requires standard Bengali terminology.",
+                "domain": "Healthcare & Medicine"
+            }]
+            created_eng = synth.cluster_and_synthesize_anomalies(raw_eng_anomaly)
+            self.assertEqual(len(created_eng), 0, "Raw English token anomaly must be rejected from drafting")
+
+            # Anomaly 2: Anomaly where suggestion is a meta-instruction without positive exemplars
+            meta_inst_anomaly = [{
+                "rule_id": "RULE-ANOMALY-CALQUE",
+                "matched": "দ্বারা চালিত",
+                "raw_text": "প্রকল্পটি বৈদেশিক অর্থ দ্বারা চালিত।",
+                "suggestion": "প্রমিত বাংলায় স্বাভাবিকভাবে পুনর্লিখন করুন।",
+                "domain": "translation"
+            }]
+            created_meta = synth.cluster_and_synthesize_anomalies(meta_inst_anomaly)
+            self.assertEqual(len(created_meta), 0, "Anomaly lacking positive exemplars must be rejected from drafting")
+
+            # Anomaly 3: Valid anomaly with concrete paired Bengali exemplar
+            valid_anomaly = [{
+                "rule_id": "RULE-ANOMALY-CALQUE",
+                "matched": "অযৌক্তিক কৃত্রিম ক্যাল্ক",
+                "raw_text": "এটি একটি অযৌক্তিক কৃত্রিম ক্যাল্ক বাক্য।",
+                "suggestion": "'এটি একটি সাবলীল প্রমিত বাংলা বাক্য।'",
+                "domain": "translation"
+            }]
+            created_valid = synth.cluster_and_synthesize_anomalies(valid_anomaly)
+            self.assertEqual(len(created_valid), 1, "Anomaly with authentic positive exemplar must be drafted")
+
     def test_skill_distiller_token_budget_verification(self):
         distiller = SkillDistiller()
         self.assertGreater(len(distiller.approved_cards), 0)
