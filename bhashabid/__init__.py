@@ -23,6 +23,7 @@ from .numbers import (
     to_ascii_digits,
     format_date_bangla,
     format_date_bongabdo,
+    gregorian_to_bongabdo,
     BENGALI_MONTHS
 )
 from .prosody import scan_line, verify_payar
@@ -73,6 +74,7 @@ __all__ = [
     "to_ascii_digits",
     "format_date_bangla",
     "format_date_bongabdo",
+    "gregorian_to_bongabdo",
     "BENGALI_MONTHS",
     "scan_line",
     "verify_payar",

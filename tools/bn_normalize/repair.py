@@ -14,8 +14,13 @@ from ..bn_lint.honorifics import (
     SE_CLASH_PAT,
     TUMI_CLASH_PAT,
     APNI_CLASH_PAT,
+    AMI_CLASH_PAT,
+    SECOND_PERSON_FIRST_VERB_PAT,
     FORMAL_TO_FAMILIAR_VERBS,
-    FAMILIAR_TO_FORMAL_VERBS
+    FAMILIAR_TO_FORMAL_VERBS,
+    NON_FIRST_TO_FIRST_VERBS,
+    FIRST_TO_SECOND_FAMILIAR_VERBS,
+    FIRST_TO_SECOND_FORMAL_VERBS
 )
 
 B_L = r"(?<![\u0980-\u09FF])"
@@ -268,5 +273,48 @@ def repair_text(text: str, profile: str = "bd_standard") -> Tuple[str, List[Dict
             "after": new_clause,
             "description": f"Concorded 2nd-person familiar '{subj}' with verb '{fam_verb}'"
         })
+
+    # (e) AMI / AMRA + non-first-person verb -> AMI / AMRA + first-person verb
+    for m in list(AMI_CLASH_PAT.finditer(current_text)):
+        middle = m.group(2)
+        if re.search(r"(?<![\u0980-\u09FF])(?:আপনি|আপনারা|তুমি|তোমরা|তুই|তোরা|তিনি|তাঁরা|সে|তারা|কে|কারা)(?![\u0980-\u09FF])", middle):
+            continue
+        subj = m.group(1)
+        verb = m.group(3)
+        first_verb = NON_FIRST_TO_FIRST_VERBS.get(verb)
+        if first_verb:
+            old_clause = m.group(0)
+            new_clause = f"{subj}{middle}{first_verb}"
+            current_text = current_text.replace(old_clause, new_clause, 1)
+            applied_fixes.append({
+                "category": "PERSON_CONCORDANCE",
+                "before": old_clause,
+                "after": new_clause,
+                "description": f"Concorded 1st-person '{subj}' with verb '{first_verb}'"
+            })
+
+    # (f) TUMI / APNI + first-person verb -> TUMI / APNI + 2nd-person verb
+    for m in list(SECOND_PERSON_FIRST_VERB_PAT.finditer(current_text)):
+        middle = m.group(2)
+        if re.search(r"(?<![\u0980-\u09FF])(?:আমি|আমরা)(?![\u0980-\u09FF])", middle):
+            continue
+        subj = m.group(1)
+        verb = m.group(3)
+        if subj in ("তুমি", "তোমরা"):
+            target_verb = FIRST_TO_SECOND_FAMILIAR_VERBS.get(verb)
+        elif subj in ("আপনি", "আপনারা"):
+            target_verb = FIRST_TO_SECOND_FORMAL_VERBS.get(verb)
+        else:
+            target_verb = None
+        if target_verb:
+            old_clause = m.group(0)
+            new_clause = f"{subj}{middle}{target_verb}"
+            current_text = current_text.replace(old_clause, new_clause, 1)
+            applied_fixes.append({
+                "category": "PERSON_CONCORDANCE",
+                "before": old_clause,
+                "after": new_clause,
+                "description": f"Concorded 2nd-person '{subj}' with verb '{target_verb}'"
+            })
 
     return current_text, applied_fixes

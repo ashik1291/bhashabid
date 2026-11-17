@@ -47,6 +47,32 @@ THIRD_PERSON_HONORIFIC_TO_ORDINARY = {
     v: k for k, v in THIRD_PERSON_ORDINARY_TO_HONORIFIC.items()
 }
 
+# First-person verbal concordances
+NON_FIRST_TO_FIRST_VERBS = {
+    # 2nd/3rd honorific -> 1st person
+    "করবেন": "করব", "বলবেন": "বলব", "যাবেন": "যাব", "খাবেন": "খাব", "দেখবেন": "দেখব",
+    "করলেন": "করলাম", "বললেন": "বললাম", "গেলেন": "গেলাম", "খেলেন": "খেলাম", "দেখলেন": "দেখলাম",
+    "করেন": "করি", "বলেন": "বলি", "যান": "যাই", "খান": "খাই", "দেখেন": "দেখি",
+    "হলেন": "হলাম", "হবেন": "হব", "হোন": "হই",
+    # 3rd ordinary -> 1st person
+    "করল": "করলাম", "বলল": "বললাম", "গেল": "গেলাম", "খেল": "খেলাম", "দেখল": "দেখলাম",
+    "করে": "করি", "বলে": "বলি", "যায়": "যাই", "খায়": "খাই", "দেখে": "দেখি",
+    "করবে": "করব", "বলবে": "বলব", "যাবে": "যাব", "খাবে": "খাব", "দেখবে": "দেখব",
+    "হলো": "হলাম", "হবে": "হব",
+}
+
+FIRST_TO_SECOND_FAMILIAR_VERBS = {
+    "করলাম": "করলে", "বললাম": "বললে", "গেলাম": "গেলে", "খেলাম": "খেলে", "দেখলাম": "দেখলে",
+    "করব": "করবে", "বলব": "বলবে", "যাব": "যাবে", "খাব": "খাবে", "দেখব": "দেখবে",
+    "করি": "করো", "বলি": "বলো", "যাই": "যাও", "খাই": "খাও", "দেখি": "দেখো"
+}
+
+FIRST_TO_SECOND_FORMAL_VERBS = {
+    "করলাম": "করলেন", "বললাম": "বললেন", "গেলাম": "গেলেন", "খেলাম": "খেলেন", "দেখলাম": "দেখলেন",
+    "করব": "করবেন", "বলব": "বলবেন", "যাব": "যাবেন", "খাব": "খাবেন", "দেখব": "দেখবেন",
+    "করি": "করেন", "বলি": "বলেন", "যাই": "যান", "খাই": "খান", "দেখি": "দেখেন"
+}
+
 # Regular productive Bengali honorific inflectional verbal suffixes
 HONORIFIC_FINITE_VERB_PAT = re.compile(
     r"(?<![\u0980-\u09FF])[\u0980-\u09FF]+?(?:লেন|তেন|বেন|েন|ছেন|ছিলেন|েছেন)(?![\u0980-\u09FF])"
@@ -85,6 +111,28 @@ SE_CLASH_PAT = re.compile(
     B_L + r"(সে|তারা)" + B_R +
     r"((?:(?!(?:সে|তারা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
     B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন|ফিরলেন|বসলেন|উঠলেন|লিখলেন|পড়লেন|ডাকলেন|হাসলেন|শুনলেন|আনলেন|পাঠালেন|জানালেন|চাইলেন)" + B_R
+)
+
+# 6. আমি / আমরা + non-first-person verbs (e.g. আমি করবেন না -> আমি করব না)
+AMI_CLASH_PAT = re.compile(
+    B_L + r"(আমি|আমরা)" + B_R +
+    r"((?:(?!(?:আমি|আমরা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
+    B_L + r"(করবেন|বলবেন|যাবেন|খাবেন|দেখবেন|নেবেন|দেবেন|আসবেন|থাকবেন|হবেন|"
+          r"করলেন|বললেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|এলেন|আসলেন|থাকলেন|হলেন|"
+          r"করেন|বলেন|যান|খান|দেখেন|নেন|দেন|আসেন|থাকেন|হোন|"
+          r"করতেন|বলতেন|যেতেন|খেতেন|দেখতেন|থাকতেন|"
+          r"করল|বলল|গেল|খেল|দেখল|নিল|দিল|এলো|আসলো|হলো|থাকল|"
+          r"করবে|বলবে|যাবে|খাবে|দেখবে|নেবে|দেবে|আসবে|থাকবে|হবে|"
+          r"করিস|বলিস|যাবি|খাস|দেখিস|নিস|দিস|আসিস)" + B_R
+)
+
+# 7. Second-person pronouns + first-person verbs (e.g. তুমি কাজটি করলাম -> তুমি কাজটি করলে)
+SECOND_PERSON_FIRST_VERB_PAT = re.compile(
+    B_L + r"(আপনি|আপনারা|তুমি|তোমরা|তুই|তোরা)" + B_R +
+    r"((?:(?!(?:আপনি|আপনারা|তুমি|তোমরা|তুই|তোরা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
+    B_L + r"(করলাম|বললাম|গেলাম|খেলাম|দেখলাম|নিলাম|দিলাম|হলাম|থাকলাম|"
+          r"করব|বলব|যাব|খাব|দেখব|নেব|দেব|হব|থাকব|"
+          r"করতাম|বলতাম|যেতাম|খেতাম|দেখতাম|থাকতাম)" + B_R
 )
 
 # Universal clause boundary marker: subordinate and coordinate conjunctions
@@ -258,6 +306,69 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
                 message=f"তৃতীয় পুরুষ সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (সাধারণ) এর সাথে সম্ভ্রমাত্মক ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
                 line=line_idx,
                 col=m_se.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion=suggestion
+            ))
+
+        # 6. Check আমি / আমরা clash (1st person pronoun + 2nd/3rd person verb)
+        for m_ami in AMI_CLASH_PAT.finditer(line):
+            subj = m_ami.group(1)
+            middle = m_ami.group(2)
+            verb = m_ami.group(3)
+            matched = m_ami.group(0)
+
+            # Linguistic Guard: Cross-clause boundary
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            # Guard: Intervening subject pronoun (e.g. আমি জানি আপনি আসবেন)
+            if re.search(r"(?<![\u0980-\u09FF])(?:আপনি|আপনারা|তুমি|তোমরা|তুই|তোরা|তিনি|তাঁরা|সে|তারা|কে|কারা)(?![\u0980-\u09FF])", middle):
+                continue
+
+            first_verb = NON_FIRST_TO_FIRST_VERBS.get(verb)
+            if first_verb:
+                suggestion = f"উত্তম পুরুষের ক্রিয়াপদ প্রয়োগ করুন: '{subj}{middle}{first_verb}'"
+            else:
+                suggestion = "উত্তম পুরুষের সঙ্গতিপূর্ণ ক্রিয়াপদ প্রয়োগ করুন।"
+
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-PERSON-AMI",
+                message=f"পুরুষ ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (উত্তম পুরুষ) এর সাথে বেমানান ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_ami.start() + 1,
+                severity=LintSeverity.ERROR,
+                matched_text=matched,
+                suggestion=suggestion
+            ))
+
+        # 7. Check 2nd person pronoun + 1st person verb (e.g. তুমি কাজটি করলাম)
+        for m_sec in SECOND_PERSON_FIRST_VERB_PAT.finditer(line):
+            subj = m_sec.group(1)
+            middle = m_sec.group(2)
+            verb = m_sec.group(3)
+            matched = m_sec.group(0)
+
+            if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            if re.search(r"(?<![\u0980-\u09FF])(?:আমি|আমরা)(?![\u0980-\u09FF])", middle):
+                continue
+
+            if subj in ("তুমি", "তোমরা"):
+                cor_verb = FIRST_TO_SECOND_FAMILIAR_VERBS.get(verb, "করবে/করলে")
+            elif subj in ("আপনি", "আপনারা"):
+                cor_verb = FIRST_TO_SECOND_FORMAL_VERBS.get(verb, "করবেন/করলেন")
+            else:
+                cor_verb = "করবি/করলি"
+
+            suggestion = f"মধ্যম পুরুষের ক্রিয়াপদ প্রয়োগ করুন: '{subj}{middle}{cor_verb}'"
+
+            issues.append(LintIssue(
+                rule_id="RULE-LINT-PERSON-TUMI",
+                message=f"পুরুষ ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (মধ্যম পুরুষ) এর সাথে উত্তম পুরুষের ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
+                line=line_idx,
+                col=m_sec.start() + 1,
                 severity=LintSeverity.ERROR,
                 matched_text=matched,
                 suggestion=suggestion

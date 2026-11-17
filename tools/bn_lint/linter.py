@@ -2,6 +2,7 @@ from .models import LintIssue, LintSeverity
 from .guru_chandali import check_guru_chandali
 from .honorifics import check_honorific_clash
 from .calques import check_calques
+from .grammar import check_grammar_defects
 from .spelling import check_spelling
 from ..bn_normalize.unicode import canonicalize_unicode
 
@@ -13,9 +14,10 @@ def lint_text(
     """
     Scans Bengali text for linguistic errors:
     1. Sadhu-Cholito mixing (Guru-chandali dosh).
-    2. Pronoun-verb honorific clashes (আপনি/তুমি/তুই/তিনি/সে).
-    3. English literal calques and awkward passive voice.
-    4. Optional offline phonetic spelling mistakes (if include_spelling=True).
+    2. Pronoun-verb honorific and person clashes (আমি/আপনি/তুমি/তুই/তিনি/সে).
+    3. Grammatical defects (double plurals, pleonasms, affix errors, sandhi).
+    4. English literal calques and awkward passive voice.
+    5. Optional offline phonetic spelling mistakes (if include_spelling=True).
     Respects dialect profile ('bd_standard' or 'wb_standard').
     """
     if not text:
@@ -25,6 +27,7 @@ def lint_text(
     issues = []
     issues.extend(check_guru_chandali(text))
     issues.extend(check_honorific_clash(text))
+    issues.extend(check_grammar_defects(text))
     issues.extend(check_calques(text, profile=profile))
 
     if include_spelling:

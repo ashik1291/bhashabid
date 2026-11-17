@@ -66,6 +66,37 @@ class TestRepairEngine(unittest.TestCase):
         self.assertIn("তুমি সিদ্ধান্ত নাও", repaired_tumi)
         self.assertTrue(any(f["category"] == "HONORIFIC_CONCORDANCE" for f in fixes_tumi))
 
+    def test_first_person_concordance_repair(self):
+        # Ami (1st person) + honorific verb -> Ami + 1st person verb
+        raw_ami = "আমি কাজটি করবেন না।"
+        repaired_ami, fixes_ami = repair_text(raw_ami)
+        self.assertIn("আমি কাজটি করব না।", repaired_ami)
+        self.assertTrue(any(f["category"] == "PERSON_CONCORDANCE" for f in fixes_ami))
+        self.assertEqual(len(lint_text(repaired_ami)), 0)
+
+        # Tumi + 1st person verb -> Tumi + 2nd person verb
+        raw_tumi = "তুমি কাজটি করলাম।"
+        repaired_tumi, fixes_tumi = repair_text(raw_tumi)
+        self.assertIn("তুমি কাজটি করলে।", repaired_tumi)
+        self.assertTrue(any(f["category"] == "PERSON_CONCORDANCE" for f in fixes_tumi))
+        self.assertEqual(len(lint_text(repaired_tumi)), 0)
+
+    def test_grammar_defect_repairs(self):
+        # Double plurals
+        repaired_dp, _ = repair_text("সব ছাত্রগণ ক্লাসে উপস্থিত ছিল।")
+        self.assertEqual(repaired_dp, "সব ছাত্র ক্লাসে উপস্থিত ছিল।")
+        self.assertEqual(len(lint_text(repaired_dp)), 0)
+
+        # Pleonasm
+        repaired_pl, _ = repair_text("তিনি প্রায়শই বিলম্ব করেন।")
+        self.assertEqual(repaired_pl, "তিনি প্রায়শ বিলম্ব করেন।")
+        self.assertEqual(len(lint_text(repaired_pl)), 0)
+
+        # Affix defect
+        repaired_affix, _ = repair_text("তারা একত্রিত হয়ে সিদ্ধান্ত নিল।")
+        self.assertEqual(repaired_affix, "তারা একত্র হয়ে সিদ্ধান্ত নিল।")
+        self.assertEqual(len(lint_text(repaired_affix)), 0)
+
     def test_idempotence_and_clean_text(self):
         clean_text = "তিনি প্রতিদিন সকালে বিদ্যালয়ে যান এবং পাঠদান করেন।"
         repaired, fixes = repair_text(clean_text)

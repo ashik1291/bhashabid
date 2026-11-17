@@ -231,5 +231,49 @@ class TestBnLint(unittest.TestCase):
             issues = [i for i in lint_text(s) if "HONORIFIC" in i.rule_id]
             self.assertGreater(len(issues), 0, f"Failed to trap honorific clash on: '{s}'")
 
+    def test_first_person_concordance_ami(self):
+        # 1st person subject with 2nd/3rd person verb must be caught
+        clashing_sentences = [
+            ("আমি কাজটি করবেন না।", "RULE-LINT-PERSON-AMI"),
+            ("আমরা গতকাল ঢাকা গেলেন।", "RULE-LINT-PERSON-AMI"),
+            ("আমি ভাত খেলেন।", "RULE-LINT-PERSON-AMI"),
+            ("তুমি কাজটি করলাম।", "RULE-LINT-PERSON-TUMI"),
+            ("আপনি ভাত খেলাম।", "RULE-LINT-PERSON-TUMI")
+        ]
+        for s, expected_rule in clashing_sentences:
+            issues = [i for i in lint_text(s) if "PERSON" in i.rule_id]
+            self.assertGreater(len(issues), 0, f"Failed to trap person clash on: '{s}'")
+            self.assertEqual(issues[0].rule_id, expected_rule)
+
+        # Complex sentence with intervening pronoun or clause boundary must NOT false positive
+        safe_sentences = [
+            "আমি জানি তিনি আসবেন।",
+            "আমি বাজারে যাব কিন্তু তিনি যাবেন না।",
+            "আমি চাই আপনি কাজটি করবেন।"
+        ]
+        for s in safe_sentences:
+            issues = [i for i in lint_text(s) if "PERSON" in i.rule_id]
+            self.assertEqual(len(issues), 0, f"False positive person clash on safe sentence: '{s}'")
+
+    def test_grammar_defects_detection(self):
+        # Double plurals
+        issues_dp1 = lint_text("সব ছাত্রগণ ক্লাসে উপস্থিত ছিল।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-DOUBLE-PLURAL" for i in issues_dp1))
+
+        issues_dp2 = lint_text("সকল সদস্যবৃন্দ সভায় এসেছিলেন।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-DOUBLE-PLURAL" for i in issues_dp2))
+
+        # Pleonasm
+        issues_pleonasm = lint_text("তিনি প্রায়শই বিলম্ব করেন।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-PLEONASM" for i in issues_pleonasm))
+
+        # Affix defect
+        issues_affix = lint_text("তারা একত্রিত হয়ে সিদ্ধান্ত নিল।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-AFFIX" for i in issues_affix))
+
+        # Sandhi defect
+        issues_sandhi = lint_text("উপরি-উক্ত বিষয়ের পরিবর্তে উপরোক্ত লিখল।")
+        self.assertTrue(any(i.rule_id == "RULE-GRAMMAR-SANDHI" for i in issues_sandhi))
+
 if __name__ == "__main__":
     unittest.main()

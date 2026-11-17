@@ -9,6 +9,8 @@ from .unicode import canonicalize_unicode
 BENGALI_CONFUSION_PAIRS = [
     ({'ি', 'ী'}, 1),
     ({'ু', 'ূ'}, 1),
+    ({'ই', 'ঈ'}, 1),
+    ({'উ', 'ঊ'}, 1),
     ({'শ', 'ষ', 'স'}, 1),
     ({'ন', 'ণ'}, 1),
     ({'র', 'ড়', 'ঢ়'}, 1),

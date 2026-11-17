@@ -18,6 +18,8 @@ from tools.bn_numbers import (
     fraction_to_bangla_words,
     format_currency_words,
     format_date_bangla,
+    format_date_bongabdo,
+    gregorian_to_bongabdo,
     to_classical_ordinal,
     to_date_ordinal
 )
@@ -134,9 +136,22 @@ class TestBnNumbers(unittest.TestCase):
         self.assertEqual(format_date_bangla(1971, 12, 16), "১৬ই ডিসেম্বর, ১৯৭১")
 
     def test_bongabdo_date_formatting(self):
-        from tools.bn_numbers.dates import format_date_bongabdo
+        # Native Bangabda year formatting
         self.assertEqual(format_date_bongabdo(1433, 1, 1), "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
         self.assertEqual(format_date_bongabdo(1378, 9, 1), "১লা পৌষ, ১৩৭৮ বঙ্গাব্দ")
+
+    def test_gregorian_to_bongabdo_conversion(self):
+        # Pahela Baishakh
+        self.assertEqual(gregorian_to_bongabdo(2026, 4, 14), (1433, 1, 1))
+        self.assertEqual(format_date_bongabdo(2026, 4, 14), "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ")
+
+        # Last day of Chaitra
+        self.assertEqual(gregorian_to_bongabdo(2026, 4, 13), (1432, 12, 30))
+        self.assertEqual(format_date_bongabdo(2026, 4, 13), "৩০শে চৈত্র, ১৪৩২ বঙ্গাব্দ")
+
+        # Ekushey February
+        self.assertEqual(gregorian_to_bongabdo(2026, 2, 21), (1432, 11, 8))
+        self.assertEqual(format_date_bongabdo(2026, 2, 21), "৮ই ফাল্গুন, ১৪৩২ বঙ্গাব্দ")
 
 if __name__ == "__main__":
     unittest.main()

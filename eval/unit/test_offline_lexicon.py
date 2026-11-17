@@ -23,6 +23,12 @@ class TestBengaliOfflineLexicon(unittest.TestCase):
         dist_vowel_different = bengali_edit_distance("পাখা", "পাখি")
         self.assertLessEqual(dist_vowel_homophone, dist_vowel_different)
 
+        # Independent vowel homophones (ই vs ঈ, উ vs ঊ) should have distance 1.0
+        dist_init_vowel = bengali_edit_distance("ইতিমধ্যে", "ঈতিমধ্যে")
+        dist_init_different = bengali_edit_distance("ইতিমধ্যে", "অতিমধ্যে")
+        self.assertEqual(dist_init_vowel, 1.0)
+        self.assertLess(dist_init_vowel, dist_init_different)
+
     def test_known_and_unknown_words(self):
         self.assertTrue(self.lex.is_known("বাংলাদেশ"))
         self.assertTrue(self.lex.is_known("মনোযোগ"))
