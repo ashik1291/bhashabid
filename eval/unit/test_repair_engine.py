@@ -191,6 +191,24 @@ class TestRepairEngine(unittest.TestCase):
         issues = lint_text(literal_cake)
         self.assertTrue(any("কেকের টুকরো" in i.matched_text for i in issues))
 
+    def test_contextual_idiom_calque_repairs(self):
+        # 1. Non-literal context repaired
+        raw_idiom = "এই কাজটা কোনো কেকের টুকরো নয়।"
+        repaired, _ = repair_text(raw_idiom)
+        self.assertEqual(repaired, "এই কাজটা কোনো সহজ কাজ নয়।")
+        self.assertEqual(len(lint_text(repaired)), 0)
+
+        # 2. Literal food preserved untouched
+        raw_literal = "টেবিলে একটি কেকের টুকরো আছে।"
+        repaired_lit, _ = repair_text(raw_literal)
+        self.assertEqual(repaired_lit, raw_literal)
+
+        # 3. Bad workman proverb repaired
+        raw_workman = "দিনের শেষে, একজন খারাপ কর্মী তার সরঞ্জামকে দোষ দেয়।"
+        repaired_wm, _ = repair_text(raw_workman)
+        self.assertIn("নাচতে না জানলে উঠান বাঁকা", repaired_wm)
+        self.assertEqual(len(lint_text(repaired_wm)), 0)
+
     def test_mcp_server_repair_tool(self):
         server = BhashabidMCPServer()
         res = server.call_tool(

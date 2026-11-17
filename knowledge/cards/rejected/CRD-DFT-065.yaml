@@ -1,0 +1,32 @@
+id: CRD-DFT-065
+title: 'Candidate Rule for Pattern: Login'
+domain: Education & NCTB Pedagogy
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Login' requires standard
+  Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- 'মঙ্গলবার, ১৭ নভেম্বর ২০২৬ Login বন্ধুদের লেখা কার্যক্রম ফিচার খেলা ক্যারিয়ার মনোবন্ধু
+  ফটো ফিচার বন্ধুসভা সম্পর্কে ফিচার এসো মিলি জলধারায় ২.০ গারো পাহাড়ের পাদদেশ থেকে
+  নদীর বুকে লেখা: নাঈম মিয়া প্রকাশ: ১৭ নভেম্বর ২০২৬, ১১: ০০ গারো পাহাড়ের পাদদেশে বেড়ে
+  ওঠা আমাদের কাছে নদীর বুকে এমন নৌবিহার খুব একটা পরিচিত অভিজ্ঞতা নয় ছবি: লেখকের সৌজন্যে
+  আগের দিন থেকেই মনের মধ্যে অন্য রকম একটা আনন্দ ও উত্তেজনা কাজ করছিল'
+common_llm_error: LLMs emit unadapted English terminology 'Login' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Prothom Alo (Education & Pedagogy)'
+- Principle P2 Human Provenance Audit Gate
+- National Curriculum and Textbook Board (NCTB) Standard Bengali
+- Ministry of Education Pedagogical Guidelines
+confidence: rejected
+created_date: '2026-11-17'
+last_modified: '2026-11-17'
+review:
+  reviewer_name: Bhashabid Autonomous Anti-Deception Gate (Principle P2)
+  reviewer_affiliation: Automated Exemplar Completeness & Linguistic Viability Filter
+  reviewed_date: '2026-11-17'
+  status: REJECTED
+  notes: 'Auto-rejected by Principle P2 Quality Gate: isolated foreign token / scraping
+    artifact; does not represent a generalizable grammatical invariant. Preserved
+    in negative learning memory to prevent re-synthesis.'
+  signature_hash: sha256:6d8eefd8e57a3d95

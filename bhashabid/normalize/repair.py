@@ -61,7 +61,15 @@ CANONICAL_CALQUE_REPAIRS = [
     (re.compile(B_L + r"পোকা\s+মারার\s+ওষুধ" + B_R), "বালাইনাশক"),
     (re.compile(B_L + r"পরাজয়\s+স্বীকার\s+করেছে" + B_R), "পরাজিত হয়েছে"),
     # Best practice calque naturalization
-    (re.compile(B_L + r"সর্বোত্তম\s+অনুশীলন(?:গুলো|সমূহ|গুলা)?" + B_R), "সর্বোত্তম চর্চা")
+    (re.compile(B_L + r"সর্বোত্তম\s+অনুশীলন(?:গুলো|সমূহ|গুলা)?" + B_R), "সর্বোত্তম চর্চা"),
+    # Contextually unambiguous idiom calque naturalizations (safeguards literal food & physical actions)
+    (re.compile(B_L + r"কাজ(?:টি|টা)?\s+(?:কোনো\s+)?কেকের\s+টুকরো\s+নয়" + B_R), "কাজটা কোনো সহজ কাজ নয়"),
+    (re.compile(B_L + r"(?:সবসময়\s+)?ঝোপের\s+চারপাশে\s+পেটাচ্ছেন" + B_R), "ঘুরিয়ে-পেঁচিয়ে কথা বলছেন"),
+    (re.compile(B_L + r"খারাপ\s+কর্মী\s+তার\s+সরঞ্জামকে\s+দোষ\s+দেয়" + B_R), "নাচতে না জানলে উঠান বাঁকা"),
+    (re.compile(B_L + r"হৃৎপিণ্ড\s+পাথরে\s+পরিণত\s+হয়েছিল" + B_R), "হৃদয় পাষাণ হয়েছিল"),
+    (re.compile(B_L + r"ঘেউ\s+ঘেউ\s+করা\s+কুকুর\s+কদাচিৎ\s+কামড়ায়" + B_R), "যত গর্জে তত বর্ষে না"),
+    (re.compile(B_L + r"অধিক\s+রাঁধুনি\s+ঝোল\s+নষ্ট\s+করে" + B_R), "অধিক সন্ন্যাসীতে গাজন নষ্ট"),
+    (re.compile(B_L + r"একটি\s+পাথর\s+দিয়ে\s+দুটি\s+পাখি\s+মারা" + B_R), "এক ঢিলে দুই পাখি মারা")
 ]
 
 # Deterministic grammatical pleonasms and ungrammatical affix repairs (অপপ্রয়োগ ও বাহুল্য বর্জন)
