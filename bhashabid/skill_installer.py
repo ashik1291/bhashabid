@@ -462,9 +462,11 @@ def uninstall_skill(target: str = "all", workspace_dir: str = None, with_mcp: bo
             except Exception:
                 pass
 
-    if (workspace / ".cursor" / "bangla-references").exists():
-        shutil.rmtree(workspace / ".cursor" / "bangla-references", ignore_errors=True)
-        removed_paths.append(f"Workspace References: {workspace / '.cursor' / 'bangla-references'}")
+    target_cursor_refs = (workspace / ".cursor" / "bangla-references").resolve()
+    # Guard: Ensure we only delete the isolated references folder, never the workspace root
+    if target_cursor_refs.exists() and target_cursor_refs.name == "bangla-references":
+        shutil.rmtree(target_cursor_refs, ignore_errors=True)
+        removed_paths.append(f"Workspace References: {target_cursor_refs}")
 
     msg = ""
     if removed_paths:

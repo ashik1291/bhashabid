@@ -1,0 +1,7 @@
+{
+  "scanner": "NVIDIA SkillSpector Rules Engine",
+  "scanned_files": 468,
+  "yara_findings": [],
+  "static_findings": [],
+  "verdict": "CLEAN"
+}
