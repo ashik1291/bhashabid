@@ -1,29 +1,29 @@
 {
   "version": "1.0.0",
   "first_initialized": "2026-11-12T16:22:27.685447",
-  "last_updated": "2026-11-18T08:27:39.434035",
-  "cumulative_practice_sessions": 40,
-  "cumulative_rounds_completed": 5406,
-  "cumulative_sentences_practiced": 557622,
-  "cumulative_checks_evaluated": 831108,
-  "cumulative_flaws_trapped": 100976,
-  "cumulative_fresh_batches_ingested": 1404,
+  "last_updated": "2026-11-18T09:48:10.212949",
+  "cumulative_practice_sessions": 41,
+  "cumulative_rounds_completed": 5475,
+  "cumulative_sentences_practiced": 566598,
+  "cumulative_checks_evaluated": 843948,
+  "cumulative_flaws_trapped": 101706,
+  "cumulative_fresh_batches_ingested": 1427,
   "sector_sentence_distribution": {
-    "Constitutional Law & Writs": 43541,
-    "Macroeconomics & Banking": 74114,
-    "Healthcare & Epidemiology": 40439,
-    "Administrative Governance & Memos": 60941,
-    "Creative Fiction & Dialogue": 50405,
-    "Classical Poetry & Prosody": 36172,
-    "Academic Research & Methodology": 40356,
-    "Land Registry & Deeds": 32343,
-    "Agronomy & Disaster Management": 55921,
-    "ICT & Software Engineering": 43468,
-    "Education & NCTB Pedagogy": 40358,
-    "Consumer E-Commerce & Retail Logistics": 10036,
-    "Customer Support & Conversational Chat": 10040,
-    "Mass Media & Digital Journalism": 9924,
-    "Translation & Calque Naturalization": 9564
+    "Constitutional Law & Writs": 44129,
+    "Macroeconomics & Banking": 75494,
+    "Healthcare & Epidemiology": 41006,
+    "Administrative Governance & Memos": 62048,
+    "Creative Fiction & Dialogue": 50960,
+    "Classical Poetry & Prosody": 36718,
+    "Academic Research & Methodology": 40920,
+    "Land Registry & Deeds": 32916,
+    "Agronomy & Disaster Management": 56761,
+    "ICT & Software Engineering": 44023,
+    "Education & NCTB Pedagogy": 40925,
+    "Consumer E-Commerce & Retail Logistics": 10324,
+    "Customer Support & Conversational Chat": 10328,
+    "Mass Media & Digital Journalism": 10200,
+    "Translation & Calque Naturalization": 9846
   },
   "confidence_milestones": [
     {
@@ -12661,6 +12661,213 @@
       "batch_size": 132,
       "status": "CONFIDENT_BATCH_MASTERED",
       "new_batch_ingested": "scraped_batch_2026_11_18_072954.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:17:45.141684",
+      "round": 3,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_091744.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:19:07.386044",
+      "round": 6,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_091907.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:20:31.935117",
+      "round": 9,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092031.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:21:18.745974",
+      "round": 12,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092118.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:22:20.317544",
+      "round": 15,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092219.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:23:21.496243",
+      "round": 18,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092321.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:24:33.311739",
+      "round": 21,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092432.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:26:08.201780",
+      "round": 24,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092607.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:27:39.684321",
+      "round": 27,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092739.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:29:00.485132",
+      "round": 30,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_092900.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:30:20.358061",
+      "round": 33,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093019.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:31:42.275743",
+      "round": 36,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093141.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:33:03.595765",
+      "round": 39,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093303.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:34:24.501565",
+      "round": 42,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093424.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:35:45.369769",
+      "round": 45,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093544.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:37:10.615119",
+      "round": 48,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093710.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:38:38.833020",
+      "round": 51,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_093838.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:40:06.342472",
+      "round": 54,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_094005.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:41:33.280911",
+      "round": 57,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_094132.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:42:58.115829",
+      "round": 60,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_094257.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:44:25.877831",
+      "round": 63,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_094425.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:45:52.209007",
+      "round": 66,
+      "saturation_score": 1.0,
+      "clean_precision": 1.0,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_094551.jsonl"
+    },
+    {
+      "timestamp": "2026-11-18T09:47:13.680010",
+      "round": 69,
+      "saturation_score": 0.9844,
+      "clean_precision": 0.9844,
+      "batch_size": 128,
+      "status": "CONFIDENT_BATCH_MASTERED",
+      "new_batch_ingested": "scraped_batch_2026_11_18_094713.jsonl"
     }
   ]
 }

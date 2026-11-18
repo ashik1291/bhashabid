@@ -1,0 +1,30 @@
+id: CRD-DFT-067
+title: 'Candidate Rule for Pattern: PWSBH'
+domain: MFS, Microfinance & Grassroots FinTech
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'PWSBH' requires standard
+  Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- PWSBH মুসলমানদের হজ ( মক্কায় তীর্থযাত্রার) খরচ বাঁচানোর জন্য একটি সংস্থা হিসাবে
+  প্রতিষ্ঠিত হয়েছিল
+common_llm_error: LLMs emit unadapted English terminology 'PWSBH' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: Bangla Wikipedia Banking & Grassroots Finance'
+- Principle P2 Human Provenance Audit Gate
+- Bangladesh Bank Payment Systems Department (PSD) MFS Guidelines
+- Microcredit Regulatory Authority (MRA) Rules & Standards
+- Anti-Money Laundering & Financial Fraud Prevention Protocols
+confidence: rejected
+created_date: '2026-11-18'
+last_modified: '2026-11-18'
+review:
+  reviewer_name: Bhashabid Autonomous Anti-Deception Gate (Principle P2)
+  reviewer_affiliation: Automated Exemplar Completeness & Linguistic Viability Filter
+  reviewed_date: '2026-11-18'
+  status: REJECTED
+  notes: 'Auto-rejected by Principle P2 Quality Gate: isolated foreign token / scraping
+    artifact; does not represent a generalizable grammatical invariant. Preserved
+    in negative learning memory to prevent re-synthesis.'
+  signature_hash: sha256:33e848feedae228e
