@@ -1,0 +1,28 @@
+id: CRD-DFT-066
+title: 'Candidate Rule for Pattern: Google'
+domain: Healthcare & Medicine
+profile: bd_standard
+register: formal
+rule_summary: Foreign terminology or unquoted Latin-script word 'Google' requires
+  standard Bengali terminology or phonetic transliteration with English in parentheses.
+good_examples: []
+bad_examples:
+- এই নিবন্ধে Google YouTubeএর কনটেন্ট রয়েছে
+common_llm_error: LLMs emit unadapted English terminology 'Google' in Bengali contexts.
+sources:
+- 'Corpus Harvest Provenance: BBC News Bangla (Healthcare & Science)'
+- Principle P2 Human Provenance Audit Gate
+- Bangla Academy Medical Science Dictionary (চিকিৎসাবিজ্ঞান পরিভাষা)
+- Directorate General of Health Services (DGHS) Bangladesh
+confidence: rejected
+created_date: '2026-11-18'
+last_modified: '2026-11-18'
+review:
+  reviewer_name: Bhashabid Autonomous Anti-Deception Gate (Principle P2)
+  reviewer_affiliation: Automated Exemplar Completeness & Linguistic Viability Filter
+  reviewed_date: '2026-11-18'
+  status: REJECTED
+  notes: 'Auto-rejected by Principle P2 Quality Gate: isolated foreign token / scraping
+    artifact; does not represent a generalizable grammatical invariant. Preserved
+    in negative learning memory to prevent re-synthesis.'
+  signature_hash: sha256:bea524e3e86f2e52
