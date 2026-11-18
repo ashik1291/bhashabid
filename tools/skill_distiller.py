@@ -21,12 +21,12 @@ REFERENCES_DIR = os.path.join(SKILLS_DIR, "references")
 CURSORRULES_PATH = os.path.join(REPO_ROOT, "adapters", "cursor", ".cursorrules")
 STANDALONE_PATH = os.path.join(SKILLS_DIR, "STANDALONE_ALL_IN_ONE.md")
 
-MAX_CORE_TOKEN_BUDGET = 390
+MAX_CORE_TOKEN_BUDGET = 750  # BPE cl100k token budget (approx 390 multilingual words)
 
 class SkillDistiller:
     """
     Distills validated, human-approved Knowledge Cards into progressive skill layers.
-    Maintains strict token budgets (< 390 tokens) on root rules while updating
+    Maintains strict token budgets (< 750 BPE tokens) on root rules while updating
     deep domain reference guides.
     """
 
