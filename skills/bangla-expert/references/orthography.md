@@ -40,3 +40,8 @@
 - Format currency amounts and standalone large quantities using standard South Asian comma grouping:
   - Correct: ১২,৩৪,৫৬৭ টাকা (or 12,34,567 taka)
   - Decimals use dot: ৩.১৪ শতাংশ (never ৩।১৪)
+
+## 6. Homophone & Chandrabindu Disambiguation (সমোচ্চারিত শব্দ ও চন্দ্রবিন্দু)
+- **কাচ বনাম কাঁচা**:
+  - `কাচ` (Glass, কাচের টুকরো, কাচপাত্র, আতশ কাচ — বাংলা একাডেমি নিয়মে চন্দ্রবিন্দু সম্পূর্ণ বর্জনীয়)।
+  - `কাঁচা` (Unripe/Raw, কাঁচা আম, কাঁচকলা, কাঁচা রাস্তা — চন্দ্রবিন্দুযুক্ত)।

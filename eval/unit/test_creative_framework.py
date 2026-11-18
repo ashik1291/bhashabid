@@ -62,6 +62,20 @@ class TestCreativeFramework(unittest.TestCase):
         self.assertIn("অভিপ্রায় / সংকল্প", content)
         self.assertIn("NEVER wings/ডানা", content)
 
+    def test_semantic_conservation_and_pop_culture_rules(self):
+        ref_content = self.ref_file.read_text(encoding="utf-8")
+        self.assertIn("Rule of Semantic Conservation & Scale Integrity", ref_content)
+        self.assertIn("Rule of Modern Pop-Culture Entity Exemption", ref_content)
+        self.assertIn("Rule of Dignified Cognitive Metaphor Mapping", ref_content)
+        self.assertIn("গিটার হিরো", ref_content)
+        self.assertIn("তলিয়ে দেখা", ref_content)
+
+        standalone_content = self.standalone_file.read_text(encoding="utf-8")
+        self.assertIn("Modern Pop-Culture & Entity Exemption", standalone_content)
+        self.assertIn("Semantic Conservation & Factual Scale Invariant", standalone_content)
+        self.assertIn("Cognitive & Investigative Metaphors", standalone_content)
+        self.assertIn("গিটার-নায়ক", standalone_content)
+
     def test_python_lapidary_engine(self):
         from bhashabid.creative import lookup_lapidary
         res = lookup_lapidary("amethyst")

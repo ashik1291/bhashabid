@@ -112,7 +112,7 @@ Core Invariants:
 ```
 
 ### Sector 5: Creative Fiction, Literature & Living Spoken Dialogue
-> 📊 **Module Token Consumption**: **~352 tokens** (GPT-4o: `259` | Claude: `444`) | **Combined with Tier 1: ~940 tokens** (GPT-4o: `694` | Claude: `1185`)
+> 📊 **Module Token Consumption**: **~456 tokens** (GPT-4o: `345` | Claude: `567`) | **Combined with Tier 1: ~1056 tokens** (GPT-4o: `787` | Claude: `1326`)
 ```markdown
 [DOMAIN: FICTION, NARRATIVE LITERATURE & SPOKEN DIALOGUE]
 1. Living Spoken Dialogue:
@@ -126,6 +126,9 @@ Core Invariants:
    - Intent / Will / Volition ➔ 'অভিপ্রায়' বা 'সংকল্প' (strictly NEVER romanticize into 'বাসনা').
    - Zero uninvited metric padding particles ('কখনো', 'যেন', 'তুমিও', 'সেই').
    - Somatic metaphors: "heart turned to stone" ➔ 'হৃদয় পাষাণ হয়ে গেল' (never 'হৃৎপিণ্ড পাথরে পরিণত হলো').
+4. Modern Pop-Culture & Entity Exemption:
+   - Distinguish syntactic calques from recognized pop-cultural/artistic tropes.
+   - Keep established pop entities in natural phonetic Bengali ('গিটার হিরো', 'রকস্টার', 'সায়েন্স ফিকশন', 'পপস্টার'); do NOT invent artificial Sanskritized purisms (strictly NEVER 'গিটার-নায়ক').
 ```
 
 ### Sector 6: Classical Poetry, Prosody & Literary Translation
@@ -213,7 +216,7 @@ Core Invariants:
 ```
 
 ### Sector 12: Translation & Cultural Idiom Naturalization
-> 📊 **Module Token Consumption**: **~602 tokens** (GPT-4o: `395` | Claude: `808`) | **Combined with Tier 1: ~1190 tokens** (GPT-4o: `830` | Claude: `1549`)
+> 📊 **Module Token Consumption**: **~885 tokens** (GPT-4o: `607` | Claude: `1163`) | **Combined with Tier 1: ~1485 tokens** (GPT-4o: `1049` | Claude: `1922`)
 ```markdown
 [DOMAIN: TRANSLATION & CULTURAL IDIOM NATURALIZATION]
 1. High-Frequency Idiom & Proverb Mapping:
@@ -230,6 +233,12 @@ Core Invariants:
    - Tip of the iceberg ➔ হিমশৈলের চূড়া মাত্র (never বরফখণ্ডের ডগা)
 2. Principle of Cultural Naturalization:
    - Translate for equivalent native cultural impact rather than lexical word-for-word mimicry.
+3. Semantic Conservation & Factual Scale Invariant:
+   - Naturalize syntax and voice freely, but NEVER alter factual metrics, scale, or introduce unprompted intensifiers (do NOT insert 'চিরকাল', 'অন্তত', 'সবসময়' unless explicitly present in source).
+   - Never drift factual scope: 'grow to ten employees' ➔ 'কর্মীসংখ্যা দশের বেশি বাড়ে না' (strictly NEVER 'কর্মী কাজ করার সুযোগ তৈরি হয় না').
+4. Cognitive & Investigative Metaphors:
+   - In intellectual/analytical non-fiction, map 'digging / looking deeper' to dignified cognitive verbs ('তলিয়ে দেখা', 'অনুসন্ধান করা'), NEVER messy physical colloquialisms ('খোঁড়াখুঁড়ি').
+   - Inanimate Agency Invariant: Inanimate objects cannot act as active agents (manuscripts gather dust ➔ 'পাণ্ডুলিপিতে ধুলো জমছে', NEVER 'পাণ্ডুলিপি ধুলো জমায়').
 ```
 
 ### Sector 13: Consumer E-Commerce & Retail Logistics

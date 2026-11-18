@@ -142,6 +142,16 @@ Literary translation requires identifying and strictly maintaining the author's 
    - *Visible, invisible* $\rightarrow$ `দৃশ্য, অদৃশ্য` (Never: `দৃশ্যমান, কখনো অদৃশ্য`).
 4. **Rule of Non-Surrender on Compounds**:
    - Never surrender on mineral, flora, or fauna compounds by simply transliterating English words (`অ্যাম্বার-রঙা অ্যামেথিস্ট` নিষিদ্ধ; `পিঙ্গল-আভ রক্তনীলমণি` বাধ্যতামূলক).
+5. **Rule of Semantic Conservation & Scale Integrity (অর্থ ও মাত্রার অবিচলতা)**:
+   - Naturalize syntax and voice freely, but NEVER alter factual metrics, scale, or introduce unprompted intensifiers.
+   - Strictly forbidden: inserting unprompted adverbs (`চিরকাল`, `অন্তত`, `সবসময়`) or distorting factual scale (e.g., translating "grow to ten employees" as employment deficit `কাজের সুযোগ তৈরি হয় না` instead of scale `কর্মীসংখ্যা দশের বেশি বাড়ে না`).
+6. **Rule of Modern Pop-Culture Entity Exemption (পপ-সংস্কৃতি বনাম কৃত্রিম সংস্কৃতায়ন)**:
+   - Distinguish syntactic calques from recognized, established pop-cultural / artistic tropes.
+   - Keep established pop entities in natural phonetic Bengali (`গিটার হিরো`, `রকস্টার`, `সায়েন্স ফিকশন`, `পপস্টার`, `থ্রিলার`).
+   - Strictly forbidden: inventing artificial Sanskritized purisms (NEVER `গিটার-নায়ক`).
+7. **Rule of Dignified Cognitive Metaphor Mapping (মননশীল রূপক বিন্যাস ও অচেতন কর্তাবোধ বর্জন)**:
+   - In intellectual/analytical non-fiction, map "digging / looking deeper" to dignified cognitive verbs (`তলিয়ে দেখা`, `অনুসন্ধান করা`), NEVER messy physical colloquialisms (`খোঁড়াখুঁড়ি`).
+   - Inanimate Agency Invariant: Inanimate objects cannot act as active agents (manuscripts gather dust ➔ `পাণ্ডুলিপিতে ধুলো জমছে`, NEVER `পাণ্ডুলিপি ধুলো জমায়`).
 
 ---
 
