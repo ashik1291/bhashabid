@@ -70,7 +70,7 @@ def detect_environments() -> Dict[str, Dict[str, Any]]:
     claude_found = False
     claude_hint = ""
     claude_cfg = get_claude_desktop_config_path()
-    if (home / ".claude").exists():
+    if (home / ".claude").exists() or (home / ".claude.json").exists():
         claude_found = True
         claude_hint = str(home / ".claude")
     elif claude_cfg and claude_cfg.exists():
@@ -159,8 +159,30 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
         else:
             skipped.append("Antigravity (Not detected)")
 
-    # 3. Claude Desktop MCP
+    # 3. Claude Desktop & Claude Code MCP
     if target in ["claude", "all"]:
+        # 3a. Claude Code CLI (~/.claude.json)
+        claude_code_cfg = home / ".claude.json"
+        if claude_code_cfg.exists() or shutil.which("claude") is not None:
+            code_data = {"mcpServers": {}}
+            if claude_code_cfg.exists():
+                try:
+                    with open(claude_code_cfg, "r", encoding="utf-8-sig") as f:
+                        code_data = json.load(f)
+                except Exception:
+                    code_data = {"mcpServers": {}}
+            if "mcpServers" not in code_data:
+                code_data["mcpServers"] = {}
+            code_data["mcpServers"]["bhashabid"] = {
+                "type": "stdio",
+                "command": python_exe,
+                "args": ["-m", "bhashabid.mcp"]
+            }
+            with open(claude_code_cfg, "w", encoding="utf-8") as f:
+                json.dump(code_data, f, indent=2, ensure_ascii=False)
+            configured.append(f"Claude Code: {claude_code_cfg}")
+
+        # 3b. Claude Desktop
         claude_cfg = get_claude_desktop_config_path()
         if target == "claude" or (claude_cfg and claude_cfg.parent.exists()) or env_info["claude"]["detected"]:
             if claude_cfg:
@@ -339,8 +361,23 @@ def uninstall_mcp(target: str = "all", workspace_dir: str = None) -> str:
         else:
             skipped.append("Cursor (Not detected)")
 
-    # 2. Claude Desktop config
+    # 2. Claude Desktop & Claude Code config
     if target in ["claude", "all"]:
+        # 2a. Claude Code (~/.claude.json)
+        claude_code_cfg = home / ".claude.json"
+        if claude_code_cfg.exists():
+            try:
+                with open(claude_code_cfg, "r", encoding="utf-8") as f:
+                    code_data = json.load(f)
+                if "mcpServers" in code_data and "bhashabid" in code_data["mcpServers"]:
+                    del code_data["mcpServers"]["bhashabid"]
+                    with open(claude_code_cfg, "w", encoding="utf-8") as f:
+                        json.dump(code_data, f, indent=2, ensure_ascii=False)
+                    removed_from.append(f"Claude Code MCP: {claude_code_cfg}")
+            except Exception:
+                pass
+
+        # 2b. Claude Desktop
         claude_cfg = get_claude_desktop_config_path()
         if target == "claude" or (claude_cfg and claude_cfg.exists()) or env_info["claude"]["detected"]:
             if claude_cfg and claude_cfg.exists():
@@ -568,18 +605,28 @@ def verify_installation() -> Dict[str, Any]:
         cl_ref_count = len(list(cl_refs.glob("*.*"))) if cl_refs.exists() else 0
 
         claude_cfg = get_claude_desktop_config_path()
+        claude_code_cfg = home / ".claude.json"
         has_skill = cl_skill.exists()
-        has_mcp = False
+        has_desktop_mcp = False
+        has_code_mcp = False
         if claude_cfg and claude_cfg.exists():
             try:
                 data = json.load(open(claude_cfg, "r", encoding="utf-8-sig"))
-                has_mcp = "bhashabid" in data.get("mcpServers", {})
+                has_desktop_mcp = "bhashabid" in data.get("mcpServers", {})
             except Exception:
                 pass
+        if claude_code_cfg.exists():
+            try:
+                code_data = json.load(open(claude_code_cfg, "r", encoding="utf-8-sig"))
+                has_code_mcp = "bhashabid" in code_data.get("mcpServers", {})
+            except Exception:
+                pass
+
         claude_active = has_skill
         claude_details.append(f"Global Skill: {'✓' if has_skill else '✗'}")
         claude_details.append(f"References ({cl_ref_count} guides & datasets): {'✓' if cl_ref_count > 0 else '✗'}")
-        claude_details.append(f"Desktop MCP: {'✓' if has_mcp else '✗'}")
+        claude_details.append(f"Claude Code MCP: {'✓' if has_code_mcp else '✗'}")
+        claude_details.append(f"Desktop MCP: {'✓' if has_desktop_mcp else '✗'}")
 
     status["claude"] = {
         "detected": env_info["claude"]["detected"],
