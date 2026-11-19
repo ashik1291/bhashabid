@@ -51,45 +51,13 @@ curl -fsSL https://raw.githubusercontent.com/ashik1291/bhashabid/main/scripts/in
 pip install bhashabid
 ```
 
-#### Python SDK (`import bhashabid`)
 ```python
 import bhashabid
-
-# 1. Automatic Bengali Unicode & Spelling Repair (<2ms, Zero-LLM)
-repaired, diffs = bhashabid.repair("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন.")
-# Output: "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
-
-# 2. Offline Phonetic Spellchecker (78,000+ Word Compressed Lexicon, 9.2ms)
-suggestions = bhashabid.spellcheck("আবিস্কার")
-# Output: ['আবিষ্কার']
-
-# 3. Statutory South Asian Currency & Number Formatting
-print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
-print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
-print(bhashabid.format_date_bongabdo(1433, 1, 1))   # "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
-
-# 4. Static Honorific & Calque Linter
-issues = bhashabid.lint("তারা সেই অর্থ ফেরত দিয়েছিলেন।")
+# 10-Second Test: Automatic Unicode & spelling repair (<2ms, Zero-LLM)
+repaired, _ = bhashabid.repair("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন.")
+print(repaired)  # "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
 ```
-
-#### Command Line Interface (CLI)
-```bash
-# In-place safe file repair with colored unified diff
-bhashabid repair article.txt --diff --write
-
-# Convert numbers to authentic Bengali words
-bhashabid number 99 --format words                  # Output: নিরানব্বই
-
-# Offline spellcheck across 78,000 words
-bhashabid spellcheck "আবিস্কার"
-
-# Generate statutory civil conveyancing deeds & writ prayers
-bhashabid deed --type saf-kabala --vendor "করিম উদ্দিন" --purchaser "রহিম মিয়া" --taka 500000
-bhashabid writ --remedy detention --subject "অবৈধ আটক" --authority "পুলিশ কমিশনার"
-
-# Check global IDE integration health
-bhashabid status
-```
+*(See [Deep-Dive Usage & Integrations](#-deep-dive-usage--integrations) below for full Python SDK, CLI tools, and MCP documentation).*
 
 ---
 
@@ -226,7 +194,7 @@ Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Eve
 
 | Verification Suite | Target | Observed Result | Status |
 | :--- | :---: | :---: | :---: |
-| **Automated Unit & Regression Suite** | 100% Pass | **153 / 153 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-153%2F153%20Pass-brightgreen.svg) |
+| **Automated Unit & Regression Suite** | 100% Pass | **178 / 178 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-178%2F178%20Pass-brightgreen.svg) |
 | **Principle P2 Provenance Integrity** | 100% Signed | **50 / 50 Cards Reviewed** | ![P2](https://img.shields.io/badge/P2%20Provenance-50%2F50%20Reviewed-blueviolet.svg) |
 | **Core Skill Token Footprint** | < 390 Tokens | **298 True BPE Tokens** (`cl100k_base`) | ![Tokens](https://img.shields.io/badge/BPE%20Tokens-298%20%2F%20390-success.svg) |
 | **Invariant Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles / Summaries / Examples** | ![Duplicates](https://img.shields.io/badge/Duplicates-0-brightgreen.svg) |
@@ -237,37 +205,38 @@ Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Eve
 
 ---
 
-## 🚀 How to Use Bhashabid Today
+## 🚀 Deep-Dive Usage & Integrations
 
-### 1. Python SDK (`import bhashabid`)
+### 1. Python SDK Reference (`import bhashabid`)
 ```python
 import bhashabid
 
-# Automated Unicode NFC canonicalization, spelling & Dari punctuation
+# 1. Automated Unicode NFC canonicalization, spelling & Dari punctuation (<2ms, Zero-LLM)
 repaired, diffs = bhashabid.repair("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন.")
 print(repaired)  # "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
 
-# 78,000+ Word Offline Phonetic Spellchecker (sub-10ms)
+# 2. 78,000+ Word Offline Phonetic Spellchecker (sub-10ms)
 suggestions = bhashabid.spellcheck("আবিস্কার")
 print(suggestions)  # ['আবিষ্কার']
 
-# South Asian Lakh/Crore Currency & Number Formatting
+# 3. Statutory South Asian Lakh/Crore Currency & Number Formatting
 print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
 print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
+print(bhashabid.format_date_bongabdo(1433, 1, 1))   # "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
 
-# Static Grammar, Honorific & Calque Linter
+# 4. Static Grammar, Honorific & Calque Linter
 issues = bhashabid.lint("তুমি সিদ্ধান্ত নেন")
 for issue in issues:
     print(issue.suggestion)  # "তুমি সিদ্ধান্ত নাও" / "আপনি সিদ্ধান্ত নেন"
 
-# Classical 14-Akshar Payar Scansion (8+6)
+# 5. Classical 14-Akshar Payar Scansion (8+6)
 result = bhashabid.verify_payar("কাশীদাস কহে সাধু শুনে পুণ্যবান")
 print(result.is_valid_payar)  # True
 print(result.total_morae)     # 14 (8+6)
 print(result.explanation)     # "শুদ্ধ পয়ার ছন্দ: ৮+৬=১৪ মাত্রার পর্ব ও মধ্যযতি যথাযথভাবে বিন্যস্ত।"
 ```
 
-### 2. Command-Line Interface (CLI)
+### 2. Developer CLI Reference
 ```bash
 # In-place safe file repair with colored unified diff
 bhashabid repair article.txt --diff --write
@@ -292,25 +261,13 @@ bhashabid prosody "কাশীদাস কহে সাধু শুনে প
 
 # Draft High Court constitutional writ prayers (Article 102)
 bhashabid writ --remedy "detention" --subject "জনাব করিম" --authority "স্বরাষ্ট্র সচিব"
+
+# Check global IDE integration health
+bhashabid status
 ```
 
-### 3. 1-Command Skill Installation (Antigravity, Claude, Cursor)
-Install the progressive skill along with **all 9 specialized reference guides** into your coding environment:
-```bash
-# Install globally to all detected environments (Antigravity, Claude, and Cursor)
-bhashabid install-skill --target all
-
-# Or install specifically:
-bhashabid install-skill --target antigravity
-bhashabid install-skill --target claude
-bhashabid install-skill --target cursor
-
-# Uninstall cleanly at any time:
-bhashabid uninstall-skill --target all
-```
-
-### 4. Model Context Protocol (MCP) Server
-Expose Bhashabid's deterministic tools via stdio MCP for Claude Desktop, Cursor, Windsurf, or Zed:
+### 3. Model Context Protocol (MCP) Server
+Expose Bhashabid's deterministic tools via stdio MCP for Claude Desktop, Claude Code, Cursor, Windsurf, or Zed:
 ```bash
 bhashabid-mcp
 # or: bhashabid mcp
@@ -322,14 +279,6 @@ bhashabid-mcp
 - `bhashabid_lint`: Static analysis for Guru-chandali, cross-clause honorific concordance, and English calques.
 - `bhashabid_prosody`: Classical scansion (Dalabritta, Matrabritta, Aksharbritta) and 14-akshar Payar validation.
 - `generate_writ_prayer`: Drafts Article 102 High Court constitutional writ prayers in statutory Bengali.
-
-### 5. Standalone Three-Tier Prompt System (ChatGPT, Claude Web, Gemini Web, DeepSeek)
-If you are using a web browser interface or third-party client and cannot install Python packages, use our three-tier prompt system:
-👉 **[`skills/bangla-expert/STANDALONE_ALL_IN_ONE.md`](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
-
-- **Tier 1 (Nano Prompt)**: Copy and paste directly into **ChatGPT Custom Instructions** (fits cleanly within the 1,500-char limit) or mobile apps.
-- **Tier 2 (Domain Modules)**: Prepend Tier 1 and attach your sector module (Legal, Banking, Petitions, NCTB, Medical, Agriculture, Tech) into Claude Projects or Custom GPTs.
-- **Tier 3 (Full Reference)**: Load the full taxonomy and 105+ idiom mapping table into foundation model system prompts.
 
 ---
 
