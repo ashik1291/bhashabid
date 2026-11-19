@@ -41,9 +41,3 @@ For specialized domain tasks across all 17 sectors, consult these progressive re
 - **numerals.md**: 0–99 cardinal words, currency in words, fractions, dates.
 - **orthography.md**: Bangla Academy spelling rules, foreign loanword normalization, NFC.
 - **grammar_registers.md**: Sadhu/Cholito concordance tables, honorifics, pleonasms.
-
-## Zero-Install Web Prompts (STANDALONE_ALL_IN_ONE.md)
-When working outside IDEs, use the Three-Tier token architecture in `STANDALONE_ALL_IN_ONE.md`:
-- **Tier 1 (Nano Prompt)**: <160 tokens / <1,100 chars (fits ChatGPT 1,500-char limit).
-- **Tier 2 (Sector Modules)**: Plug-and-play domain modules across all 17 sectors.
-- **Tier 3 (Complete Prompt)**: Full architectural reference in a single copyable block.

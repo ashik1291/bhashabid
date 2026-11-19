@@ -93,13 +93,14 @@ bhashabid status
 
 ---
 
-### Option C: Web & Mobile AI Chat (ChatGPT, Gemini Web, Claude Web)
-If you don't use an AI code editor or CLI, choose the tier that fits your token budget from our standalone instruction system:
-- ⚡ **Tier 1 (Nano Prompt)**: Ultra-dense (<160 tokens / <1,100 chars), strictly engineered to fit within **ChatGPT's 1,500-character Custom Instructions limit**.
-- 🧩 **Tier 2 (Modular Prompts)**: Plug-and-play domain modules (~350–500 tokens) for Law/Writs, Banking, Admin Petitions, NCTB Pedagogy, Healthcare, Agronomy, and Software.
-- 📚 **Tier 3 (Architectural Reference)**: Full 17-sector taxonomy and 105+ idiom mapping table for large context windows (Claude 200k, Gemini 1M).
+### Option C: Web & Mobile AI Chat (Claude Web, Gemini Web, ChatGPT)
+If you don't use an AI code editor or CLI, you can use Bhashabid directly in web browsers:
+- 📦 **Claude Web Skill**: Upload [`bhashabid-skill.zip`](bhashabid-skill.zip) directly via Claude Web's **Upload a skill** feature.
+- 💎 **Gemini Web**: Create a **Bhashabid Gem** or attach instructions directly.
+- 🤖 **ChatGPT Web**: Create a **Custom GPT** with `bhashabid-skill.zip` or use **Custom Instructions** (<1,500 chars).
 
-👉 **[View Three-Tier Instructions (STANDALONE_ALL_IN_ONE.md)](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
+👉 **[Complete Step-by-Step Web Guide (docs/WEB_CHAT_USER_GUIDE.md)](docs/WEB_CHAT_USER_GUIDE.md)**
+👉 **[View Three-Tier Standalone Prompts (STANDALONE_ALL_IN_ONE.md)](skills/bangla-expert/STANDALONE_ALL_IN_ONE.md)**
 
 ---
 
