@@ -2,6 +2,20 @@
 
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
+## [1.1.0] - 2026-11-19
+### Added
+- **First-Class Claude Code CLI MCP Support**: Automatic stdio tool registration and health checking in `~/.claude.json`.
+- **Packaged Pure Agent Skill**: Built lean `bhashabid-skill.zip` and `bhashabid.skill` for direct upload to Claude Web and ChatGPT Custom GPTs.
+- **Web Chat User Guide (`docs/WEB_CHAT_USER_GUIDE.md`)**: Full visual walkthrough for Claude Web, Google Gemini Web (Gems), and ChatGPT Web.
+- **3 Production Creative Writing Meta-Invariants**: Codified Semantic Conservation & Scale Integrity, Modern Pop-Culture Entity Exemption, and Dignified Cognitive Metaphor Mapping into Sector 5 & 12.
+- **Automated Tag-Based PyPI Deployment**: Added `push: tags: ['v*']` trigger to GitHub Actions PyPI Trusted Publishing workflow.
+- **Test Suite Expansion**: 178 automated unit tests passing 100% green.
+
+## [1.0.1] - 2026-11-15
+### Added
+- **Literary & Creative Mastery Framework**: Expanded 17-sector taxonomy and lapidary database.
+- **Cross-Platform Visual Architecture Documentation**.
+
 ## [0.4.0] - 2026-11-11 - Cycle 4 Release
 ### Added
 - Regional Dialect Profiles in `tools/bn_normalize/profiles.py` (`bd_standard` vs `wb_standard`).
