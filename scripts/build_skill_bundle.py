@@ -9,6 +9,7 @@ Layout (Anthropic's documented format: skill folder at the ZIP root, named like 
   bangla-expert/scripts/bn.py            # runner: python scripts/bn.py <command> ...
   bangla-expert/scripts/bhashabid/...    # pure-stdlib engine (no MCP server needed)
 """
+import json
 import os
 import sys
 import zipfile
@@ -19,6 +20,18 @@ PKG_DIR = os.path.join(REPO, "bhashabid")
 SKILL_NAME = "bangla-expert"
 OUTPUTS = ("bhashabid-skill.zip", "bhashabid.skill")
 TEXT_OUTPUT = "bhashabid-skill-text.zip"
+IDIOMS_JSON = os.path.join(PKG_DIR, "assets", "idioms", "bilingual_idioms.json")  # engine source of truth
+# Generated into the skill and its packaged mirrors (installers copy these).
+IDIOMS_MD_PATHS = [
+    os.path.join(SKILL_DIR, "references", "idioms.md"),
+    os.path.join(PKG_DIR, "assets", "skills", SKILL_NAME, "references", "idioms.md"),
+    os.path.join(REPO, "tools", "assets", "skills", SKILL_NAME, "references", "idioms.md"),
+]
+CATEGORY_TITLES = {
+    "PROVERB": "Proverbs", "COLLOQUIAL": "Everyday idioms", "BUSINESS": "Business",
+    "ADMINISTRATIVE": "Administrative", "JOURNALISM": "Journalism", "LEGAL": "Legal",
+    "CIVIC": "Civic services", "LITERARY": "Literary", "ACADEMIC": "Academic",
+}
 
 # Engine parts not needed inside the skill sandbox (MCP server, IDE installers, duplicated skill copies).
 PKG_EXCLUDE_DIRS = {"__pycache__", "mcp", os.path.join("assets", "skills"), os.path.join("assets", "adapters")}
@@ -65,7 +78,36 @@ def _engine_files():
             yield full, os.path.join(SKILL_NAME, "scripts", "bhashabid", os.path.relpath(full, PKG_DIR))
 
 
+def render_idioms_md() -> str:
+    """Compact model-facing idiom list generated from the engine's JSON (no regex, ids or JSON syntax)."""
+    with open(IDIOMS_JSON, encoding="utf-8") as f:
+        items = json.load(f)
+    lines = [
+        "# English Idioms → Natural Bengali",
+        "",
+        "Translate idioms by meaning, never word for word. Format: English → natural Bengali (✗ literal calque to avoid).",
+        "Generated from the engine's idiom table; the `lint`/`repair` tools detect and fix these calques.",
+    ]
+    order = list(CATEGORY_TITLES) + sorted({i["category"] for i in items} - set(CATEGORY_TITLES))
+    for cat in order:
+        group = sorted((i for i in items if i["category"] == cat), key=lambda i: i["english"].lower())
+        if not group:
+            continue
+        lines += ["", f"## {CATEGORY_TITLES.get(cat, cat.title())}"]
+        lines += [f"- {i['english']} → {i.get('gloss', i['natural_bengali'])} (✗ {i['flawed_calque']})" for i in group]
+    return "\n".join(lines) + "\n"
+
+
+def write_idioms_md() -> list:
+    text = render_idioms_md()
+    for path in IDIOMS_MD_PATHS:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+    return IDIOMS_MD_PATHS
+
+
 def build() -> list:
+    write_idioms_md()
     entries = sorted(set(_skill_files()) | set(_engine_files()), key=lambda e: e[1])
     written = []
     for out in OUTPUTS:

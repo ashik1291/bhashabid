@@ -38,7 +38,8 @@
     "calque_pattern": "কেকের\\s+টুকরো",
     "repair_pattern": "কাজ(?:টি|টা)?\\s+(?:কোনো\\s+)?কেকের\\s+টুকরো\\s+নয়",
     "natural_bengali": "কাজটা কোনো সহজ কাজ নয়",
-    "category": "COLLOQUIAL"
+    "category": "COLLOQUIAL",
+    "gloss": "পানির মতো সহজ / খুব সহজ কাজ"
   },
   {
     "id": "IDM-006",
@@ -47,7 +48,8 @@
     "calque_pattern": "ঝোপের\\s+চারপাশে\\s+পেটা[\\u0980-\\u09FF]*",
     "repair_pattern": "(?:সবসময়\\s+)?ঝোপের\\s+চারপাশে\\s+পেটাচ্ছেন",
     "natural_bengali": "ঘুরিয়ে-পেঁচিয়ে কথা বলছেন",
-    "category": "COLLOQUIAL"
+    "category": "COLLOQUIAL",
+    "gloss": "ঘুরিয়ে-পেঁচিয়ে কথা বলা"
   },
   {
     "id": "IDM-007",
@@ -184,14 +186,6 @@
     "calque_pattern": "একই\\s+পৃষ্ঠায়\\s+থাকা",
     "natural_bengali": "সহমত পোষণ করা / একই সিদ্ধান্তে থাকা",
     "category": "BUSINESS"
-  },
-  {
-    "id": "IDM-024",
-    "english": "See eye to eye",
-    "flawed_calque": "চোখে চোখ রাখা",
-    "calque_pattern": "চোখে\\s+চোখ\\s+রাখা",
-    "natural_bengali": "একমত হওয়া",
-    "category": "COLLOQUIAL"
   },
   {
     "id": "IDM-025",
@@ -410,14 +404,6 @@
     "category": "COLLOQUIAL"
   },
   {
-    "id": "IDM-052",
-    "english": "Keep an eye on",
-    "flawed_calque": "চোখ রাখা",
-    "calque_pattern": "চোখ\\s+রাখুন",
-    "natural_bengali": "নজর রাখা / খেয়াল রাখা",
-    "category": "COLLOQUIAL"
-  },
-  {
     "id": "IDM-053",
     "english": "Make ends meet",
     "flawed_calque": "দুই প্রান্ত মেলানো",
@@ -438,7 +424,7 @@
     "english": "Out of the frying pan into the fire",
     "flawed_calque": "ভাজার কড়াই থেকে আগুনে পড়া",
     "calque_pattern": "ভাজার\\s+কড়াই\\s+থেকে\\s+আগুনে\\s+পড়া",
-    "natural_bengali": "জলে কুমির ডাঙায় বাঘ",
+    "natural_bengali": "তপ্ত কড়াই থেকে জ্বলন্ত উনুনে / বিপদ থেকে আরও বড় বিপদে পড়া",
     "category": "PROVERB"
   },
   {
@@ -455,14 +441,6 @@
     "flawed_calque": "আলমারির ভেতরের কঙ্কাল",
     "calque_pattern": "আলমারির\\s+ভেতরের\\s+কঙ্কাল",
     "natural_bengali": "লুকিয়ে রাখা গোপন কলঙ্ক",
-    "category": "COLLOQUIAL"
-  },
-  {
-    "id": "IDM-058",
-    "english": "Storm in a teacup",
-    "flawed_calque": "চায়ের কাপে ঝড়",
-    "calque_pattern": "চায়ের\\s+কাপে\\s+ঝড়",
-    "natural_bengali": "তুচ্ছ বিষয় নিয়ে তুলকালাম কাণ্ড",
     "category": "COLLOQUIAL"
   },
   {
@@ -490,19 +468,11 @@
     "category": "PROVERB"
   },
   {
-    "id": "IDM-062",
-    "english": "Rome wasn't built in a day",
-    "flawed_calque": "রোম একদিনে তৈরি হয়নি",
-    "calque_pattern": "রোম\\s+একদিনে\\s+তৈরি\\s+হয়নি",
-    "natural_bengali": "বড় কাজে সময় ও ধৈর্য লাগে",
-    "category": "PROVERB"
-  },
-  {
     "id": "IDM-063",
     "english": "Birds of a feather flock together",
     "flawed_calque": "একই পালকের পাখি একসাথে ওড়ে",
     "calque_pattern": "একই\\s+পালকের\\s+পাখি\\s+একসাথে\\s+ওড়ে",
-    "natural_bengali": "চোরে চোরে মাসতুতো ভাই",
+    "natural_bengali": "রতনে রতন চেনে / (নেতিবাচক অর্থে) চোরে চোরে মাসতুতো ভাই",
     "category": "PROVERB"
   },
   {
@@ -518,7 +488,7 @@
     "english": "Look before you leap",
     "flawed_calque": "লাফ দেওয়ার আগে দেখুন",
     "calque_pattern": "লাফ\\s+দেওয়ার\\s+আগে\\s+দেখুন",
-    "natural_bengali": "ভাবিয়া করিও কাজ",
+    "natural_bengali": "ভেবেচিন্তে কাজ করা",
     "category": "PROVERB"
   },
   {
@@ -534,23 +504,7 @@
     "english": "Strike while the iron is hot",
     "flawed_calque": "লোহা গরম থাকতেই আঘাত করো",
     "calque_pattern": "লোহা\\s+গরম\\s+থাকতেই\\s+আঘাত\\s+করো",
-    "natural_bengali": "ঝোপ বুঝে কোপ মারা",
-    "category": "PROVERB"
-  },
-  {
-    "id": "IDM-068",
-    "english": "All that glitters is not gold",
-    "flawed_calque": "যা চকচক করে সবই সোনা নয়",
-    "calque_pattern": "যা\\s+চকচক\\s+করে\\s+সবই\\s+সোনা\\s+নয়",
-    "natural_bengali": "চকচক করলেই সোনা হয় না",
-    "category": "PROVERB"
-  },
-  {
-    "id": "IDM-069",
-    "english": "As you sow, so shall you reap",
-    "flawed_calque": "যেমন বীজ বুনবে তেমন ফসল পাবে",
-    "calque_pattern": "যেমন\\s+বীজ\\s+বুনবে\\s+তেমন\\s+ফসল\\s+পাবে",
-    "natural_bengali": "যেমন কর্ম তেমন ফল",
+    "natural_bengali": "সুযোগ থাকতেই কাজে লাগানো / সময়ের কাজ সময়ে করা",
     "category": "PROVERB"
   },
   {
@@ -566,7 +520,7 @@
     "english": "Empty vessels make the most noise",
     "flawed_calque": "খালি পাত্র বেশি শব্দ করে",
     "calque_pattern": "খালি\\s+পাত্র\\s+বেশি\\s+শব্দ\\s+করে",
-    "natural_bengali": "অসারের তর্জন-গর্জন সার",
+    "natural_bengali": "খালি কলসি বাজে বেশি / অসারের তর্জন-গর্জন সার",
     "category": "PROVERB"
   },
   {
@@ -606,7 +560,7 @@
     "english": "A bird in the hand is worth two in the bush",
     "flawed_calque": "হাতের একটি পাখি ঝোপের দুটির সমান",
     "calque_pattern": "হাতের\\s+একটি\\s+পাখি\\s+ঝোপের\\s+দুটির\\s+সমান",
-    "natural_bengali": "গাছে কাঁঠাল গোঁফে তেল নয় / হাতের কাছের জিনিসই শ্রেষ্ঠ",
+    "natural_bengali": "হাতের কাছের নিশ্চিত জিনিসই শ্রেয়",
     "category": "PROVERB"
   },
   {
@@ -623,14 +577,6 @@
     "flawed_calque": "পয়সার ক্ষেত্রে জ্ঞানী কিন্তু পাউন্ডে বোকা",
     "calque_pattern": "পয়সার\\s+ক্ষেত্রে\\s+জ্ঞানী\\s+কিন্তু\\s+পাউন্ডে\\s+বোকা",
     "natural_bengali": "বজ্র আঁটুনি ফস্কা গেরো",
-    "category": "PROVERB"
-  },
-  {
-    "id": "IDM-079",
-    "english": "A drowning man catches at a straw",
-    "flawed_calque": "ডুবন্ত মানুষ খড়কুটো ধরে",
-    "calque_pattern": "ডুবন্ত\\s+মানুষ\\s+খড়কুটো\\s+ধরে",
-    "natural_bengali": "মরণাপন্ন ব্যক্তি খড়কুটো আঁকড়ে ধরে",
     "category": "PROVERB"
   },
   {
@@ -654,7 +600,7 @@
     "english": "Diamond cuts diamond",
     "flawed_calque": "হীরা হীরাকে কাটে",
     "calque_pattern": "হীরা\\s+হীরাকে\\s+কাটে",
-    "natural_bengali": "হীরকে হীরক কাটে",
+    "natural_bengali": "সেয়ানে সেয়ানে কোলাকুলি",
     "category": "PROVERB"
   },
   {
@@ -682,35 +628,11 @@
     "category": "PROVERB"
   },
   {
-    "id": "IDM-086",
-    "english": "Something is better than nothing",
-    "flawed_calque": "কিছু না থাকার চেয়ে কিছু থাকা ভালো",
-    "calque_pattern": "কিছু\\s+না\\s+থাকার\\s+চেয়ে\\s+কিছু\\s+থাকা\\s+ভালো",
-    "natural_bengali": "নাই মামার চেয়ে কানা মামা ভালো",
-    "category": "PROVERB"
-  },
-  {
     "id": "IDM-087",
     "english": "The grass is always greener on the other side",
     "flawed_calque": "অন্য প্রান্তের ঘাস সবসময় বেশি সবুজ",
     "calque_pattern": "অন্য\\s+প্রান্তের\\s+ঘাস\\s+সবসময়\\s+বেশি\\s+সবুজ",
     "natural_bengali": "দূর থেকে সবকিছু সুন্দর দেখায় / পরের পিঠা বড় দেখায়",
-    "category": "PROVERB"
-  },
-  {
-    "id": "IDM-088",
-    "english": "There is no rose without a thorn",
-    "flawed_calque": "কাঁটা ছাড়া কোনো গোলাপ নেই",
-    "calque_pattern": "কাঁটা\\s+ছাড়া\\s+কোনো\\s+গোলাপ\\s+নেই",
-    "natural_bengali": "কাঁটা ছাড়া গোলাপ হয় না",
-    "category": "PROVERB"
-  },
-  {
-    "id": "IDM-089",
-    "english": "Waste not, want not",
-    "flawed_calque": "অপচয় করো না, অভাব হবে না",
-    "calque_pattern": "অপচয়\\s+করো\\s+না,\\s+অভাব\\s+হবে\\s+না",
-    "natural_bengali": "অপচয় না করলে অভাব হয় না",
     "category": "PROVERB"
   },
   {

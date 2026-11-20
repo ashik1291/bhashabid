@@ -409,7 +409,7 @@ When the context touches any of these domains, apply its verified institutional 
       * *Tip of the iceberg* ➔ `হিমশৈলের চূড়া মাত্র`
       * *Caught red-handed* ➔ `হাতে-নাতে ধরা পড়া`
       * *Once in a blue moon* ➔ `ডুমুরের ফুল` / `কদাচিৎ`
-      * *(Full 105-idiom dataset)* ➔ `references/bilingual_idioms.json`
+      * *(Full idiom list)* ➔ `references/idioms.md`
 13. **Consumer E-Commerce & Retail Logistics**:
     - Terminology: `অর্ডার ট্র্যাকিং`, `হোম ডেলিভারি`, `রিটার্ন ও রিফান্ড নীতি`, `মূল্য পরিশোধ`, `এসক্রো সুরক্ষা`. Avoid hybrid Banglish verbs ('ডেলিভারি হয়ে গিয়েছে' ➔ 'ডেলিভারি সম্পন্ন হয়েছে').
 14. **Customer Support & Omnichannel Messaging**:

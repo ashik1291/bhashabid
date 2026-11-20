@@ -4,6 +4,7 @@ All notable changes to Bhashabid are documented here following Semantic Versioni
 
 ## [Unreleased]
 ### Fixed
+- **Idiom table**: the skill now ships a compact generated `references/idioms.md` (~6.8k cl100k tokens, was a 16.4k-token JSON with regex/ids) instead of `bilingual_idioms.json`; the engine keeps its JSON. Removed 10 entries that flagged natural Bengali as calques (চোখ রাখা, চোখে চোখ রাখা, চায়ের কাপে ঝড়, রোম একদিনে তৈরি হয়নি, যা চকচক করে সবই সোনা নয়, ডুবন্ত মানুষ খড়কুটো ধরে, …); better equivalents for 7 (খালি কলসি বাজে বেশি, সেয়ানে সেয়ানে কোলাকুলি, রতনে রতন চেনে, …); the Sadhu proverb `ভাবিয়া করিও কাজ` no longer inserted into Cholito text.
 - **Sadhu → Cholito conversion**: `repair_text(..., target_style="cholito")`, CLI `repair --to-cholito`, MCP `repair_text.target_style`. Paradigm-based (~3.5k forms: verb roots × tenses × persons, causatives, irregulars খাওয়া/যাওয়া/হওয়া/নেওয়া, আ→এ stem mutation, Sadhu pronouns/adverbs, context-aware হইতে → হতে/থেকে). Look-alikes (মোবাইল, লিখিত, চলিত, বাড়িতে, হাসিল, names) are protected; unconvertible forms are reported as `SADHU_UNRESOLVED`. Default `repair` still leaves consistent Sadhu text intact.
 - **Repair no longer corrupts correct text**: honorific repair only rewrites clashes the linter confirms (previously `তিনি কাজ শেষ করে বাড়ি ফিরলেন` → `করেন`, `সে সময় ... ছিলেন` → `ছিল`).
 - **Consistent Sadhu prose is preserved**: repair harmonizes only genuine Sadhu/Cholito mixing where Cholito dominates, instead of half-converting Sadhu text into Guru-chandali.

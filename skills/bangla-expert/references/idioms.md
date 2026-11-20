@@ -1,0 +1,117 @@
+# English Idioms → Natural Bengali
+
+Translate idioms by meaning, never word for word. Format: English → natural Bengali (✗ literal calque to avoid).
+Generated from the engine's idiom table; the `lint`/`repair` tools detect and fix these calques.
+
+## Proverbs
+- A bad workman blames his tools → নাচতে না জানলে উঠান বাঁকা (✗ খারাপ কর্মী তার সরঞ্জামকে দোষ দেয়)
+- A bird in the hand is worth two in the bush → হাতের কাছের নিশ্চিত জিনিসই শ্রেয় (✗ হাতের একটি পাখি ঝোপের দুটির সমান)
+- A friend in need is a friend indeed → বিপদের বন্ধুই প্রকৃত বন্ধু (✗ প্রয়োজনের বন্ধুই প্রকৃত বন্ধু)
+- A stitch in time saves nine → সময়ের এক ফোঁড় অসময়ের দশ ফোঁড় (✗ সময়ের একটি সেলাই নয়টি বাঁচায়)
+- Actions speak louder than words → কথার চেয়ে কাজের মূল্য বেশি (✗ কাজ শব্দের চেয়ে জোরে কথা বলে)
+- Add insult to injury → কাটা ঘায়ে নুনের ছিটা (✗ আঘাতে অপমান যোগ করা)
+- Barking dogs seldom bite → যত গর্জে তত বর্ষে না (✗ ঘেউ ঘেউ করা কুকুর কদাচিৎ কামড়ায়)
+- Better late than never → দেরিতে হলেও হওয়া ভালো (✗ কখনও না হওয়ার চেয়ে দেরি ভালো)
+- Birds of a feather flock together → রতনে রতন চেনে / (নেতিবাচক অর্থে) চোরে চোরে মাসতুতো ভাই (✗ একই পালকের পাখি একসাথে ওড়ে)
+- Blessing in disguise → শাপে বর (✗ ছদ্মবেশে আশীর্বাদ)
+- Blood is thicker than water → রক্তের টান সবার উপরে (✗ রক্ত পানির চেয়ে ঘন)
+- Charity begins at home → আগে ঘর তবে তো পর (✗ দান বাড়ি থেকেই শুরু হয়)
+- Cry over spilled milk → অতীতের ভুল নিয়ে বৃথা অনুশোচনা করা (✗ ছড়িয়ে পড়া দুধের জন্য কান্না করা)
+- Cut your coat according to your cloth → আয় বুঝে ব্যয় করো (✗ কাপড় অনুযায়ী কোট কাটুন)
+- Diamond cuts diamond → সেয়ানে সেয়ানে কোলাকুলি (✗ হীরা হীরাকে কাটে)
+- Empty vessels make the most noise → খালি কলসি বাজে বেশি / অসারের তর্জন-গর্জন সার (✗ খালি পাত্র বেশি শব্দ করে)
+- Every cloud has a silver lining → অন্ধকারের পরেই আলোর উদয় হয় / মেঘ দেখে কেউ করিসনে ভয় (✗ প্রতিটি মেঘের একটি রূপালী আস্তরণ থাকে)
+- Grasp all, lose all → অতি লোভে তাঁতি নষ্ট (✗ সব আঁকড়ে ধরলে সব হারায়)
+- Honesty is the best policy → সততাই সর্বোত্তম পন্থা (✗ সততা হলো সেরা নীতি)
+- Kill two birds with one stone → এক ঢিলে দুই পাখি মারা (✗ একটি পাথর দিয়ে দুটি পাখি মারা)
+- Leave no stone unturned → সব ধরনের প্রচেষ্টা চালানো / চেষ্টার ত্রুটি না রাখা (✗ কোনো পাথর না উল্টে রাখা)
+- Look before you leap → ভেবেচিন্তে কাজ করা (✗ লাফ দেওয়ার আগে দেখুন)
+- Oil your own machine → আপন চরকায় তেল দাও (✗ আপনার নিজের মেশিনে তেল দিন)
+- Out of sight, out of mind → চোখের আড়াল হলে মনের আড়াল হয় (✗ দৃষ্টির বাইরে মনের বাইরে)
+- Out of the frying pan into the fire → তপ্ত কড়াই থেকে জ্বলন্ত উনুনে / বিপদ থেকে আরও বড় বিপদে পড়া (✗ ভাজার কড়াই থেকে আগুনে পড়া)
+- Penny wise, pound foolish → বজ্র আঁটুনি ফস্কা গেরো (✗ পয়সার ক্ষেত্রে জ্ঞানী কিন্তু পাউন্ডে বোকা)
+- Pride goes before a fall → অতি দর্পে হত লঙ্কা (✗ পতনের আগে অহংকার আসে)
+- Slow and steady wins the race → ধীরস্থির প্রচেষ্টাই জয়ী হয় (✗ ধীর এবং অবিচল দৌড়ে জেতে)
+- Strike while the iron is hot → সুযোগ থাকতেই কাজে লাগানো / সময়ের কাজ সময়ে করা (✗ লোহা গরম থাকতেই আঘাত করো)
+- The grass is always greener on the other side → দূর থেকে সবকিছু সুন্দর দেখায় / পরের পিঠা বড় দেখায় (✗ অন্য প্রান্তের ঘাস সবসময় বেশি সবুজ)
+- Tit for tat → যেমন কুকুর তেমন মুগুর (✗ টিটের জন্য ট্যাট)
+- To err is human → মানুষ মাত্রই ভুল করে (✗ ভুল করা হলো মানবিক)
+- Too many cooks spoil the broth → অধিক সন্ন্যাসীতে গাজন নষ্ট (✗ অধিক রাঁধুনি ঝোল নষ্ট করে)
+- Where there is a will, there is a way → ইচ্ছা থাকলে উপায় হয় (✗ যেখানে ইচ্ছা আছে সেখানে পথ আছে)
+
+## Everyday idioms
+- A drop in the ocean → সমুদ্রে শিশিরবিন্দু / নামমাত্র (✗ সমুদ্রে এক ফোঁটা)
+- A piece of cake → পানির মতো সহজ / খুব সহজ কাজ (✗ কেকের টুকরো)
+- A wild goose chase → পণ্ডশ্রম / সোনার হরিণের পেছনে ছোটা (✗ বুনো হাঁসের পেছনে ছোটা)
+- At the drop of a hat → বিনা দ্বিধায় / চোখের পলকে (✗ টুপির পতনে)
+- At the end of the day → চূড়ান্ত বিচারে / দিনশেষে (✗ দিনের শেষে)
+- Barking up the wrong tree → ভুল জায়গায় চেষ্টা করা / ভুল ব্যক্তিকে দোষারোপ করা (✗ ভুল গাছে ঘেউ ঘেউ করা)
+- Beat around the bush → ঘুরিয়ে-পেঁচিয়ে কথা বলা (✗ ঝোপের চারপাশে পেটানো)
+- Bite the bullet → বাধ্য হয়ে কঠিন পরিস্থিতি মেনে নেওয়া (✗ বুলেটে কামড় দেওয়া)
+- Break a leg → শুভকামনা রইল (✗ একটি পা ভেঙে ফেলা)
+- Burn bridges → পেছনের সব পথ বন্ধ করে দেওয়া (✗ সেতু পুড়িয়ে ফেলা)
+- Burn the midnight oil → রাত জেগে কঠোর পরিশ্রম করা (✗ মধ্যরাতের তেল পোড়ানো)
+- Cold feet → ভয়ে পিছুটান দেওয়া / দ্বিধাগ্রস্ত হওয়া (✗ ঠান্ডা পা হওয়া)
+- Cost an arm and a leg → অগাধ খরচ হওয়া / পানির মতো টাকা খরচ হওয়া (✗ একটি হাত এবং একটি পা খরচ হওয়া)
+- Cross that bridge when we come to it → সময় আসলেই দেখা যাবে / আগাম দুশ্চিন্তা না করা (✗ সেতুতে পৌঁছালে সেতু পার হওয়া)
+- Face the music → কাজের দায় বহন করা / পরিণাম ভোগ করা (✗ সংগীতের মুখোমুখি হওয়া)
+- Fish out of water → অস্বস্তিকর পরিস্থিতিতে পড়া / খাবি খাওয়া (✗ পানির বাইরের মাছ)
+- Fit as a fiddle → সম্পূর্ণ সুস্থ / চাঙ্গা (✗ বেহালার মতো ফিট)
+- Greased lightning → বিদ্যুৎ গতিতে / চোখের পলকে (✗ তেলযুক্ত বিদ্যুৎ)
+- Hit the nail on the head → আসল কথাটি বলা / মোক্ষম কথা বলা (✗ পেরেকের মাথায় আঘাত করা)
+- In hot water → মহাবিপদে পড়া / জটিল সংকটে পড়া (✗ গরম পানির মধ্যে পড়া)
+- In the nick of time → ঠিক শেষ মুহূর্তে (✗ সময়ের খাঁজে)
+- Jump on the bandwagon → স্রোতে গা ভাসানো (✗ বাদ্যযন্ত্রের গাড়িতে চড়া)
+- Make ends meet → টানাটানির সংসার চালানো / কোনোমতে দিন চালানো (✗ দুই প্রান্ত মেলানো)
+- Off the hook → দায়মুক্তি পাওয়া / সংকট থেকে রেহাই পাওয়া (✗ বড়শি থেকে মুক্ত)
+- Once in a blue moon → ডুমুরের ফুল / কদাচিৎ (✗ একটি নীল চাঁদে একবার)
+- Rain cats and dogs → মুষলধারে বৃষ্টি হওয়া (✗ বিড়াল এবং কুকুর বৃষ্টি হওয়া)
+- Skeleton in the closet → লুকিয়ে রাখা গোপন কলঙ্ক (✗ আলমারির ভেতরের কঙ্কাল)
+- Spill the beans → হাঁড়ি ভেঙে দেওয়া / গোপন তথ্য ফাঁস করা (✗ শিম ছড়িয়ে দেওয়া)
+- Take with a grain of salt → সতর্কতার সাথে বিবেচনা করা / পুরোপুরি বিশ্বাস না করা (✗ এক দানা লবণ দিয়ে গ্রহণ করা)
+- Through thick and thin → সুখে-দুঃখে সর্বাবস্থায় (✗ মোটা এবং পাতলার মধ্য দিয়ে)
+- Throw in the towel → পরাজয় মেনে নেওয়া / হাল ছেড়ে দেওয়া (✗ তোয়ালে ফেলে দেওয়া)
+- Under the weather → শরীরে অস্বস্তি বোধ করা / মৃদু অসুস্থ থাকা (✗ আবহাওয়ার নিচে থাকা)
+- Up in the air → অনিশ্চিত অবস্থায় থাকা (✗ বাতাসের ওপর ভেসে থাকা)
+- When pigs fly → আকাশকুসুম কল্পনা / অসম্ভব ব্যাপার (✗ যখন শূকর উড়বে)
+
+## Business
+- Back to square one → আবার গোড়া থেকে শুরু করা (✗ এক নম্বর বর্গে ফিরে যাওয়া)
+- Ball is in your court → সিদ্ধান্ত নেওয়ার দায়িত্ব এখন আপনার (✗ বল এখন আপনার কোর্টে)
+- Best practice / practices → সর্বোত্তম চর্চা (✗ সর্বোত্তম অনুশীলন)
+- Cut corners → কাজে ফাঁকি দেওয়া / নিয়মের ব্যত্যয় ঘটানো (✗ কোণাগুলো কাটা)
+- Don't put all eggs in one basket → এক ঝুঁকিতে সর্বস্ব সমর্পণ না করা (✗ সব ডিম এক ঝুড়িতে রাখবেন না)
+- Elephant in the room → উপেক্ষা করা সুস্পষ্ট সংকট (✗ ঘরের ভেতর হাতি)
+- Game changer → যুগান্তকারী সমাধান (✗ গেম চেঞ্জার)
+- On the same page → সহমত পোষণ করা / একই সিদ্ধান্তে থাকা (✗ একই পৃষ্ঠায় থাকা)
+- Pain point → প্রধান সংকট / মূল সমস্যা (✗ পেইন পয়েন্ট)
+
+## Administrative
+- Approved by → অনুমোদিত (✗ দ্বারা অনুমোদিত)
+- Chaired by → সভাপতিত্বে অনুষ্ঠিত (✗ দ্বারা সভাপতিত্ব)
+- Driven by → পরিচালিত (✗ দ্বারা চালিত)
+- Executed by → সম্পাদিত (✗ দ্বারা কৃত)
+- Supplied by → সরবরাহকৃত (✗ দ্বারা সরবরাহ)
+
+## Journalism
+- Conceded defeat → পরাজিত হয়েছে (✗ পরাজয় স্বীকার করেছে)
+- Straight from the horse's mouth → সরাসরি নির্ভরযোগ্য সূত্র থেকে (✗ ঘোড়ার মুখ থেকে সরাসরি)
+- Tip of the iceberg → হিমশৈলের চূড়া মাত্র / সংকটের সামান্যতম প্রকাশ (✗ বরফখণ্ডের ডগা)
+
+## Legal
+- Caught red-handed → হাতে-নাতে ধরা পড়া (✗ লাল হাতে ধরা পড়া)
+- Deed of sale → সাফ-কবলা বিক্রয় দলিল (✗ বিক্রির কাগজ)
+- Issued a rule asking why → রুল নিশি জারি করেছেন (✗ জিজ্ঞেস করে একটি রুল জারি করেছে)
+
+## Civic services
+- Great danger signal → মহাবিপদ সংকেত (✗ বড় বিপদের সংকেত)
+- Pesticide → বালাইনাশক (✗ পোকা মারার ওষুধ)
+- Storm surge → জলোচ্ছ্বাস (✗ ঝড় বৃদ্ধি)
+
+## Literary
+- Apple of one's eye → নয়নের মণি / অতি আদরের ধন (✗ চোখের আপেল)
+- Heart turned to stone → হৃদয় পাষাণ হয়েছিল (✗ হৃৎপিণ্ড পাথরে পরিণত হয়েছিল)
+
+## Academic
+- Devil's advocate → যুক্তির খাতিরে বিপক্ষ অবস্থান নেওয়া (✗ শয়তানের আইনজীবী)
+- The paper argues that → গবেষণাপত্রে যুক্তি উপস্থাপন করা হয়েছে (✗ পেপারটি তর্ক করে)

@@ -23,4 +23,4 @@ Always use a tool (or the tables) for Bangabda dates, amounts in words and Payar
 - Keep code, JSON keys and identifiers in English. Output only the requested text.
 
 ## 3. References (read only the one the task needs)
-`official_letters.md` applications, memos · `constitutional_writs.md` Article 102 writs · `academic_legal_medical.md` deeds, health, agriculture, NCTB · `ecommerce_fintech_civic.md` MFS, e-commerce, civic services · `journalism_domains.md` news, banking · `creative_writing.md` fiction, poetry · `numerals.md` numbers, Bangabda dates, Payar counting · `orthography.md` spelling · `grammar_registers.md` register tables · `bilingual_idioms.json` idiom list (search it; do not read it whole).
+`official_letters.md` applications, memos · `constitutional_writs.md` Article 102 writs · `academic_legal_medical.md` deeds, health, agriculture, NCTB · `ecommerce_fintech_civic.md` MFS, e-commerce, civic services · `journalism_domains.md` news, banking · `creative_writing.md` fiction, poetry · `numerals.md` numbers, Bangabda dates, Payar counting · `orthography.md` spelling · `grammar_registers.md` register tables · `idioms.md` English idioms → natural Bengali.

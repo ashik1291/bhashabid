@@ -41,7 +41,7 @@
   - `Where there is a will, there is a way` ➔ **`ইচ্ছা থাকলে উপায় হয়`**
   - `Out of the frying pan into the fire` ➔ **`জলে কুমির ডাঙায় বাঘ`**
   - `All that glitters is not gold` ➔ **`চকচক করলেই সোনা হয় না`**
-  - *(Full structured catalog of 105+ bilingual idioms available in `references/bilingual_idioms.json`)*
+  - *(Full English idiom → natural Bengali list in `references/idioms.md`)*
 
 ## 4. Poetic Metaphors, Imagery & Figurative Diction (কাব্যিক রূপক ও চিত্রকল্প)
 - **Figurative Tri-layer**:
