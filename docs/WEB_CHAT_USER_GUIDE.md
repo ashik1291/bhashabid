@@ -21,7 +21,7 @@ Anthropic supports native Agent Skills through `.zip` uploads.
 
 **Requirements:** code execution must be enabled (Settings → Capabilities → *Code execution and file creation*). The skill then runs Bhashabid's offline engine (`scripts/bn.py`) inside Claude's sandbox for dates, amounts in words, Payar metre and lint checks. No MCP server is needed on claude.ai. Without code execution the skill still works from its rules and reference tables, but exact facts (Bangabda dates, metre) are less reliable.
 
-**Updating an older upload:** an uploaded skill is a frozen copy and does not change when this repository changes. Delete the old `bangla-expert` skill and upload the new zip. Bundles built before v1.1.2 placed `SKILL.md` at the zip root, which claude.ai does not recognise as a skill. Build a fresh bundle with `python scripts/build_skill_bundle.py` (it places everything under `bangla-expert/`).
+**Updating an older upload:** an uploaded skill is a frozen copy and does not change when this repository changes. Delete the old `bangla-expert` skill and upload the new zip. Build fresh bundles with `python scripts/build_skill_bundle.py`; it places everything under `bangla-expert/`, the layout Anthropic documents (older bundles with `SKILL.md` at the zip root have also been reported to upload fine).
 
 ### Step-by-Step Installation:
 1. Log in to [claude.ai](https://claude.ai).
@@ -40,7 +40,7 @@ Chat with Claude in Bengali or ask for translations. Claude loads the `bangla-ex
 
 ## 2. Google Gemini Web Chat (gemini.google.com)
 
-Gemini provides two methods: a persistent **Gemini Gem** (recommended) or direct file attachment. Gemini cannot run the bundled engine or an MCP server, so it works from rules and reference tables only. To improve dates and fractions, add `skills/bangla-expert/references/numerals.md` as a Gem knowledge file. After a Bhashabid update, re-paste the instructions below; a Gem does not update itself.
+Gemini provides two methods: a persistent **Gemini Gem** (recommended) or direct file attachment. Gemini cannot run the bundled engine or an MCP server, so it works from rules and reference tables only. Upload **`bhashabid-skill-text.zip`** (SKILL.md + references, no Python code) as the Gem's knowledge, not `bhashabid-skill.zip`; at minimum include `references/numerals.md` for Bangabda dates and fractions. After a Bhashabid update, re-paste the instructions below; a Gem does not update itself.
 
 ### Method A: Create a "Bhashabid Gem" (Recommended)
 1. Go to [gemini.google.com](https://gemini.google.com).

@@ -1,6 +1,9 @@
-"""Builds the claude.ai / API Agent Skill bundle: bhashabid-skill.zip and bhashabid.skill.
+"""Builds the skill bundles:
+  bhashabid-skill.zip / bhashabid.skill  claude.ai and API Agent Skill (rules + references + bundled engine)
+  bhashabid-skill-text.zip               text-only (SKILL.md + references) for Gemini Gems, ChatGPT and
+                                         claude.ai without code execution; no Python code or binary files
 
-Layout (claude.ai requires the skill folder at the ZIP root, named like the skill):
+Layout (Anthropic's documented format: skill folder at the ZIP root, named like the skill):
   bangla-expert/SKILL.md
   bangla-expert/references/...
   bangla-expert/scripts/bn.py            # runner: python scripts/bn.py <command> ...
@@ -15,6 +18,7 @@ SKILL_DIR = os.path.join(REPO, "skills", "bangla-expert")
 PKG_DIR = os.path.join(REPO, "bhashabid")
 SKILL_NAME = "bangla-expert"
 OUTPUTS = ("bhashabid-skill.zip", "bhashabid.skill")
+TEXT_OUTPUT = "bhashabid-skill-text.zip"
 
 # Engine parts not needed inside the skill sandbox (MCP server, IDE installers, duplicated skill copies).
 PKG_EXCLUDE_DIRS = {"__pycache__", "mcp", os.path.join("assets", "skills"), os.path.join("assets", "adapters")}
@@ -71,6 +75,11 @@ def build() -> list:
                 z.write(src, arc.replace(os.sep, "/"))
             z.writestr(f"{SKILL_NAME}/scripts/bn.py", RUNNER)
         written.append(path)
+    text_path = os.path.join(REPO, TEXT_OUTPUT)
+    with zipfile.ZipFile(text_path, "w", zipfile.ZIP_DEFLATED) as z:
+        for src, arc in sorted(_skill_files(), key=lambda e: e[1]):
+            z.write(src, arc.replace(os.sep, "/"))
+    written.append(text_path)
     return written
 
 
