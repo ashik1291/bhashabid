@@ -7,16 +7,22 @@ First live comparison of real model outputs (REQ-039 / P7 pilot). Small and sing
 - Models: Claude Haiku and Claude Sonnet, run as isolated sub-agents.
   - **base**: own knowledge only; no files, skills, MCP or code.
   - **skill**: read `skills/bangla-expert/SKILL.md` + the references it points to; no MCP or code.
-  - **tools**: skill + the `bhashabid` MCP tools (the installed server, i.e. the released package, not this branch).
+  - **tools**: old skill + the `bhashabid` MCP tools (the installed server, i.e. the released package, not this branch).
+  - **v2text**: rewritten tool-routing skill (built bundle), no code and no MCP; simulates Gemini or claude.ai without code execution.
+  - **v2code**: rewritten skill + its bundled engine via code execution (`scripts/bn.py`), no MCP; simulates claude.ai with code execution.
 - `+repair`: the same output passed through `bhashabid.repair` (the offline engine, no LLM).
 - Raw outputs: `out_<model>_<condition>.json`. Scoring: `python eval/llm_ab/2026-11-20/score.py` (deterministic checks only).
 
 ## Results
 
-| model | base | skill | skill + tools | engine-flagged defects (base / skill / tools) |
-|---|---|---|---|---|
-| haiku | 12/12 | 11/12 | 11/12 | 3 / 0 / 0 |
-| sonnet | 10/12 | 10/12 | **12/12** | 0 / 0 / 0 |
+| model | base | old skill | old skill + MCP | new skill, text only | new skill + bundled engine |
+|---|---|---|---|---|---|
+| haiku | 12/12 | 11/12 | 11/12 | 12/12 | 12/12 |
+| sonnet | 10/12 | 10/12 | 12/12 | **12/12** | **12/12** |
+
+Engine-flagged defects: Haiku base 3 (Sadhu/Cholito mix), all other runs 0.
+
+**Caveat on the new-skill columns:** the rewritten skill's calendar table and Payar rule were added after seeing the T07/T10 failures on these same 12 tasks. These columns show that the fix works on the failures it targets; they are not an unbiased estimate. A held-out task set is needed.
 
 `+repair` changed no task result in any condition.
 

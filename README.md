@@ -210,12 +210,12 @@ Bhashabid follows an anti-self-deception policy (Principle P8). This section sep
 
 [`eval/llm_ab/2026-11-20`](eval/llm_ab/2026-11-20/README.md): 12 tasks, Claude Haiku and Sonnet, deterministic scoring.
 
-| model | no skill | skill text | skill + MCP tools |
-|---|---|---|---|
-| Haiku | 12/12 | 11/12 | 11/12 |
-| Sonnet | 10/12 | 10/12 | **12/12** |
+| model | no skill | old skill | old skill + MCP | new skill, text only | new skill + bundled engine |
+|---|---|---|---|---|---|
+| Haiku | 12/12 | 11/12 | 11/12 | 12/12 | 12/12 |
+| Sonnet | 10/12 | 10/12 | 12/12 | 12/12 | 12/12 |
 
-On this small set the skill text alone gave no consistent gain; the MCP tools fixed the two tasks models get wrong from memory (Bangabda date conversion, Payar metre) for Sonnet. n = 12, one vendor: a pilot, not proof.
+The old skill text gave no consistent gain; tools fixed the two tasks models get wrong from memory (Bangabda date conversion, Payar metre). The rewritten skill routes those facts to the MCP tools, the bundled engine, or reference tables, and passed all 12 in both modes. Caveat: those fixes were written after seeing failures on this same task set, so a held-out set is needed. n = 12, one vendor: a pilot, not proof.
 
 ### Not yet measured
 
