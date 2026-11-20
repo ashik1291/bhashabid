@@ -6,7 +6,7 @@ from typing import Tuple, List, Dict, Optional
 from .unicode import canonicalize_unicode
 from .punctuation import normalize_punctuation
 from .orthography import normalize_orthography
-from ..lint.guru_chandali import SADHU_MARKERS, CHOLITO_MARKERS
+from ..lint.guru_chandali import SADHU_MARKERS, find_style_tokens
 from ..lint.honorifics import (
     THIRD_PERSON_ORDINARY_TO_HONORIFIC,
     THIRD_PERSON_HONORIFIC_TO_ORDINARY,
@@ -22,7 +22,9 @@ from ..lint.honorifics import (
     FIRST_TO_SECOND_FAMILIAR_VERBS,
     FIRST_TO_SECOND_FORMAL_VERBS,
     FIRST_TO_THIRD_ORDINARY_VERBS,
-    CLAUSE_BOUNDARY_PAT
+    CLAUSE_BOUNDARY_PAT,
+    inflect_verb,
+    is_guarded_middle,
 )
 
 B_L = r"(?<![\u0980-\u09FF])"
@@ -242,12 +244,10 @@ def repair_text(
         pass
 
     # 4. Guru-Chandali Harmonization (Archaic Sadhu verbs in Cholito text)
-    tokens = set(re.findall(r"[\u0980-\u09FF]+", current_text))
-    has_cholito = bool(tokens.intersection(CHOLITO_MARKERS))
-    has_sadhu = bool(tokens.intersection(set(SADHU_MARKERS.keys())))
-
-    # In modern standard prose, if Cholito markers exist or default standard is requested, harmonise Sadhu
-    if has_sadhu and (has_cholito or profile == "bd_standard"):
+    # Only repair genuine mixing where Cholito dominates; consistent Sadhu prose (REQ-027) is left intact,
+    # since partial word-list conversion of Sadhu text would itself create Guru-chandali.
+    sadhu_tokens, cholito_tokens = find_style_tokens(current_text)
+    if sadhu_tokens and cholito_tokens and len(cholito_tokens) >= len(sadhu_tokens):
         for s_verb, c_verb in SADHU_MARKERS.items():
             # Only use strict single canonical Cholito verb (skip multi-suggestions with '/')
             c_target = c_verb.split("/")[0].strip()
@@ -267,7 +267,9 @@ def repair_text(
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        hon_verb = THIRD_PERSON_ORDINARY_TO_HONORIFIC.get(verb, f"{verb}েন")
+        hon_verb = inflect_verb(verb, THIRD_PERSON_ORDINARY_TO_HONORIFIC, "honorific_3p")
+        if not hon_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{hon_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -283,7 +285,9 @@ def repair_text(
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        ord_verb = THIRD_PERSON_HONORIFIC_TO_ORDINARY.get(verb, verb)
+        ord_verb = inflect_verb(verb, THIRD_PERSON_HONORIFIC_TO_ORDINARY, "ordinary_3p")
+        if not ord_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{ord_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -299,7 +303,9 @@ def repair_text(
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        formal_verb = FAMILIAR_TO_FORMAL_VERBS.get(verb, f"{verb}েন")
+        formal_verb = inflect_verb(verb, FAMILIAR_TO_FORMAL_VERBS, "formal_2p")
+        if not formal_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{formal_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -315,7 +321,9 @@ def repair_text(
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        fam_verb = FORMAL_TO_FAMILIAR_VERBS.get(verb, verb)
+        fam_verb = inflect_verb(verb, FORMAL_TO_FAMILIAR_VERBS, "familiar_2p")
+        if not fam_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{fam_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)

@@ -341,7 +341,7 @@
     "id": "IDM-043",
     "english": "At the end of the day",
     "flawed_calque": "দিনের শেষে",
-    "calque_pattern": "দিনের\\s+শেষে",
+    "calque_pattern": "দিনের\\s+শেষে(?=\\s*,)",
     "natural_bengali": "চূড়ান্ত বিচারে / দিনশেষে",
     "category": "COLLOQUIAL"
   },
