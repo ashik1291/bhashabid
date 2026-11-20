@@ -1,0 +1,22 @@
+id: CAND-LEXICON-dd91cc56
+title: 'Learning candidate (lexicon): পাঁচশত'
+kind: lexicon
+candidate: পাঁচশত
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 2
+  sources:
+  - out_haiku_base.json:T02
+  - out_haiku_v2text.json:T02
+  contexts:
+  - বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র।
+  - 'কথায়: বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র'
+decision:
+  action: add_lexicon
+  word: পাঁচশত
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

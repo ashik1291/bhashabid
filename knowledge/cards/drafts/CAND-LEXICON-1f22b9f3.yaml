@@ -1,0 +1,27 @@
+id: CAND-LEXICON-1f22b9f3
+title: 'Learning candidate (lexicon): পোহাতে'
+kind: lexicon
+candidate: পোহাতে
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 3
+  sources:
+  - out_haiku_base.json:T04
+  - out_sonnet_base.json:T04
+  - out_sonnet_skill.json:T04
+  contexts:
+  - বর্ষা মৌসুমে সড়কের বিভিন্ন স্থানে বড় বড় গর্ত সৃষ্টি হওয়ায় পথচারী, শিক্ষার্থী ও
+    কৃষকদের চলাচলে অত্যন্ত দুর্ভোগ পোহাতে হচ্ছে।
+  - বর্ষাকালে সড়কটি কাদাপানিতে ডুবে যায়, ফলে শিক্ষার্থী, রোগী ও কৃষকদের চলাচলে চরম
+    দুর্ভোগ পোহাতে হয়।
+  - এতে কৃষকেরা ফসল হাটে নিয়ে যেতে পারেন না, শিক্ষার্থীরা স্কুলে যেতে পারে না, আর
+    অসুস্থ রোগীকে জরুরি অবস্থায় হাসপাতালে নিতে চরম ভোগান্তি পোহাতে হয়।
+decision:
+  action: add_lexicon
+  word: পোহাতে
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

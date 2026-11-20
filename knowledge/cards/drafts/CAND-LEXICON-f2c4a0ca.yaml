@@ -1,0 +1,26 @@
+id: CAND-LEXICON-f2c4a0ca
+title: 'Learning candidate (lexicon): জোগাবে'
+kind: lexicon
+candidate: জোগাবে
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 5
+  sources:
+  - out_haiku_base.json:T03
+  - out_haiku_skill.json:T03
+  - out_sonnet_tools.json:T03
+  - out_sonnet_v2code.json:T03
+  - out_sonnet_v2text.json:T03
+  contexts:
+  - প্রকল্পগুলোর অর্থ জোগাবে বৈদেশিক ঋণদাতা সংস্থাগুলো।
+  - অর্থ জোগাবে বিদেশি ঋণদাতা সংস্থাগুলো।
+  - বিদেশি ঋণদাতা সংস্থাগুলো এসব প্রকল্পের অর্থ জোগাবে।
+decision:
+  action: add_lexicon
+  word: জোগাবে
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

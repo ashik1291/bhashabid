@@ -273,6 +273,16 @@ def get_default_lexicon() -> BengaliOfflineLexicon:
         except Exception:
             pass
 
+        # 1b. Human-approved additions from the learning loop (tools/learning_loop.py)
+        try:
+            import os
+            learned = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "learned", "lexicon_additions.txt")
+            if os.path.isfile(learned):
+                with open(learned, encoding="utf-8") as f:
+                    _GLOBAL_LEXICON.add_words({canonicalize_unicode(line.strip()) for line in f if line.strip()})
+        except Exception:
+            pass
+
         # 2. Seed from available clean domain corpora sources
         try:
             import glob

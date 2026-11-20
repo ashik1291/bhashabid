@@ -1,0 +1,21 @@
+id: CAND-LEXICON-638765c2
+title: 'Learning candidate (lexicon): খাওনি'
+kind: lexicon
+candidate: খাওনি
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 2
+  sources:
+  - out_sonnet_base.json:T06
+  - out_sonnet_v2text.json:T06
+  contexts:
+  - 'ছেলে: তুমি এখনো খাওনি?'
+decision:
+  action: add_lexicon
+  word: খাওনি
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

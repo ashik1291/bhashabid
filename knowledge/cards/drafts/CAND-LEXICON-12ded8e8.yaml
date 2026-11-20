@@ -1,0 +1,24 @@
+id: CAND-LEXICON-12ded8e8
+title: 'Learning candidate (lexicon): জানিস'
+kind: lexicon
+candidate: জানিস
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 3
+  sources:
+  - out_haiku_tools.json:T06
+  - out_haiku_v2code.json:T06
+  - out_sonnet_tools.json:T06
+  contexts:
+  - তুই জানিস আমি কত চিন্তা করি।
+  - আমি কতটা ভয় পেয়েছিলাম জানিস?
+  - 'মা: তুই কি জানিস না, আমি কত চিন্তা করি?'
+decision:
+  action: add_lexicon
+  word: জানিস
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

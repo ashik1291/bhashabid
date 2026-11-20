@@ -11,6 +11,7 @@ and Gemini (Customize > Skills):
   scripts/bhashabid/...    # bhashabid-skill.zip only: pure-stdlib engine (no MCP server needed)
 """
 import json
+import shutil
 import os
 import sys
 import zipfile
@@ -108,8 +109,17 @@ def write_idioms_md() -> list:
     return IDIOMS_MD_PATHS
 
 
+def sync_skill_mirrors() -> None:
+    """Copies skills/bangla-expert into the packaged mirrors used by installers and the wheel."""
+    for mirror in (os.path.join(PKG_DIR, "assets", "skills", SKILL_NAME),
+                   os.path.join(REPO, "tools", "assets", "skills", SKILL_NAME)):
+        shutil.copytree(SKILL_DIR, mirror, dirs_exist_ok=True,
+                        ignore=shutil.ignore_patterns("__pycache__"))
+
+
 def build() -> list:
     write_idioms_md()
+    sync_skill_mirrors()
     entries = sorted(set(_skill_files()) | set(_engine_files()), key=lambda e: e[1])
     written = []
     for out in OUTPUTS:

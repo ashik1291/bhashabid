@@ -1,0 +1,26 @@
+id: CAND-LEXICON-6e88c100
+title: 'Learning candidate (lexicon): পাঠায়'
+kind: lexicon
+candidate: পাঠায়
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 5
+  sources:
+  - out_haiku_skill.json:T11
+  - out_sonnet_base.json:T11
+  - out_sonnet_skill.json:T11
+  - out_sonnet_v2code.json:T11
+  - out_sonnet_v2text.json:T11
+  contexts:
+  - বিদ্যালয়ের কাছেই আছে একটি পোস্ট অফিস, যেখান থেকে মানুষ চিঠি ও মনিঅর্ডার পাঠায়।
+  - গ্রামে একটি ডাকঘর আছে, যেখান থেকে মানুষ চিঠি পাঠায় ও গ্রহণ করে।
+  - নদীর ধারে পোস্ট অফিস, সেখান থেকে মানুষ চিঠি পাঠায় আর চিঠি পায়।
+decision:
+  action: add_lexicon
+  word: পাঠায়
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

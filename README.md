@@ -148,9 +148,15 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 - **Problem**: Monolithic linguistic system prompts (5,000–20,000 tokens) cause severe context dilution, high latency, and high API expenses.
 - **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is kept compact (**~890 tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure. Note: this exceeds the 600-token target in REQ-036 — the unit test uses a word-count estimate that undercounts Bengali; see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).
 
-### 2. Human-Reviewed Knowledge Cards & Regression Harness
-- **Problem**: Manually appending example sentences to prompts causes prompt bloat, and un-reviewed machine-generated rules drift into hallucinated grammar.
-- **Solution**: Rules live as knowledge cards and engine rules that a human edits and reviews. The `harvest` / `practice` / `synthesize-cards` commands are a **regression harness**: they run the linter over corpora and draft candidate cards from its findings, but they can only surface patterns the engine already knows, and `distill` validates and syncs files rather than writing rules. New rules come from reviewed errors in real LLM outputs (see `eval/llm_ab/`, `eval/gold/`). Knowledge cards cannot enter production without a **recorded human sign-off** (reviewer name, date, and a SHA-256 content fingerprint that detects later edits; it is not a cryptographic signature).
+### 2. Semi-Autonomous Learning Loop (human-approved)
+- **Problem**: Hand-maintained rules miss what models actually get wrong, while un-reviewed machine-generated rules drift into hallucinated grammar.
+- **Solution**: `bhashabid learn` runs a closed loop with a human gate (P2):
+  1. **scan** real text (LLM outputs you collect, or approved sources; see `eval/corpora/llm_inbox/`);
+  2. **detect** what the engine cannot decide: unknown words with no confident correction, Sadhu forms it cannot convert, English left untranslated in Bengali prose (outside first-use glosses), and defects that survive `repair`;
+  3. **draft** evidence cards (count, sources, contexts) in `knowledge/cards/drafts/`, never approving them;
+  4. a native speaker **approves** (`learn approve --reviewer ...`) or rejects;
+  5. **apply** distills approved cards into the lexicon, Sadhu verb roots, the idiom table or the technical-terms glossary, records a regression case, and rebuilds the skill bundles.
+  The older `harvest` / `practice` / `distill` commands remain as a regression harness over existing rules.
 
 ### 3. Modular Domain Isolation (9 Progressive Guides)
 - **Problem**: Exposing all specialized vocabularies simultaneously confuses model style and wastes tokens.

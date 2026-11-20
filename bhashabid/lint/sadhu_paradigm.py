@@ -96,6 +96,18 @@ LEXICAL = {
 }
 
 
+def _learned_roots() -> list:
+    """Consonant roots added through the human-approved learning loop (assets/learned/sadhu_roots.json)."""
+    import json
+    import os
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "learned", "sadhu_roots.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            return [r for r in json.load(f) if isinstance(r, str) and r and r not in CONSONANT_ROOTS]
+    except (OSError, ValueError):
+        return []
+
+
 def _mutate(stem: str) -> str:
     """আ-vowel roots take এ in the Cholito participle/perfect: রাখ -> রেখ, আস -> এস, কাঁদ -> কেঁদ."""
     if stem.startswith("আ"):
@@ -114,7 +126,7 @@ def build_forms() -> dict:
     for s_prefix, c_prefix, tense in [(p, c, t) for t, p, c in IRREGULAR_PREFIXES]:
         add(s_prefix, c_prefix, tense)
 
-    for r in CONSONANT_ROOTS:
+    for r in CONSONANT_ROOTS + _learned_roots():
         m = _mutate(r)
         add(r + "িয়া", m + "ে", "PART")
         add(r + "িয়াছ", m + "েছ", "PERF")

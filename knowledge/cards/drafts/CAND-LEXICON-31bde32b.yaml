@@ -1,0 +1,24 @@
+id: CAND-LEXICON-31bde32b
+title: 'Learning candidate (lexicon): রোগীসহ'
+kind: lexicon
+candidate: রোগীসহ
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 2
+  sources:
+  - out_haiku_tools.json:T04
+  - out_sonnet_tools.json:T04
+  contexts:
+  - রাস্তার বিভিন্ন স্থানে বড় গর্ত সৃষ্টি হওয়ায় শিক্ষার্থী, কৃষক ও রোগীসহ সর্বসাধারণের
+    চলাচলে গুরুতর অসুবিধা হচ্ছে।
+  - বর্ষার সময় রাস্তায় কাদা ও জলাবদ্ধতার কারণে শিক্ষার্থী, কৃষক ও রোগীসহ সব গ্রামবাসী
+    চরম দুর্ভোগে পড়েন।
+decision:
+  action: add_lexicon
+  word: রোগীসহ
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

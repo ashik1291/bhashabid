@@ -1,0 +1,24 @@
+id: CAND-RULE-8e6ce156
+title: 'Learning candidate (rule): RULE-LINT-GURU-CHANDALI: হইবে'
+kind: rule
+candidate: 'RULE-LINT-GURU-CHANDALI: হইবে'
+detected_by: LINT_UNRESOLVED
+evidence:
+  count: 1
+  sources:
+  - out_haiku_base.json:T09
+  contexts:
+  - অতএব, মহামান্য হাইকোর্ট বিভাগের নিকট বিনীত প্রার্থনা এই যে, মহামান্য আদালত অনুগ্রহপূর্বক
+    বাংলাদেশের সংবিধানের ১০২ অনুচ্ছেদের অধীনে একটি রুল নিশি (Rule Nisi) জারি করে প্রতিপক্ষগণকে
+    এই মর্মে কারণ দর্শাইতে আদেশ দিবেন যে, জনাব করিমকে আটক রাখা কেন আইনানুগ কর্তৃত্ববিহীন
+    ও কার্যকরতাশূন্য বলে ঘোষণা করা হইবে না; এবং উক্ত রুল চূড়ান্ত শুনানি শেষে মহামান্য
+    আদালত যথাযথ আদেশ ও নির্দেশ প্রদান করিবেন।
+decision:
+  action: manual
+  note: Write or extend a rule/reference; not applied automatically.
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

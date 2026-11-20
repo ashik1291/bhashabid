@@ -1,0 +1,28 @@
+id: CAND-LEXICON-f4b17f2f
+title: 'Learning candidate (lexicon): এজন্য'
+kind: lexicon
+candidate: এজন্য
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 4
+  sources:
+  - out_haiku_base.json:T05
+  - out_haiku_skill.json:T05
+  - out_haiku_tools.json:T05
+  - out_haiku_v2code.json:T05
+  contexts:
+  - 'প্রিয় গ্রাহক, আপনার অর্ডারটির (ট্র্যাকিং আইডি: TCK-942) ডেলিভারি দুই দিন বিলম্বিত
+    হচ্ছে, এজন্য আমরা আন্তরিকভাবে দুঃখিত।'
+  - আপনার অর্ডার (ট্র্যাকিং আইডি TCK-942) দুই দিন দেরিতে পৌঁছাবে, এজন্য আমরা আন্তরিকভাবে
+    দুঃখিত।
+  - 'প্রিয় গ্রাহক, আপনার অর্ডারটি (ট্র্যাকিং আইডি: TCK-942) দুই দিন বিলম্বিত হয়েছে,
+    এজন্য আমরা আন্তরিকভাবে দুঃখিত।'
+decision:
+  action: add_lexicon
+  word: এজন্য
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

@@ -555,6 +555,34 @@ def handle_literary_prompt(args):
         sys.stderr.write(f"Literary Prompt Error: {e}\n")
         return 1
 
+def handle_learn(args):
+    try:
+        loop = _load_dev_module("learning_loop")
+        cmd = args.learn_command
+        if cmd == "scan":
+            print(json.dumps(loop.scan(args.paths, min_count=args.min_count), ensure_ascii=False, indent=2))
+        elif cmd == "pending":
+            for c in loop.list_pending():
+                ev = c["evidence"]
+                print(f"{c['id']}  [{c['kind']}] {c['candidate']}  x{ev['count']}  -> {c['decision'].get('action')}  ({c['review']['status']})")
+                for ctx in ev["contexts"][:1]:
+                    print(f"    e.g. {ctx}")
+        elif cmd == "approve":
+            updates = dict(kv.split("=", 1) for kv in args.set)
+            card = loop.approve(args.card_id, args.reviewer, updates)
+            print(f"Approved {card['id']}: {card['decision']}")
+        elif cmd == "reject":
+            print(f"Rejected -> {loop.reject(args.card_id, args.reviewer, args.reason)}")
+        elif cmd == "apply":
+            print(json.dumps(loop.apply_approved(), ensure_ascii=False, indent=2))
+        else:
+            sys.stderr.write("Usage: bhashabid learn {scan,pending,approve,reject,apply}\n")
+            return 1
+        return 0
+    except Exception as e:
+        sys.stderr.write(f"Learn Error: {e}\n")
+        return 1
+
 def handle_lapidary(args):
     try:
         from .creative import lookup_lapidary, LAPIDARY_MAP
@@ -765,6 +793,25 @@ def main():
     p_lap = subparsers.add_parser("lapidary", help="Lookup classical Bengali equivalents for minerals, gems, and nature terms")
     p_lap.add_argument("term", help="English or Bengali term to look up (e.g. 'amethyst', 'amber')")
     p_lap.set_defaults(func=handle_lapidary)
+
+    # learn: semi-autonomous learning loop (ingest -> detect -> human review -> distill)
+    p_learn = subparsers.add_parser("learn", help="Learning loop: scan real text, review candidate cards, apply approved ones")
+    learn_sub = p_learn.add_subparsers(dest="learn_command")
+    p_ls = learn_sub.add_parser("scan", help="Ingest .txt/.jsonl files or folders (e.g. LLM outputs) and draft candidate cards")
+    p_ls.add_argument("paths", nargs="+")
+    p_ls.add_argument("--min-count", type=int, default=2, help="Minimum occurrences for unknown-word candidates")
+    learn_sub.add_parser("pending", help="List candidate cards awaiting human review")
+    p_la = learn_sub.add_parser("approve", help="Approve a candidate card (human reviewer required)")
+    p_la.add_argument("card_id")
+    p_la.add_argument("--reviewer", required=True)
+    p_la.add_argument("--set", nargs="*", default=[], metavar="KEY=VALUE",
+                      help="Decision fields, e.g. action=add_term english=deploy bengali=ডিপ্লয়")
+    p_lr = learn_sub.add_parser("reject", help="Reject a candidate card")
+    p_lr.add_argument("card_id")
+    p_lr.add_argument("--reviewer", required=True)
+    p_lr.add_argument("--reason", default="")
+    learn_sub.add_parser("apply", help="Distill approved cards into the engine and skill, then rebuild bundles")
+    p_learn.set_defaults(func=handle_learn)
 
     args = parser.parse_args()
     if not args.command:

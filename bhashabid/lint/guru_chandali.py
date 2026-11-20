@@ -142,15 +142,6 @@ _CHOLITO_SUFFIX_PAT = re.compile(
 _CHOLITO_SUFFIX_EXCLUSIONS = {"গুচ্ছে", "গুচ্ছো"}
 
 
-# Productive Sadhu -> Cholito verb conversions (stem + Sadhu suffix + tense tail).
-_SADHU_TO_CHOLITO_RULES = [
-    (re.compile(r"^(.+)াইতেছ(.*)$"), r"\1াচ্ছ\2"),   # খাইতেছে -> খাচ্ছে
-    (re.compile(r"^(.+)িতেছ(.*)$"), r"\1ছ\2"),      # করিতেছে -> করছে, লিখিতেছিল -> লিখছিল
-]
-# Perfect -িয়াছ- -> -েছ- is regular only when the stem has no আ-kar (পারিয়াছে -> পেরেছে mutates).
-_SADHU_PERFECT_PAT = re.compile(r"^([^\u09BE]+)িয়াছ(.*)$")
-
-
 # Sadhu forms that also occur in formal or Bangladeshi Cholito: converted only on explicit request,
 # never reported as Guru-chandali.
 # অদ্য and ঐ survive in legal/official Cholito formulas ("এই চুক্তিপত্র অদ্য ... সম্পাদিত হলো").
@@ -162,7 +153,7 @@ _INFINITIVE_NEXT = _HOITE_INFINITIVE_NEXT + ("শুরু", "আরম্ভ")
 
 
 def sadhu_to_cholito(token: str, next_token: str = ""):
-    """Cholito form of a Sadhu token (paradigm table, dictionary, then suffix rule); None when not derivable."""
+    """Cholito form of a Sadhu token from the paradigm table or dictionary; None when not derivable."""
     if token == "হইতে":
         return "হতে" if next_token.startswith(_HOITE_INFINITIVE_NEXT) else "থেকে"
     if token in CONTEXT_INFINITIVES and not next_token.startswith(_INFINITIVE_NEXT):
@@ -171,11 +162,8 @@ def sadhu_to_cholito(token: str, next_token: str = ""):
         return SADHU_FORMS[token]
     if token in SADHU_MARKERS:
         return SADHU_MARKERS[token].split("/")[0].strip()
-    for pat, repl in _SADHU_TO_CHOLITO_RULES:
-        if pat.match(token):
-            return pat.sub(repl, token)
-    if _SADHU_PERFECT_PAT.match(token):
-        return _SADHU_PERFECT_PAT.sub(r"\1েছ\2", token)
+    # Unknown roots are not guessed (a generic suffix rule produced e.g. ঘুমেছিল for ঘুমিয়াছিল);
+    # they are reported as unresolved and become learning-loop candidates (tools/learning_loop.py).
     return None
 
 

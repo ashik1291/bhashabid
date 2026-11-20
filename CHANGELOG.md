@@ -3,6 +3,9 @@
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
 ## [1.2.0] - 2026-11-20
+### Added
+- **Learning loop** (`bhashabid learn scan|pending|approve|reject|apply`, `tools/learning_loop.py`): ingests real text (e.g. LLM outputs), detects what the engine cannot decide (unknown words without confident correction, unconvertible Sadhu forms, untranslated English outside parenthetical glosses, defects surviving repair), drafts evidence cards, requires a named human approval (P2), then distills approved cards into the lexicon (`assets/learned/lexicon_additions.txt`), Sadhu roots (`assets/learned/sadhu_roots.json`), the idiom table or `technical_terms.md`, records regression cases (`eval/gold/learned_cases.jsonl`) and rebuilds bundles. First scan of the 120 pilot outputs produced 12 candidates.
+- Sadhu→Cholito no longer guesses unknown roots with a generic suffix rule (it produced e.g. ঘুমেছিল); they are reported and become learning candidates.
 ### Fixed
 - **Creative writing guide**: `creative_writing.md` condensed from ~7.0k to ~3.1k cl100k tokens (duplicated rules merged, idioms moved to `idioms.md`); fixed a Devanagari-mixed word (পরিশিষ্ট) and wrong gemstone names in the guide and the `lookup_lapidary` / literary-audit engine (lapis = রাজাবর্ত/লাজবর্দ, not বৈদূর্য/নীলা; jade had sunstone/coral; opal had moonstone); no more pressure to invent names when no Bengali name exists.
 - **Technical vocabulary**: new `technical_terms.md` (Bengali vs. established loanword, Bangla Academy loanword spelling, English kept for code/commands/brands, Bengali grammar around loanwords, ~80-term glossary across UI, files, software engineering, infrastructure, security, AI).
