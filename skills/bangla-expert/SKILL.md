@@ -8,7 +8,7 @@ description: Bengali linguistic coprocessor (Bangla Academy, anti-calque, statut
 1. **Bangla Academy Orthography & Canonical NFC**:
    - Foreign loanwords use 'স'/'স্ট' (স্টেশন, পোস্ট, মাস্টার); never 'ষ'/'ষ্ট'. Reph gemination eliminated (বর্তমান, ধর্ম, কার্য).
    - Desi/foreign words take short 'ি' (পাখি, হাতি, দাবি, তৈরি, চাকরি, বেশি, সরকারি, একাডেমি). Suffix '-আবলি' (নিয়মাবলি). Initial /æ/ uses 'অ্যা' (অ্যাসিড, অ্যাম্বুলেন্স).
-   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
+   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই; MCP `format_date`: `ordinal_suffix: false`). Keep alphanumeric IDs intact (TCK-942).
 
 2. **Numerals, Grouping & Punctuation**:
    - South Asian commas: ১২,৩৪,৫৬৭. Decimals use dot: ৩.১৪ (never ৩।১৪).

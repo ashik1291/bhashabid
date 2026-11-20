@@ -134,7 +134,8 @@ class BhashabidMCPServer:
                     "type": "object",
                     "properties": {
                         "date": {"type": "string", "description": "ISO date string ('YYYY-MM-DD') or Bengali date string."},
-                        "calendar": {"type": "string", "enum": ["gregorian", "gregorian_bangla", "bongabdo"], "default": "gregorian", "description": "Target calendar: 'gregorian' (২৬শে মার্চ, ২০২৬) or 'bongabdo' (১৪৩৩ বঙ্গাব্দ)."}
+                        "calendar": {"type": "string", "enum": ["gregorian", "gregorian_bangla", "bongabdo"], "default": "gregorian", "description": "Target calendar: 'gregorian' (২৬শে মার্চ, ২০২৬) or 'bongabdo' (১৪৩৩ বঙ্গাব্দ)."},
+                        "ordinal_suffix": {"type": "boolean", "default": True, "description": "Gregorian only. false gives modern news/official style without day suffix (২৬ মার্চ, ২০২৬)."}
                     },
                     "required": ["date"]
                 }
@@ -350,7 +351,7 @@ class BhashabidMCPServer:
                         "bongabdo_components": {"year": y, "month": m, "day": d}
                     }
                 else:
-                    formatted = format_date_bangla(raw_date)
+                    formatted = format_date_bangla(raw_date, ordinal_suffix=bool(arguments.get("ordinal_suffix", True)))
                     return {
                         "input": raw_date,
                         "calendar": "gregorian",

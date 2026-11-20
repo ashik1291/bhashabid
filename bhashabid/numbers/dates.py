@@ -121,16 +121,21 @@ def gregorian_to_bongabdo(
 def format_date_bangla(
     year_or_date: Union[int, str, date],
     month: Optional[int] = None,
-    day: Optional[int] = None
+    day: Optional[int] = None,
+    ordinal_suffix: bool = True
 ) -> str:
     """
     Format a Gregorian date with Bengali month name, date suffix, and Bengali year digits.
     Accepts (year, month, day), a datetime.date object, or an ISO date string ('YYYY-MM-DD').
     Example: (2026, 3, 26) -> "২৬শে মার্চ, ২০২৬"
     Example: "2026-03-26" -> "২৬শে মার্চ, ২০২৬"
+    ordinal_suffix=False gives the modern news/official style: "২৬ মার্চ, ২০২৬".
     """
     year, month, day = _parse_date_args(year_or_date, month, day)
-    day_str = DATE_ORDINALS.get(day, f"{to_bangla_digits(day)}ই")
+    if ordinal_suffix:
+        day_str = DATE_ORDINALS.get(day, f"{to_bangla_digits(day)}ই")
+    else:
+        day_str = to_bangla_digits(day)
     month_str = GREGORIAN_MONTHS_BN[month] if 1 <= month <= 12 else str(month)
     year_str = to_bangla_digits(year)
     return f"{day_str} {month_str}, {year_str}"
