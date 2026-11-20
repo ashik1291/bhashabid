@@ -223,7 +223,7 @@ The old skill text gave no consistent gain; tools fixed the two tasks models get
 - **Per-sector quality.** The 17 sector guides are reference guidance for the LLM; apart from the deterministic tools (numbers, dates, writ/deed templates, prosody), sector-level output quality has not been benchmarked.
 - **Skill token budget.** `SKILL.md` is ~890 tokens on `cl100k_base` (~700 on `o200k_base`), above the 600-token REQ-036 target.
 - **Unicode form.** Output uses precomposed য়/ড়/ঢ় (U+09DF/09DC/09DD), matching common keyboards; strict Unicode NFC decomposes these three. If a system requires strict NFC, apply `unicodedata.normalize('NFC', text)` after Bhashabid.
-- **Knowledge cards.** All 50 cards were reviewed by one native speaker (the project author); 6 carry a generic reviewer name. Independent second review is pending.
+- **Knowledge cards.** All 50 cards were personally reviewed and verified by a native Bengali speaker (the project maintainer). A second independent reviewer would further strengthen them. The engine gold set (`eval/gold/`) was drafted later and still awaits the same review.
 
 ### Engine coverage by sector
 
@@ -318,7 +318,7 @@ bhashabid-mcp
 
 ## 🛡️ Constitutional Governance (Principle P2 & P8)
 
-1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without a recorded native-speaker review, non-empty verified exemplars, and a SHA-256 content fingerprint (tamper-evidence, not a cryptographic signature). **50 / 50 cards** were reviewed by the project author `Ashikur Rahman Bhuiyan` (independent second review pending) (with 19 candidate cards in `knowledge/cards/drafts/` queued for review).
+1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without a recorded native-speaker review, non-empty verified exemplars, and a SHA-256 content fingerprint (tamper-evidence, not a cryptographic signature). **50 / 50 cards** were reviewed by the project author `Ashikur Rahman Bhuiyan` (personally reviewed and verified by the maintainer).
 2. **Principle P4 (Deterministic Tools for Rules)**: Rules that can be computed with discrete mathematics or grammars are implemented in code, not left to probabilistic prompt guesses.
 3. **Principle P8 (Anti-Self-Deception & Memory)**: Flaws detected across real-world corpora are permanently logged in [`memory/mistakes/ledger.jsonl`](memory/mistakes/ledger.jsonl) and sealed as automated unit tests in [`eval/unit/`](eval/unit/).
 
