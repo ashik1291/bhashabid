@@ -17,7 +17,11 @@ This guide provides step-by-step instructions for using Bhashabid in web chat in
 
 ## 1. Claude Web Chat (claude.ai)
 
-Anthropic supports native Agent Skills through `.zip` or `.skill` file uploads.
+Anthropic supports native Agent Skills through `.zip` uploads.
+
+**Requirements:** code execution must be enabled (Settings → Capabilities → *Code execution and file creation*). The skill then runs Bhashabid's offline engine (`scripts/bn.py`) inside Claude's sandbox for dates, amounts in words, Payar metre and lint checks. No MCP server is needed on claude.ai. Without code execution the skill still works from its rules and reference tables, but exact facts (Bangabda dates, metre) are less reliable.
+
+**Updating an older upload:** an uploaded skill is a frozen copy and does not change when this repository changes. Delete the old `bangla-expert` skill and upload the new zip. Bundles built before v1.1.2 placed `SKILL.md` at the zip root, which claude.ai does not recognise as a skill. Build a fresh bundle with `python scripts/build_skill_bundle.py` (it places everything under `bangla-expert/`).
 
 ### Step-by-Step Installation:
 1. Log in to [claude.ai](https://claude.ai).
@@ -30,13 +34,13 @@ Anthropic supports native Agent Skills through `.zip` or `.skill` file uploads.
 5. Once uploaded, the skill will appear as **`bangla-expert`** in your skills list.
 
 ### How to Use:
-Simply chat with Claude in Bengali or ask for translations. Claude will automatically invoke the `bangla-expert` skill and consult domain-specific references (`constitutional_writs.md`, `ecommerce_fintech_civic.md`, `bilingual_idioms.json`, etc.) whenever you prompt it.
+Chat with Claude in Bengali or ask for translations. Claude loads the `bangla-expert` skill, reads only the domain reference it needs, and runs the bundled engine for exact facts, e.g. `python scripts/bn.py date 2025-12-16 --bongabdo` → `১লা পৌষ, ১৪৩২ বঙ্গাব্দ`.
 
 ---
 
 ## 2. Google Gemini Web Chat (gemini.google.com)
 
-Gemini provides two seamless methods: a persistent **Gemini Gem** (recommended) or direct file attachment.
+Gemini provides two methods: a persistent **Gemini Gem** (recommended) or direct file attachment. Gemini cannot run the bundled engine or an MCP server, so it works from rules and reference tables only. To improve dates and fractions, add `skills/bangla-expert/references/numerals.md` as a Gem knowledge file. After a Bhashabid update, re-paste the instructions below; a Gem does not update itself.
 
 ### Method A: Create a "Bhashabid Gem" (Recommended)
 1. Go to [gemini.google.com](https://gemini.google.com).
@@ -52,8 +56,10 @@ You are Bhashabid (ভাষাবিদ)—an authoritative Bengali Linguistic 
 1. Orthography & Unicode:
    - Foreign loanwords must use 'স'/'স্ট' (স্টেশন, পোস্ট, মাস্টার); never 'ষ'/'ষ্ট'.
    - Desi and foreign loanwords take short 'ি' (পাখি, হাতি, দাবি, সরকারি, একাডেমি).
-   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
-   - Enforce canonical Unicode NFC. No decomposed or split vowel signs.
+   - Dates in prose: no ordinal suffix (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
+   - Bangabda (revised calendar) months start on fixed Gregorian dates: বৈশাখ 14 Apr, জ্যৈষ্ঠ 15 May, আষাঢ় 15 Jun, শ্রাবণ 16 Jul, ভাদ্র 16 Aug, আশ্বিন 16 Sep, কার্তিক 17 Oct, অগ্রহায়ণ 16 Nov, পৌষ 16 Dec, মাঘ 15 Jan, ফাল্গুন 14 Feb, চৈত্র 15 Mar. Year = Gregorian − 593 from 14 Apr (− 594 before).
+   - Fractions: 1.5 দেড়, 2.5 আড়াই, 3.5 and up সাড়ে.
+   - Use canonical Unicode; no decomposed or split vowel signs.
 
 2. Numerals & Punctuation:
    - Use South Asian digit grouping (১২,৩৪,৫৬৭). Decimals use dots (৩.১৪), never Dari.

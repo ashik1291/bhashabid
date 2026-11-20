@@ -34,7 +34,7 @@ REQ-032,TASK-020,eval/unit/test_bn_lint.py::test_calque_detection;eval/unit/test
 REQ-033,TASK-021,,CRD-GRM-005,EV-GEN-001,NOT_IMPLEMENTED (skill guidance only)
 REQ-034,TASK-021,,CRD-GRM-003,EV-GEN-002,NOT_IMPLEMENTED (skill guidance only)
 REQ-035,TASK-020,,CRD-TRN-001,EV-TRANS-002,NOT_IMPLEMENTED (skill guidance only)
-REQ-036,TASK-012,eval/unit/test_skill.py::test_skill_token_budget,CRD-SKL-001,EV-SKL-001,PARTIAL (test uses words*1.3 estimate; real cl100k count of SKILL.md is ~1260 tokens)
+REQ-036,TASK-012,eval/unit/test_skill.py::test_skill_token_budget,CRD-SKL-001,EV-SKL-001,PARTIAL (test uses words*1.3 estimate; real cl100k count of SKILL.md is ~890 tokens)
 REQ-037,TASK-004,eval/unit/test_regression_ledger.py::test_all_resolved_mistakes_in_ledger,CRD-MEM-001,EV-MEM-001,IMPLEMENTED
 REQ-038,TASK-004,eval/unit/test_regression_ledger.py::test_all_resolved_mistakes_in_ledger,CRD-MEM-002,EV-MEM-002,IMPLEMENTED
 REQ-039,TASK-034,eval/benchmarks/benchmark_matrix.py::run_matrix,CRD-EVL-001,EV-BENCH-001,NOT_IMPLEMENTED (benchmark_matrix.py uses hand-written simulated baselines; no live model runs)

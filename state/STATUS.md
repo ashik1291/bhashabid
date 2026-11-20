@@ -17,7 +17,7 @@
 ## Known Gaps (not yet done)
 - Only a 12-task single-vendor LLM pilot exists (REQ-039 / P7); a large multi-vendor benchmark with blind native rating is pending (needs paid API approval).
 - Learning loop does not learn: practice/harvest re-run existing rules on edited news text; mistake ledger unchanged since 2026-11-11; `distill` only validates and syncs files.
-- `SKILL.md` is ~1,260 `cl100k_base` tokens, above the 600-token REQ-036 target; the unit test uses a words×1.3 estimate.
+- `SKILL.md` is ~890 `cl100k_base` tokens, above the 600-token REQ-036 target; the unit test uses a words×1.3 estimate.
 - REQ-014, REQ-031, REQ-033, REQ-034, REQ-035 not implemented in code (skill guidance only); REQ-015, REQ-027, REQ-036 partial. See `specs/traceability.csv`.
 - Independent second native-speaker review of cards and of the gold set.
 - Writ/deed templates not reviewed by a legal professional.

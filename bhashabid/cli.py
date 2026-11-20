@@ -100,7 +100,7 @@ def handle_date(args):
             y, m, d = gregorian_to_bongabdo(val)
             print(f"{y}-{m:02d}-{d:02d}")
         else:
-            print(format_date_bangla(val))
+            print(format_date_bangla(val, ordinal_suffix=not args.no_suffix))
         return 0
     except Exception as e:
         sys.stderr.write(f"Error: {e}\n")
@@ -608,6 +608,7 @@ def main():
     p_date.add_argument("value", help="Date string (e.g. 2026-04-14, 2026-03-26, or 'today')")
     p_date.add_argument("--bongabdo", "-b", action="store_true", help="Format as traditional Bengali calendar date (বঙ্গাব্দ)")
     p_date.add_argument("--convert", "-c", action="store_true", help="Convert to numeric Bangabda date (YYYY-MM-DD)")
+    p_date.add_argument("--no-suffix", action="store_true", help="Gregorian: omit day suffix, modern style (১৫ নভেম্বর)")
     p_date.set_defaults(func=handle_date)
 
     # normalize

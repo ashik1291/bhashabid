@@ -32,13 +32,13 @@
                                                   │
                                                   ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│              CORE SKILL KERNEL (Compact, ~1.26k cl100k Tokens, Domains Loaded On-Demand)          │
+│              CORE SKILL KERNEL (Compact, ~890 cl100k Tokens, Domains Loaded On-Demand)            │
 └───────────────────────┬─────────────────────────┬─────────────────────────┬───────────────────────┘
                         │                         │                         │
                         ▼ [Pillar 1]              ▼ [Pillar 3]              ▼ [Pillar 4]
 ┌───────────────────────────────┐ ┌───────────────────────────────┐ ┌───────────────────────────────┐
 │  PROGRAMMATIC TOKEN CEILING   │ │   MODULAR DOMAIN ISOLATION    │ │ DETERMINISTIC COPROCESSOR     │
-│ • ~1.26k cl100k Tokens        │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
+│ • ~890 cl100k Tokens          │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
 │ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~11k–175k words/second      │
 │ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • 100% Exact Math, NFC & Dari │
 └───────────────────────────────┘ └───────────────────────────────┘ └───────────────▲───────────────┘
@@ -51,7 +51,7 @@
                         └───────────────────────────────────────────────────┘
 ```
 
-- **Pillar 1: Compact Skill Kernel**: Progressive disclosure keeps the always-loaded kernel compact (~1,260 tokens on `cl100k_base`; Bengali script tokenizes densely) and loads domain guides only on demand.
+- **Pillar 1: Compact Skill Kernel**: Progressive disclosure keeps the always-loaded kernel compact (~890 tokens on `cl100k_base`; Bengali script tokenizes densely) and loads domain guides only on demand.
 - **Pillar 2: Human-Reviewed Knowledge Cards & Regression Harness**: Rules are edited and reviewed by a human (Principle P2). The harvest/practice commands are a regression harness that re-checks corpora with existing rules; they do not discover or write new rules on their own.
 - **Pillar 3: Modular Domain Isolation**: 17 professional sectors are organized into **9 isolated reference guides** loaded strictly on demand; unrelated domain knowledge burns 0.0 prompt tokens.
 - **Pillar 4: Deterministic MCP Offloading (Zero Token Cost)**: Irregular 0–99 numerals, South Asian currency commas, Unicode NFC canonical normalization, and 14-akshar Payar scansion run as local Python (measured ~110k–175k words/s for normalization, ~11–13k words/s for lint/repair).
@@ -64,6 +64,6 @@
 | :--- | :---: | :---: |
 | **Unit & Regression Tests** | 100% Pass | **112 / 112 Tests Passing (100% Green)** |
 | **Principle P2 Provenance Cards** | 100% Reviewed | **50 / 50 cards reviewed by the project author (content-fingerprinted)** |
-| **Core Skill Token Footprint** | REQ-036: < 600 | **~1,260 `cl100k_base` tokens (over target)** |
+| **Core Skill Token Footprint** | REQ-036: < 600 | **~890 `cl100k_base` tokens (over target)** |
 | **Domain Sectors Supported** | 17 Sectors | **17 Sectors across 9 Reference Guides** |
 | **Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles, Summaries, or Exemplars** |

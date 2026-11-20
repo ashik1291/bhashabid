@@ -13,7 +13,7 @@
 [![Secrets: 0 Leaks](https://img.shields.io/badge/Secrets-0%20Leaks-brightgreen.svg)](SECURITY.md)
 [![Supply Chain: Sigstore Attested](https://img.shields.io/badge/Supply%20Chain-Sigstore%20Attested-blue.svg)](SECURITY.md)
 [![P2 Provenance: 50 Author-Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-50%20Author--Reviewed%20Cards-blueviolet.svg)](knowledge/cards)
-[![Core Skill: ~1.26k cl100k tokens](https://img.shields.io/badge/Core%20Skill-~1.26k%20cl100k%20tokens-yellow.svg)](skills/bangla-expert/SKILL.md)
+[![Core Skill: ~890 cl100k tokens](https://img.shields.io/badge/Core%20Skill-~890%20cl100k%20tokens-yellow.svg)](skills/bangla-expert/SKILL.md)
 
 > **Bhashabid** (ভাষাবিদ) is, to our knowledge, the first open-source **MCP server + Agent Skill** that bundles offline Bengali normalization, register/honorific linting, statutory numerals and dates, and Payar prosody for LLMs. It works alongside a model without retraining it: the skill gives compact style guidance across **17 professional sectors**, and the deterministic tools handle what models get wrong from memory. It builds on earlier Bengali NLP work such as [BNLP](https://github.com/sagorbrur/bnlp), [csebuetnlp/normalizer](https://github.com/csebuetnlp/normalizer) and [bnunicodenormalizer](https://pypi.org/project/bnunicodenormalizer/).
 
@@ -63,7 +63,7 @@ print(repaired)  # "ডাক্তার সাহেব ৩.১৪ গ্র�
 
 ### Option C: Web & Mobile AI Chat (Claude Web, Gemini Web, ChatGPT)
 If you don't use an AI code editor or CLI, you can use Bhashabid directly in web browsers:
-- 📦 **Claude Web Skill**: Upload [`bhashabid-skill.zip`](bhashabid-skill.zip) directly via Claude Web's **Upload a skill** feature.
+- 📦 **Claude Web Skill**: Upload [`bhashabid-skill.zip`](bhashabid-skill.zip) via **Upload a skill** with code execution enabled; the bundle includes the offline engine (`scripts/bn.py`), so no MCP server is needed. Rebuild with `python scripts/build_skill_bundle.py`.
 - 💎 **Gemini Web**: Create a **Bhashabid Gem** or attach instructions directly.
 - 🤖 **ChatGPT Web**: Create a **Custom GPT** with `bhashabid-skill.zip` or use **Custom Instructions** (<1,500 chars).
 
@@ -111,7 +111,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 | **6. Judicial Writ Formulas (Article 102)** | Approximates legal phrasing colloquially (*"জিজ্ঞেস করে রুল জারি করেছে"*). | Enforces Supreme Court of Bangladesh statutory Rule Nisi show-cause and prayer formulas. | Raw LLM: `"কেন বেআইনি হবে না জিজ্ঞেস করে রুল দিয়েছে"` ⚠️<br>Bhashabid: **"কেন বেআইনি ঘোষণা করা হবে না, তা জানতে চেয়ে রুল জারি করেছেন"** ✔️ |
 | **7. Secretariat Administrative Memos** | Calques English salutations (*"Dear Sir"* ➔ *"প্রিয় মহাশয়"*). | Enforces official *Bangladesh Secretariat Instructions* (*সচিবালয় নির্দেশমালা*) opening and closing protocols. | Raw LLM: `"প্রিয় মহাশয়, আশা করি ভালো আছেন"` ⚠️<br>Bhashabid: **"বরাবর... বিষয়:... জনাব, বিনীত নিবেদন এই যে..."** ✔️ |
 | **8. Classical 14-Akshar Payar Scansion** | Cannot reliably count poetic morae due to subword BPE tokenization abstraction. | Deterministic phonological syllabifier (*মুক্তদল* vs *রুদ্ধদল*) verifies exact 8+6=14 akshar Payar cadence. | Raw LLM: Pseudo-verse with broken 16/17 syllable rhythm ⚠️<br>Bhashabid: **Validates exact 8+6=14 akshar Payar couplets** ✔️ |
-| **9. Context Window & Token Efficiency** | Dumping massive style guides (5,000–10,000 tokens) exhausts context, increases latency, and costs money. | Compact root skill kernel (**~1,260 tokens** on `cl100k_base`, ~890 on `o200k_base`; Bengali script tokenizes densely), loading domain guides on-demand. | Raw LLM: 10,000+ token monolithic prompt injection ⚠️<br>Bhashabid: **~1.26k-token kernel + 0-token Python offloading** ✔️ |
+| **9. Context Window & Token Efficiency** | Dumping massive style guides (5,000–10,000 tokens) exhausts context, increases latency, and costs money. | Compact root skill kernel (**~890 tokens** on `cl100k_base`, ~700 on `o200k_base`; Bengali script tokenizes densely), loading domain guides on-demand. | Raw LLM: 10,000+ token monolithic prompt injection ⚠️<br>Bhashabid: **~890-token kernel + 0-token Python offloading** ✔️ |
 | **10. Local Offline Edge Execution** | Requires active internet, cloud API keys, and 500ms–2000ms latency per request. | 100% offline, local execution with 78,000+ word lexicon; measured ~110,000–175,000 words/s (normalize) and ~11,000–13,000 words/s (lint / repair) on a laptop CPU. | Raw LLM: Cloud dependent, network latency, API costs ⚠️<br>Bhashabid: **Pure local Python, 0 network calls, $0.00 marginal cost** ✔️ |
 
 ---
@@ -125,13 +125,13 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
                                                   │
                                                   ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│              CORE SKILL KERNEL (Compact, ~1.26k cl100k Tokens, Domains Loaded On-Demand)          │
+│              CORE SKILL KERNEL (Compact, ~890 cl100k Tokens, Domains Loaded On-Demand)            │
 └───────────────────────┬─────────────────────────┬─────────────────────────┬───────────────────────┘
                         │                         │                         │
                         ▼ [Pillar 1]              ▼ [Pillar 3]              ▼ [Pillar 4]
 ┌───────────────────────────────┐ ┌───────────────────────────────┐ ┌───────────────────────────────┐
 │  PROGRAMMATIC TOKEN CEILING   │ │   MODULAR DOMAIN ISOLATION    │ │ DETERMINISTIC COPROCESSOR     │
-│ • ~1.26k cl100k Tokens        │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
+│ • ~890 cl100k Tokens          │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
 │ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~11k–175k words/second      │
 │ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • Exact Math, Unicode & Dari  │
 └───────────────────────────────┘ └───────────────────────────────┘ └───────────────▲───────────────┘
@@ -146,7 +146,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 
 ### 1. Compact Skill Kernel with Progressive Disclosure
 - **Problem**: Monolithic linguistic system prompts (5,000–20,000 tokens) cause severe context dilution, high latency, and high API expenses.
-- **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is kept compact (**~1,260 tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure. Note: this exceeds the 600-token target in REQ-036 — the unit test uses a word-count estimate that undercounts Bengali; see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).
+- **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is kept compact (**~890 tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure. Note: this exceeds the 600-token target in REQ-036 — the unit test uses a word-count estimate that undercounts Bengali; see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).
 
 ### 2. Human-Reviewed Knowledge Cards & Regression Harness
 - **Problem**: Manually appending example sentences to prompts causes prompt bloat, and un-reviewed machine-generated rules drift into hallucinated grammar.
@@ -221,7 +221,7 @@ On this small set the skill text alone gave no consistent gain; the MCP tools fi
 
 - **LLM uplift at scale.** No large, multi-vendor (GPT, Gemini), multi-sample benchmark with blind native-speaker rating yet (REQ-039 / P7). `eval/benchmarks/benchmark_matrix.py` and `benchmark_evaluator.py` use hand-written example outputs and are illustrative only.
 - **Per-sector quality.** The 17 sector guides are reference guidance for the LLM; apart from the deterministic tools (numbers, dates, writ/deed templates, prosody), sector-level output quality has not been benchmarked.
-- **Skill token budget.** `SKILL.md` is ~1,260 tokens on `cl100k_base` (~890 on `o200k_base`), above the 600-token REQ-036 target.
+- **Skill token budget.** `SKILL.md` is ~890 tokens on `cl100k_base` (~700 on `o200k_base`), above the 600-token REQ-036 target.
 - **Unicode form.** Output uses precomposed য়/ড়/ঢ় (U+09DF/09DC/09DD), matching common keyboards; strict Unicode NFC decomposes these three. If a system requires strict NFC, apply `unicodedata.normalize('NFC', text)` after Bhashabid.
 - **Knowledge cards.** All 50 cards were reviewed by one native speaker (the project author); 6 carry a generic reviewer name. Independent second review is pending.
 
