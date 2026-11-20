@@ -112,7 +112,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 | **7. Secretariat Administrative Memos** | Calques English salutations (*"Dear Sir"* ➔ *"প্রিয় মহাশয়"*). | Enforces official *Bangladesh Secretariat Instructions* (*সচিবালয় নির্দেশমালা*) opening and closing protocols. | Raw LLM: `"প্রিয় মহাশয়, আশা করি ভালো আছেন"` ⚠️<br>Bhashabid: **"বরাবর... বিষয়:... জনাব, বিনীত নিবেদন এই যে..."** ✔️ |
 | **8. Classical 14-Akshar Payar Scansion** | Cannot reliably count poetic morae due to subword BPE tokenization abstraction. | Deterministic phonological syllabifier (*মুক্তদল* vs *রুদ্ধদল*) verifies exact 8+6=14 akshar Payar cadence. | Raw LLM: Pseudo-verse with broken 16/17 syllable rhythm ⚠️<br>Bhashabid: **Validates exact 8+6=14 akshar Payar couplets** ✔️ |
 | **9. Context Window & Token Efficiency** | Dumping massive style guides (5,000–10,000 tokens) exhausts context, increases latency, and costs money. | Compact root skill kernel (**~1,260 tokens** on `cl100k_base`, ~890 on `o200k_base`; Bengali script tokenizes densely), loading domain guides on-demand. | Raw LLM: 10,000+ token monolithic prompt injection ⚠️<br>Bhashabid: **~1.26k-token kernel + 0-token Python offloading** ✔️ |
-| **10. Local Offline Edge Execution** | Requires active internet, cloud API keys, and 500ms–2000ms latency per request. | 100% offline, local execution with 78,000+ word lexicon; measured ~175,000 words/s (normalize) and ~11,000–13,000 words/s (lint / repair) on a laptop CPU. | Raw LLM: Cloud dependent, network latency, API costs ⚠️<br>Bhashabid: **Pure local Python, 0 network calls, $0.00 marginal cost** ✔️ |
+| **10. Local Offline Edge Execution** | Requires active internet, cloud API keys, and 500ms–2000ms latency per request. | 100% offline, local execution with 78,000+ word lexicon; measured ~110,000–175,000 words/s (normalize) and ~11,000–13,000 words/s (lint / repair) on a laptop CPU. | Raw LLM: Cloud dependent, network latency, API costs ⚠️<br>Bhashabid: **Pure local Python, 0 network calls, $0.00 marginal cost** ✔️ |
 
 ---
 
@@ -202,7 +202,7 @@ Bhashabid follows an anti-self-deception policy (Principle P8). This section sep
 | Gold set — pronoun/verb honorific & person clashes | 14 / 14 detected, 14 / 14 auto-repaired | 〃 |
 | Gold set — calques & mechanical passives | 8 / 8 detected, 4 / 8 auto-repaired (others flagged for rewrite) | 〃 |
 | Gold set — clean sentences (news, legal, dialogue, consistent Sadhu) | **0 / 52 false positives**; `repair` leaves all 52 unchanged | 〃 |
-| Throughput (laptop CPU, single thread) | normalize ~175k words/s · repair ~13k words/s · lint ~11k words/s | — |
+| Throughput (laptop CPU, single thread) | normalize ~110k–175k words/s · repair ~11k–13k words/s · lint ~11k words/s (varies by run) | — |
 
 **Limits of these numbers:** the gold set (`eval/gold/engine_gold.jsonl`, ~90 sentences) was drafted by an LLM assistant together with the rule changes, and is still awaiting native-speaker review. Treat it as an optimistic upper bound and a regression guard, not as real-world accuracy. The engine is rule-based: it only catches patterns it has rules for.
 

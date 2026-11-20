@@ -54,7 +54,7 @@
 - **Pillar 1: Compact Skill Kernel**: Progressive disclosure keeps the always-loaded kernel compact (~1,260 tokens on `cl100k_base`; Bengali script tokenizes densely) and loads domain guides only on demand.
 - **Pillar 2: Supervised Self-Learning Distillation Loop**: Unlike unconstrained autonomous agents that hallucinate grammar rules, Bhashabid pairs an anomaly harvester with a human-in-the-loop (Principle P2) cryptographic sign-off gate before distilling high-level invariants.
 - **Pillar 3: Modular Domain Isolation**: 17 professional sectors are organized into **9 isolated reference guides** loaded strictly on demand; unrelated domain knowledge burns 0.0 prompt tokens.
-- **Pillar 4: Deterministic MCP Offloading (Zero Token Cost)**: Irregular 0–99 numerals, South Asian currency commas, Unicode NFC canonical normalization, and 14-akshar Payar scansion run as local Python (measured ~175k words/s for normalization, ~11–13k words/s for lint/repair).
+- **Pillar 4: Deterministic MCP Offloading (Zero Token Cost)**: Irregular 0–99 numerals, South Asian currency commas, Unicode NFC canonical normalization, and 14-akshar Payar scansion run as local Python (measured ~110k–175k words/s for normalization, ~11–13k words/s for lint/repair).
 
 ---
 
