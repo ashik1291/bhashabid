@@ -86,6 +86,7 @@ def render_idioms_md() -> str:
         "# English Idioms → Natural Bengali",
         "",
         "Translate idioms by meaning, never word for word. Format: English → natural Bengali (✗ literal calque to avoid).",
+        "Apply only to figurative use; literal mentions stay literal (\"I ate a piece of cake\" → এক টুকরো কেক খেলাম).",
         "Generated from the engine's idiom table; the `lint`/`repair` tools detect and fix these calques.",
     ]
     order = list(CATEGORY_TITLES) + sorted({i["category"] for i in items} - set(CATEGORY_TITLES))
