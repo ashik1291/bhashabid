@@ -231,7 +231,7 @@ NON_FIRST_PERSON_FIRST_VERB_PAT = re.compile(
 
 # Universal clause boundary marker: subordinate and coordinate conjunctions
 CLAUSE_BOUNDARY_PAT = re.compile(
-    B_L + r"(যে|যেন|কারণ|যেহেতু|সেহেতু|যখন|তখন|যদি|তবে|তাহলে|কিন্তু|অথবা|বা|যাতে|নইলে)" + B_R
+    B_L + r"(যে|যেন|কারণ|যেহেতু|সেহেতু|যখন|তখন|যদি|তবে|তাহলে|কিন্তু|অথবা|বা|যাতে|নইলে|যা|তাই|যত|যেমন|যেখানে)" + B_R
 )
 
 def check_honorific_clash(text: str) -> list[LintIssue]:
