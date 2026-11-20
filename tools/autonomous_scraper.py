@@ -11,6 +11,7 @@ import shutil
 import urllib.request
 import urllib.error
 import urllib.parse
+import urllib.robotparser
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from typing import List, Dict, Optional, Tuple
@@ -418,6 +419,29 @@ DEFAULT_FEEDS = [
 
 USER_AGENT = "Bhashabid-Bot/2.0 (Open-Source Bengali Linguistic Coprocessor; https://github.com/ashik1291/bhashabid; contact: ashik1291@github)"
 
+SOURCE_REGISTRY_PATH = os.path.join(REPO_ROOT, "memory", "sources", "registry.yaml")
+
+
+def load_approved_hosts(registry_path: str = SOURCE_REGISTRY_PATH) -> set:
+    """Hosts of sources with status 'approved' in memory/sources/registry.yaml (P3 license gate)."""
+    try:
+        import yaml
+        with open(registry_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+    except (OSError, ImportError, ValueError):
+        return set()
+    hosts = set()
+    for src in data.get("sources", []) or []:
+        if str(src.get("status", "")).lower() != "approved":
+            continue
+        for u in [src.get("url")] + list(src.get("hosts") or []):
+            if u:
+                host = urllib.parse.urlparse(u if "://" in u else f"https://{u}").hostname
+                if host:
+                    hosts.add(host.lower())
+    return hosts
+
+
 class AutonomousScraper:
     """
     Autonomous, zero-dependency web & RSS crawler for continuous real-world
@@ -430,9 +454,15 @@ class AutonomousScraper:
         feeds: Optional[List[Dict]] = None,
         timeout: int = 10,
         inbox_dir: Optional[str] = None,
-        fingerprints_path: Optional[str] = None
+        fingerprints_path: Optional[str] = None,
+        allow_unregistered_sources: bool = False
     ):
         self.feeds = feeds or DEFAULT_FEEDS
+        # P3: only fetch hosts registered as approved, and only where robots.txt allows.
+        # Unregistered sources need explicit opt-in (and user approval per the constitution).
+        self.allow_unregistered_sources = allow_unregistered_sources
+        self.approved_hosts = load_approved_hosts()
+        self._robots_cache: Dict[str, Optional[urllib.robotparser.RobotFileParser]] = {}
         self.timeout = timeout
         self.inbox_dir = inbox_dir or os.path.join(REPO_ROOT, "eval", "corpora", "inbox")
         os.makedirs(self.inbox_dir, exist_ok=True)
@@ -462,6 +492,31 @@ class AutonomousScraper:
                     pass
         return set()
 
+    def is_fetch_permitted(self, url: str) -> bool:
+        """True only for approved (or explicitly opted-in) hosts whose robots.txt allows our user agent."""
+        parsed = urllib.parse.urlparse(url)
+        host = (parsed.hostname or "").lower()
+        if parsed.scheme not in ("http", "https") or not host:
+            return False
+        if not self.allow_unregistered_sources and host not in self.approved_hosts:
+            return False
+        if host not in self._robots_cache:
+            rp = urllib.robotparser.RobotFileParser(f"{parsed.scheme}://{host}/robots.txt")
+            try:
+                req = urllib.request.Request(rp.url, headers={"User-Agent": USER_AGENT})
+                with urllib.request.urlopen(req, timeout=self.timeout) as resp:  # nosec B310
+                    rp.parse(resp.read().decode("utf-8", errors="ignore").splitlines())
+            except urllib.error.HTTPError as he:
+                if he.code in (401, 403):
+                    rp = None
+                else:
+                    rp.parse([])  # no robots.txt: crawling permitted
+            except (urllib.error.URLError, OSError, ValueError):
+                rp = None  # robots.txt unreachable: do not crawl
+            self._robots_cache[host] = rp
+        rp = self._robots_cache[host]
+        return bool(rp and rp.can_fetch(USER_AGENT, url))
+
     def fetch_full_article_content(self, link: str) -> str:
         """
         Fetches the complete news article text from the web page link,
@@ -473,6 +528,8 @@ class AutonomousScraper:
         clean_link = link.split("?")[0]
         if clean_link in self._article_cache:
             return self._article_cache[clean_link]
+        if not self.is_fetch_permitted(link):
+            return ""
 
         try:
             req = urllib.request.Request(link, headers={"User-Agent": USER_AGENT})
@@ -558,6 +615,8 @@ class AutonomousScraper:
         # Security: Strictly validate scheme to prevent SSRF or local file inclusion (CWE-22 / B310)
         if not url.startswith(("http://", "https://")):
             raise ValueError(f"Security: Insecure or unsupported URL scheme rejected: {url}")
+        if not self.is_fetch_permitted(url):
+            return items
 
         headers = {
             "User-Agent": USER_AGENT,
