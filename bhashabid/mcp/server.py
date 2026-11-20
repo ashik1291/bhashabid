@@ -388,8 +388,30 @@ class BhashabidMCPServer:
         Runs standard JSON-RPC 2.0 stdio server loop for Model Context Protocol (MCP) clients
         (Claude Desktop, Cursor, Antigravity, Windsurf).
         Guards against unbounded line allocations by enforcing max_frame_bytes (default: 10MB).
+        Guarantees UTF-8 serialization across all operating systems (including Windows charmap).
         """
         import sys
+        if hasattr(sys.stdout, "reconfigure"):
+            try:
+                sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+                sys.stdin.reconfigure(encoding="utf-8", errors="replace")
+                sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+            except Exception:
+                pass
+
+        def _write_resp(resp_obj):
+            payload_str = json.dumps(resp_obj, ensure_ascii=False) + "\n"
+            try:
+                sys.stdout.write(payload_str)
+                sys.stdout.flush()
+            except (UnicodeEncodeError, LookupError):
+                if hasattr(sys.stdout, "buffer"):
+                    sys.stdout.buffer.write(payload_str.encode("utf-8", errors="replace"))
+                    sys.stdout.buffer.flush()
+                else:
+                    sys.stdout.write(json.dumps(resp_obj, ensure_ascii=True) + "\n")
+                    sys.stdout.flush()
+
         while True:
             raw_line = sys.stdin.readline(max_frame_bytes)
             if not raw_line:
@@ -402,8 +424,7 @@ class BhashabidMCPServer:
                     "id": None,
                     "error": {"code": -32600, "message": "Payload Too Large: JSON-RPC frame exceeds maximum size limit (10MB)"}
                 }
-                sys.stdout.write(json.dumps(err_resp, ensure_ascii=False) + "\n")
-                sys.stdout.flush()
+                _write_resp(err_resp)
                 continue
 
             raw_line = raw_line.strip()
@@ -426,7 +447,7 @@ class BhashabidMCPServer:
                             },
                             "serverInfo": {
                                 "name": "bhashabid-mcp",
-                                "version": "1.0.0"
+                                "version": "1.1.1"
                             }
                         }
                     }
@@ -471,16 +492,14 @@ class BhashabidMCPServer:
                         "id": msg_id,
                         "error": {"code": -32601, "message": f"Method {method} not found"}
                     }
-                sys.stdout.write(json.dumps(resp, ensure_ascii=False) + "\n")
-                sys.stdout.flush()
+                _write_resp(resp)
             except Exception as ex:
                 err_resp = {
                     "jsonrpc": "2.0",
                     "id": msg.get("id") if "msg" in locals() else None,
                     "error": {"code": -32603, "message": str(ex)}
                 }
-                sys.stdout.write(json.dumps(err_resp, ensure_ascii=False) + "\n")
-                sys.stdout.flush()
+                _write_resp(err_resp)
 
 def main():
     srv = BhashabidMCPServer()

@@ -107,7 +107,11 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
     # Portable MCP entrypoint using installed package module
     mcp_entry = {
         "command": python_exe,
-        "args": ["-m", "bhashabid.mcp"]
+        "args": ["-m", "bhashabid.mcp"],
+        "env": {
+            "PYTHONIOENCODING": "utf-8",
+            "PYTHONUTF8": "1"
+        }
     }
 
     configured = []
@@ -176,7 +180,11 @@ def install_mcp(target: str = "all", workspace_dir: str = None) -> str:
             code_data["mcpServers"]["bhashabid"] = {
                 "type": "stdio",
                 "command": python_exe,
-                "args": ["-m", "bhashabid.mcp"]
+                "args": ["-m", "bhashabid.mcp"],
+                "env": {
+                    "PYTHONIOENCODING": "utf-8",
+                    "PYTHONUTF8": "1"
+                }
             }
             with open(claude_code_cfg, "w", encoding="utf-8") as f:
                 json.dump(code_data, f, indent=2, ensure_ascii=False)
