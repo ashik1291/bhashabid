@@ -17,7 +17,7 @@
 5. [Article 102 Constitutional Writs](Constitutional-Writs-Article-102.md)
    - High Court writ petitions (Habeas Corpus, Mandamus, Certiorari, Prohibition, Quo Warranto) and statutory prayers.
 6. [Principle P2 Provenance & Human Review](Principle-P2-Provenance-&-Review.md)
-   - The cryptographic review protocol and verification system that keeps Bhashabid scientifically honest (48/48 reviewed cards).
+   - The human review protocol (reviewer, date, SHA-256 content fingerprint) for knowledge cards.
 7. [Centralized Linguistic Review Hub](../review_queue/README.md)
    - Community guidelines for reviewing and submitting candidate cards via GitHub Pull Requests.
 
@@ -32,14 +32,14 @@
                                                   │
                                                   ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│              CORE SKILL KERNEL (Programmatically Capped Under 390 BPE Tokens • cl100k)            │
+│              CORE SKILL KERNEL (Compact, ~1.26k cl100k Tokens, Domains Loaded On-Demand)          │
 └───────────────────────┬─────────────────────────┬─────────────────────────┬───────────────────────┘
                         │                         │                         │
                         ▼ [Pillar 1]              ▼ [Pillar 3]              ▼ [Pillar 4]
 ┌───────────────────────────────┐ ┌───────────────────────────────┐ ┌───────────────────────────────┐
 │  PROGRAMMATIC TOKEN CEILING   │ │   MODULAR DOMAIN ISOLATION    │ │ DETERMINISTIC COPROCESSOR     │
-│ • 298 True BPE Tokens         │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
-│ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~500,000 words/second       │
+│ • ~1.26k cl100k Tokens        │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
+│ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~11k–175k words/second      │
 │ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • 100% Exact Math, NFC & Dari │
 └───────────────────────────────┘ └───────────────────────────────┘ └───────────────▲───────────────┘
                                                   ▲                                 │
@@ -51,10 +51,10 @@
                         └───────────────────────────────────────────────────┘
 ```
 
-- **Pillar 1: Hard Programmatic Token Ceiling (< 390 tokens)**: Progressive disclosure keeps core rules ultra-lightweight (**298 true BPE tokens** on `cl100k_base`), preventing context exhaustion and task dilution.
+- **Pillar 1: Compact Skill Kernel**: Progressive disclosure keeps the always-loaded kernel compact (~1,260 tokens on `cl100k_base`; Bengali script tokenizes densely) and loads domain guides only on demand.
 - **Pillar 2: Supervised Self-Learning Distillation Loop**: Unlike unconstrained autonomous agents that hallucinate grammar rules, Bhashabid pairs an anomaly harvester with a human-in-the-loop (Principle P2) cryptographic sign-off gate before distilling high-level invariants.
 - **Pillar 3: Modular Domain Isolation**: 17 professional sectors are organized into **9 isolated reference guides** loaded strictly on demand; unrelated domain knowledge burns 0.0 prompt tokens.
-- **Pillar 4: Deterministic MCP Offloading (Zero Token Cost)**: Irregular 0–99 numerals, South Asian currency commas, Unicode NFC canonical normalization, and 14-akshar Payar scansion run in microsecond Python algorithms at 500,000 words/second.
+- **Pillar 4: Deterministic MCP Offloading (Zero Token Cost)**: Irregular 0–99 numerals, South Asian currency commas, Unicode NFC canonical normalization, and 14-akshar Payar scansion run as local Python (measured ~175k words/s for normalization, ~11–13k words/s for lint/repair).
 
 ---
 
@@ -63,7 +63,7 @@
 | Metric | Target | Current Production Status |
 | :--- | :---: | :---: |
 | **Unit & Regression Tests** | 100% Pass | **112 / 112 Tests Passing (100% Green)** |
-| **Principle P2 Provenance Cards** | 100% Reviewed | **48 / 48 Cards Cryptographically Signed** |
-| **Core Skill Token Budget** | < 390 Tokens | **298 True BPE Tokens (`cl100k_base`)** |
+| **Principle P2 Provenance Cards** | 100% Reviewed | **50 / 50 cards reviewed by the project author (content-fingerprinted)** |
+| **Core Skill Token Footprint** | REQ-036: < 600 | **~1,260 `cl100k_base` tokens (over target)** |
 | **Domain Sectors Supported** | 17 Sectors | **17 Sectors across 9 Reference Guides** |
 | **Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles, Summaries, or Exemplars** |

@@ -1,5 +1,11 @@
 # Specifications & Features Changelog
 
+## [2026-11-20] - Traceability Honesty Audit
+- **Rationale**: Several rows cited tests that do not exist or a card-schema test as proof of behaviour.
+- **Corrected rows**: REQ-013, 037, 038, 040 now cite existing tests; REQ-026/028/029/030/032 cite lint tests plus `eval/unit/test_engine_gold.py`.
+- **Status downgrades**: REQ-014, 031, 033, 034, 035, 039 → `NOT_IMPLEMENTED`; REQ-015, 027, 036 → `PARTIAL` (reasons inline in `traceability.csv`).
+- **No requirement text changed.** Budget/scope decisions on REQ-036 (skill token count) and REQ-039 (live benchmark) are left to the maintainer.
+
 ## [2026-11-11] - Principle P2 Human Review Milestones
 - **21 Knowledge Cards Promoted to `reviewed`**:
   - Reviewer: Ashikur Rahman Bhuiyan (`@ashik1291`)

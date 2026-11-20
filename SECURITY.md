@@ -2,7 +2,7 @@
 
 ## 🛡️ Security Overview & Architecture
 
-Bhashabid (ভাষাবিদ) is engineered as a deterministic, offline-first linguistic coprocessor engine. It has undergone a comprehensive defensive security audit using the **[Cloudflare Security Audit Skill](https://github.com/cloudflare/security-audit-skill)**, achieving an **A+ (Hardened Production Grade)** rating across all operational trust boundaries.
+Bhashabid (ভাষাবিদ) is engineered as a deterministic, offline-first linguistic coprocessor engine. It has been self-assessed with an AI-assisted review following the **[Cloudflare Security Audit Skill](https://github.com/cloudflare/security-audit-skill)** checklist. This is not an independent third-party audit.
 
 Bhashabid is designed from the ground up with strict security guarantees:
 
@@ -17,7 +17,7 @@ Bhashabid is designed from the ground up with strict security guarantees:
 4. **Data Lifecycle & Configuration Protection**:
    - Skill installers strictly verify Bhashabid content signatures before modifying or unlinking any workspace files (e.g. `.cursorrules`), guaranteeing zero accidental data loss for developer configurations.
 5. **Supply Chain Integrity & Provenance (Principle P2)**:
-   - All production knowledge cards undergo cryptographically signed human review (`sha256` signatures).
+   - All production knowledge cards carry a recorded human review with a truncated SHA-256 content fingerprint (tamper-evidence; not a keyed cryptographic signature).
    - PyPI release builds utilize GitHub Actions OpenID Connect (OIDC) with Sigstore cryptographic provenance attestations (PEP 740).
 
 ---
@@ -28,7 +28,8 @@ We provide active security patches and vulnerability audits for the following ve
 
 | Version | Supported          | Security Scan Status |
 | :------ | :----------------- | :------------------- |
-| `1.0.x` | :white_check_mark: | Active (Bandit 0-vuln, pip-audit clean) |
+| `1.1.x` | :white_check_mark: | Active (Bandit 0-vuln, pip-audit clean) |
+| `1.0.x` | :x:                | Superseded           |
 | `< 1.0` | :x:                | Deprecated           |
 
 ---
@@ -37,7 +38,7 @@ We provide active security patches and vulnerability audits for the following ve
 
 The repository maintains an automated multi-layer security audit suite:
 
-1. **Cloudflare Security Audit Framework**:
+1. **Cloudflare Security Audit Checklist (self-assessment)**:
    - Comprehensive six-phase defensive vulnerability and attack-class review based on [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill).
    - Validates local IPC, MCP stdio protocols, ReDoS regex safety, safe deserialization, and workspace file lifecycles.
 2. **Static Application Security Testing (SAST)**:

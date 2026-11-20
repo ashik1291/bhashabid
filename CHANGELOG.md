@@ -2,6 +2,22 @@
 
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
+## [Unreleased]
+### Fixed
+- **Repair no longer corrupts correct text**: honorific repair only rewrites clashes the linter confirms (previously `তিনি কাজ শেষ করে বাড়ি ফিরলেন` → `করেন`, `সে সময় ... ছিলেন` → `ছিল`).
+- **Consistent Sadhu prose is preserved**: repair harmonizes only genuine Sadhu/Cholito mixing where Cholito dominates, instead of half-converting Sadhu text into Guru-chandali.
+- **Register detection by morphology**: Sadhu suffixes (-িয়াছ-, -িতেছ-), Sadhu pronouns, Cholito verb endings, and productive honorific forms (আছো/আছেন, -ছেন, -েছেন, -চ্ছে, করছে) are detected; `তুই` clashes are repaired.
+- **Calques**: generic `দ্বারা + -িত/-কৃত` passive rule; `X দ্বারা সভাপতিত্ব করা` / `X দ্বারা সরবরাহ` repaired into genitive constructions instead of leaving a dangling `করা`; literal `দিনের শেষে` no longer flagged.
+- **Spellcheck ranking**: missing vowel-sign and aspirate typos rank higher (`বাজরে` → `বাজারে`), without widening auto-repair.
+- **Windows**: CLI forces UTF-8 stdio; the full test suite now passes without `PYTHONIOENCODING`.
+- **Practice generator**: removed perturbations that labelled standard Bengali (ইতোমধ্যে, `সিদ্ধান্ত নেওয়া হয়েছে`, literal `দিনের শেষে`) as errors.
+### Added
+- `format_date_bangla(..., ordinal_suffix=False)` and MCP `format_date.ordinal_suffix` for the modern `১৫ নভেম্বর` style the skill recommends.
+- `eval/gold/engine_gold.jsonl` + `eval/benchmarks/engine_accuracy.py` + `eval/unit/test_engine_gold.py`: measured engine precision/recall (gold set pending native review).
+### Changed
+- `tools/bn_*`, `tools/mcp_server`, `tools/cli.py`, `tools/skill_installer.py` are now aliases of the `bhashabid` package (single source of truth; tests exercise shipped code).
+- Documentation corrected: removed unmeasured claims (simulated "+90% lift", "80–85% fluency", "298 BPE tokens", "500k words/s", "cryptographic signatures", "Cloudflare A+"); README now separates measured from unmeasured results.
+
 ## [1.1.1] - 2026-11-20
 ### Fixed
 - **Abbreviation & Initials Protection**: Resolved period-to-Dari over-conversion. Protected titles (`ড.`, `ডা.`, `মো.`), name initials (`এস. এ.`, `টি. এস.`), academic degrees (`এম.বি.বি.এস.`, `পিএইচ.ডি.`), citations (`পৃ.`, `নং.`, `খ্রি.`), list markers (`১.`, `ক.`), and multi-dot IP addresses (`১৯২.১৬৮.১.১`) from Dari mutation.

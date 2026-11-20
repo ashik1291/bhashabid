@@ -5,17 +5,17 @@
 [![Security CI](https://github.com/ashik1291/bhashabid/actions/workflows/security_audit.yml/badge.svg)](https://github.com/ashik1291/bhashabid/actions/workflows/security_audit.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
-[![PyPI: v1.1.0](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/)
-[![Tests: 181 Passing](https://img.shields.io/badge/Tests-181%20Passing-brightgreen.svg)](eval/unit)
-[![Security Audit: Cloudflare Skill (A+)](https://img.shields.io/badge/Security%20Audit-Cloudflare%20Skill%20(A%2B)-success.svg)](SECURITY.md)
+[![PyPI](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/)
+[![Tests: 185 Passing](https://img.shields.io/badge/Tests-185%20Passing-brightgreen.svg)](eval/unit)
+[![Security: Self-Assessed](https://img.shields.io/badge/Security-Self--Assessed-informational.svg)](SECURITY.md)
 [![Security: Bandit 0-Vuln](https://img.shields.io/badge/Security-Bandit%200--Vuln-brightgreen.svg)](SECURITY.md)
 [![Dependencies: 0 CVEs](https://img.shields.io/badge/Dependencies-0%20CVEs%20(OSV)-brightgreen.svg)](SECURITY.md)
 [![Secrets: 0 Leaks](https://img.shields.io/badge/Secrets-0%20Leaks-brightgreen.svg)](SECURITY.md)
 [![Supply Chain: Sigstore Attested](https://img.shields.io/badge/Supply%20Chain-Sigstore%20Attested-blue.svg)](SECURITY.md)
-[![P2 Provenance: 50 Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-50%2F50%20Cards%20Reviewed-blueviolet.svg)](knowledge/cards)
-[![Core Skill Token Budget: 298 BPE](https://img.shields.io/badge/Core%20Budget-298%20%2F%20390%20Tokens-success.svg)](skills/bangla-expert/SKILL.md)
+[![P2 Provenance: 50 Author-Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-50%20Author--Reviewed%20Cards-blueviolet.svg)](knowledge/cards)
+[![Core Skill: ~1.26k cl100k tokens](https://img.shields.io/badge/Core%20Skill-~1.26k%20cl100k%20tokens-yellow.svg)](skills/bangla-expert/SKILL.md)
 
-> **Bhashabid** (ভাষাবিদ) is the **first-ever open-source Bengali language coprocessor engine** featuring a **constitutionally supervised self-learning loop**. Operating as an external cognitive and deterministic coprocessor without retraining model weights, it continuously harvests real-world anomalies, synthesizes candidate rules, and distills high-level invariants under human verification (Principle P2) and a strict < 390 token ceiling—systematically elevating the accuracy, orthography, and native fluency of AI-generated Bengali across **17 specialized professional sectors**.
+> **Bhashabid** (ভাষাবিদ) is the **first-ever open-source Bengali language coprocessor engine** featuring a **constitutionally supervised self-learning loop**. Operating as an external cognitive and deterministic coprocessor without retraining model weights, it continuously harvests real-world anomalies, synthesizes candidate rules, and distills high-level invariants under human verification (Principle P2) with a compact, progressively-disclosed skill kernel—systematically elevating the accuracy, orthography, and native fluency of AI-generated Bengali across **17 specialized professional sectors**.
 
 ---
 
@@ -75,7 +75,7 @@ If you don't use an AI code editor or CLI, you can use Bhashabid directly in web
 ## 🎯 What Bhashabid Does & What Problem It Solves Uniquely
 
 ### The Production Reality: Frontier LLMs (~80–85% Fluent) & The Deterministic "Last-Mile"
-Frontier large language models (such as GPT-4o, Claude 3.5 Sonnet, and Gemini 1.5 Pro) are remarkably competent. Across standard Bengali conversation, translation, and open-ended generation, **frontier models routinely achieve ~80% to 85%+ semantic fluency**. They are not illiterate or broken.
+Frontier large language models (such as GPT-4o, Claude 3.5 Sonnet, and Gemini 1.5 Pro) are remarkably competent. Across standard Bengali conversation, translation, and open-ended generation, frontier models are broadly fluent. They are not illiterate or broken. *(The often-quoted "~80–85% fluency / 15–20% gap" framing in this README is the author's working estimate; it has not been measured by this project — see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).)*
 
 However, because frontier LLMs are **probabilistic token predictors**, mission-critical production workflows (banking systems, legal writs, government administrative memos, high-throughput publications) encounter a persistent **15–20% "Last-Mile" fidelity and determinism gap**:
 
@@ -95,7 +95,7 @@ However, because frontier LLMs are **probabilistic token predictors**, mission-c
 ### 🤝 The Neurosymbolic Solution: Coprocessor Synergy, Not Replacement
 Bhashabid does not attempt to train a model from scratch or replace frontier LLMs. Instead, it pairs with them as a **high-speed, deterministic neurosymbolic coprocessor**:
 - **Frontier LLM (Semantic Heavy-Lifter)**: Handles open-domain world knowledge, reasoning, creative depth, and semantic generation (~85% of the cognitive burden).
-- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the 15% deterministic last mile—zero-latency Unicode NFC normalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and ultra-lean (< 390 BPE tokens) context-aware guidance via MCP & pure local Python.
+- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the 15% deterministic last mile—zero-latency Unicode NFC normalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and compact, on-demand context guidance via MCP & pure local Python.
 
 ---
 
@@ -111,8 +111,8 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 | **6. Judicial Writ Formulas (Article 102)** | Approximates legal phrasing colloquially (*"জিজ্ঞেস করে রুল জারি করেছে"*). | Enforces Supreme Court of Bangladesh statutory Rule Nisi show-cause and prayer formulas. | Raw LLM: `"কেন বেআইনি হবে না জিজ্ঞেস করে রুল দিয়েছে"` ⚠️<br>Bhashabid: **"কেন বেআইনি ঘোষণা করা হবে না, তা জানতে চেয়ে রুল জারি করেছেন"** ✔️ |
 | **7. Secretariat Administrative Memos** | Calques English salutations (*"Dear Sir"* ➔ *"প্রিয় মহাশয়"*). | Enforces official *Bangladesh Secretariat Instructions* (*সচিবালয় নির্দেশমালা*) opening and closing protocols. | Raw LLM: `"প্রিয় মহাশয়, আশা করি ভালো আছেন"` ⚠️<br>Bhashabid: **"বরাবর... বিষয়:... জনাব, বিনীত নিবেদন এই যে..."** ✔️ |
 | **8. Classical 14-Akshar Payar Scansion** | Cannot reliably count poetic morae due to subword BPE tokenization abstraction. | Deterministic phonological syllabifier (*মুক্তদল* vs *রুদ্ধদল*) verifies exact 8+6=14 akshar Payar cadence. | Raw LLM: Pseudo-verse with broken 16/17 syllable rhythm ⚠️<br>Bhashabid: **Validates exact 8+6=14 akshar Payar couplets** ✔️ |
-| **9. Context Window & Token Efficiency** | Dumping massive style guides (5,000–10,000 tokens) exhausts context, increases latency, and costs money. | Root skill kernel is strictly capped under **390 tokens** (currently **298 true BPE tokens** on `cl100k_base`), loading domains on-demand. | Raw LLM: 10,000+ token monolithic prompt injection ⚠️<br>Bhashabid: **298 true BPE tokens + 0-token Python offloading** ✔️ |
-| **10. Local Offline Edge Execution** | Requires active internet, cloud API keys, and 500ms–2000ms latency per request. | 100% offline, local execution with 78,000+ word lexicon; processes at **500,000 words/second** in under 5ms. | Raw LLM: Cloud dependent, network latency, API costs ⚠️<br>Bhashabid: **Pure local Python, 0 network calls, $0.00 marginal cost** ✔️ |
+| **9. Context Window & Token Efficiency** | Dumping massive style guides (5,000–10,000 tokens) exhausts context, increases latency, and costs money. | Compact root skill kernel (**~1,260 tokens** on `cl100k_base`, ~890 on `o200k_base`; Bengali script tokenizes densely), loading domain guides on-demand. | Raw LLM: 10,000+ token monolithic prompt injection ⚠️<br>Bhashabid: **~1.26k-token kernel + 0-token Python offloading** ✔️ |
+| **10. Local Offline Edge Execution** | Requires active internet, cloud API keys, and 500ms–2000ms latency per request. | 100% offline, local execution with 78,000+ word lexicon; measured ~175,000 words/s (normalize) and ~11,000–13,000 words/s (lint / repair) on a laptop CPU. | Raw LLM: Cloud dependent, network latency, API costs ⚠️<br>Bhashabid: **Pure local Python, 0 network calls, $0.00 marginal cost** ✔️ |
 
 ---
 
@@ -125,14 +125,14 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
                                                   │
                                                   ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────┐
-│              CORE SKILL KERNEL (Programmatically Capped Under 390 BPE Tokens • cl100k)            │
+│              CORE SKILL KERNEL (Compact, ~1.26k cl100k Tokens, Domains Loaded On-Demand)          │
 └───────────────────────┬─────────────────────────┬─────────────────────────┬───────────────────────┘
                         │                         │                         │
                         ▼ [Pillar 1]              ▼ [Pillar 3]              ▼ [Pillar 4]
 ┌───────────────────────────────┐ ┌───────────────────────────────┐ ┌───────────────────────────────┐
 │  PROGRAMMATIC TOKEN CEILING   │ │   MODULAR DOMAIN ISOLATION    │ │ DETERMINISTIC COPROCESSOR     │
-│ • 298 True BPE Tokens         │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
-│ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~500,000 words/second       │
+│ • ~1.26k cl100k Tokens        │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
+│ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~11k–175k words/second      │
 │ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • 100% Exact Math, NFC & Dari │
 └───────────────────────────────┘ └───────────────────────────────┘ └───────────────▲───────────────┘
                                                   ▲                                 │
@@ -144,13 +144,13 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
                         └───────────────────────────────────────────────────┘
 ```
 
-### 1. Hard Programmatic Token Ceiling (< 390 Tokens Core Budget)
+### 1. Compact Skill Kernel with Progressive Disclosure
 - **Problem**: Monolithic linguistic system prompts (5,000–20,000 tokens) cause severe context dilution, high latency, and high API expenses.
-- **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is hard-capped programmatically under **390 tokens** (currently **298 true BPE tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure.
+- **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is kept compact (**~1,260 tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure. Note: this exceeds the 600-token target in REQ-036 — the unit test uses a word-count estimate that undercounts Bengali; see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).
 
 ### 2. Generalization Over Memorization (Supervised Closed-Loop Learning)
 - **Problem**: Manually appending example sentences to prompts causes prompt bloat. Un-gated autonomous self-learning leads to hallucinated grammar rules.
-- **Solution**: Bhashabid executes a closed loop (`harvest` ➔ `synthesize-cards` ➔ `human review (P2)` ➔ `distill`). A single high-level invariant covers tens of thousands of sentence permutations. Knowledge cards cannot enter production without **cryptographic human sign-off**.
+- **Solution**: Bhashabid executes a closed loop (`harvest` ➔ `synthesize-cards` ➔ `human review (P2)` ➔ `distill`). A single high-level invariant covers tens of thousands of sentence permutations. Knowledge cards cannot enter production without a **recorded human sign-off** (reviewer name, date, and a SHA-256 content fingerprint that detects later edits; it is not a cryptographic signature).
 
 ### 3. Modular Domain Isolation (9 Progressive Guides)
 - **Problem**: Exposing all specialized vocabularies simultaneously confuses model style and wastes tokens.
@@ -158,7 +158,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 
 ### 4. Deterministic Python Offloading via MCP (Zero Token Cost)
 - **Problem**: LLMs struggle with mathematical lookups, comma spacing, and phonological syllable counting.
-- **Solution**: Bhashabid offloads deterministic operations to local Python algorithms via the **Model Context Protocol (MCP)** and CLI at **500,000 words/second**, with **100% mathematical precision and 0 prompt tokens burned**.
+- **Solution**: Bhashabid offloads deterministic operations to local Python algorithms via the **Model Context Protocol (MCP)** and CLI, with exact, unit-tested results for numbers, dates and Unicode, and **0 prompt tokens burned**.
 
 ---
 
@@ -188,20 +188,42 @@ Bhashabid provides comprehensive domain standards across **17 specialized profes
 
 ---
 
-## 🧪 Proven Accuracy & Verification Metrics
+## 🧪 Measured Accuracy — What Is and Isn't Verified
 
-Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Every mistake discovered in practice is preserved in a permanent regression ledger and executed on every commit:
+Bhashabid follows an anti-self-deception policy (Principle P8). This section separates what has been **measured** from what is **not yet measured**.
 
-| Verification Suite | Target | Observed Result | Status |
-| :--- | :---: | :---: | :---: |
-| **Automated Unit & Regression Suite** | 100% Pass | **181 / 181 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-181%2F181%20Pass-brightgreen.svg) |
-| **Principle P2 Provenance Integrity** | 100% Signed | **50 / 50 Cards Reviewed** | ![P2](https://img.shields.io/badge/P2%20Provenance-50%2F50%20Reviewed-blueviolet.svg) |
-| **Core Skill Token Footprint** | < 390 Tokens | **298 True BPE Tokens** (`cl100k_base`) | ![Tokens](https://img.shields.io/badge/BPE%20Tokens-298%20%2F%20390-success.svg) |
-| **Invariant Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles / Summaries / Examples** | ![Duplicates](https://img.shields.io/badge/Duplicates-0-brightgreen.svg) |
-| **Irregular Number Precision (0–99)** | 100.0% | **100.0% Deterministic Match** | ![Numbers](https://img.shields.io/badge/Numeral%20Accuracy-100%25-brightgreen.svg) |
-| **Sentence-Ending Dari Enforcement** | 100.0% | **100.0% (Decimal Protected)** | ![Punctuation](https://img.shields.io/badge/Punctuation-100%25-brightgreen.svg) |
-| **Guru-chandali Concordance Trapping** | 100.0% | **100.0% Trapped with Bidirectional Fixes** | ![Linter](https://img.shields.io/badge/Linter-100%25-brightgreen.svg) |
-| **Execution Throughput (Local Python)** | > 100k wps | **~500,000 words/second ($0.00 cost)** | ![Performance](https://img.shields.io/badge/Speed-500k%20words%2Fsec-blue.svg) |
+### Measured (deterministic engine, no LLM in the loop)
+
+| Check | Result | How to reproduce |
+| :--- | :--- | :--- |
+| Unit & regression suite | **185 / 185 passing** (Windows & Linux) | `python -m unittest discover -s eval/unit` |
+| Numbers 0–99, lakh/crore grouping, currency, fractions, Bongabdo dates | Exact, unit-tested | `eval/unit/test_bn_numbers.py` |
+| Gold set — Guru-chandali detection | 10 / 10 detected, 10 / 10 auto-repaired | `python eval/benchmarks/engine_accuracy.py` |
+| Gold set — pronoun/verb honorific & person clashes | 14 / 14 detected, 14 / 14 auto-repaired | 〃 |
+| Gold set — calques & mechanical passives | 8 / 8 detected, 4 / 8 auto-repaired (others flagged for rewrite) | 〃 |
+| Gold set — clean sentences (news, legal, dialogue, consistent Sadhu) | **0 / 52 false positives**; `repair` leaves all 52 unchanged | 〃 |
+| Throughput (laptop CPU, single thread) | normalize ~175k words/s · repair ~13k words/s · lint ~11k words/s | — |
+
+**Limits of these numbers:** the gold set (`eval/gold/engine_gold.jsonl`, ~90 sentences) was drafted by an LLM assistant together with the rule changes, and is still awaiting native-speaker review. Treat it as an optimistic upper bound and a regression guard, not as real-world accuracy. The engine is rule-based: it only catches patterns it has rules for.
+
+### Not yet measured
+
+- **LLM uplift from the skill.** No live with-skill vs. without-skill runs across models have been done yet (REQ-039 / P7). `eval/benchmarks/benchmark_matrix.py` and `benchmark_evaluator.py` use hand-written example outputs and are illustrative only.
+- **Per-sector quality.** The 17 sector guides are reference guidance for the LLM; apart from the deterministic tools (numbers, dates, writ/deed templates, prosody), sector-level output quality has not been benchmarked.
+- **Skill token budget.** `SKILL.md` is ~1,260 tokens on `cl100k_base` (~890 on `o200k_base`), above the 600-token REQ-036 target.
+- **Knowledge cards.** All 50 cards were reviewed by one native speaker (the project author); 6 carry a generic reviewer name. Independent second review is pending.
+
+### Engine coverage by sector
+
+| Sector(s) | Deterministic support | Status |
+| :--- | :--- | :--- |
+| All sectors | Unicode NFC, Dari, numbers, dates, orthography, Guru-chandali, honorific concordance | ✅ Tested |
+| Classical Poetry & Prosody | 14-akshar Payar / Aksharbritta scansion | ✅ Tested on canonical lines |
+| Constitutional Writs, Land Deeds | Template generators (prayers, schedules, clauses) | 🟡 Templates not yet reviewed by a lawyer |
+| Banking, MFS, E-Commerce | Lakh/crore, currency words, ID preservation | 🟡 Numbers tested; prose guidance only |
+| Translation & Calque | Calque/idiom detection (~110 phrases + generic passive rule) | 🟡 Pattern-based |
+| Healthcare, Agronomy, Admin, Education, Academic, ICT, Journalism, Civic, Support, Creative | Reference guides for the LLM | ⚪ Guidance only, unmeasured |
+
 
 ---
 
@@ -221,7 +243,7 @@ print(suggestions)  # ['আবিষ্কার']
 
 # 3. Statutory South Asian Lakh/Crore Currency & Number Formatting
 print(bhashabid.format_number("1234567.50"))        # "১২,৩৪,৫৬৭.৫০"
-print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র"
+print(bhashabid.format_currency_words(1234567.50))  # "বারো লাখ চৌত্রিশ হাজার পাঁচ শত সাতষট্টি টাকা পঞ্চাশ পয়সা"
 print(bhashabid.format_date_bongabdo(1433, 1, 1))   # "১লা বৈশাখ, ১৪৩৩ বঙ্গাব্দ"
 
 # 4. Static Grammar, Honorific & Calque Linter
@@ -251,7 +273,7 @@ bhashabid number 99 --format words
 
 # Format currency in South Asian lakh/crore
 bhashabid number 1234567.50 --format currency
-# Output: বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা
+# Output: বারো লাখ চৌত্রিশ হাজার পাঁচ শত সাতষট্টি টাকা পঞ্চাশ পয়সা
 
 # Lint text for grammatical, honorific, and calque errors
 bhashabid lint "তারা সেই অর্থ ফেরত দিয়েছিলেন এবং বিষয়টি বিদ্যুৎ দ্বারা চালিত."
@@ -272,29 +294,29 @@ Expose Bhashabid's deterministic tools via stdio MCP for Claude Desktop, Claude 
 bhashabid-mcp
 # or: bhashabid mcp
 ```
-**Exposed Deterministic Tools**:
-- `bhashabid_repair`: Automatic Unicode NFC normalization, Bangla Academy orthography, and Dari punctuation.
-- `bhashabid_spellcheck`: 78k offline phonetic candidate search with compound word decomposition.
-- `bhashabid_format_number`: Irregular 0–99 cardinal words, currency words, South Asian comma grouping.
-- `bhashabid_lint`: Static analysis for Guru-chandali, cross-clause honorific concordance, and English calques.
-- `bhashabid_prosody`: Classical scansion (Dalabritta, Matrabritta, Aksharbritta) and 14-akshar Payar validation.
-- `generate_writ_prayer`: Drafts Article 102 High Court constitutional writ prayers in statutory Bengali.
+**Exposed Deterministic Tools** (12):
+- `repair_text`, `normalize_text`: Unicode NFC, Bangla Academy orthography, Dari punctuation, register/calque repair.
+- `lint_text`, `spellcheck_text`: Guru-chandali, honorific concordance, calques; 78k-word offline spellcheck.
+- `convert_number`, `format_date`: Cardinal/ordinal words, currency, lakh/crore grouping; Gregorian and Bongabdo dates (`ordinal_suffix: false` for "১৫ নভেম্বর" style).
+- `prosody_scan`: Aksharbritta scansion and 14-akshar Payar validation.
+- `generate_writ_prayer`, `generate_deed_clause`: Article 102 writ prayers and land-deed clauses.
+- `audit_literary_text`, `generate_literary_prompt`, `lookup_lapidary`: literary audit and lexicon helpers.
 
 ---
 
 ## 🛡️ Constitutional Governance (Principle P2 & P8)
 
-1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without authenticated native-speaker review, non-empty verified exemplars, and cryptographic SHA-256 signatures. **50 / 50 cards (100%)** are authenticated by lead human arbiter `Ashikur Rahman Bhuiyan` (with 19 candidate cards in `knowledge/cards/drafts/` queued for review).
+1. **Principle P2 (Human Provenance Gate)**: No knowledge card enters production without a recorded native-speaker review, non-empty verified exemplars, and a SHA-256 content fingerprint (tamper-evidence, not a cryptographic signature). **50 / 50 cards** were reviewed by the project author `Ashikur Rahman Bhuiyan` (independent second review pending) (with 19 candidate cards in `knowledge/cards/drafts/` queued for review).
 2. **Principle P4 (Deterministic Tools for Rules)**: Rules that can be computed with discrete mathematics or grammars are implemented in code, not left to probabilistic prompt guesses.
 3. **Principle P8 (Anti-Self-Deception & Memory)**: Flaws detected across real-world corpora are permanently logged in [`memory/mistakes/ledger.jsonl`](memory/mistakes/ledger.jsonl) and sealed as automated unit tests in [`eval/unit/`](eval/unit/).
 
 ---
 
-## 🔒 Security & Defensive Audit (Cloudflare Audit Skill)
+## 🔒 Security & Defensive Self-Assessment
 
-Bhashabid has undergone a comprehensive defensive security audit adhering to the **[Cloudflare Security Audit Skill](https://github.com/cloudflare/security-audit-skill)** framework, achieving an **A+ Hardened Production Grade** rating:
+Bhashabid was self-assessed with an AI-assisted review following the **[Cloudflare Security Audit Skill](https://github.com/cloudflare/security-audit-skill)** checklist (not an independent third-party audit). CI runs Bandit, an OSV dependency audit and a secret scanner on every push:
 - **Zero Dynamic Execution**: 100% pure Python AST with zero calls to `eval()`, `exec()`, or dynamic code execution.
-- **Zero Runtime Dependencies & Offline Purity**: Operates strictly in-memory without external network telemetry, APIs, or third-party wheels.
+- **Offline Purity**: Operates in-memory without network telemetry or external APIs; the only declared runtime dependency is `pyyaml`.
 - **Hardened MCP Boundary**: Bounded 10MB stdio frames and strict tool type sanitization prevent local IPC resource exhaustion.
 - **Data Lifecycle Safety**: Skill installers strictly verify Bhashabid content signatures before unlinking any workspace files, guaranteeing zero accidental data loss for developer configurations.
 - **Software Composition & Secrets**: 0 CVEs detected in Google OSV.dev / PyPA, and 0 secret/credential leaks across 1,860 scanned files.

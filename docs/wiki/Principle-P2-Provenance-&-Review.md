@@ -6,13 +6,13 @@ Bhashabid strictly adheres to **Principle P2** of its Constitution:
 
 ---
 
-## 🔒 Cryptographic Review Seal
+## 🔒 Review Record & Content Fingerprint
 
 Every reviewed knowledge card in `knowledge/cards/` is permanently sealed with:
 * The human reviewer's full legal name and email.
 * Institutional affiliation or native-speaker qualification.
 * Approval timestamp (`YYYY-MM-DD`).
-* A SHA-256 cryptographic signature hash of the card's linguistic rules:
+* A truncated SHA-256 fingerprint of the card's content (detects later edits; it is not a keyed signature and does not by itself prove who reviewed):
   ```yaml
   review:
     reviewer_name: Ashikur Rahman Bhuiyan

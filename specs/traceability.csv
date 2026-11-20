@@ -11,9 +11,9 @@ REQ-009,TASK-004,eval/unit/test_bn_numbers.py::test_ascii_to_bangla_digits,CRD-N
 REQ-010,TASK-004,eval/unit/test_bn_numbers.py::test_bangla_to_ascii_digits,CRD-NUM-010,EV-NUM-010,IMPLEMENTED
 REQ-011,TASK-004,eval/unit/test_bn_numbers.py::test_style_profiles,CRD-NUM-011,EV-NUM-011,IMPLEMENTED
 REQ-012,TASK-004,eval/unit/test_bn_numbers.py::test_negative_numbers,CRD-NUM-012,EV-NUM-012,IMPLEMENTED
-REQ-013,TASK-004,eval/unit/test_bn_numbers.py::test_crore_compounding,CRD-NUM-013,EV-NUM-013,IMPLEMENTED
-REQ-014,TASK-004,eval/unit/test_bn_numbers.py::test_classifiers_with_numbers,CRD-NUM-014,EV-NUM-014,IMPLEMENTED
-REQ-015,TASK-004,eval/unit/test_bn_numbers.py::test_invalid_inputs,CRD-NUM-015,EV-NUM-015,IMPLEMENTED
+REQ-013,TASK-004,eval/unit/test_bn_numbers.py::test_large_numbers_words,CRD-NUM-013,EV-NUM-013,IMPLEMENTED
+REQ-014,TASK-004,,CRD-NUM-014,EV-NUM-014,NOT_IMPLEMENTED
+REQ-015,TASK-004,,CRD-NUM-015,EV-NUM-015,PARTIAL (raises TypeError/ValueError; no structured InvalidNumberError)
 REQ-016,TASK-010,eval/unit/test_bn_normalize.py::test_unicode_canonicalization,CRD-ORT-001,EV-ORTH-001,IMPLEMENTED
 REQ-017,TASK-010,eval/unit/test_bn_normalize.py::test_unicode_canonicalization,CRD-ORT-001,EV-ORTH-002,IMPLEMENTED
 REQ-018,TASK-010,eval/unit/test_bn_normalize.py::test_unicode_canonicalization,CRD-ORT-001,EV-ORTH-003,IMPLEMENTED
@@ -24,18 +24,18 @@ REQ-022,TASK-010,eval/unit/test_bn_normalize.py::test_tatbhava_short_vowels,CRD-
 REQ-023,TASK-010,eval/unit/test_bn_normalize.py::test_unicode_canonicalization,CRD-ORT-001,EV-ORTH-008,IMPLEMENTED
 REQ-024,TASK-010,eval/unit/test_bn_normalize.py::test_whitespace_compaction,CRD-ORT-001,EV-ORTH-009,IMPLEMENTED
 REQ-025,TASK-010,eval/unit/test_bn_normalize.py::test_dari_punctuation_and_decimals,CRD-ORT-001,EV-ORTH-010,IMPLEMENTED
-REQ-026,TASK-011,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-001,EV-REG-001,IMPLEMENTED
-REQ-027,TASK-011,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-001,EV-REG-002,IMPLEMENTED
-REQ-028,TASK-011,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-002,EV-REG-003,IMPLEMENTED
-REQ-029,TASK-011,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-002,EV-REG-004,IMPLEMENTED
-REQ-030,TASK-011,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-002,EV-REG-005,IMPLEMENTED
-REQ-031,TASK-021,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-003,EV-REG-006,IMPLEMENTED
-REQ-032,TASK-020,eval/unit/test_bn_lint.py::test_calque_detection,CRD-TRN-001,EV-TRANS-001,IMPLEMENTED
-REQ-033,TASK-021,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-005,EV-GEN-001,IMPLEMENTED
-REQ-034,TASK-021,eval/unit/test_knowledge_cards.py::test_all_cards_valid_schema,CRD-GRM-003,EV-GEN-002,IMPLEMENTED
-REQ-035,TASK-020,eval/unit/test_bn_lint.py::test_calque_detection,CRD-TRN-001,EV-TRANS-002,IMPLEMENTED
-REQ-036,TASK-012,eval/unit/test_skill.py::test_skill_token_budget,CRD-SKL-001,EV-SKL-001,IMPLEMENTED
-REQ-037,TASK-004,eval/unit/test_regression_ledger.py::test_mistake_ledger_schema,CRD-MEM-001,EV-MEM-001,IMPLEMENTED
-REQ-038,TASK-004,eval/unit/test_regression_ledger.py::test_ledger_coverage,CRD-MEM-002,EV-MEM-002,IMPLEMENTED
-REQ-039,TASK-034,eval/benchmarks/benchmark_matrix.py::run_matrix,CRD-EVL-001,EV-BENCH-001,IMPLEMENTED
-REQ-040,TASK-004,eval/unit/test_kill_switch.py::test_stop_file,CRD-SYS-001,EV-SYS-001,IMPLEMENTED
+REQ-026,TASK-011,eval/unit/test_bn_lint.py::test_guru_chandali_detection;eval/unit/test_engine_gold.py::test_detection_recall,CRD-GRM-001,EV-REG-001,IMPLEMENTED
+REQ-027,TASK-011,eval/unit/test_engine_gold.py::test_repair_leaves_clean_text_unchanged,CRD-GRM-001,EV-REG-002,PARTIAL (consistent Sadhu preserved; no explicit Sadhu style profile)
+REQ-028,TASK-011,eval/unit/test_bn_lint.py::test_honorific_clash_detection;eval/unit/test_engine_gold.py::test_detection_recall,CRD-GRM-002,EV-REG-003,IMPLEMENTED
+REQ-029,TASK-011,eval/unit/test_bn_lint.py::test_honorific_clash_detection;eval/unit/test_engine_gold.py::test_detection_recall,CRD-GRM-002,EV-REG-004,IMPLEMENTED
+REQ-030,TASK-011,eval/unit/test_bn_lint.py::test_honorific_clash_detection;eval/unit/test_engine_gold.py::test_detection_recall,CRD-GRM-002,EV-REG-005,IMPLEMENTED
+REQ-031,TASK-021,,CRD-GRM-003,EV-REG-006,NOT_IMPLEMENTED (skill guidance only)
+REQ-032,TASK-020,eval/unit/test_bn_lint.py::test_calque_detection;eval/unit/test_engine_gold.py::test_detection_recall,CRD-TRN-001,EV-TRANS-001,IMPLEMENTED
+REQ-033,TASK-021,,CRD-GRM-005,EV-GEN-001,NOT_IMPLEMENTED (skill guidance only)
+REQ-034,TASK-021,,CRD-GRM-003,EV-GEN-002,NOT_IMPLEMENTED (skill guidance only)
+REQ-035,TASK-020,,CRD-TRN-001,EV-TRANS-002,NOT_IMPLEMENTED (skill guidance only)
+REQ-036,TASK-012,eval/unit/test_skill.py::test_skill_token_budget,CRD-SKL-001,EV-SKL-001,PARTIAL (test uses words*1.3 estimate; real cl100k count of SKILL.md is ~1260 tokens)
+REQ-037,TASK-004,eval/unit/test_regression_ledger.py::test_all_resolved_mistakes_in_ledger,CRD-MEM-001,EV-MEM-001,IMPLEMENTED
+REQ-038,TASK-004,eval/unit/test_regression_ledger.py::test_all_resolved_mistakes_in_ledger,CRD-MEM-002,EV-MEM-002,IMPLEMENTED
+REQ-039,TASK-034,eval/benchmarks/benchmark_matrix.py::run_matrix,CRD-EVL-001,EV-BENCH-001,NOT_IMPLEMENTED (benchmark_matrix.py uses hand-written simulated baselines; no live model runs)
+REQ-040,TASK-004,eval/unit/test_kill_switch.py::test_kill_switch_detection,CRD-SYS-001,EV-SYS-001,IMPLEMENTED
