@@ -1,6 +1,6 @@
 # Bhashabid (ভাষাবিদ) — The Deterministic Bengali Language Coprocessor Engine
 
-### *Deterministic Bengali linguistic coprocessor engine & progressive skill layer with a Supervised Self-Learning Distillation Loop.*
+### *Deterministic Bengali linguistic coprocessor engine & progressive skill layer for LLMs, with human-reviewed knowledge cards.*
 
 [![Security CI](https://github.com/ashik1291/bhashabid/actions/workflows/security_audit.yml/badge.svg)](https://github.com/ashik1291/bhashabid/actions/workflows/security_audit.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -15,7 +15,7 @@
 [![P2 Provenance: 50 Author-Reviewed Cards](https://img.shields.io/badge/P2%20Provenance-50%20Author--Reviewed%20Cards-blueviolet.svg)](knowledge/cards)
 [![Core Skill: ~1.26k cl100k tokens](https://img.shields.io/badge/Core%20Skill-~1.26k%20cl100k%20tokens-yellow.svg)](skills/bangla-expert/SKILL.md)
 
-> **Bhashabid** (ভাষাবিদ) is the **first-ever open-source Bengali language coprocessor engine** featuring a **constitutionally supervised self-learning loop**. Operating as an external cognitive and deterministic coprocessor without retraining model weights, it continuously harvests real-world anomalies, synthesizes candidate rules, and distills high-level invariants under human verification (Principle P2) with a compact, progressively-disclosed skill kernel—systematically elevating the accuracy, orthography, and native fluency of AI-generated Bengali across **17 specialized professional sectors**.
+> **Bhashabid** (ভাষাবিদ) is, to our knowledge, the first open-source **MCP server + Agent Skill** that bundles offline Bengali normalization, register/honorific linting, statutory numerals and dates, and Payar prosody for LLMs. It works alongside a model without retraining it: the skill gives compact style guidance across **17 professional sectors**, and the deterministic tools handle what models get wrong from memory. It builds on earlier Bengali NLP work such as [BNLP](https://github.com/sagorbrur/bnlp), [csebuetnlp/normalizer](https://github.com/csebuetnlp/normalizer) and [bnunicodenormalizer](https://pypi.org/project/bnunicodenormalizer/).
 
 ---
 
@@ -95,7 +95,7 @@ However, because frontier LLMs are **probabilistic token predictors**, mission-c
 ### 🤝 The Neurosymbolic Solution: Coprocessor Synergy, Not Replacement
 Bhashabid does not attempt to train a model from scratch or replace frontier LLMs. Instead, it pairs with them as a **high-speed, deterministic neurosymbolic coprocessor**:
 - **Frontier LLM (Semantic Heavy-Lifter)**: Handles open-domain world knowledge, reasoning, creative depth, and semantic generation (~85% of the cognitive burden).
-- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the 15% deterministic last mile—zero-latency Unicode NFC normalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and compact, on-demand context guidance via MCP & pure local Python.
+- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the 15% deterministic last mile—zero-latency Unicode canonicalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and compact, on-demand context guidance via MCP & pure local Python.
 
 ---
 
@@ -104,7 +104,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 | Linguistic & Production Dimension | Frontier LLM Baseline (Probabilistic Generation) | Bhashabid Neurosymbolic Coprocessor (Deterministic Guard) | Empirical Production Example |
 | :--- | :--- | :--- | :--- |
 | **1. South Asian Currency & Numbers** | High fluency, but frequently defaults to Western 3-digit comma grouping (`1,234,567.50`). | Mathematically guarantees South Asian Lakh/Crore grouping and official check words in Bengali. | Input: `1234567.50`<br>Raw LLM: `1,234,567.50` ⚠️<br>Bhashabid: **"১২,৩৪,৫৬৭.৫০ (বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র)"** ✔️ |
-| **2. Unicode NFC & Punctuation** | Emits mixed Unicode codepoints (NFD/broken Hasanta) and ASCII periods (`.`) instead of Dari (`।`). | Deterministically canonicalizes Unicode to NFC and converts terminal periods to Dari while preserving decimals (`৩.১৪`). | Raw LLM: `"তিনি বাড়ি গেলেন."` ⚠️<br>Bhashabid: **"তিনি বাড়ি গেলেন।"** ✔️ |
+| **2. Unicode NFC & Punctuation** | Emits mixed Unicode codepoints (NFD/broken Hasanta) and ASCII periods (`.`) instead of Dari (`।`). | Deterministically canonicalizes Unicode (NFC with precomposed য়/ড়/ঢ়) and converts terminal periods to Dari while preserving decimals (`৩.১৪`). | Raw LLM: `"তিনি বাড়ি গেলেন."` ⚠️<br>Bhashabid: **"তিনি বাড়ি গেলেন।"** ✔️ |
 | **3. Bangla Academy Orthography** | Frequently blends archaic, dialectal, and modern spellings based on historical internet training data (*ষ্টেশন, পাখী, পোষ্ট*). | Deterministically normalizes loanwords and native vocabulary to official Bangla Academy standards (*স্টেশন, পাখি, পোস্ট*). | Raw LLM: `"রেল ষ্টেশনে পাখী ডাকছে"` ⚠️<br>Bhashabid: **"রেল স্টেশনে পাখি ডাকছে"** ✔️ |
 | **4. Pronominal & Verbal Honorifics** | Prone to register drift across multi-clause sentences (mixing informal *তারা* with honorific *দিয়েছিলেন*). | Enforces strict grammatical concordance (*তারা ... দিয়েছিল* vs *তাঁরা ... দিয়েছিলেন*) across clause boundaries. | Raw LLM: `"তারা অর্থ ফেরত দিয়েছিলেন"` ⚠️<br>Bhashabid: **"তাঁরা সেই অর্থ ফেরত দিয়েছিলেন"** ✔️ |
 | **5. Passive Voice English Calques** | Translates technical passives with literal *"দ্বারা"* (*"মুদ্রাস্ফীতির দ্বারা চালিত"*). | Converts passive calques into natural, active causal Bengali syntax. | Raw LLM: `"মুদ্রাস্ফীতির দ্বারা চালিত রাজস্ব ঘাটতি"` ⚠️<br>Bhashabid: **"মুদ্রাস্ফীতিজনিত কারণে রাজস্ব ঘাটতি বৃদ্ধি পেয়েছে"** ✔️ |
@@ -133,7 +133,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 │  PROGRAMMATIC TOKEN CEILING   │ │   MODULAR DOMAIN ISOLATION    │ │ DETERMINISTIC COPROCESSOR     │
 │ • ~1.26k cl100k Tokens        │ │ • 9 Progressive Domain Guides │ │ • Pure Python / MCP Server    │
 │ • Universal Grammar Invariant │ │ • 17 Specialized Sectors      │ │ • ~11k–175k words/second      │
-│ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • 100% Exact Math, NFC & Dari │
+│ • Zero Context Bloat          │ │ • 0.0 Unrelated Prompt Tokens │ │ • Exact Math, Unicode & Dari  │
 └───────────────────────────────┘ └───────────────────────────────┘ └───────────────▲───────────────┘
                                                   ▲                                 │
                                                   │                                 │
@@ -148,9 +148,9 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 - **Problem**: Monolithic linguistic system prompts (5,000–20,000 tokens) cause severe context dilution, high latency, and high API expenses.
 - **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is kept compact (**~1,260 tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure. Note: this exceeds the 600-token target in REQ-036 — the unit test uses a word-count estimate that undercounts Bengali; see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).
 
-### 2. Generalization Over Memorization (Supervised Closed-Loop Learning)
-- **Problem**: Manually appending example sentences to prompts causes prompt bloat. Un-gated autonomous self-learning leads to hallucinated grammar rules.
-- **Solution**: Bhashabid executes a closed loop (`harvest` ➔ `synthesize-cards` ➔ `human review (P2)` ➔ `distill`). A single high-level invariant covers tens of thousands of sentence permutations. Knowledge cards cannot enter production without a **recorded human sign-off** (reviewer name, date, and a SHA-256 content fingerprint that detects later edits; it is not a cryptographic signature).
+### 2. Human-Reviewed Knowledge Cards & Regression Harness
+- **Problem**: Manually appending example sentences to prompts causes prompt bloat, and un-reviewed machine-generated rules drift into hallucinated grammar.
+- **Solution**: Rules live as knowledge cards and engine rules that a human edits and reviews. The `harvest` / `practice` / `synthesize-cards` commands are a **regression harness**: they run the linter over corpora and draft candidate cards from its findings, but they can only surface patterns the engine already knows, and `distill` validates and syncs files rather than writing rules. New rules come from reviewed errors in real LLM outputs (see `eval/llm_ab/`, `eval/gold/`). Knowledge cards cannot enter production without a **recorded human sign-off** (reviewer name, date, and a SHA-256 content fingerprint that detects later edits; it is not a cryptographic signature).
 
 ### 3. Modular Domain Isolation (9 Progressive Guides)
 - **Problem**: Exposing all specialized vocabularies simultaneously confuses model style and wastes tokens.
@@ -177,7 +177,7 @@ Bhashabid provides comprehensive domain standards across **17 specialized profes
 | **7** | **Academic Research & Methodology** | Peer-reviewed citation standards, academic transliteration with Latin in parentheses, thesis structure. | [`academic_legal_medical.md`](skills/bangla-expert/references/academic_legal_medical.md) |
 | **8** | **Land Registry & Deeds** | Transfer of Property Act 1882, Registration Act 1908, Sub-Kabala conveyance, Heba, CS/SA/RS/BS Khatian, plot boundaries (*চৌহদ্দি*). | [`academic_legal_medical.md`](skills/bangla-expert/references/academic_legal_medical.md) |
 | **9** | **Agronomy & Disaster Management** | Department of Agricultural Extension (DAE), BMD official cyclone warning signals (1-10 মহাবিপদ সংকেত), storm surge (*জলোচ্ছ্বাস*). | [`academic_legal_medical.md`](skills/bangla-expert/references/academic_legal_medical.md) |
-| **10** | **ICT & Software Engineering** | Bangladesh Computer Council (BCC) computing standards, Unicode NFC canonical normalization, open-source localization. | [`orthography.md`](skills/bangla-expert/references/orthography.md) |
+| **10** | **ICT & Software Engineering** | Bangladesh Computer Council (BCC) computing standards, Unicode canonical normalization, open-source localization. | [`orthography.md`](skills/bangla-expert/references/orthography.md) |
 | **11** | **Education & NCTB Pedagogy** | National Curriculum and Textbook Board (NCTB) 4-tier Creative Questioning taxonomy (উদ্দীপক, জ্ঞান, অনুধাবন, প্রয়োগ, উচ্চতর দক্ষতা). | [`academic_legal_medical.md`](skills/bangla-expert/references/academic_legal_medical.md) |
 | **12** | **Translation & Calque Naturalization** | De-calquing passive voice (*দ্বারা*), naturalizing English idioms (*বাগধারা ও প্রবচন*), semantic tri-layer model (*অভিধা, লক্ষণা, ব্যঞ্জনা*). | [`grammar_registers.md`](skills/bangla-expert/references/grammar_registers.md) |
 | **13** | **Consumer E-Commerce & Retail Logistics** *(NEW)* | Consumers' Rights Protection Act 2009, e-CAB guidelines, escrow settlement, refund honorific concordance (*তারা বনাম তাঁরা*), courier tracking. | [`ecommerce_fintech_civic.md`](skills/bangla-expert/references/ecommerce_fintech_civic.md) |
@@ -206,18 +206,30 @@ Bhashabid follows an anti-self-deception policy (Principle P8). This section sep
 
 **Limits of these numbers:** the gold set (`eval/gold/engine_gold.jsonl`, ~90 sentences) was drafted by an LLM assistant together with the rule changes, and is still awaiting native-speaker review. Treat it as an optimistic upper bound and a regression guard, not as real-world accuracy. The engine is rule-based: it only catches patterns it has rules for.
 
+### LLM pilot (with vs. without skill and tools)
+
+[`eval/llm_ab/2026-11-20`](eval/llm_ab/2026-11-20/README.md): 12 tasks, Claude Haiku and Sonnet, deterministic scoring.
+
+| model | no skill | skill text | skill + MCP tools |
+|---|---|---|---|
+| Haiku | 12/12 | 11/12 | 11/12 |
+| Sonnet | 10/12 | 10/12 | **12/12** |
+
+On this small set the skill text alone gave no consistent gain; the MCP tools fixed the two tasks models get wrong from memory (Bangabda date conversion, Payar metre) for Sonnet. n = 12, one vendor: a pilot, not proof.
+
 ### Not yet measured
 
-- **LLM uplift from the skill.** No live with-skill vs. without-skill runs across models have been done yet (REQ-039 / P7). `eval/benchmarks/benchmark_matrix.py` and `benchmark_evaluator.py` use hand-written example outputs and are illustrative only.
+- **LLM uplift at scale.** No large, multi-vendor (GPT, Gemini), multi-sample benchmark with blind native-speaker rating yet (REQ-039 / P7). `eval/benchmarks/benchmark_matrix.py` and `benchmark_evaluator.py` use hand-written example outputs and are illustrative only.
 - **Per-sector quality.** The 17 sector guides are reference guidance for the LLM; apart from the deterministic tools (numbers, dates, writ/deed templates, prosody), sector-level output quality has not been benchmarked.
 - **Skill token budget.** `SKILL.md` is ~1,260 tokens on `cl100k_base` (~890 on `o200k_base`), above the 600-token REQ-036 target.
+- **Unicode form.** Output uses precomposed য়/ড়/ঢ় (U+09DF/09DC/09DD), matching common keyboards; strict Unicode NFC decomposes these three. If a system requires strict NFC, apply `unicodedata.normalize('NFC', text)` after Bhashabid.
 - **Knowledge cards.** All 50 cards were reviewed by one native speaker (the project author); 6 carry a generic reviewer name. Independent second review is pending.
 
 ### Engine coverage by sector
 
 | Sector(s) | Deterministic support | Status |
 | :--- | :--- | :--- |
-| All sectors | Unicode NFC, Dari, numbers, dates, orthography, Guru-chandali, honorific concordance | ✅ Tested |
+| All sectors | Unicode canonical form, Dari, numbers, dates, orthography, Guru-chandali, honorific concordance | ✅ Tested |
 | Classical Poetry & Prosody | 14-akshar Payar / Aksharbritta scansion | ✅ Tested on canonical lines |
 | Constitutional Writs, Land Deeds | Template generators (prayers, schedules, clauses) | 🟡 Templates not yet reviewed by a lawyer |
 | Banking, MFS, E-Commerce | Lakh/crore, currency words, ID preservation | 🟡 Numbers tested; prose guidance only |
@@ -233,7 +245,7 @@ Bhashabid follows an anti-self-deception policy (Principle P8). This section sep
 ```python
 import bhashabid
 
-# 1. Automated Unicode NFC canonicalization, spelling & Dari punctuation (<2ms, Zero-LLM)
+# 1. Automated Unicode canonicalization, spelling & Dari punctuation (<2ms, Zero-LLM)
 repaired, diffs = bhashabid.repair("ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন.")
 print(repaired)  # "ডাক্তার সাহেব ৩.১৪ গ্রাম ওষুধ দিলেন।"
 
@@ -295,7 +307,7 @@ bhashabid-mcp
 # or: bhashabid mcp
 ```
 **Exposed Deterministic Tools** (12):
-- `repair_text`, `normalize_text`: Unicode NFC, Bangla Academy orthography, Dari punctuation, register/calque repair.
+- `repair_text`, `normalize_text`: Unicode canonicalization, Bangla Academy orthography, Dari punctuation, register/calque repair.
 - `lint_text`, `spellcheck_text`: Guru-chandali, honorific concordance, calques; 78k-word offline spellcheck.
 - `convert_number`, `format_date`: Cardinal/ordinal words, currency, lakh/crore grouping; Gregorian and Bongabdo dates (`ordinal_suffix: false` for "১৫ নভেম্বর" style).
 - `prosody_scan`: Aksharbritta scansion and 14-akshar Payar validation.

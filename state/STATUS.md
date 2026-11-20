@@ -11,9 +11,12 @@
 - Single code tree: `tools/bn_*`, `tools/mcp_server`, `tools/cli.py` are aliases of the `bhashabid` package.
 - Knowledge base: 50 cards marked `reviewed`, all by one reviewer (project author); 6 carry a generic reviewer name.
 - MCP: 12 tools; CLI: 24 subcommands.
+- LLM pilot (`eval/llm_ab/2026-11-20`): Haiku 12/11/11 and Sonnet 10/10/12 of 12 tasks for base / skill / skill+tools.
+- Scraper gated to approved sources + robots.txt; news feeds (BBC, Prothom Alo, Daily Star, DW, TBS) are not registered and therefore not fetched.
 
 ## Known Gaps (not yet done)
-- No live with-skill vs. without-skill LLM benchmark (REQ-039 / P7); `benchmark_matrix.py` uses simulated baselines.
+- Only a 12-task single-vendor LLM pilot exists (REQ-039 / P7); a large multi-vendor benchmark with blind native rating is pending (needs paid API approval).
+- Learning loop does not learn: practice/harvest re-run existing rules on edited news text; mistake ledger unchanged since 2026-11-11; `distill` only validates and syncs files.
 - `SKILL.md` is ~1,260 `cl100k_base` tokens, above the 600-token REQ-036 target; the unit test uses a words×1.3 estimate.
 - REQ-014, REQ-031, REQ-033, REQ-034, REQ-035 not implemented in code (skill guidance only); REQ-015, REQ-027, REQ-036 partial. See `specs/traceability.csv`.
 - Independent second native-speaker review of cards and of the gold set.

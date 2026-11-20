@@ -10,12 +10,16 @@ All notable changes to Bhashabid are documented here following Semantic Versioni
 - **Calques**: generic `দ্বারা + -িত/-কৃত` passive rule; `X দ্বারা সভাপতিত্ব করা` / `X দ্বারা সরবরাহ` repaired into genitive constructions instead of leaving a dangling `করা`; literal `দিনের শেষে` no longer flagged.
 - **Spellcheck ranking**: missing vowel-sign and aspirate typos rank higher (`বাজরে` → `বাজারে`), without widening auto-repair.
 - **Windows**: CLI forces UTF-8 stdio; the full test suite now passes without `PYTHONIOENCODING`.
+- **Relative clauses**: `তুমি যা বলবে তাই করব` is no longer flagged/rewritten (যা/তাই/যত/যেমন/যেখানে bound the subject-verb span).
+- **Scraper (P3)**: fetches only hosts of approved sources in `memory/sources/registry.yaml` and only where robots.txt allows; other sources need `allow_unregistered_sources=True`.
 - **Practice generator**: removed perturbations that labelled standard Bengali (ইতোমধ্যে, `সিদ্ধান্ত নেওয়া হয়েছে`, literal `দিনের শেষে`) as errors.
 ### Added
+- `eval/llm_ab/2026-11-20`: first live pilot of base vs. skill vs. skill + MCP tools (Claude Haiku/Sonnet, 12 tasks).
 - `format_date_bangla(..., ordinal_suffix=False)` and MCP `format_date.ordinal_suffix` for the modern `১৫ নভেম্বর` style the skill recommends.
 - `eval/gold/engine_gold.jsonl` + `eval/benchmarks/engine_accuracy.py` + `eval/unit/test_engine_gold.py`: measured engine precision/recall (gold set pending native review).
 ### Changed
 - `tools/bn_*`, `tools/mcp_server`, `tools/cli.py`, `tools/skill_installer.py` are now aliases of the `bhashabid` package (single source of truth; tests exercise shipped code).
+- "Unicode NFC" wording replaced by "Unicode canonical form": output keeps precomposed য়/ড়/ঢ়, which strict NFC decomposes; `is_nfc_normalized` docstring clarified. "First-ever" and "self-learning loop" claims narrowed; harvest/practice described as a regression harness.
 - Documentation corrected: removed unmeasured claims (simulated "+90% lift", "80–85% fluency", "298 BPE tokens", "500k words/s", "cryptographic signatures", "Cloudflare A+"); README now separates measured from unmeasured results.
 
 ## [1.1.1] - 2026-11-20

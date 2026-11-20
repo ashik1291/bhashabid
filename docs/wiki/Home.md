@@ -1,6 +1,6 @@
 # Welcome to the Bhashabid (ভাষাবিদ) Wiki
 
-**Bhashabid** (ভাষাবিদ) is the first-ever open-source Bengali language coprocessor engine featuring a **constitutionally supervised self-learning loop**. Operating as an external cognitive and deterministic coprocessor without retraining model weights, it continuously harvests real-world anomalies, synthesizes candidate rules, and distills high-level invariants under human verification (Principle P2) and a strict < 390 token ceiling—systematically elevating the accuracy, orthography, and native fluency of AI-generated Bengali across **17 specialized professional sectors**.
+**Bhashabid** (ভাষাবিদ) is, to our knowledge, the first open-source MCP server + Agent Skill bundling offline Bengali normalization, register/honorific linting, statutory numerals and dates, and Payar prosody for LLMs. It complements a model without retraining it and builds on earlier Bengali NLP work (BNLP, csebuetnlp/normalizer, bnunicodenormalizer). See the README "Measured Accuracy" section for what is and is not verified.
 
 ---
 
@@ -52,7 +52,7 @@
 ```
 
 - **Pillar 1: Compact Skill Kernel**: Progressive disclosure keeps the always-loaded kernel compact (~1,260 tokens on `cl100k_base`; Bengali script tokenizes densely) and loads domain guides only on demand.
-- **Pillar 2: Supervised Self-Learning Distillation Loop**: Unlike unconstrained autonomous agents that hallucinate grammar rules, Bhashabid pairs an anomaly harvester with a human-in-the-loop (Principle P2) cryptographic sign-off gate before distilling high-level invariants.
+- **Pillar 2: Human-Reviewed Knowledge Cards & Regression Harness**: Rules are edited and reviewed by a human (Principle P2). The harvest/practice commands are a regression harness that re-checks corpora with existing rules; they do not discover or write new rules on their own.
 - **Pillar 3: Modular Domain Isolation**: 17 professional sectors are organized into **9 isolated reference guides** loaded strictly on demand; unrelated domain knowledge burns 0.0 prompt tokens.
 - **Pillar 4: Deterministic MCP Offloading (Zero Token Cost)**: Irregular 0–99 numerals, South Asian currency commas, Unicode NFC canonical normalization, and 14-akshar Payar scansion run as local Python (measured ~110k–175k words/s for normalization, ~11–13k words/s for lint/repair).
 
