@@ -2,6 +2,15 @@
 
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
+## [1.1.1] - 2026-11-20
+### Fixed
+- **Abbreviation & Initials Protection**: Resolved period-to-Dari over-conversion. Protected titles (`ড.`, `ডা.`, `মো.`), name initials (`এস. এ.`, `টি. এস.`), academic degrees (`এম.বি.বি.এস.`, `পিএইচ.ডি.`), citations (`পৃ.`, `নং.`, `খ্রি.`), list markers (`১.`, `ক.`), and multi-dot IP addresses (`১৯২.১৬৮.১.১`) from Dari mutation.
+- **Universal Reph Gemination (Rule 1.02)**: Generalized elimination of doubled consonants after Reph (`বর্ত্তমান` -> `বর্তমান`, `কর্ত্তব্য` -> `কর্তব্য`, `কীর্ত্তি` -> `কীর্তি`, `সর্ব্ব` -> `সর্ব`, `চর্চ্চা` -> `চর্চা`, `অর্দ্ধেক` -> `অর্ধেক`, `মূর্চ্ছা` -> `মূর্ছা`).
+- **Initial Loanword /æ/ Standardization (Rule 2.01)**: Normalized obsolete initial `এ্যা` to standard `অ্যা` (`এ্যাসিড` -> `অ্যাসিড`, `এ্যাম্বুলেন্স` -> `অ্যাম্বুলেন্স`).
+- **Sanskrit Suffix Shortening (Rule 1.01)**: Standardized `-আবলী` to `-াবলি` (`নিয়মাবলি`, `শর্তাবলি`, `রচনাবলি`, `তথ্যাবলি`).
+- **Pleonasm & Concordance Expansion**: Unified double plural elimination across all combinations of `সব`/`সকল` + `গণ`/`বৃন্দ`/`সমূহ` and added `কেবলমাত্র` -> `কেবল` repair.
+- **Unit & Regression Suite**: Expanded automated unit tests to 181 passing tests (100% green).
+
 ## [1.1.0] - 2026-11-19
 ### Added
 - **First-Class Claude Code CLI MCP Support**: Automatic stdio tool registration and health checking in `~/.claude.json`.

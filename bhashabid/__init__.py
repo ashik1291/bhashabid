@@ -38,7 +38,7 @@ from .legal import (
     generate_saf_kabala_clause
 )
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 def spellcheck(text_or_word: str):
     """
