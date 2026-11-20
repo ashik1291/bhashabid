@@ -108,10 +108,22 @@ class TestRepairEngine(unittest.TestCase):
         self.assertEqual(repaired_dp, "সব ছাত্র ক্লাসে উপস্থিত ছিল।")
         self.assertEqual(len(lint_text(repaired_dp)), 0)
 
+        repaired_dp2, _ = repair_text("সকল শিক্ষকগণ উপস্থিত ছিলেন।")
+        self.assertEqual(repaired_dp2, "সকল শিক্ষক উপস্থিত ছিলেন।")
+        self.assertEqual(len(lint_text(repaired_dp2)), 0)
+
+        repaired_dp3, _ = repair_text("সব বইসমূহ লাইব্রেরিতে আছে।")
+        self.assertEqual(repaired_dp3, "সব বই লাইব্রেরিতে আছে।")
+        self.assertEqual(len(lint_text(repaired_dp3)), 0)
+
         # Pleonasm
         repaired_pl, _ = repair_text("তিনি প্রায়শই বিলম্ব করেন।")
         self.assertEqual(repaired_pl, "তিনি প্রায়শ বিলম্ব করেন।")
         self.assertEqual(len(lint_text(repaired_pl)), 0)
+
+        repaired_km, _ = repair_text("তিনি কেবলমাত্র সত্য বলতেন।")
+        self.assertEqual(repaired_km, "তিনি কেবল সত্য বলতেন।")
+        self.assertEqual(len(lint_text(repaired_km)), 0)
 
         # Affix defect
         repaired_affix, _ = repair_text("তারা একত্রিত হয়ে সিদ্ধান্ত নিল।")
@@ -259,6 +271,15 @@ class TestRepairEngine(unittest.TestCase):
             self.assertIn(expected, repaired)
             self.assertGreater(len(fixes), 0)
             self.assertEqual(len(lint_text(repaired)), 0, f"Residual defects in repaired idiom: {repaired}")
+
+    def test_abbreviation_and_reph_end_to_end(self):
+        raw = "ড. মুহাম্মদ ইউনূস ও ডা. এ. কে. খান সাহেবকে (পৃ. ৩০-৩৫) স্মরণ করা হলো."
+        repaired, fixes = repair_text(raw)
+        self.assertEqual(repaired, "ড. মুহাম্মদ ইউনূস ও ডা. এ. কে. খান সাহেবকে (পৃ. ৩০-৩৫) স্মরণ করা হলো।")
+
+        raw_reph = "বর্ত্তমান যুগে কর্ত্তব্য পালন আবশ্যক."
+        repaired_reph, _ = repair_text(raw_reph)
+        self.assertEqual(repaired_reph, "বর্তমান যুগে কর্তব্য পালন আবশ্যক।")
 
 if __name__ == "__main__":
     unittest.main()

@@ -144,5 +144,34 @@ class TestBnNormalize(unittest.TestCase):
         self.assertIn("রেলস্টেশনে", res)
         self.assertIn("গেলেন।", res)
 
+    def test_abbreviation_and_initials_preservation(self):
+        cases = [
+            ("তিনি ড. মুহাম্মদ ইউনূস.", "তিনি ড. মুহাম্মদ ইউনূস।"),
+            ("ডা. এ. কে. খান সাহেব এসেছেন.", "ডা. এ. কে. খান সাহেব এসেছেন।"),
+            ("এস. এ. আয়ার এবং টি. এস. এলিয়ট.", "এস. এ. আয়ার এবং টি. এস. এলিয়ট।"),
+            ("বইটি (পৃ. ৩৫) দ্রষ্টব্য.", "বইটি (পৃ. ৩৫) দ্রষ্টব্য।"),
+            ("শর্তগুলো হলো: ১. প্রথম শর্ত ২. দ্বিতীয় শর্ত.", "শর্তগুলো হলো: ১. প্রথম শর্ত ২. দ্বিতীয় শর্ত।"),
+            ("তিনি এম.বি.বি.এস. পাস করেছেন.", "তিনি এম.বি.বি.এস. পাস করেছেন।"),
+            ("সার্ভার আইপি ১৯২.১৬৮.১.১ এবং সংস্করণ v1.1.0 প্রস্তুত.", "সার্ভার আইপি ১৯২.১৬৮.১.১ এবং সংস্করণ v1.1.0 প্রস্তুত।")
+        ]
+        for inp, exp in cases:
+            self.assertEqual(normalize_punctuation(inp), exp)
+
+    def test_reph_gemination_and_loanword_generalization(self):
+        # Universal Reph gemination elimination
+        text_reph = "বর্ত্তমান যুগে কর্ত্তব্য পালন ও কীর্ত্তি অর্জনই সর্ব্বপ্রধান লক্ষ্য। অর্দ্ধেক কাজ শেষ করে মূর্চ্ছা যাওয়া উচিত নয়।"
+        exp_reph = "বর্তমান যুগে কর্তব্য পালন ও কীর্তি অর্জনই সর্বপ্রধান লক্ষ্য। অর্ধেক কাজ শেষ করে মূর্ছা যাওয়া উচিত নয়।"
+        self.assertEqual(normalize_orthography(text_reph), exp_reph)
+
+        # Initial /æ/ loanword standard
+        text_ae = "এ্যাসিড ও এ্যাম্বুলেন্স নিয়ে এ্যাকশন নেওয়া হলো।"
+        exp_ae = "অ্যাসিড ও অ্যাম্বুলেন্স নিয়ে অ্যাকশন নেওয়া হলো।"
+        self.assertEqual(normalize_orthography(text_ae), exp_ae)
+
+        # Suffix -আবলি
+        text_aboli = "নতুন নিয়মাবলী ও শর্তাবলীর আলোকে তথ্যাবলী সংগ্রহ করা হয়েছে।"
+        exp_aboli = "নতুন নিয়মাবলি ও শর্তাবলির আলোকে তথ্যাবলি সংগ্রহ করা হয়েছে।"
+        self.assertEqual(normalize_orthography(text_aboli), exp_aboli)
+
 if __name__ == "__main__":
     unittest.main()

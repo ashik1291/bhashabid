@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: >=3.10](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
 [![PyPI: v1.1.0](https://img.shields.io/pypi/v/bhashabid.svg)](https://pypi.org/project/bhashabid/)
-[![Tests: 178 Passing](https://img.shields.io/badge/Tests-178%20Passing-brightgreen.svg)](eval/unit)
+[![Tests: 181 Passing](https://img.shields.io/badge/Tests-181%20Passing-brightgreen.svg)](eval/unit)
 [![Security Audit: Cloudflare Skill (A+)](https://img.shields.io/badge/Security%20Audit-Cloudflare%20Skill%20(A%2B)-success.svg)](SECURITY.md)
 [![Security: Bandit 0-Vuln](https://img.shields.io/badge/Security-Bandit%200--Vuln-brightgreen.svg)](SECURITY.md)
 [![Dependencies: 0 CVEs](https://img.shields.io/badge/Dependencies-0%20CVEs%20(OSV)-brightgreen.svg)](SECURITY.md)
@@ -194,7 +194,7 @@ Bhashabid enforces an anti-self-deception testing philosophy (Principle P8). Eve
 
 | Verification Suite | Target | Observed Result | Status |
 | :--- | :---: | :---: | :---: |
-| **Automated Unit & Regression Suite** | 100% Pass | **178 / 178 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-178%2F178%20Pass-brightgreen.svg) |
+| **Automated Unit & Regression Suite** | 100% Pass | **181 / 181 Tests Passing** | ![Pass](https://img.shields.io/badge/Unit%20Tests-181%2F181%20Pass-brightgreen.svg) |
 | **Principle P2 Provenance Integrity** | 100% Signed | **50 / 50 Cards Reviewed** | ![P2](https://img.shields.io/badge/P2%20Provenance-50%2F50%20Reviewed-blueviolet.svg) |
 | **Core Skill Token Footprint** | < 390 Tokens | **298 True BPE Tokens** (`cl100k_base`) | ![Tokens](https://img.shields.io/badge/BPE%20Tokens-298%20%2F%20390-success.svg) |
 | **Invariant Duplicate Collisions** | 0 Collisions | **0 Duplicate Titles / Summaries / Examples** | ![Duplicates](https://img.shields.io/badge/Duplicates-0-brightgreen.svg) |

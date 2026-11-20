@@ -9,6 +9,31 @@ URL_OR_EMAIL_PATTERN = re.compile(
     r"(?:https?://[^\s।]+|ftp://[^\s।]+|www\.[^\s।]+|[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+)"
 )
 
+# Regexes to protect abbreviations, name initials, academic degrees, citations, and list markers
+ABBR_AND_INITIALS_PATS = [
+    # Multi-dot IP addresses and semantic version strings (ASCII and Bengali digits)
+    r"(?<=\b)(?:\d{1,3}\.){3}\d{1,3}(?=\b)",
+    r"(?<![\u0980-\u09FF])(?:[\u09E6-\u09EF]{1,3}\.){3}[\u09E6-\u09EF]{1,3}(?![\u0980-\u09FF])",
+    r"(?<![\u0980-\u09FF])(?:ভ|v)?[\u09E6-\u09EF\d]+\.[\u09E6-\u09EF\d]+(?:\.[\u09E6-\u09EF\d]+)+(?![\u0980-\u09FF])",
+
+    # Numbered and lettered list markers (e.g. ১. , ২. , ক. , খ. , 1. , a. )
+    r"(?:^|(?<=[\s\n(]))(?:[\u09E6-\u09EF]+|\d+|[ক-হ])\.(?=\s)",
+
+    # Bengali honorifics and titles (e.g. ড. , ডা. , মো. , মোঃ , প্রফে. , লে. , মে. , মি. , মিস. , অ্যাড. , ব্যারিস্টার. , ইঞ্জি. , প্রফেসর.)
+    r"(?<![\u0980-\u09FF])(?:ড|ডা|মো|মোঃ|প্রফে|লে|মে|মি|মিস|অ্যাড|ব্যারিস্টার|ইঞ্জি|প্রফেসর)\.(?=\s|[\u0980-\u09FF]|$)",
+
+    # Scholarly, legal, business, and bibliographic abbreviations (e.g. পৃ. , নং. , খ্রি. , খ্রি.পূ. , বি.দ্র. , তাং. , ইং. , ভলু. , খণ্ড. , অনু. , ইত্যা. , লি. , কোং.)
+    r"(?<![\u0980-\u09FF])(?:পৃ|নং|খ্রি|খ্রি\.পূ|বি\.দ্র|তাং|ইং|ভলু|খণ্ড|অনু|ইত্যা|লি|কোং)\.(?=\s|[\u0980-\u09FF\d\u09E6-\u09EF]|$)",
+
+    # Multi-letter academic degrees & credentials (e.g. এম.বি.বি.এস. , পিএইচ.ডি. , বি.এ. , এম.এ. , বি.এসসি. , এম.এসসি. , বি.বি.এ. , এম.বি.এ. , বি.কম. , এম.কম. , এলএল.বি. , এলএল.এম. , বি.এড. , এম.এড. , সি.এ.)
+    r"(?<![\u0980-\u09FF])(?:এম\.বি\.বি\.এস|পিএইচ\.ডি|বি\.এ|এম\.এ|বি\.এসসি|এম\.এসসি|বি\.বি\.এ|এম\.বি\.এ|বি\.কম|এম\.কম|এলএল\.বি|এলএল\.এম|বি\.এড|এম\.এড|সি\.এ)\.",
+
+    # Name initials (Bengali single letter or transliterated letter followed by dot, e.g. এস. এ. , টি. এস. , এ. কে. , জে. আর. , ডব্লিউ. বি.)
+    r"(?<![\u0980-\u09FF])(?:[অ-হড়ঢ়য়ৎ]|এস|টি|এ|কে|জে|আর|ডব্লিউ|বি|সি|ডি|ই|এফ|জি|এইচ|আই|এম|এন|ও|পি|কিউ|ইউ|ভি|এক্স|ওয়াই|জেড)\.(?=\s*(?:[অ-হড়ঢ়য়ৎ]|এস|টি|এ|কে|জে|আর|ডব্লিউ|বি|সি|ডি|ই|এফ|জি|এইচ|আই|এম|এন|ও|পি|কিউ|ইউ|ভি|এক্স|ওয়াই|জেড)\.|\s+[\u0980-\u09FF])"
+]
+
+PROTECTED_ABBR_PATTERN = re.compile("|".join(f"(?:{p})" for p in ABBR_AND_INITIALS_PATS))
+
 def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str:
     """
     Normalizes punctuation in Bengali text:
@@ -17,6 +42,8 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
        - Web URLs (e.g. https://www.tbsnews.net)
        - Email addresses (e.g. info@bangladesh.gov.bd)
        - Alphanumeric domain names and abbreviations (e.g. e.g., i.e., test.com)
+       - Bengali abbreviations and initials (ড., ডা., মো., এস. এ., টি. এস., পৃ., নং., ১., ক.)
+       - Academic credentials and degrees (এম.বি.বি.এস., পিএইচ.ডি., বি.এ., এম.এ.)
        - Markdown table rows (| col1 | col2 |) and non-Bengali shell/bitwise pipes
     2. Collapses repeated consecutive Dari characters (।। -> ।).
     3. Enforces standard typographic spacing:
@@ -42,6 +69,15 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
 
     text = URL_OR_EMAIL_PATTERN.sub(_mask_url_or_email, text)
 
+    # Protect abbreviations, name initials, academic degrees, citations, and list markers
+    masked_abbrs = []
+    def _mask_abbr(match):
+        idx = len(masked_abbrs)
+        masked_abbrs.append(match.group(0))
+        return f"__BHASHABID_ABBR_MASK_{idx}__"
+
+    text = PROTECTED_ABBR_PATTERN.sub(_mask_abbr, text)
+
     # 1. Convert ASCII pipe (|) used as Dari in Bengali text (protecting markdown tables and shell/code pipes)
     if re.search(r"[\u0980-\u09FF]", text):
         lines = text.split("\n")
@@ -58,7 +94,7 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
         text = "\n".join(norm_lines)
 
     # 2. Convert ASCII period (.) to Bengali Dari (।) where appropriate (protecting ellipsis and decimals)
-    text = re.sub(r"\.{3,}", "…", text)
+    text = re.sub(r"\.{2,}", "…", text)
     if convert_period_to_dari and re.search(r"[\u0980-\u09FF]", text):
         # 1. Do not convert if followed by ASCII/Bengali digit (decimals like 3.14, ৩.১৪)
         # 2. Do not convert if between ASCII alphanumeric characters (like site.com, node.js, e.g.)
@@ -80,6 +116,10 @@ def normalize_punctuation(text: str, convert_period_to_dari: bool = True) -> str
 
     # 3. Collapse multiple consecutive Daris (।। -> ।)
     text = re.sub(r"[\u0964]{2,}", DARI, text)
+
+    # Restore protected abbreviations and initials
+    for idx, original in enumerate(masked_abbrs):
+        text = text.replace(f"__BHASHABID_ABBR_MASK_{idx}__", original)
 
     # Restore protected URLs and email addresses
     for idx, original in enumerate(masked_items):

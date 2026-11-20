@@ -79,6 +79,15 @@ TATBHAVA_SHORT_VOWEL_ROOTS = [
     ("আসামী", "আসামি"),
     ("ছুরী", "ছুরি"),
     ("দাবী", "দাবি"),
+    ("তৈরী", "তৈরি"),
+    ("চাকরী", "চাকরি"),
+    ("বেশী", "বেশি"),
+    ("জরুরী", "জরুরি"),
+    ("বেআইনী", "বেআইনি"),
+    ("আইনী", "আইনি"),
+    ("কাহিনী", "কাহিনি"),
+    ("মহামারী", "মহামারি"),
+    ("পঞ্জী", "পঞ্জি"),
 ]
 
 # 4. Affix, Sandhi & Morphology Invariant Standardizations (প্রত্যয় ও সন্ধিঘটিত প্রমিত রূপ)
@@ -157,6 +166,9 @@ def normalize_orthography(text: str, profile: str = "bd_standard") -> str:
         # Handle 'বাষ' (bus) strictly at word boundaries to avoid altering 'বাষট্টি' (62), 'সুভাষ', or 'বাষ্প' (vapor)
         text = re.sub(r"(?<![\u0980-\u09FF])বাষ(?=(?:ে|ের|টা|টি|গুলো|গুলা)?(?![\u0980-\u09FF]))", "বাস", text)
 
+        # Initial /æ/ sound in loanwords takes 'অ্যা', never 'এ্যা' (Bangla Academy Rule 2.01)
+        text = re.sub(r"(?<![\u0980-\u09FF])এ্যা", "অ্যা", text)
+
         # 2. Natva-Shatva Vidhan replacements
         for bad_stem, good_stem in NATVA_SHATVA_ROOTS:
             text = text.replace(bad_stem, good_stem)
@@ -169,13 +181,22 @@ def normalize_orthography(text: str, profile: str = "bd_standard") -> str:
         for bad_stem, good_stem in TATBHAVA_SHORT_VOWEL_ROOTS:
             text = text.replace(bad_stem, good_stem)
 
+        # Suffix '-আবলী' must take short-vowel 'াবলি' (Bangla Academy Rule 1.01)
+        text = re.sub(r"াবলী(?=(?:ের|ে|র|কে|তে|রও)?(?![\u0980-\u09FF]))", "াবলি", text)
+
         # 5. Affix, Sandhi & Invariants replacements
         for bad_stem, good_stem in AFFIX_AND_SANDHI_ROOTS:
             text = text.replace(bad_stem, good_stem)
 
-        # 6. Reph gemination elimination
+        # 6. Reph gemination elimination (Bangla Academy Rule 1.02)
         for bad_stem, good_stem in REPH_GEMINATION_ROOTS:
             text = text.replace(bad_stem, good_stem)
+        # Universal identical consonant doubling after Reph: র্ + C + ্ + C -> র্ + C
+        text = re.sub(r"(\u09B0\u09CD)([\u0995-\u09B9])\u09CD\2", r"\1\2", text)
+        # Aspirated stop doubling pairs after Reph:
+        text = re.sub(r"\u09B0\u09CD\u09A6\u09CD\u09A7", "\u09B0\u09CD\u09A7", text)  # র্দ্ + ধ -> র্ধ
+        text = re.sub(r"\u09B0\u09CD\u099A\u09CD\u099B", "\u09B0\u09CD\u099B", text)  # র্চ্ + ছ -> র্ছ
+        text = re.sub(r"\u09B0\u09CD\u09AC\u09CD\u09AD", "\u09B0\u09CD\u09AD", text)  # র্ব্ + ভ -> র্ভ
 
         # 7. Word boundary separations
         for pat, good in COMPILED_WORD_BOUNDARIES:
