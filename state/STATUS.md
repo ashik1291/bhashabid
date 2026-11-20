@@ -16,7 +16,7 @@
 
 ## Known Gaps (not yet done)
 - Only a 12-task single-vendor LLM pilot exists (REQ-039 / P7); a large multi-vendor benchmark with blind native rating is pending (needs paid API approval).
-- Manual practice: `bhashabid learn cycle --fetch` (sector-wise bn.wikipedia/bn.wikisource + LLM inbox). Learning loop (`bhashabid learn`) implemented and agent-operable (Claude Code / Gemini CLI via `docs/LEARNING_LOOP_AGENT_GUIDE.md`); 12 candidate cards from the pilot LLM outputs carry agent suggestions and await maintainer approval in `knowledge/cards/drafts/`. Needs a steady input of real LLM outputs to improve the system over time.
+- Manual practice: `bhashabid learn prompts` → paste answers or correction pairs → `bhashabid learn cycle --fetch` (sector-wise bn.wikipedia/bn.wikisource + LLM inbox). Learning loop (`bhashabid learn`) implemented and agent-operable (Claude Code / Gemini CLI via `docs/LEARNING_LOOP_AGENT_GUIDE.md`); 12 candidate cards from the pilot LLM outputs carry agent suggestions and await maintainer approval in `knowledge/cards/drafts/`. Needs a steady input of real LLM outputs to improve the system over time.
 - `SKILL.md` is ~890 `cl100k_base` tokens, above the 600-token REQ-036 target; the unit test uses a words×1.3 estimate.
 - REQ-014, REQ-031, REQ-033, REQ-034, REQ-035 not implemented in code (skill guidance only); REQ-015, REQ-027, REQ-036 partial. See `specs/traceability.csv`.
 - Native-speaker review of the engine gold set (`eval/gold/`); optional second reviewer for cards.

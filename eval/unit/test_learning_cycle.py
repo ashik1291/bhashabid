@@ -90,5 +90,55 @@ class TestLearningCycle(unittest.TestCase):
         self.assertIn("ICT & Software Engineering", res["new_cards_by_sector"])
 
 
+
+class TestCorrectionsAndPrompts(unittest.TestCase):
+
+    def _kinds(self, llm, fixed):
+        cands = L.detect_candidates([{"text": llm, "fixed": fixed, "source": "t", "sector": "S"}])
+        return {(c["kind"], c["candidate"]) for c in cands}
+
+    def assertKinds(self, llm, fixed, expected):
+        from bhashabid.normalize.unicode import canonicalize_unicode as canon
+        self.assertEqual(self._kinds(llm, fixed), {(k, canon(c)) for k, c in expected})
+
+    def test_correction_classification(self):
+        self.assertKinds("অর্ডারটি deliver হবে।", "অর্ডারটি সরবরাহ হবে।", {("term", "deliver → সরবরাহ")})
+        self.assertKinds("আপনার ইউজার একাউন্ট দেখুন।", "আপনার ব্যবহারকারী অ্যাকাউন্ট দেখুন।",
+                         {("replacement", "ইউজার → ব্যবহারকারী"), ("replacement", "একাউন্ট → অ্যাকাউন্ট")})
+        self.assertKinds("এটা কেকের টুকরো ছিল।", "এটা সহজ কাজ ছিল।", {("idiom", "কেকের টুকরো → সহজ কাজ")})
+        self.assertKinds("আপনি কাজটা করো।", "আপনি কাজটা করুন।", {("rule", "করো → করুন")})
+        self.assertKinds("সে চিঠি গুনিয়াছিল।", "সে চিঠি গুনেছিল।", {("sadhu_root", "গুনিয়াছিল → গুনেছিল")})
+        self.assertKinds("সে বাড়ি ফিরিয়া আসিল।", "সে বাড়ি ফিরে এল।", set())  # engine already knows
+
+    def test_replacement_round_trip_through_engine(self):
+        from bhashabid.lint import learned
+        from bhashabid.lint.linter import lint_text
+        from bhashabid.normalize.repair import repair_text
+        with tempfile.TemporaryDirectory() as t:
+            paths = L.LoopPaths(replacements=os.path.join(t, "rep.json"))
+            L._apply_replacement({"wrong": "ইউজার", "right": "ব্যবহারকারী"}, paths)
+            old_path = learned._PATH
+            learned._PATH = paths.replacements
+            learned.learned_replacements.cache_clear()
+            try:
+                self.assertIn("RULE-LINT-LEARNED", [i.rule_id for i in lint_text("নতুন ইউজার এসেছেন।")])
+                self.assertEqual(repair_text("নতুন ইউজার এসেছেন।")[0], "নতুন ব্যবহারকারী এসেছেন।")
+                self.assertEqual(repair_text("ইউজারনেম লিখুন।")[0], "ইউজারনেম লিখুন।")  # whole words only
+            finally:
+                learned._PATH = old_path
+                learned.learned_replacements.cache_clear()
+
+    def test_prompt_batch_rotates_and_writes_template(self):
+        with tempfile.TemporaryDirectory() as t:
+            used = os.path.join(t, "used.json")
+            a = L.prompt_batch(count=5, inbox_dir=t, used_path=used)
+            b = L.prompt_batch(count=5, inbox_dir=t, used_path=used)
+            self.assertEqual(len(a["prompts"]), 5)
+            self.assertFalse({p["id"] for p in a["prompts"]} & {p["id"] for p in b["prompts"]})
+            self.assertGreater(len({p["sector"] for p in a["prompts"]}), 1)  # spread over sectors
+            self.assertEqual(set(L._read_json(a["template"])), {p["id"] for p in a["prompts"]})
+            self.assertEqual(L.ingest([a["template"]]), [])  # unfilled answers are ignored
+
+
 if __name__ == "__main__":
     unittest.main()

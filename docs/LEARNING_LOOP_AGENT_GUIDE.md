@@ -28,7 +28,10 @@ bhashabid learn cycle                          # only scan new LLM outputs dropp
 article, scans only files not scanned before, merges repeat evidence into existing pending cards (so frequent issues
 rise to the top), tags cards with sectors, and writes a report to `eval/reports/learning_cycles/`.
 Sectors with no open source (e-commerce, MFS, customer support, citizen services) learn from LLM outputs only.
-**1. Produce input (raw model behaviour).** Pick 10–20 prompts from `eval/corpora/learning_prompts.json`
+**1. Produce input.** The most valuable input is **human corrections** (`{"llm": ..., "fixed": ...}` pairs, see
+`eval/corpora/llm_inbox/README.md`): they capture mistakes the detectors cannot see. `bhashabid learn prompts --count 10`
+gives a sector-spread batch of unused prompts and an answer file.
+**Raw model behaviour:** Pick 10–20 prompts from `eval/corpora/learning_prompts.json`
 (or prompts the human gives). Answer each in Bengali **from your own knowledge, without this skill or
 its tools**, the way you would for a normal user. Save as `eval/corpora/llm_inbox/<model>_<YYYYMMDD>.json`:
 ```json
@@ -55,7 +58,9 @@ bhashabid learn suggest <ID> --by "<your model id>" --set <fields> --rationale "
 | `term` | English left in Bengali prose | `action=add_term bengali=<form per references/technical_terms.md>`; `action=reject` for brands, code, or legitimate glosses |
 | `sadhu_root` | Regular consonant-final root (`গুন` → গুনিয়াছিল/গুনেছিল) | `action=add_sadhu_root root=<root>` |
 | `sadhu_root` | Irregular or -আ causative verb (ঘুমানো, দৌড়ানো) | `action=manual`, give the correct Cholito forms in the rationale |
-| `rule` | Defect that survives repair | `action=manual`; propose the concrete rule or reference edit in the rationale |
+| `rule` | Defect that survives repair, or a reviewer's verb-ending change | `action=manual`; propose the concrete rule or reference edit in the rationale |
+| `idiom` | From a human correction: phrase replaced | `action=add_idiom` (calque and natural form pre-filled; add `english=` if known). Reject if the replacement only fits that one sentence |
+| `replacement` | From a human correction: single word replaced | `action=add_replacement` if the fix is right **everywhere** (spelling, standard term); otherwise `action=reject` or `manual` |
 
 Any card can instead propose an idiom:
 `--set action=add_idiom english="…" flawed_calque="<literal calque seen>" natural_bengali="…"`.
@@ -83,4 +88,5 @@ Commit with the applied card IDs in the message. Do not push or tag unless asked
 | `add_sadhu_root` | `bhashabid/assets/learned/sadhu_roots.json` | Sadhu→Cholito converts every tense/person of the root |
 | `add_idiom` | `bhashabid/assets/idioms/bilingual_idioms.json` (+ generated `references/idioms.md`) | Lint flags and repair fixes the calque; the skill shows the idiom |
 | `add_term` | `references/technical_terms.md` → "Learned additions" | The skill guides models to the approved Bengali term |
+| `add_replacement` | `bhashabid/assets/learned/replacements.json` | Lint flags (`RULE-LINT-LEARNED`) and repair fixes the word/phrase, whole words only |
 | every action | `eval/gold/learned_cases.jsonl`, `knowledge/cards/learned/` | Audit trail and regression cases |

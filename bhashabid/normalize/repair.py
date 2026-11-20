@@ -221,6 +221,17 @@ def repair_text(
                 "description": f"Naturalized literal calque to '{replacement if isinstance(replacement, str) else current_text}'"
             })
 
+    # 3a. Human-approved replacements learned through the learning loop
+    from ..lint.learned import apply_learned
+    current_text, learned_fixes = apply_learned(current_text)
+    for wrong, right in learned_fixes:
+        applied_fixes.append({
+            "category": "LEARNED_REPLACEMENT",
+            "pattern": wrong,
+            "replacement": right,
+            "description": f"Approved correction: '{wrong}' -> '{right}'"
+        })
+
     # 3b. Canonical Grammar Defect Repairs (Pleonasm, Affixes & Concordance)
     for pat, replacement, desc in CANONICAL_GRAMMAR_DEFECT_REPAIRS:
         if pat.search(current_text):

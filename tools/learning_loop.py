@@ -1,6 +1,7 @@
 # tools/learning_loop.py
 # Semi-autonomous learning loop: ingest real text -> detect what the engine cannot decide ->
 # draft evidence cards -> human approval (P2) -> distill approved knowledge into engine + skill.
+import difflib
 import glob
 import hashlib
 import json
@@ -20,7 +21,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from bhashabid.lint import lint_text
-from bhashabid.lint.guru_chandali import convert_to_cholito, is_cholito_token
+from bhashabid.lint.guru_chandali import convert_to_cholito, is_cholito_token, is_sadhu_token, sadhu_to_cholito
 from bhashabid.lint.sadhu_paradigm import SADHU_FORMS
 from bhashabid.normalize.lexicon import get_default_lexicon
 from bhashabid.normalize.repair import repair_text
@@ -42,7 +43,8 @@ SADHU_SUFFIXES = [canonicalize_unicode(s) for s in SADHU_SUFFIXES]
 ACTION_FIELDS = {
     "add_lexicon": ["word"],
     "add_term": ["english", "bengali"],
-    "add_idiom": ["english", "flawed_calque", "natural_bengali"],
+    "add_idiom": ["flawed_calque", "natural_bengali"],
+    "add_replacement": ["wrong", "right"],
     "add_sadhu_root": ["root"],
     "manual": [],
 }
@@ -64,6 +66,7 @@ class LoopPaths:
     rejected_dir: str = os.path.join(REPO_ROOT, "knowledge", "cards", "rejected")
     lexicon_additions: str = os.path.join(REPO_ROOT, "bhashabid", "assets", "learned", "lexicon_additions.txt")
     sadhu_roots: str = os.path.join(REPO_ROOT, "bhashabid", "assets", "learned", "sadhu_roots.json")
+    replacements: str = os.path.join(REPO_ROOT, "bhashabid", "assets", "learned", "replacements.json")
     idioms_json: List[str] = field(default_factory=lambda: [
         os.path.join(REPO_ROOT, "bhashabid", "assets", "idioms", "bilingual_idioms.json"),
         os.path.join(REPO_ROOT, "tools", "assets", "idioms", "bilingual_idioms.json"),
@@ -106,14 +109,22 @@ def ingest(paths: List[str]) -> List[Dict]:
                 data = json.load(fh)
                 items = data.items() if isinstance(data, dict) else enumerate(data)
                 for key, val in items:
+                    if isinstance(val, dict) and "llm" in val and "fixed" in val:
+                        docs.append({"text": val["llm"], "fixed": val["fixed"], "source": f"{name}:{key}",
+                                     "sector": val.get("sector") or sectors_by_prompt.get(str(key), "")})
+                        continue
                     text = val.get("text") if isinstance(val, dict) else val
-                    if isinstance(text, str):
+                    if isinstance(text, str) and text.strip():
                         sector = (val.get("sector") if isinstance(val, dict) else None) or sectors_by_prompt.get(str(key), "")
                         docs.append({"text": text, "source": f"{name}:{key}", "sector": sector})
             elif f.endswith(".jsonl"):
                 for line in fh:
                     if line.strip():
                         rec = json.loads(line)
+                        if "llm" in rec and "fixed" in rec:  # human correction pair
+                            docs.append({"text": rec["llm"], "fixed": rec["fixed"], "source": rec.get("source", name),
+                                         "sector": rec.get("sector") or rec.get("domain") or ""})
+                            continue
                         docs.append({"text": rec["text"], "source": rec.get("source", name),
                                      "sector": rec.get("sector") or rec.get("domain") or ""})
             else:
@@ -150,12 +161,80 @@ def guess_sadhu_root(token: str) -> str:
     return ""
 
 
+_DIFF_TOKEN = re.compile(r"[\u0980-\u09E5\u09F0-\u09FF]+|[A-Za-z][A-Za-z-]*|[০-৯0-9][০-৯0-9.,]*")
+
+
+def _classify_edit(old_t: List[str], new_t: List[str], context: str) -> Dict:
+    old, new = " ".join(old_t), " ".join(new_t)
+    base = {"detected_by": "HUMAN_CORRECTION", "candidate": f"{old or '∅'} → {new or '∅'}", "context": context}
+    if not old or not new:
+        return {**base, "kind": "rule", "proposed": {"action": "manual",
+                "note": f"Words {'removed' if not new else 'added'} by the reviewer: '{old or new}'"}}
+    if re.search(r"[A-Za-z]", old):
+        return {**base, "kind": "term", "proposed": {"action": "add_term", "english": old, "bengali": new}}
+    if len(old_t) == 1 and is_sadhu_token(old):
+        known = sadhu_to_cholito(old)
+        if known == new:
+            return None  # the engine already converts this form exactly as the reviewer did
+        if known:
+            return {**base, "kind": "rule", "proposed": {"action": "manual",
+                    "note": f"Engine converts '{old}' to '{known}', reviewer wrote '{new}'"}}
+        root = guess_sadhu_root(old)
+        proposed = ({"action": "add_sadhu_root", "root": root} if root
+                    else {"action": "manual", "note": f"Sadhu form '{old}' → '{new}'"})
+        return {**base, "kind": "sadhu_root", "proposed": proposed}
+    if len(old_t) > 1 or len(new_t) > 1:
+        return {**base, "kind": "idiom", "proposed": {"action": "add_idiom", "english": None,
+                "flawed_calque": old, "natural_bengali": new}}
+    if len(os.path.commonprefix([old, new])) >= 2 and (is_cholito_token(old) or is_cholito_token(new)):
+        return {**base, "kind": "rule", "proposed": {"action": "manual",
+                "note": f"Verb ending changed ('{old}' → '{new}'): register/agreement depends on context"}}
+    return {**base, "kind": "replacement", "proposed": {"action": "add_replacement", "wrong": old, "right": new}}
+
+
+def _independent_pair(o: str, n: str) -> bool:
+    """A word pair that is safe to learn on its own: a spelling variant, a Sadhu form or an English word."""
+    return (difflib.SequenceMatcher(None, o, n).ratio() >= 0.5 or is_sadhu_token(o)
+            or bool(re.search(r"[A-Za-z]", o)))
+
+
+def _correction_candidates(doc: Dict) -> List[Dict]:
+    """Word-level diff of an LLM sentence and its human correction -> classified candidates.
+    Equal-length edits are split into independent word pairs; the rest stay together as a phrase."""
+    a, b = canonicalize_unicode(doc["text"]), canonicalize_unicode(doc["fixed"])
+    ta, tb = _DIFF_TOKEN.findall(a), _DIFF_TOKEN.findall(b)
+    context = f"LLM: {a.strip()}  →  Fixed: {b.strip()}"
+    out = []
+    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=ta, b=tb, autojunk=False).get_opcodes():
+        if tag == "equal":
+            continue
+        old_t, new_t = ta[i1:i2], tb[j1:j2]
+        if tag == "replace" and len(old_t) == len(new_t) > 1:
+            group_o, group_n = [], []
+            for o, n in zip(old_t, new_t):
+                if _independent_pair(o, n):
+                    if group_o:
+                        out.append(_classify_edit(group_o, group_n, context))
+                        group_o, group_n = [], []
+                    out.append(_classify_edit([o], [n], context))
+                else:
+                    group_o.append(o)
+                    group_n.append(n)
+            if group_o:
+                out.append(_classify_edit(group_o, group_n, context))
+        else:
+            out.append(_classify_edit(old_t, new_t, context))
+    return [c for c in out if c]
+
+
 def detect_candidates(docs: List[Dict], min_count: int = 2) -> List[Dict]:
     """Finds what the engine cannot decide on. Returns aggregated candidates with evidence."""
     lex = get_default_lexicon()
     agg: Dict[tuple, Dict] = {}
+    current_sector = [""]
 
     def add(kind, detected_by, key, sentence, source, **extra):
+        sector = current_sector[0]
         c = agg.setdefault((kind, key), {"kind": kind, "detected_by": detected_by, "candidate": key,
                                          "count": 0, "contexts": [], "sources": set(), "sectors": set(), **extra})
         c["count"] += 1
@@ -166,12 +245,16 @@ def detect_candidates(docs: List[Dict], min_count: int = 2) -> List[Dict]:
             c["sectors"].add(sector)
 
     for doc in docs:
+        current_sector[0] = doc.get("sector", "")
+        if "fixed" in doc:
+            for c in _correction_candidates(doc):
+                add(c["kind"], c["detected_by"], c["candidate"], c["context"], doc["source"], proposed=c["proposed"])
+            continue
         text = canonicalize_unicode(CODE_SPAN.sub(" ", doc["text"]))
         for sent in (s.strip() for s in SENTENCE_SPLIT.split(text)):
             if not re.search(r"[ঀ-৿]", sent):
                 continue
             src = doc["source"]
-            sector = doc.get("sector", "")
             # 1. Words the lexicon does not know and cannot correct with confidence: new words or terms.
             for m in BN_WORD.finditer(sent):
                 tok = m.group(0)
@@ -196,7 +279,7 @@ def detect_candidates(docs: List[Dict], min_count: int = 2) -> List[Dict]:
     out = []
     for c in agg.values():
         # Lexicon candidates need repeated evidence; the rest are rarer and worth a look at count 1.
-        if c["kind"] == "lexicon" and c["count"] < min_count:
+        if c["kind"] == "lexicon" and c["count"] < min_count and c["detected_by"] != "HUMAN_CORRECTION":
             continue
         c["sources"] = sorted(c["sources"])
         c["sectors"] = sorted(c["sectors"])
@@ -218,6 +301,8 @@ def _known_ids(paths: LoopPaths) -> set:
 
 
 def _proposed_decision(c: Dict) -> Dict:
+    if c.get("proposed"):
+        return dict(c["proposed"])
     if c["kind"] == "lexicon":
         return {"action": "add_lexicon", "word": c["candidate"]}
     if c["kind"] == "term":
@@ -407,7 +492,7 @@ def _apply_sadhu_root(d: Dict, paths: LoopPaths) -> str:
 
 def _apply_idiom(d: Dict, paths: LoopPaths) -> str:
     entry_base = {
-        "english": d["english"].strip(),
+        "english": (d.get("english") or "(learned from correction)").strip(),
         "flawed_calque": d["flawed_calque"].strip(),
         "calque_pattern": r"\s+".join(re.escape(w) for w in d["flawed_calque"].split()),
         "natural_bengali": d["natural_bengali"].strip(),
@@ -441,8 +526,19 @@ def _apply_term(d: Dict, paths: LoopPaths) -> str:
     return f"term += {line[2:]}"
 
 
+def _apply_replacement(d: Dict, paths: LoopPaths) -> str:
+    wrong, right = canonicalize_unicode(d["wrong"].strip()), canonicalize_unicode(d["right"].strip())
+    items = _read_json(paths.replacements) if os.path.exists(paths.replacements) else []
+    if not any(i["wrong"] == wrong for i in items):
+        items.append({"wrong": wrong, "right": right})
+        os.makedirs(os.path.dirname(paths.replacements), exist_ok=True)
+        with open(paths.replacements, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(items, ensure_ascii=False, indent=2) + "\n")
+    return f"replacement += {wrong} → {right}"
+
+
 APPLIERS = {"add_lexicon": _apply_lexicon, "add_sadhu_root": _apply_sadhu_root,
-            "add_idiom": _apply_idiom, "add_term": _apply_term}
+            "add_idiom": _apply_idiom, "add_term": _apply_term, "add_replacement": _apply_replacement}
 
 
 def apply_approved(paths: LoopPaths = None) -> Dict[str, List[str]]:
@@ -469,6 +565,9 @@ def apply_approved(paths: LoopPaths = None) -> Dict[str, List[str]]:
         os.makedirs(paths.learned_dir, exist_ok=True)
         _save(card, os.path.join(paths.learned_dir, os.path.basename(path)))
         os.remove(path)
+    if report["applied"]:
+        from bhashabid.lint.learned import learned_replacements
+        learned_replacements.cache_clear()
     if report["applied"] and paths.rebuild_bundle:
         import importlib.util
         spec = importlib.util.spec_from_file_location("build_skill_bundle", os.path.join(REPO_ROOT, "scripts", "build_skill_bundle.py"))
@@ -591,3 +690,37 @@ def cycle(fetch: bool = False, sectors: Optional[List[str]] = None, pages_per_se
         f.write("\n".join(lines) + "\n")
     summary["report"] = report
     return summary
+
+
+# ---------------------------------------------------------------- prompt batches for manual practice
+PROMPTS_USED = os.path.join(REPO_ROOT, "state", "learning_prompts_used.json")
+
+
+def prompt_batch(count: int = 10, sectors: Optional[List[str]] = None, inbox_dir: str = LLM_INBOX,
+                 used_path: str = PROMPTS_USED, bank_path: str = PROMPT_BANK) -> Dict:
+    """Picks unused prompts (round-robin over sectors) and writes an answer template to the inbox.
+    Fill each "" with the model's Bengali answer, or {"llm": ..., "fixed": ...} to teach a correction."""
+    bank = _read_json(bank_path)
+    used = set(_read_json(used_path)) if os.path.exists(used_path) else set()
+    pool = [p for p in bank if p["id"] not in used and (not sectors or p["sector"] in sectors)]
+    if not pool and not sectors:  # bank exhausted: start a new round
+        used, pool = set(), list(bank)
+    by_sector: Dict[str, List[Dict]] = defaultdict(list)
+    for p in pool:
+        by_sector[p["sector"]].append(p)
+    picked = []
+    while len(picked) < count and any(by_sector.values()):
+        for sec in sorted(by_sector):
+            if by_sector[sec] and len(picked) < count:
+                picked.append(by_sector[sec].pop(0))
+    used |= {p["id"] for p in picked}
+    os.makedirs(os.path.dirname(used_path), exist_ok=True)
+    with open(used_path, "w", encoding="utf-8") as f:
+        json.dump(sorted(used), f)
+    template = None
+    if picked:
+        os.makedirs(inbox_dir, exist_ok=True)
+        template = os.path.join(inbox_dir, f"answers_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{os.urandom(3).hex()}.json")
+        with open(template, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps({p["id"]: "" for p in picked}, ensure_ascii=False, indent=2) + "\n")
+    return {"prompts": picked, "template": template}

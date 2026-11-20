@@ -595,6 +595,18 @@ def handle_learn(args):
             res = loop.cycle(fetch=args.fetch, sectors=args.sectors, pages_per_sector=args.pages, min_count=args.min_count)
             print(json.dumps({k: v for k, v in res.items() if k != "status"}, ensure_ascii=False, indent=2))
             print(f"Report: {res['report']}")
+        elif cmd == "prompts":
+            res = loop.prompt_batch(count=args.count, sectors=args.sectors)
+            if not res["prompts"]:
+                print("No unused prompts for these sectors.")
+                return 0
+            for p in res["prompts"]:
+                print(f"[{p['id']}] ({p['sector']})")
+                print(f"  {p['prompt']}")
+                print()
+            print(f"Answer file: {res['template']}")
+            print("Paste each model answer as the value, or {\"llm\": \"...\", \"fixed\": \"...\"} to teach a correction. "
+                  "Then run: bhashabid learn cycle")
         elif cmd == "sectors":
             src = _load_dev_module("sector_sources")
             for sector, pages in src.SECTOR_SOURCES.items():
@@ -853,6 +865,9 @@ def main():
     p_lc.add_argument("--pages", type=int, default=3, help="New articles to fetch per sector (default 3)")
     p_lc.add_argument("--min-count", type=int, default=2)
     learn_sub.add_parser("sectors", help="List sectors and their licence-approved source pages")
+    p_lpr = learn_sub.add_parser("prompts", help="Print unused practice prompts and create an answer file in the LLM inbox")
+    p_lpr.add_argument("--count", type=int, default=10)
+    p_lpr.add_argument("--sectors", nargs="*", default=None)
     p_learn.set_defaults(func=handle_learn)
 
     args = parser.parse_args()

@@ -4,6 +4,7 @@ from .honorifics import check_honorific_clash
 from .calques import check_calques
 from .grammar import check_grammar_defects
 from .spelling import check_spelling
+from .learned import check_learned
 from ..normalize.unicode import canonicalize_unicode
 
 def lint_text(
@@ -29,6 +30,7 @@ def lint_text(
     issues.extend(check_honorific_clash(text))
     issues.extend(check_grammar_defects(text))
     issues.extend(check_calques(text, profile=profile))
+    issues.extend(check_learned(text))
 
     if include_spelling:
         issues.extend(check_spelling(text))
