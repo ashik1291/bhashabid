@@ -129,15 +129,37 @@ _BN_WORD = re.compile(r"[ঀ-৿]+")
 # Sadhu finite verb morphology (perfect -িয়াছ-, progressive -িতেছ-) is not used in Cholito.
 _SADHU_SUFFIX_PAT = re.compile(r"(?:ি|ই)(?:য়াছ|তেছ)(?:ে|েন|ি|িল|িলেন|িলাম|িস)$")
 
-# Cholito finite verb morphology: perfect -েছ-, progressive -চ্ছ-, consonant-stem past -লেন/-লো, consonant-stem future -বো/-বেন.
+# Cholito finite verb morphology: perfect -েছ-, progressive -চ্ছ-/-ছ-, consonant-stem past -লেন/-লো, consonant-stem future -বো/-বেন.
 _CONSONANT = r"[ক-হড়ঢ়য়]"
 _CHOLITO_SUFFIX_PAT = re.compile(
     r"(?:েছ(?:ে|েন|ি|িল|িলেন|িলাম|িস|ো)"
     r"|চ্ছ(?:ে|েন|ি|িল|িলেন|িলাম|িস|ো)"
+    rf"|{_CONSONANT}ছ(?:ে|েন|ি|িস|ো|িল|িলেন|িলাম)"
     rf"|{_CONSONANT}ল(?:েন|ো)"
     rf"|{_CONSONANT}ব(?:ো|েন))$"
 )
 _CHOLITO_SUFFIX_EXCLUSIONS = {"গুচ্ছে", "গুচ্ছো"}
+
+
+# Productive Sadhu -> Cholito verb conversions (stem + Sadhu suffix + tense tail).
+_SADHU_TO_CHOLITO_RULES = [
+    (re.compile(r"^(.+)াইতেছ(.*)$"), r"\1াচ্ছ\2"),   # খাইতেছে -> খাচ্ছে
+    (re.compile(r"^(.+)িতেছ(.*)$"), r"\1ছ\2"),      # করিতেছে -> করছে, লিখিতেছিল -> লিখছিল
+]
+# Perfect -িয়াছ- -> -েছ- is regular only when the stem has no আ-kar (পারিয়াছে -> পেরেছে mutates).
+_SADHU_PERFECT_PAT = re.compile(r"^([^\u09BE]+)িয়াছ(.*)$")
+
+
+def sadhu_to_cholito(token: str):
+    """Cholito form of a Sadhu token from the dictionary or a regular suffix rule; None when not derivable."""
+    if token in SADHU_MARKERS:
+        return SADHU_MARKERS[token].split("/")[0].strip()
+    for pat, repl in _SADHU_TO_CHOLITO_RULES:
+        if pat.match(token):
+            return pat.sub(repl, token)
+    if _SADHU_PERFECT_PAT.match(token):
+        return _SADHU_PERFECT_PAT.sub(r"\1েছ\2", token)
+    return None
 
 
 def is_word_in_text(word: str, text: str) -> bool:
