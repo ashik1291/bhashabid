@@ -572,7 +572,19 @@ def handle_lapidary(args):
         sys.stderr.write(f"Lapidary Error: {e}\n")
         return 1
 
+
+def ensure_utf8_stdio() -> None:
+    """Bengali output must not crash on Windows consoles/pipes that default to a legacy code page (cp1252)."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure") and (stream.encoding or "").lower().replace("-", "") != "utf8":
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except (ValueError, OSError):
+                pass
+
+
 def main():
+    ensure_utf8_stdio()
     parser = argparse.ArgumentParser(
         prog="bhashabid",
         description="Bhashabid (ভাষাবিদ) — Open-Source Bengali Linguistic Coprocessor CLI"
