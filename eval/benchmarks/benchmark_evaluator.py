@@ -1,6 +1,7 @@
 # eval/benchmarks/benchmark_evaluator.py
-# Honest, Unbiased Before-and-After Benchmark Evaluator
-# Compares Realistic Frontier LLM (Gemini / Claude / GPT-4o) baseline outputs vs. Bhashabid Coprocessor outputs.
+# Illustrative Before-and-After Evaluator
+# NOTE: 'before_sample' and 'after_sample' are hand-written illustrations, not captured model outputs,
+# and both are scored by Bhashabid's own linter. Results are illustrative, not a measured benchmark.
 import os
 import sys
 import re
@@ -176,7 +177,7 @@ def print_comparison(case_id: int, before_text: str, after_text: str):
 def run_all_benchmarks():
     all_cases = sorted(list(SAMPLE_BASELINES.keys()))
     print(f"\n===========================================================================")
-    print(f"BHASHABID UNBIASED BENCHMARK AUDIT (REAL FRONTIER LLM VS. COPROCESSOR)")
+    print(f"BHASHABID ILLUSTRATIVE AUDIT (HAND-WRITTEN SAMPLES, SELF-SCORED)")
     print(f"===========================================================================")
     total_before = 0
     total_after = 0
@@ -190,7 +191,7 @@ def run_all_benchmarks():
     avg_b = total_before / len(all_cases)
     avg_a = total_after / len(all_cases)
     print(f"\n===========================================================================")
-    print(f"EXECUTIVE SUMMARY (UNBIASED FRONTIER MODEL REALITY):")
+    print(f"EXECUTIVE SUMMARY (ILLUSTRATIVE ONLY, NOT A MEASURED BENCHMARK):")
     print(f"  • Raw Frontier LLM Baseline (Fluent General Bengali):  {avg_b:.1f} / 100")
     print(f"  • Bhashabid Coprocessor (Professional Statutory Grade): {avg_a:.1f} / 100")
     print(f"  • Net 'Last-Mile' Precision Uplift:                    +{avg_a - avg_b:.1f} points (+{(avg_a - avg_b)/avg_b*100:.1f}%)")

@@ -6,13 +6,16 @@ from typing import Tuple, List, Dict, Optional
 from .unicode import canonicalize_unicode
 from .punctuation import normalize_punctuation
 from .orthography import normalize_orthography
-from ..lint.guru_chandali import SADHU_MARKERS, CHOLITO_MARKERS
+from ..lint.guru_chandali import SADHU_MARKERS, find_style_tokens, convert_to_cholito
 from ..lint.honorifics import (
+    check_honorific_clash,
     THIRD_PERSON_ORDINARY_TO_HONORIFIC,
     THIRD_PERSON_HONORIFIC_TO_ORDINARY,
     TINI_CLASH_PAT,
     SE_CLASH_PAT,
     TUMI_CLASH_PAT,
+    TUI_CLASH_PAT,
+    FORMAL_TO_INTIMATE_VERBS,
     APNI_CLASH_PAT,
     AMI_CLASH_PAT,
     NON_FIRST_PERSON_FIRST_VERB_PAT,
@@ -22,7 +25,9 @@ from ..lint.honorifics import (
     FIRST_TO_SECOND_FAMILIAR_VERBS,
     FIRST_TO_SECOND_FORMAL_VERBS,
     FIRST_TO_THIRD_ORDINARY_VERBS,
-    CLAUSE_BOUNDARY_PAT
+    CLAUSE_BOUNDARY_PAT,
+    inflect_verb,
+    is_guarded_middle,
 )
 
 B_L = r"(?<![\u0980-\u09FF])"
@@ -64,6 +69,24 @@ def _load_canonical_calque_repairs():
 
 _LOADED_REPAIRS = _load_canonical_calque_repairs()
 
+
+def _genitive(word: str) -> str:
+    """Genitive case of a Bengali noun: -র after a vowel, -এর after a consonant; already-genitive words unchanged."""
+    if word.endswith(("ের", "র")) and len(word) > 2:
+        return word
+    last = word[-1]
+    is_vowel = ("\u09BE" <= last <= "\u09CC") or ("\u0985" <= last <= "\u0994")
+    return word + ("র" if is_vowel else "ের")
+
+# Agent-passive rewrites that need the agent noun in genitive case; run before the idiom table so the
+# passive auxiliary ('করা') is absorbed instead of being left dangling.
+STRUCTURAL_CALQUE_REPAIRS = [
+    (re.compile(B_L + r"([\u0980-\u09FF]+)\s+দ্বারা\s+সভাপতিত্ব[\u0980-\u09FF]*(?:\s+করা)?" + B_R),
+     lambda m: f"{_genitive(m.group(1))} সভাপতিত্বে অনুষ্ঠিত"),
+    (re.compile(B_L + r"([\u0980-\u09FF]+)\s+দ্বারা\s+সরবরাহ" + B_R),
+     lambda m: f"{_genitive(m.group(1))} মাধ্যমে সরবরাহ"),
+]
+
 RAW_CANONICAL_CALQUE_REPAIRS = [
     # Causal / passive calques
     (re.compile(B_L + r"দ্বারা\s+সভাপতিত্ব[\u0980-\u09FF]*" + B_R), "সভাপতিত্বে অনুষ্ঠিত"),
@@ -95,7 +118,7 @@ RAW_CANONICAL_CALQUE_REPAIRS = [
     (re.compile(B_L + r"একটি\s+পাথর\s+দিয়ে\s+দুটি\s+পাখি\s+মারা" + B_R), "এক ঢিলে দুই পাখি মারা")
 ]
 
-CANONICAL_CALQUE_REPAIRS = _LOADED_REPAIRS if _LOADED_REPAIRS else RAW_CANONICAL_CALQUE_REPAIRS
+CANONICAL_CALQUE_REPAIRS = STRUCTURAL_CALQUE_REPAIRS + (_LOADED_REPAIRS if _LOADED_REPAIRS else RAW_CANONICAL_CALQUE_REPAIRS)
 
 # Deterministic grammatical pleonasms and ungrammatical affix repairs (অপপ্রয়োগ ও বাহুল্য বর্জন)
 CANONICAL_GRAMMAR_DEFECT_REPAIRS = [
@@ -126,7 +149,8 @@ CANONICAL_GRAMMAR_DEFECT_REPAIRS = [
 def repair_text(
     text: str,
     profile: str = "bd_standard",
-    preserve_code_blocks: bool = True
+    preserve_code_blocks: bool = True,
+    target_style: Optional[str] = None
 ) -> Tuple[str, List[Dict]]:
     """
     Deterministic Bengali linguistic repair engine.
@@ -193,8 +217,8 @@ def repair_text(
             applied_fixes.append({
                 "category": "CALQUE_NATURALIZATION",
                 "pattern": pat.pattern,
-                "replacement": replacement,
-                "description": f"Naturalized literal calque to '{replacement}'"
+                "replacement": replacement if isinstance(replacement, str) else current_text,
+                "description": f"Naturalized literal calque to '{replacement if isinstance(replacement, str) else current_text}'"
             })
 
     # 3b. Canonical Grammar Defect Repairs (Pleonasm, Affixes & Concordance)
@@ -241,33 +265,42 @@ def repair_text(
     except Exception:
         pass
 
-    # 4. Guru-Chandali Harmonization (Archaic Sadhu verbs in Cholito text)
-    tokens = set(re.findall(r"[\u0980-\u09FF]+", current_text))
-    has_cholito = bool(tokens.intersection(CHOLITO_MARKERS))
-    has_sadhu = bool(tokens.intersection(set(SADHU_MARKERS.keys())))
-
-    # In modern standard prose, if Cholito markers exist or default standard is requested, harmonise Sadhu
-    if has_sadhu and (has_cholito or profile == "bd_standard"):
-        for s_verb, c_verb in SADHU_MARKERS.items():
-            # Only use strict single canonical Cholito verb (skip multi-suggestions with '/')
-            c_target = c_verb.split("/")[0].strip()
-            pattern = re.compile(B_L + re.escape(s_verb) + B_R)
-            if pattern.search(current_text):
-                current_text = pattern.sub(c_target, current_text)
-                applied_fixes.append({
-                    "category": "GURU_CHANDALI_HARMONIZATION",
-                    "sadhu": s_verb,
-                    "cholito": c_target,
-                    "description": f"Harmonized Sadhu form '{s_verb}' to Promito Cholito '{c_target}'"
-                })
+    # 4. Guru-Chandali Harmonization / explicit Sadhu -> Cholito conversion
+    # target_style="cholito" converts the whole text. By default only genuine mixing where Cholito
+    # dominates is harmonized; consistent Sadhu prose (REQ-027) is left intact.
+    sadhu_tokens, cholito_tokens = find_style_tokens(current_text)
+    convert_all = target_style == "cholito"
+    if convert_all or (sadhu_tokens and cholito_tokens and len(cholito_tokens) >= len(sadhu_tokens)):
+        converted, changes, unresolved = convert_to_cholito(current_text)
+        current_text = converted
+        for ch in {c["sadhu"]: c for c in changes}.values():
+            applied_fixes.append({
+                "category": "GURU_CHANDALI_HARMONIZATION",
+                "sadhu": ch["sadhu"],
+                "cholito": ch["cholito"],
+                "description": f"Harmonized Sadhu form '{ch['sadhu']}' to Promito Cholito '{ch['cholito']}'"
+            })
+        if unresolved:
+            applied_fixes.append({
+                "category": "SADHU_UNRESOLVED",
+                "tokens": unresolved,
+                "description": "Sadhu forms without a known Cholito equivalent; rewrite manually: " + ", ".join(unresolved)
+            })
 
     # 5. Honorific Concordance Repair
+    # Only rewrite clashes the linter confirms, so repair inherits every linter guard
+    # (participle + honorific main verb, demonstrative 'সে', intervening subjects, clause bounds).
+    flagged_clauses = {i.matched_text for i in check_honorific_clash(current_text)}
     # (a) TINI + ordinary verb -> TINI + honorific verb
     for m in list(TINI_CLASH_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        hon_verb = THIRD_PERSON_ORDINARY_TO_HONORIFIC.get(verb, f"{verb}েন")
+        hon_verb = inflect_verb(verb, THIRD_PERSON_ORDINARY_TO_HONORIFIC, "honorific_3p")
+        if not hon_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{hon_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -280,10 +313,14 @@ def repair_text(
 
     # (b) SE + honorific verb -> SE + ordinary verb
     for m in list(SE_CLASH_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        ord_verb = THIRD_PERSON_HONORIFIC_TO_ORDINARY.get(verb, verb)
+        ord_verb = inflect_verb(verb, THIRD_PERSON_HONORIFIC_TO_ORDINARY, "ordinary_3p")
+        if not ord_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{ord_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -296,10 +333,14 @@ def repair_text(
 
     # (c) APNI + informal verb -> APNI + formal verb
     for m in list(APNI_CLASH_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        formal_verb = FAMILIAR_TO_FORMAL_VERBS.get(verb, f"{verb}েন")
+        formal_verb = inflect_verb(verb, FAMILIAR_TO_FORMAL_VERBS, "formal_2p")
+        if not formal_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{formal_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -312,10 +353,14 @@ def repair_text(
 
     # (d) TUMI + formal or intimate verb -> TUMI + familiar verb
     for m in list(TUMI_CLASH_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
         subj = m.group(1)
         middle = m.group(2)
         verb = m.group(3)
-        fam_verb = FORMAL_TO_FAMILIAR_VERBS.get(verb, verb)
+        fam_verb = inflect_verb(verb, FORMAL_TO_FAMILIAR_VERBS, "familiar_2p")
+        if not fam_verb or is_guarded_middle(middle):
+            continue
         old_clause = m.group(0)
         new_clause = f"{subj}{middle}{fam_verb}"
         current_text = current_text.replace(old_clause, new_clause, 1)
@@ -326,8 +371,28 @@ def repair_text(
             "description": f"Concorded 2nd-person familiar '{subj}' with verb '{fam_verb}'"
         })
 
+    # (d2) TUI + formal or familiar verb -> TUI + intimate verb
+    for m in list(TUI_CLASH_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
+        subj, middle, verb = m.group(1), m.group(2), m.group(3)
+        int_verb = inflect_verb(verb, FORMAL_TO_INTIMATE_VERBS, "intimate_2p")
+        if not int_verb or is_guarded_middle(middle):
+            continue
+        old_clause = m.group(0)
+        new_clause = f"{subj}{middle}{int_verb}"
+        current_text = current_text.replace(old_clause, new_clause, 1)
+        applied_fixes.append({
+            "category": "HONORIFIC_CONCORDANCE",
+            "before": old_clause,
+            "after": new_clause,
+            "description": f"Concorded 2nd-person intimate '{subj}' with verb '{int_verb}'"
+        })
+
     # (e) AMI / AMRA + non-first-person verb -> AMI / AMRA + first-person verb
     for m in list(AMI_CLASH_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
         middle = m.group(2)
         if re.search(r"(?<![\u0980-\u09FF])(?:আপনি|আপনারা|তুমি|তোমরা|তুই|তোরা|তিনি|তাঁরা|সে|তারা|কে|কারা)(?![\u0980-\u09FF])", middle):
             continue
@@ -347,6 +412,8 @@ def repair_text(
 
     # (f) Non-first-person pronoun + first-person verb -> Non-first-person pronoun + correct verb
     for m in list(NON_FIRST_PERSON_FIRST_VERB_PAT.finditer(current_text)):
+        if m.group(0) not in flagged_clauses:
+            continue
         middle = m.group(2)
         if CLAUSE_BOUNDARY_PAT.search(middle):
             continue

@@ -17,7 +17,11 @@ This guide provides step-by-step instructions for using Bhashabid in web chat in
 
 ## 1. Claude Web Chat (claude.ai)
 
-Anthropic supports native Agent Skills through `.zip` or `.skill` file uploads.
+Anthropic supports native Agent Skills through `.zip` uploads.
+
+**Requirements:** code execution must be enabled (Settings → Capabilities → *Code execution and file creation*). The skill then runs Bhashabid's offline engine (`scripts/bn.py`) inside Claude's sandbox for dates, amounts in words, Payar metre and lint checks. No MCP server is needed on claude.ai. Without code execution the skill still works from its rules and reference tables, but exact facts (Bangabda dates, metre) are less reliable.
+
+**Updating an older upload:** an uploaded skill is a frozen copy and does not change when this repository changes. Delete the old `bangla-expert` skill and upload the new zip. Build fresh bundles with `python scripts/build_skill_bundle.py`; it places everything under `bangla-expert/`, the layout Anthropic documents (older bundles with `SKILL.md` at the zip root have also been reported to upload fine).
 
 ### Step-by-Step Installation:
 1. Log in to [claude.ai](https://claude.ai).
@@ -30,13 +34,13 @@ Anthropic supports native Agent Skills through `.zip` or `.skill` file uploads.
 5. Once uploaded, the skill will appear as **`bangla-expert`** in your skills list.
 
 ### How to Use:
-Simply chat with Claude in Bengali or ask for translations. Claude will automatically invoke the `bangla-expert` skill and consult domain-specific references (`constitutional_writs.md`, `ecommerce_fintech_civic.md`, `bilingual_idioms.json`, etc.) whenever you prompt it.
+Chat with Claude in Bengali or ask for translations. Claude loads the `bangla-expert` skill, reads only the domain reference it needs, and runs the bundled engine for exact facts, e.g. `python scripts/bn.py date 2025-12-16 --bongabdo` → `১লা পৌষ, ১৪৩২ বঙ্গাব্দ`.
 
 ---
 
 ## 2. Google Gemini Web Chat (gemini.google.com)
 
-Gemini provides two seamless methods: a persistent **Gemini Gem** (recommended) or direct file attachment.
+Gemini provides two methods: a persistent **Gemini Gem** (recommended) or direct file attachment. Gemini cannot run the bundled engine or an MCP server, so it works from rules and reference tables only. Upload **`bhashabid-skill-text.zip`** (SKILL.md + references, no Python code) as the Gem's knowledge, not `bhashabid-skill.zip`; at minimum include `references/numerals.md` for Bangabda dates and fractions. After a Bhashabid update, re-paste the instructions below; a Gem does not update itself.
 
 ### Method A: Create a "Bhashabid Gem" (Recommended)
 1. Go to [gemini.google.com](https://gemini.google.com).
@@ -52,8 +56,10 @@ You are Bhashabid (ভাষাবিদ)—an authoritative Bengali Linguistic 
 1. Orthography & Unicode:
    - Foreign loanwords must use 'স'/'স্ট' (স্টেশন, পোস্ট, মাস্টার); never 'ষ'/'ষ্ট'.
    - Desi and foreign loanwords take short 'ি' (পাখি, হাতি, দাবি, সরকারি, একাডেমি).
-   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
-   - Enforce canonical Unicode NFC. No decomposed or split vowel signs.
+   - Dates in prose: no ordinal suffix (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
+   - Bangabda (revised calendar) months start on fixed Gregorian dates: বৈশাখ 14 Apr, জ্যৈষ্ঠ 15 May, আষাঢ় 15 Jun, শ্রাবণ 16 Jul, ভাদ্র 16 Aug, আশ্বিন 16 Sep, কার্তিক 17 Oct, অগ্রহায়ণ 16 Nov, পৌষ 16 Dec, মাঘ 15 Jan, ফাল্গুন 14 Feb, চৈত্র 15 Mar. Year = Gregorian − 593 from 14 Apr (− 594 before).
+   - Fractions: 1.5 দেড়, 2.5 আড়াই, 3.5 and up সাড়ে.
+   - Use canonical Unicode; no decomposed or split vowel signs.
 
 2. Numerals & Punctuation:
    - Use South Asian digit grouping (১২,৩৪,৫৬৭). Decimals use dots (৩.১৪), never Dari.
@@ -72,7 +78,7 @@ You are Bhashabid (ভাষাবিদ)—an authoritative Bengali Linguistic 
 
 5. Technical & Code Preservation:
    - Keep programming code blocks (```...```), SQL queries, JSON keys, CLI commands, git hashes, and English acronyms untouched in ASCII English.
-   - Use natural technical loanwords (ডাটাবেস, ক্লাউড, মেমোরি লিক).
+   - Use natural technical loanwords (ডেটাবেস, ক্লাউড, মেমোরি লিক).
 
 6. Delivery:
    - Deliver clean, publication-grade output directly with ZERO conversational meta-filler, preambles, or conversational commentary.
@@ -114,7 +120,7 @@ You are Bhashabid (ভাষাবিদ)—a Bengali Linguistic Coprocessor. St
 2. Numerals & Punctuation: South Asian commas (১২,৩৪,৫৬৭). Decimals use dot: ৩.১৪. Prose percentages use 'শতাংশ' (never % এ). Terminate full sentences with Bengali Dari (।), never ASCII dot.
 3. Concordance & Anti-Guru-chandali: Zero Sadhu mixing (no হইবে, যদ্দারা, তাহাদিগকে). Strict honorific concordance: তিনি...গেলেন vs সে...গেল; তারা...করেছিল vs তাঁরা...করেছিলেন. No double plurals (সব সদস্য, never সব সদস্যবৃন্দ).
 4. Anti-Calque & Natural Idioms: Eliminate mechanical English passives ('দ্বারা চালিত'). Reconstruct with natural Bengali active voice. Translate idioms to Bengali equivalents (piece of cake -> সহজ কাজ; bad workman -> নাচতে না জানলে উঠান বাঁকা).
-5. Technical Rules: Preserve code blocks, SQL, regex, JSON keys, git hashes, and CLI flags in untouched ASCII English. Technical loanwords stay natural (ডাটাবেস, ক্লাউড, মেমোরি লিক).
+5. Technical Rules: Preserve code blocks, SQL, regex, JSON keys, git hashes, and CLI flags in untouched ASCII English. Technical loanwords stay natural (ডেটাবেস, ক্লাউড, মেমোরি লিক).
 6. Tone & Delivery: Deliver clean, publication-grade text directly with ZERO conversational filler, disclaimers, or meta-commentary.
 ```
 

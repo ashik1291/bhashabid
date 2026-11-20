@@ -24,3 +24,24 @@
 
 ## 4. Date Ordinals
 - ১লা (পয়লা), ২রা (দোসরা), ৩রা (তেসরা), ৪ঠা (চৌঠা), ৫ই (পাঁচই) ... ৩১শে (একত্রিশে)
+
+## 5. Bangabda Dates (Bangladesh revised calendar, 2019)
+Each month starts on the same Gregorian date every year (leap years included):
+
+| মাস | Day 1 | মাস | Day 1 |
+|---|---|---|---|
+| বৈশাখ | 14 Apr | কার্তিক | 17 Oct |
+| জ্যৈষ্ঠ | 15 May | অগ্রহায়ণ | 16 Nov |
+| আষাঢ় | 15 Jun | পৌষ | 16 Dec |
+| শ্রাবণ | 16 Jul | মাঘ | 15 Jan |
+| ভাদ্র | 16 Aug | ফাল্গুন | 14 Feb |
+| আশ্বিন | 16 Sep | চৈত্র | 15 Mar |
+
+- Day = (Gregorian date − that month's Day 1) + 1. Example: 16 Dec 2025 = ১ পৌষ; 21 Feb = ৮ ফাল্গুন; 26 Mar = ১২ চৈত্র.
+- Year: from 14 Apr, বঙ্গাব্দ = Gregorian year − 593; before 14 Apr, − 594 (14 Apr 2026 = ১ বৈশাখ ১৪৩৩).
+
+## 6. Payar Metre (অক্ষরবৃত্ত, 8 + 6 = 14 মাত্রা per line)
+- Split the line into syllables. An open syllable (মুক্তদল, ends in a vowel) = 1 মাত্রা.
+- A closed syllable (রুদ্ধদল, ends in a consonant) = 1 মাত্রা at the start or middle of a word, 2 মাত্রা at the end of a word.
+- First half must total 8, second half 6. Example: মহাভারতের কথা (8) | অমৃত সমান (6).
+- Verify with the prosody tool whenever one is available; manual counts are error-prone.

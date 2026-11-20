@@ -13,9 +13,9 @@
 
 ## 3. Sports & Cricket Journalism
 - Defeat phrasing: Use "সফরকারীদের কাছে ৫ উইকেটে হেরেছে", NEVER "পরাজয় স্বীকার করেছে".
-- "Against": In matches, teams play "প্রতিপক্ষের কাছে" or "মুখোমুখি", not confrontational "বিরুদ্ধে".
+- "Against": "বিরুদ্ধে" is standard ("ভারতের বিরুদ্ধে ম্যাচ"); "মুখোমুখি" also works.
 - Terminology: "লড়াকু অর্ধশতক" (Valiant half-century), "ব্যাটার", "শতক" (Century), "উইকেট শিকার".
 
 ## 4. Diplomatic News
-- Avoid nested English relative clauses ("যা ... শুরু হয়েছিল").
+- Prefer a participial clause over a long trailing "যা ..." clause when it reads more naturally.
 - Use participial clauses: "১৯৭১ সালের মহান মুক্তিযুদ্ধ থেকে শুরু হওয়া দুই দেশের সম্পর্ক..."

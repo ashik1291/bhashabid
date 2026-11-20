@@ -36,9 +36,9 @@ Your mission: Translate/compose the provided literary work into masterwork Benga
    - Never invent limbs, organs, or locomotion not present in the source organism (e.g. Jellyfish pulses/opens and closes: 'খোলে ও বুজে যায়/মুদে যায়'; NEVER wings/'ডানা মেলা').
    - Never surrender to raw English transliteration for gemstones or nature. Deploy classical equivalents:
      * Amber ➔ পিঙ্গল-আভ / মধুরঙা (never অ্যাম্বার)
-     * Amethyst ➔ রক্তনীলমণি / নীলমণি (never অ্যামেথিস্ট)
+     * Amethyst ➔ রক্তনীলমণি / বেগুনি স্ফটিক (never অ্যামেথিস্ট)
      * Turquoise ➔ ফিরোজা
-     * Lapis Lazuli ➔ বৈদূর্যমণি
+     * Lapis Lazuli ➔ রাজাবর্ত / লাজবর্দ
      * Slough ➔ নির্মোক
      * Azure ➔ নীলিমা
    - Cognitive Volition: Intent/will ➔ 'অভিপ্রায়' বা 'সংকল্প' (never romanticize into 'বাসনা').

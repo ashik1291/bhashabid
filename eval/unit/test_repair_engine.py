@@ -9,6 +9,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from tools.bn_normalize.repair import repair_text
+from tools.bn_normalize.unicode import canonicalize_unicode
 from tools.bn_lint import lint_text
 from tools.mcp_server.server import BhashabidMCPServer
 
@@ -260,17 +261,34 @@ class TestRepairEngine(unittest.TestCase):
 
     def test_expanded_bilingual_idioms_repair(self):
         cases = [
-            ("রোম একদিনে তৈরি হয়নি।", "বড় কাজে সময় ও ধৈর্য লাগে"),
             ("তিনি বললেন সততা হলো সেরা নীতি।", "সততাই সর্বোত্তম পন্থা"),
             ("কাজ শব্দের চেয়ে জোরে কথা বলে।", "কথার চেয়ে কাজের মূল্য বেশি"),
-            ("যা চকচক করে সবই সোনা নয়।", "চকচক করলেই সোনা হয় না"),
-            ("খালি পাত্র বেশি শব্দ করে।", "অসারের তর্জন-গর্জন সার")
+            ("খালি পাত্র বেশি শব্দ করে।", "খালি কলসি বাজে বেশি"),
+            ("হীরা হীরাকে কাটে।", "সেয়ানে সেয়ানে কোলাকুলি"),
         ]
         for raw, expected in cases:
             repaired, fixes = repair_text(raw)
             self.assertIn(expected, repaired)
             self.assertGreater(len(fixes), 0)
             self.assertEqual(len(lint_text(repaired)), 0, f"Residual defects in repaired idiom: {repaired}")
+
+    def test_natural_bengali_proverbs_not_flagged(self):
+        # Natural or fully naturalised Bengali sayings must not be treated as calques.
+        for text in ["যা চকচক করে সবই সোনা নয়।", "রোম একদিনে তৈরি হয়নি।", "খবরের দিকে চোখ রাখুন।",
+                     "ডুবন্ত মানুষ খড়কুটো আঁকড়ে ধরে।", "চায়ের কাপে ঝড় তুলেছে বিষয়টি।"]:
+            self.assertEqual(repair_text(text)[0], canonicalize_unicode(text), text)
+            self.assertFalse(any(i.rule_id == "RULE-LINT-CALQUE" for i in lint_text(text)), text)
+
+    def test_skill_idioms_md_in_sync_with_engine(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "build_skill_bundle", os.path.join(REPO_ROOT, "scripts", "build_skill_bundle.py"))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        expected = mod.render_idioms_md()
+        for path in mod.IDIOMS_MD_PATHS:
+            with open(path, encoding="utf-8") as f:
+                self.assertEqual(f.read(), expected, f"{path} is stale; run scripts/build_skill_bundle.py")
 
     def test_abbreviation_and_reph_end_to_end(self):
         raw = "ড. মুহাম্মদ ইউনূস ও ডা. এ. কে. খান সাহেবকে (পৃ. ৩০-৩৫) স্মরণ করা হলো."

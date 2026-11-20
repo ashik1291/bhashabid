@@ -1,15 +1,7 @@
-# tools/bn_prosody
-from .syllable import Syllable, SyllableType, syllabify_word, syllabify_line
-from .metre import scan_line, verify_payar, verify_rhyme, LineScansionResult, PayarValidationResult
+"""Development alias of `bhashabid.prosody` (single source of truth lives in the package)."""
+import importlib
 
-__all__ = [
-    "Syllable",
-    "SyllableType",
-    "syllabify_word",
-    "syllabify_line",
-    "scan_line",
-    "verify_payar",
-    "verify_rhyme",
-    "LineScansionResult",
-    "PayarValidationResult",
-]
+_impl = importlib.import_module("bhashabid.prosody")
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})
+__all__ = getattr(_impl, "__all__", [k for k in vars(_impl) if not k.startswith("_")])

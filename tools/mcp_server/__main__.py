@@ -10,7 +10,7 @@ if hasattr(sys.stdout, "reconfigure"):
     except Exception:
         pass
 
-from .server import main
+from bhashabid.mcp.server import main
 
 if __name__ == "__main__":
     sys.exit(main() or 0)

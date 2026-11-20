@@ -2,6 +2,30 @@
 
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
+## [1.2.0] - 2026-11-20
+### Fixed
+- **Creative writing guide**: `creative_writing.md` condensed from ~7.0k to ~3.1k cl100k tokens (duplicated rules merged, idioms moved to `idioms.md`); fixed a Devanagari-mixed word (পরিশিষ্ট) and wrong gemstone names in the guide and the `lookup_lapidary` / literary-audit engine (lapis = রাজাবর্ত/লাজবর্দ, not বৈদূর্য/নীলা; jade had sunstone/coral; opal had moonstone); no more pressure to invent names when no Bengali name exists.
+- **Technical vocabulary**: new `technical_terms.md` (Bengali vs. established loanword, Bangla Academy loanword spelling, English kept for code/commands/brands, Bengali grammar around loanwords, ~80-term glossary across UI, files, software engineering, infrastructure, security, AI).
+- **Idiom table**: the skill now ships a compact generated `references/idioms.md` (~6.8k cl100k tokens, was a 16.4k-token JSON with regex/ids) instead of `bilingual_idioms.json`; the engine keeps its JSON. Removed 10 entries that flagged natural Bengali as calques (চোখ রাখা, চোখে চোখ রাখা, চায়ের কাপে ঝড়, রোম একদিনে তৈরি হয়নি, যা চকচক করে সবই সোনা নয়, ডুবন্ত মানুষ খড়কুটো ধরে, …); better equivalents for 7 (খালি কলসি বাজে বেশি, সেয়ানে সেয়ানে কোলাকুলি, রতনে রতন চেনে, …); the Sadhu proverb `ভাবিয়া করিও কাজ` no longer inserted into Cholito text.
+- **Sadhu → Cholito conversion**: `repair_text(..., target_style="cholito")`, CLI `repair --to-cholito`, MCP `repair_text.target_style`. Paradigm-based (~3.5k forms: verb roots × tenses × persons, causatives, irregulars খাওয়া/যাওয়া/হওয়া/নেওয়া, আ→এ stem mutation, Sadhu pronouns/adverbs, context-aware হইতে → হতে/থেকে). Look-alikes (মোবাইল, লিখিত, চলিত, বাড়িতে, হাসিল, names) are protected; unconvertible forms are reported as `SADHU_UNRESOLVED`. Default `repair` still leaves consistent Sadhu text intact.
+- **Repair no longer corrupts correct text**: honorific repair only rewrites clashes the linter confirms (previously `তিনি কাজ শেষ করে বাড়ি ফিরলেন` → `করেন`, `সে সময় ... ছিলেন` → `ছিল`).
+- **Consistent Sadhu prose is preserved**: repair harmonizes only genuine Sadhu/Cholito mixing where Cholito dominates, instead of half-converting Sadhu text into Guru-chandali.
+- **Register detection by morphology**: Sadhu suffixes (-িয়াছ-, -িতেছ-), Sadhu pronouns, Cholito verb endings, and productive honorific forms (আছো/আছেন, -ছেন, -েছেন, -চ্ছে, করছে) are detected; `তুই` clashes are repaired.
+- **Calques**: generic `দ্বারা + -িত/-কৃত` passive rule; `X দ্বারা সভাপতিত্ব করা` / `X দ্বারা সরবরাহ` repaired into genitive constructions instead of leaving a dangling `করা`; literal `দিনের শেষে` no longer flagged.
+- **Spellcheck ranking**: missing vowel-sign and aspirate typos rank higher (`বাজরে` → `বাজারে`), without widening auto-repair.
+- **Windows**: CLI forces UTF-8 stdio; the full test suite now passes without `PYTHONIOENCODING`.
+- **Relative clauses**: `তুমি যা বলবে তাই করব` is no longer flagged/rewritten (যা/তাই/যত/যেমন/যেখানে bound the subject-verb span).
+- **Scraper (P3)**: fetches only hosts of approved sources in `memory/sources/registry.yaml` and only where robots.txt allows; other sources need `allow_unregistered_sources=True`.
+- **Practice generator**: removed perturbations that labelled standard Bengali (ইতোমধ্যে, `সিদ্ধান্ত নেওয়া হয়েছে`, literal `দিনের শেষে`) as errors.
+### Added
+- `eval/llm_ab/2026-11-20`: first live pilot of base vs. skill vs. skill + MCP tools (Claude Haiku/Sonnet, 12 tasks).
+- `format_date_bangla(..., ordinal_suffix=False)` and MCP `format_date.ordinal_suffix` for the modern `১৫ নভেম্বর` style the skill recommends.
+- `eval/gold/engine_gold.jsonl` + `eval/benchmarks/engine_accuracy.py` + `eval/unit/test_engine_gold.py`: measured engine precision/recall (gold set pending native review).
+### Changed
+- `tools/bn_*`, `tools/mcp_server`, `tools/cli.py`, `tools/skill_installer.py` are now aliases of the `bhashabid` package (single source of truth; tests exercise shipped code).
+- "Unicode NFC" wording replaced by "Unicode canonical form": output keeps precomposed য়/ড়/ঢ়, which strict NFC decomposes; `is_nfc_normalized` docstring clarified. "First-ever" and "self-learning loop" claims narrowed; harvest/practice described as a regression harness.
+- Documentation corrected: removed unmeasured claims (simulated "+90% lift", "80–85% fluency", "298 BPE tokens", "500k words/s", "cryptographic signatures", "Cloudflare A+"); README now separates measured from unmeasured results.
+
 ## [1.1.1] - 2026-11-20
 ### Fixed
 - **Abbreviation & Initials Protection**: Resolved period-to-Dari over-conversion. Protected titles (`ড.`, `ডা.`, `মো.`), name initials (`এস. এ.`, `টি. এস.`), academic degrees (`এম.বি.বি.এস.`, `পিএইচ.ডি.`), citations (`পৃ.`, `নং.`, `খ্রি.`), list markers (`১.`, `ক.`), and multi-dot IP addresses (`১৯২.১৬৮.১.১`) from Dari mutation.

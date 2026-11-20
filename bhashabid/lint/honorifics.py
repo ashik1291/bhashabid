@@ -20,6 +20,11 @@ FAMILIAR_TO_FORMAL_VERBS = {
     "এসো": "আসেন", "করবে": "করবেন", "যাবে": "যাবেন"
 }
 
+FORMAL_TO_INTIMATE_VERBS = {
+    "করেন": "করিস", "যান": "যাস", "বলেন": "বলিস", "খান": "খাস", "দেখেন": "দেখিস",
+    "নেন": "নিস", "দেন": "দিস", "আসেন": "আসিস", "করবেন": "করবি", "যাবেন": "যাবি"
+}
+
 INTIMATE_TO_FAMILIAR_VERBS = {
     "করিস": "করো", "যাবি": "যাবে", "বলিস": "বলো", "খাস": "খাও",
     "দেখিস": "দেখো", "নিস": "নাও", "দিস": "দাও", "করবি": "করবে"
@@ -118,39 +123,81 @@ HONORIFIC_FINITE_VERB_PAT = re.compile(
     r"(?<![\u0980-\u09FF])[\u0980-\u09FF]+?(?:লেন|তেন|বেন|েন|ছেন|ছিলেন|েছেন)(?![\u0980-\u09FF])"
 )
 
+# Productive finite-verb morphology (whole-token alternatives appended to the closed verb lists below)
+_W = r"[ঀ-৿]+?"
+FORMAL_VERB_MORPH = r"আছেন|" + _W + r"(?:ছেন|ছিলেন|লেন|বেন|তেন)"
+_C = r"[\u0995-\u09B9\u09DC\u09DD\u09DF]"
+FAMILIAR_VERB_MORPH = r"আছো|আছ|" + _W + r"(?:ছো|ছিলে|েছ|চ্ছ|" + _C + r"ছ)"
+ORDINARY_3P_VERB_MORPH = _W + r"(?:চ্ছে|েছে|ছিল|" + _C + r"ছে)"
+_NOT_VERB_TOKENS = {"স্বচ্ছ", "তুচ্ছ", "গুচ্ছ", "কেন", "যেন"}
+
+PERSONAL_PRONOUN_PAT = re.compile(
+    B_L + r"(?:আমি|আমরা|আপনি|আপনারা|তুমি|তোমরা|তুই|তোরা|তিনি|তাঁরা|সে|তারা|উনি|ওনারা|ও|ওরা)" + B_R
+)
+
+_SUFFIX_RULES = {
+    "formal_2p": [("ছিলে", "ছিলেন"), ("ছো", "ছেন"), ("চ্ছ", "চ্ছেন"), ("েছ", "েছেন"), ("আছ", "আছেন"), ("ছ", "ছেন")],
+    "familiar_2p": [("ছিলেন", "ছিলে"), ("ছেন", "ছো"), ("লেন", "লে"), ("বেন", "বে"), ("তেন", "তে")],
+    "intimate_2p": [("আছেন", "আছিস"), ("আছো", "আছিস"), ("েছেন", "েছিস"), ("চ্ছেন", "চ্ছিস"), ("ছেন", "ছিস"),
+                    ("েছো", "েছিস"), ("চ্ছো", "চ্ছিস"), ("ছো", "ছিস"), ("লেন", "লি"), ("বেন", "বি"), ("তেন", "তিস")],
+    "honorific_3p": [("চ্ছে", "চ্ছেন"), ("েছে", "েছেন"), ("ছিল", "ছিলেন"), ("ছে", "ছেন")],
+    "ordinary_3p": [("ছিলেন", "ছিল"), ("ছেন", "ছে"), ("লেন", "ল"), ("বেন", "বে"), ("তেন", "ত")],
+}
+
+
+COORDINATOR_PAT = re.compile(B_L + r"(?:এবং|ও|আর)" + B_R)
+
+
+def inflect_verb(verb: str, table: dict, target: str):
+    """Maps a finite verb to the target register via the closed table, else by productive suffix; None if unknown."""
+    if verb in table:
+        return table[verb]
+    if verb in _NOT_VERB_TOKENS:
+        return None
+    for old, new in _SUFFIX_RULES[target]:
+        if verb.endswith(old):
+            return verb[: -len(old)] + new
+    return None
+
+
+def is_guarded_middle(middle: str) -> bool:
+    """True when the span between subject and verb crosses a clause or contains another subject pronoun."""
+    return bool(CLAUSE_BOUNDARY_PAT.search(middle) or PERSONAL_PRONOUN_PAT.search(middle))
+
+
 # 1. আপনি + informal verbs
 APNI_CLASH_PAT = re.compile(
     B_L + r"(আপনি|আপনারা)" + B_R +
     r"((?:(?!(?:আপনি|আপনারা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(করো|যাও|বলো|খাও|দেখো|নাও|দাও|হও|এসো|করিস|যাবি|বলিস|খাস|দেখিস|আসিস)" + B_R
+    B_L + r"(করো|যাও|বলো|খাও|দেখো|নাও|দাও|হও|এসো|করিস|যাবি|বলিস|খাস|দেখিস|আসিস|" + FAMILIAR_VERB_MORPH + r")" + B_R
 )
 
 # 2. তুমি + formal or intimate verbs
 TUMI_CLASH_PAT = re.compile(
     B_L + r"(তুমি|তোমরা)" + B_R +
     r"((?:(?!(?:তুমি|তোমরা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(আসেন|করেন|যান|বলেন|খান|দেখেন|নেন|দেন|হোন|করবেন|যাবেন|করিস|যাবি|বলিস|খাস|দেখিস)" + B_R
+    B_L + r"(আসেন|করেন|যান|বলেন|খান|দেখেন|নেন|দেন|হোন|করবেন|যাবেন|করিস|যাবি|বলিস|খাস|দেখিস|" + FORMAL_VERB_MORPH + r")" + B_R
 )
 
 # 3. তুই + formal verbs
 TUI_CLASH_PAT = re.compile(
     B_L + r"(তুই|তোরা)" + B_R +
     r"((?:(?!(?:তুই|তোরা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(আসেন|করেন|যান|বলেন|খান|দেখেন|নেন|দেন|হোন|করবেন|যাবেন)" + B_R
+    B_L + r"(আসেন|করেন|যান|বলেন|খান|দেখেন|নেন|দেন|হোন|করবেন|যাবেন|" + FORMAL_VERB_MORPH + r"|" + FAMILIAR_VERB_MORPH + r")" + B_R
 )
 
 # 4. তিনি / তাঁরা + ordinary verbs (e.g. তিনি বলল -> তিনি বললেন OR সে বলল)
 TINI_CLASH_PAT = re.compile(
     B_L + r"(তিনি|তাঁরা)" + B_R +
     r"((?:(?!(?:তিনি|তাঁরা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(ছিল|বলল|করল|গেল|খেল|দেখল|নিল|দিল|বলে|করে|যায়|খায়|দেখে|হলো|বলবে|করবে|যাবে|আসে|এলো|আসলো|আসবে|থাকে|থাকবে|হয়েছে|গিয়েছিল|করেছিল|বলেছিল|এসেছিল|হয়েছিল|দেখেছিল|খেয়েছিল|দিয়েছিল|নিয়েছিল|করত|যেত|বলত|থাকত|ফিরল|বসল|উঠল|লিখল|পড়ল|ডাকল|হাসল|শুনল|আনল|পাঠাল|জানাল|চাইল)" + B_R
+    B_L + r"(ছিল|বলল|করল|গেল|খেল|দেখল|নিল|দিল|বলে|করে|যায়|খায়|দেখে|হলো|বলবে|করবে|যাবে|আসে|এলো|আসলো|আসবে|থাকে|থাকবে|হয়েছে|গিয়েছিল|করেছিল|বলেছিল|এসেছিল|হয়েছিল|দেখেছিল|খেয়েছিল|দিয়েছিল|নিয়েছিল|করত|যেত|বলত|থাকত|ফিরল|বসল|উঠল|লিখল|পড়ল|ডাকল|হাসল|শুনল|আনল|পাঠাল|জানাল|চাইল|" + ORDINARY_3P_VERB_MORPH + r")" + B_R
 )
 
 # 5. সে / তারা + honorific verbs (e.g. সে বললেন -> সে বলল OR তিনি বললেন)
 SE_CLASH_PAT = re.compile(
     B_L + r"(সে|তারা)" + B_R +
     r"((?:(?!(?:সে|তারা)" + B_R + r")[^।?!,;:\n\"“”'‘’])*?)" +
-    B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন|ফিরলেন|বসলেন|উঠলেন|লিখলেন|পড়লেন|ডাকলেন|হাসলেন|শুনলেন|আনলেন|পাঠালেন|জানালেন|চাইলেন)" + B_R
+    B_L + r"(ছিলেন|বললেন|করলেন|গেলেন|খেলেন|দেখলেন|নিলেন|দিলেন|বলেন|করেন|খান|দেখেন|হলেন|বলবেন|করবেন|যাবেন|আসেন|এলেন|আসলেন|আসবেন|থাকেন|থাকবেন|হয়েছেন|গিয়েছিলেন|করেছিলেন|বলেছিলেন|এসেছিলেন|হয়েছিলেন|দেখেছিলেন|খেয়েছিলেন|দিয়েছিলেন|নিয়েছিলেন|করতেন|যেতেন|বলতেন|থাকতেন|ফিরলেন|বসলেন|উঠলেন|লিখলেন|পড়লেন|ডাকলেন|হাসলেন|শুনলেন|আনলেন|পাঠালেন|জানালেন|চাইলেন|" + FORMAL_VERB_MORPH + r")" + B_R
 )
 
 # 6. আমি / আমরা + non-first-person verbs (e.g. আমি করবেন না -> আমি করব না)
@@ -184,7 +231,7 @@ NON_FIRST_PERSON_FIRST_VERB_PAT = re.compile(
 
 # Universal clause boundary marker: subordinate and coordinate conjunctions
 CLAUSE_BOUNDARY_PAT = re.compile(
-    B_L + r"(যে|যেন|কারণ|যেহেতু|সেহেতু|যখন|তখন|যদি|তবে|তাহলে|কিন্তু|অথবা|বা|যাতে|নইলে)" + B_R
+    B_L + r"(যে|যেন|কারণ|যেহেতু|সেহেতু|যখন|তখন|যদি|তবে|তাহলে|কিন্তু|অথবা|বা|যাতে|নইলে|যা|তাই|যত|যেমন|যেখানে)" + B_R
 )
 
 def check_honorific_clash(text: str) -> list[LintIssue]:
@@ -201,6 +248,10 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
 
             # Linguistic Guard: Cross-clause boundary
             if CLAUSE_BOUNDARY_PAT.search(middle):
+                continue
+
+            # Guard: another subject pronoun intervenes, or the token is not a verb
+            if PERSONAL_PRONOUN_PAT.search(middle) or verb in _NOT_VERB_TOKENS:
                 continue
 
             if verb in FORMAL_TO_FAMILIAR_VERBS:
@@ -239,6 +290,10 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             if CLAUSE_BOUNDARY_PAT.search(middle):
                 continue
 
+            # Guard: another subject pronoun intervenes, or the token is not a verb
+            if PERSONAL_PRONOUN_PAT.search(middle) or verb in _NOT_VERB_TOKENS:
+                continue
+
             if verb in FAMILIAR_TO_FORMAL_VERBS:
                 correct_formal_verb = FAMILIAR_TO_FORMAL_VERBS[verb]
                 opt1 = f"{subj}{middle}{correct_formal_verb}"
@@ -261,10 +316,14 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
         # 3. Check তুই clash
         for m_tui in TUI_CLASH_PAT.finditer(line):
             subj = m_tui.group(1)
+            middle = m_tui.group(2)
+            verb = m_tui.group(3)
             matched = m_tui.group(0)
+            if CLAUSE_BOUNDARY_PAT.search(middle) or PERSONAL_PRONOUN_PAT.search(middle) or verb in _NOT_VERB_TOKENS:
+                continue
             issues.append(LintIssue(
                 rule_id="RULE-LINT-HONORIFIC-TUI",
-                message=f"সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (ঘনিষ্ঠ/তুচ্ছার্থ) এর সাথে সম্ভ্রমাত্মক ক্রিয়াপদ ব্যবহার করা হয়েছে।",
+                message=f"সর্বনাম ও ক্রিয়াপদের সঙ্গতিহীনতা: '{subj}' (ঘনিষ্ঠ/তুচ্ছার্থ) এর সাথে বেমানান ক্রিয়াপদ '{verb}' ব্যবহার করা হয়েছে।",
                 line=line_idx,
                 col=m_tui.start() + 1,
                 severity=LintSeverity.ERROR,
@@ -288,8 +347,8 @@ def check_honorific_clash(text: str) -> list[LintIssue]:
             has_prior_hon_verb = any(
                 re.search(rf"(?<![\u0980-\u09FF]){hv}(?![\u0980-\u09FF])", middle)
                 for hv in THIRD_PERSON_HONORIFIC_TO_ORDINARY.keys()
-            )
-            if has_prior_hon_verb:
+            ) or bool(HONORIFIC_FINITE_VERB_PAT.search(COORDINATOR_PAT.split(middle)[-1]))
+            if has_prior_hon_verb or PERSONAL_PRONOUN_PAT.search(middle):
                 continue
 
             # Linguistic Guard 3: Non-finite participle in compound or serial verb construction

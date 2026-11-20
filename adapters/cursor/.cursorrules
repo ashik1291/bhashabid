@@ -11,7 +11,7 @@ When generating or editing Bengali:
 1. **Bangla Academy Orthography**:
    - Foreign loanwords use 'স'/'স্ট' (স্টেশন, পোস্ট); never 'ষ'/'ষ্ট'.
    - Desi/foreign words take short 'ি' (পাখি, হাতি, সরকারি).
-   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই). Keep alphanumeric IDs intact (TCK-942).
+   - Dates: Omit ordinal suffixes (১৫ নভেম্বর, never ১৫ই; MCP `format_date`: `ordinal_suffix: false`). Keep alphanumeric IDs intact (TCK-942).
 
 2. **Numerals & South Asian Grouping**:
    - Commas: ১২,৩৪,৫৬৭ (never 1,234,567). Decimals use dot: ৩.১৪ (never ৩।১৪).

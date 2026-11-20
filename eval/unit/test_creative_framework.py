@@ -27,7 +27,7 @@ class TestCreativeFramework(unittest.TestCase):
         content = self.ref_file.read_text(encoding="utf-8")
         self.assertIn("পিঙ্গল-আভ", content)
         self.assertIn("রক্তনীলমণি", content)
-        self.assertIn("বৈদূর্যমণি", content)
+        self.assertIn("রাজাবর্ত", content)
         self.assertIn("ফিরোজা", content)
         self.assertIn("শঙ্খশুভ্র", content)
         self.assertIn("নির্মোক", content)

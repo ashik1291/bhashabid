@@ -1,14 +1,7 @@
-# bhashabid/creative/__init__.py
-# Creative writing, literary translation & lapidary nature coprocessor
+"""Development alias of `bhashabid.creative` (single source of truth lives in the package)."""
+import importlib
 
-from .lapidary import lookup_lapidary, check_transliteration_surrenders, LAPIDARY_MAP
-from .audit import audit_literary_text
-from .prompt_engine import generate_literary_prompt
+_impl = importlib.import_module("bhashabid.creative")
 
-__all__ = [
-    "lookup_lapidary",
-    "check_transliteration_surrenders",
-    "LAPIDARY_MAP",
-    "audit_literary_text",
-    "generate_literary_prompt",
-]
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})
+__all__ = getattr(_impl, "__all__", [k for k in vars(_impl) if not k.startswith("_")])

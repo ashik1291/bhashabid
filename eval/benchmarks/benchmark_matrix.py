@@ -1,4 +1,5 @@
 # Cycle 3 Cross-Model Benchmark Matrix
+# SIMULATED: 'baseline_sim' and 'skill_sim' are hand-written strings, not live model outputs; only the 'Skill + Tools' column executes code. Do not cite these percentages as measured LLM lift (REQ-039).
 import os
 import sys
 
@@ -136,6 +137,7 @@ def run_matrix():
     tool_pct = (tool_passes / total) * 100.0
 
     report = "# Cycle 3 Multi-Model Benchmark Matrix Report\n\n"
+    report += "> SIMULATED: 'baseline_sim' and 'skill_sim' are hand-written strings, not live model outputs; only the 'Skill + Tools' column executes code. Do not cite these percentages as measured LLM lift (REQ-039).\n\n"
     report += "## 1. Executive Summary\n"
     report += f"- **Total Test Cases**: " + str(total) + "\n"
     report += f"- **Baseline LLM (Raw)**: " + f"{base_pct:.1f}" + "% (" + str(base_passes) + "/" + str(total) + ")\n"
@@ -149,7 +151,7 @@ def run_matrix():
         report += "| " + r['id'] + " | " + r['family'] + " | " + r['base'] + " | " + r['skill'] + " | " + r['tool'] + " |\n"
 
     report += "\n## 3. Analysis & Key Takeaways\n"
-    report += "1. **Baseline Weakness**: Unassisted models score only 10% on Bengali.\n"
+    report += "1. **Baseline (simulated)**: hand-written baseline strings fail most cases by construction.\n"
     report += "2. **Skill Prompt Lift**: Adding skill elevates performance across standard cases.\n"
     report += "3. **Deterministic Tools Invariance**: Tools provide 100% deterministic rule verification.\n\n"
     report += "## 4. Exit Criteria Audit\n"
@@ -160,7 +162,7 @@ def run_matrix():
     with open(rep_path, "w", encoding="utf-8") as f:
         f.write(report.strip() + "\n")
     print(f"Cycle 3 Benchmark report generated: {rep_path}")
-    print(f"Results: Baseline={base_pct:.1f}%, Skill={skill_pct:.1f}%, Bhashabid={tool_pct:.1f}%")
+    print(f"Results (SIMULATED baselines): Baseline={base_pct:.1f}%, Skill={skill_pct:.1f}%, Bhashabid={tool_pct:.1f}%")
 
 if __name__ == "__main__":
     run_matrix()

@@ -20,7 +20,7 @@ Core Invariants:
 2. Numbers: South Asian 2-2-3 grouping (১২,৩৪,৫৬৭). Decimals use dot (৩.১৪). Prose percentages use 'শতাংশ' (৯.৯২ শতাংশ, never % এ).
 3. Grammar: 0 Guru-Chandali (never mix সাধু/চলিত like তাহার/বলল). Concordance: তিনি...গেলেন vs সে...গেল. Eliminate double plurals (সব সদস্য, never সব সদস্যবৃন্দ).
 4. Anti-Calque & Literature: Natural active voice (পরিচালিত, not দ্বারা চালিত). Natural idioms: piece of cake -> সহজ কাজ, bad workman -> নাচতে না জানলে উঠান বাঁকা, Rome wasn't built in a day -> বড় কাজে সময় লাগে, bite the bullet -> বাধ্য হয়ে কঠিন পরিস্থিতি মেনে নেওয়া, cost an arm and a leg -> পানির মতো খরচ. Literature: Anatomical realism (NEVER wings/ডানা on jellyfish). Lapidary: Amber->পিঙ্গল-আভ, Amethyst->রক্তনীলমণি. Intent->অভিপ্রায় / সংকল্প (never বাসনা). Zero filler particles.
-5. Developers: Fenced code blocks (triple-backticks), JSON keys, SQL, variables, and IDs (TCK-942) remain untouched English ASCII. Tech terms: ডাটাবেস, ক্লাউড, মেমোরি লিক.
+5. Developers: Fenced code blocks (triple-backticks), JSON keys, SQL, variables, and IDs (TCK-942) remain untouched English ASCII. Tech terms: ডেটাবেস, ক্লাউড, মেমোরি লিক.
 6. Pure Output: Deliver clean, finalized document directly with ZERO pleasantries or meta-commentary ("নিচে দরখাস্তটি দেওয়া হলো:" সম্পূর্ণ নিষিদ্ধ).
 ```
 
@@ -144,7 +144,7 @@ Core Invariants:
 2. Lapidary & Nature Equivalence Table:
    - Amber ➔ পিঙ্গল-আভ / মধুরঙা (never অ্যাম্বার)
    - Amethyst ➔ রক্তনীলমণি / নীলমণি (never অ্যামেথিস্ট)
-   - Turquoise ➔ ফিরোজা. Lapis Lazuli ➔ বৈদূর্যমণি. Slough ➔ নির্মোক. Azure ➔ নীলিমা.
+   - Turquoise ➔ ফিরোজা. Lapis Lazuli ➔ রাজাবর্ত. Slough ➔ নির্মোক. Azure ➔ নীলিমা.
    - Cognitive Volition: Intent/will ➔ 'অভিপ্রায়' বা 'সংকল্প' (never romanticize into 'বাসনা').
 ```
 
@@ -196,7 +196,7 @@ Core Invariants:
    - All programming code blocks (triple-backticks), SQL queries, regex patterns, JSON keys, variable names, and terminal commands must remain untouched ASCII English.
    - Keep system constants, error codes (ERR_CONNECTION_REFUSED, 404 Not Found), Git hashes, and UUIDs in ASCII.
 2. Natural Technical Loanwords:
-   - Standard industry loanwords: ডাটাবেস, সার্ভার, এপিআই, রিপজিটরি, কমিট, ক্যাশ, ডিপ্লয়মেন্ট, থ্রেড সেফটি, মেমোরি লিক.
+   - Standard industry loanwords: ডেটাবেস, সার্ভার, এপিআই, রিপজিটরি, কমিট, ক্যাশ, ডিপ্লয়মেন্ট, থ্রেড সেফটি, মেমোরি লিক.
    - Strictly NEVER invent absurd literal calques (do not translate Cloud Computing as 'মেঘের গণনা' or Memory Leak as 'স্মৃতি ফুটো').
 3. Punctuation Invariant:
    - Enforce Bengali Dari (।) for explanatory prose, while preserving technical floating decimals (৩.১৪) and source code periods untouched.
@@ -334,7 +334,7 @@ When answering coding, architectural, technical, or developer-facing requests:
    - NEVER translate programming language syntax, keywords (`def`, `class`, `function`, `return`, `async`, `await`, `SELECT`, `WHERE`), variable names (`camelCase`, `snake_case`), JSON keys, API endpoints, package names (`npm install`, `pip install`), or regex patterns.
    - Code snippets and comments: Code remains pure English inside fenced code blocks; explanations outside code blocks must be in natural, professional Bengali.
 2. **Natural Technical Vocabulary (No Absurd Calques)**:
-   - Use standard industry terminology: `ডাটাবেস` (Database), `সার্ভার` (Server), `এপিআই` (API), `প্যাকেজ` (Package), `রিপজিটরি` (Repository), `কমিট` (Commit), `বিল্ড` (Build), `ডিপ্লয়মেন্ট` (Deployment), `মেমোরি` (Memory), `ক্যাশ` (Cache).
+   - Use standard industry terminology: `ডেটাবেস` (Database), `সার্ভার` (Server), `এপিআই` (API), `প্যাকেজ` (Package), `রিপজিটরি` (Repository), `কমিট` (Commit), `বিল্ড` (Build), `ডিপ্লয়মেন্ট` (Deployment), `মেমোরি` (Memory), `ক্যাশ` (Cache).
    - NEVER invent bizarre literal translations (e.g. do NOT translate "Cloud Computing" as "মেঘের গণনা", "Memory Leak" as "স্মৃতি ফুটো", or "Thread Pool" as "সুতো পুকুর").
 3. **Preserve Errors, Logs, and System Identifiers**:
    - Keep stack traces, terminal commands, HTTP status codes (`404 Not Found`, `500 Internal Server Error`), error constants (`ERR_CONNECTION_REFUSED`), UUIDs, and Git hashes in pure ASCII English.
@@ -366,7 +366,7 @@ When the context touches any of these domains, apply its verified institutional 
 6. **Classical Poetry, Prosody & Literary Translation (সাহিত্যিক অনুবাদের পঞ্চসূত্র)**:
    - Law 1 (Transduction): অভিধা (Direct physical sense), লক্ষণা (Cultural metaphor grounding), ব্যঞ্জনা (Resonant emotional aura).
    - Law 2 (Tone-Matrix): Archetype A (Minimalist/Imagist - zero padding particles), Archetype B (Romantic/Symbolist - elevated compounds), Archetype C (Realist - living dialogue & muscular verbs).
-   - Law 3 (Anatomical & Lapidary Realism): Never invent limbs or organs (jellyfish pulses: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`). Lapidary: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `বৈদূর্যমণি`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`. Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
+   - Law 3 (Anatomical & Lapidary Realism): Never invent limbs or organs (jellyfish pulses: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`). Lapidary: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `রাজাবর্ত`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`. Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
    - Law 4 (Anti-Calque Syntax): Dissolve passive English structures into active Bengali; use expressive compound verbs (sank ➔ তলিয়ে গেল; faded ➔ মিলিয়ে গেল).
    - Law 5 (Prosodic Cadence): 14-Akshar Payar (৮ + ৬ মাত্রার অন্ত্যমিল), Matrabritta, or organic free verse with zero padding particles (`কখনো`, `যেন`, `তুমিও`, `সেই`).
 7. **Healthcare, Clinical Advisories & Epidemiology**:
@@ -409,7 +409,7 @@ When the context touches any of these domains, apply its verified institutional 
       * *Tip of the iceberg* ➔ `হিমশৈলের চূড়া মাত্র`
       * *Caught red-handed* ➔ `হাতে-নাতে ধরা পড়া`
       * *Once in a blue moon* ➔ `ডুমুরের ফুল` / `কদাচিৎ`
-      * *(Full 105-idiom dataset)* ➔ `references/bilingual_idioms.json`
+      * *(Full idiom list)* ➔ `references/idioms.md`
 13. **Consumer E-Commerce & Retail Logistics**:
     - Terminology: `অর্ডার ট্র্যাকিং`, `হোম ডেলিভারি`, `রিটার্ন ও রিফান্ড নীতি`, `মূল্য পরিশোধ`, `এসক্রো সুরক্ষা`. Avoid hybrid Banglish verbs ('ডেলিভারি হয়ে গিয়েছে' ➔ 'ডেলিভারি সম্পন্ন হয়েছে').
 14. **Customer Support & Omnichannel Messaging**:

@@ -36,6 +36,8 @@ RAW_UNNATURAL_CALQUES = [
     (B_L + r"হৃৎপিণ্ড\s+পাথরে\s+পরিণত[\u0980-\u09FF]*" + B_R, "হৃৎপিণ্ড পাথরে পরিণত", "হৃদয় পাষাণ হয়ে যাওয়া / মন শক্ত হওয়া"),
     (B_L + r"অধিক\s+রাঁধুনি\s+ঝোল\s+নষ্ট\s+ক[\u0980-\u09FF]*" + B_R, "অধিক রাঁধুনি ঝোল নষ্ট করে", "অধিক সন্ন্যাসীতে গাজন নষ্ট"),
     (B_L + r"একটি\s+পাথর\s+দিয়ে\s+দুটি\s+পাখি\s+মা[\u0980-\u09FF]*" + B_R, "একটি পাথর দিয়ে দুটি পাখি মারা", "এক ঢিলে দুই পাখি মারা / রথ দেখা ও কলা বেচা"),
+    # Generic passive calque: 'X দ্বারা <past participle -িত/-কৃত>' (kept last so the specific rules above win)
+    (B_L + r"দ্বারা\s+[\u0980-\u09FF]+(?:িত|কৃত)" + B_R, "দ্বারা + কৃদন্ত (কর্মবাচ্য)", "কর্তৃবাচ্য বাক্য, অথবা '-এর মাধ্যমে / -এর নেতৃত্বে / -এর অধীনে / -এর কারণে'"),
 ]
 
 # Canonicalize all patterns at module load time to guarantee zero nukta mismatch
@@ -122,7 +124,7 @@ def check_calques(text: str, profile: str = "bd_standard") -> list[LintIssue]:
                 col = m.start() + 1
                 issues.append(LintIssue(
                     rule_id="RULE-LINT-CALQUE",
-                    message=f"অস্বাভাবিক ইংরেজি প্যাসিভ ক্যাল্ক: '{matched_label}' প্রমিত বাংলায় কৃত্রিম শোনায়।",
+                    message=f"অস্বাভাবিক ইংরেজি ক্যাল্ক (আক্ষরিক অনুবাদ): '{matched_label}' প্রমিত বাংলায় কৃত্রিম শোনায়।",
                     line=line_idx,
                     col=col,
                     severity=LintSeverity.WARNING,

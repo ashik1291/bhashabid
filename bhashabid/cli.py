@@ -100,7 +100,7 @@ def handle_date(args):
             y, m, d = gregorian_to_bongabdo(val)
             print(f"{y}-{m:02d}-{d:02d}")
         else:
-            print(format_date_bangla(val))
+            print(format_date_bangla(val, ordinal_suffix=not args.no_suffix))
         return 0
     except Exception as e:
         sys.stderr.write(f"Error: {e}\n")
@@ -121,7 +121,7 @@ def handle_repair(args):
         from .normalize.repair import repair_text
         import difflib
         text = resolve_text_or_file(args.text)
-        repaired, fixes = repair_text(text, profile=args.profile)
+        repaired, fixes = repair_text(text, profile=args.profile, target_style="cholito" if args.to_cholito else None)
 
         if getattr(args, "diff", False):
             diff = difflib.unified_diff(
@@ -572,7 +572,19 @@ def handle_lapidary(args):
         sys.stderr.write(f"Lapidary Error: {e}\n")
         return 1
 
+
+def ensure_utf8_stdio() -> None:
+    """Bengali output must not crash on Windows consoles/pipes that default to a legacy code page (cp1252)."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure") and (stream.encoding or "").lower().replace("-", "") != "utf8":
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except (ValueError, OSError):
+                pass
+
+
 def main():
+    ensure_utf8_stdio()
     parser = argparse.ArgumentParser(
         prog="bhashabid",
         description="Bhashabid (ভাষাবিদ) — Open-Source Bengali Linguistic Coprocessor CLI"
@@ -596,6 +608,7 @@ def main():
     p_date.add_argument("value", help="Date string (e.g. 2026-04-14, 2026-03-26, or 'today')")
     p_date.add_argument("--bongabdo", "-b", action="store_true", help="Format as traditional Bengali calendar date (বঙ্গাব্দ)")
     p_date.add_argument("--convert", "-c", action="store_true", help="Convert to numeric Bangabda date (YYYY-MM-DD)")
+    p_date.add_argument("--no-suffix", action="store_true", help="Gregorian: omit day suffix, modern style (১৫ নভেম্বর)")
     p_date.set_defaults(func=handle_date)
 
     # normalize
@@ -612,6 +625,7 @@ def main():
     p_rep.add_argument("--verbose", "-v", action="store_true", help="Show applied repair explanations")
     p_rep.add_argument("--diff", action="store_true", help="Show unified diff of proposed changes without altering file")
     p_rep.add_argument("--write", "-w", action="store_true", help="Write repaired text in-place to the target file")
+    p_rep.add_argument("--to-cholito", action="store_true", help="Convert all Sadhu forms to Promito Cholito (default only fixes mixed text)")
     p_rep.set_defaults(func=handle_repair)
 
     # lint

@@ -22,6 +22,8 @@ DECOMPOSED_KHANDA_TA = DECOMPOSED_KHANDA_TA_ZWNJ
 
 def is_nfc_normalized(text: str) -> bool:
     """
+    Check if string is in Bhashabid's Bengali canonical form (precomposed য়/ড়/ঢ়).
+    Note: this is NOT strict Unicode NFC, which decomposes U+09DC/09DD/09DF; the name is kept for API compatibility.
     Check if string complies with Bengali canonical normalization:
     - Contains no decomposed nukta clusters (য+়, ড+়, ঢ+়)
     - Contains no decomposed Khanda-Ta ligatures (ত্‍)

@@ -17,6 +17,11 @@ BENGALI_CONFUSION_PAIRS = [
     ({'জ', 'য'}, 1),
     ({'ৎ', 'ত'}, 1),
     ({'ং', 'ঙ'}, 1),
+    # Aspirate/unaspirate confusions: ranked above unrelated letters but kept above the
+    # 1.0 auto-repair threshold so they only influence suggestions.
+    ({'ক', 'খ'}, 1.5), ({'গ', 'ঘ'}, 1.5), ({'চ', 'ছ'}, 1.5), ({'জ', 'ঝ'}, 1.5),
+    ({'ট', 'ঠ'}, 1.5), ({'ড', 'ঢ'}, 1.5), ({'ত', 'থ'}, 1.5), ({'দ', 'ধ'}, 1.5),
+    ({'প', 'ফ'}, 1.5), ({'ব', 'ভ'}, 1.5),
 ]
 
 BENGALI_PRODUCTIVE_SUFFIXES = [
@@ -42,6 +47,11 @@ def _phonetic_cost(c1: str, c2: str) -> float:
             return cost
     return 2.0  # general mismatch
 
+def _indel_cost(c: str) -> float:
+    # A dropped or extra vowel sign (কার) is a common typo; cheaper than a consonant but above the auto-repair threshold.
+    return 1.5 if "া" <= c <= "ৌ" else 2.0
+
+
 def bengali_edit_distance(s1: str, s2: str) -> float:
     """
     Computes weighted Levenshtein distance tailored to Bengali phonology.
@@ -50,17 +60,17 @@ def bengali_edit_distance(s1: str, s2: str) -> float:
     m, n = len(s1), len(s2)
     dp = [[0.0] * (n + 1) for _ in range(m + 1)]
 
-    for i in range(m + 1):
-        dp[i][0] = float(i * 2)
-    for j in range(n + 1):
-        dp[0][j] = float(j * 2)
+    for i in range(1, m + 1):
+        dp[i][0] = dp[i - 1][0] + _indel_cost(s1[i - 1])
+    for j in range(1, n + 1):
+        dp[0][j] = dp[0][j - 1] + _indel_cost(s2[j - 1])
 
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             cost = _phonetic_cost(s1[i - 1], s2[j - 1])
             dp[i][j] = min(
-                dp[i - 1][j] + 2.0,       # deletion
-                dp[i][j - 1] + 2.0,       # insertion
+                dp[i - 1][j] + _indel_cost(s1[i - 1]),  # deletion
+                dp[i][j - 1] + _indel_cost(s2[j - 1]),  # insertion
                 dp[i - 1][j - 1] + cost   # substitution
             )
     return dp[m][n]
