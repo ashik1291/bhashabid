@@ -11,3 +11,4 @@ Welcome to Bhashabid. When operating inside this repository, adhere strictly to 
 3. **Kill Switch**: If `state/STOP` exists, halt execution immediately.
 4. **Deterministic First**: Solve numerals, ordinals, dates, punctuation, and Unicode via `tools/`. Do not rely on LLM prompts for deterministic logic.
 5. **Testing**: Run tests using `python -m unittest discover -s eval/unit`.
+6. **Learning loop**: To run a learning session (collect Bengali output → `bhashabid learn scan` → `learn suggest` → human approval → `learn apply`), follow `docs/LEARNING_LOOP_AGENT_GUIDE.md`. Agents suggest; only a named human approves.

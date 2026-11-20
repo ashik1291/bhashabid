@@ -22,3 +22,12 @@ review:
   reviewer_name: null
   reviewed_date: null
   applied_date: null
+llm_suggestion:
+  by: claude-opus-5-5
+  date: '2026-11-20'
+  decision:
+    action: add_lexicon
+    word: জানিস
+  rationale: 'জানিস: intimate present of জানা (''তুই জানিস''); valid. A future engine
+    fix could recognise -িস forms generally.'
+  confidence: high

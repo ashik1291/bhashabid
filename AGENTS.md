@@ -21,3 +21,8 @@ This repository coordinates 15 specialized personas operating under the Autonomo
 | A15 | Human Review Liaison | Native speaker packet preparation and approval logger |
 
 Each agent contract is defined in `agents/<name>.md` and mirrored in `.claude/agents/<name>.md`.
+
+## Learning Loop (any LLM agent: Claude Code, Gemini CLI, others)
+Agents improve Bhashabid by generating or collecting real Bengali output, running `bhashabid learn scan`,
+and recording recommendations with `bhashabid learn suggest`. Only a named human native speaker approves
+(`learn approve --reviewer`), which the tool enforces. Full runbook: `docs/LEARNING_LOOP_AGENT_GUIDE.md`.

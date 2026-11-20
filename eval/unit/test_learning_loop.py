@@ -27,7 +27,7 @@ class TestLearningLoop(unittest.TestCase):
             rejected_dir=os.path.join(t, "rejected"), lexicon_additions=os.path.join(t, "lex.txt"),
             sadhu_roots=os.path.join(t, "roots.json"), idioms_json=[os.path.join(t, "idioms.json")],
             terms_md=os.path.join(t, "terms.md"), cases_jsonl=os.path.join(t, "cases.jsonl"),
-            rebuild_bundle=False,
+            rebuild_bundle=False, stop_file=os.path.join(t, "STOP"),
         )
         with open(os.path.join(t, "idioms.json"), "w", encoding="utf-8") as f:
             json.dump([{"id": "IDM-001", "english": "x", "flawed_calque": "ক খ", "calque_pattern": "ক\\s+খ",
@@ -99,6 +99,42 @@ class TestLearningLoop(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(self.paths.rejected_dir, f"{lex}.yaml")))
         L.scan([self.inbox], paths=self.paths)
         self.assertNotIn(lex, [c["id"] for c in L.list_pending(self.paths)])
+
+    def test_agent_suggestion_then_human_accepts(self):
+        L.scan([self.inbox], paths=self.paths)
+        term = self._cards()["term"]["id"]
+        L.suggest(term, "gemini-2.5-pro", {"bengali": "ডিপ্লয়মেন্ট"}, "standard loanword", "high", paths=self.paths)
+        card = self._cards()["term"]
+        self.assertEqual(card["review"]["status"], "PENDING_HUMAN_REVIEW")  # suggestion never approves
+        self.assertEqual(card["llm_suggestion"]["by"], "gemini-2.5-pro")
+        L.approve(term, "Ashikur Rahman Bhuiyan", accept_suggestion=True, paths=self.paths)
+        self.assertTrue(self._cards()["term"]["review"]["accepted_llm_suggestion"])
+        self.assertEqual(L.status(self.paths)["approved_not_applied"], 1)
+
+    def test_models_cannot_approve_or_reject(self):
+        L.scan([self.inbox], paths=self.paths)
+        lex = self._cards()["lexicon"]["id"]
+        for name in ("Claude Opus", "gemini-2.5-pro", "GPT-4o", "AI reviewer", "assistant"):
+            with self.assertRaises(ValueError):
+                L.approve(lex, name, paths=self.paths)
+            with self.assertRaises(ValueError):
+                L.reject(lex, name, paths=self.paths)
+
+    def test_suggestion_must_be_complete_and_reject_suggestion_not_auto_approved(self):
+        L.scan([self.inbox], paths=self.paths)
+        term = self._cards()["term"]["id"]
+        with self.assertRaises(ValueError):
+            L.suggest(term, "claude", {}, paths=self.paths)  # bengali missing
+        L.suggest(term, "claude", {"action": "reject"}, "brand name", paths=self.paths)
+        with self.assertRaises(ValueError):
+            L.approve(term, "Ashikur Rahman Bhuiyan", accept_suggestion=True, paths=self.paths)
+
+    def test_kill_switch(self):
+        open(self.paths.stop_file, "w").close()
+        with self.assertRaises(RuntimeError):
+            L.scan([self.inbox], paths=self.paths)
+        with self.assertRaises(RuntimeError):
+            L.apply_approved(self.paths)
 
 
 if __name__ == "__main__":

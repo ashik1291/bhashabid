@@ -561,22 +561,38 @@ def handle_learn(args):
         cmd = args.learn_command
         if cmd == "scan":
             print(json.dumps(loop.scan(args.paths, min_count=args.min_count), ensure_ascii=False, indent=2))
+        elif cmd == "pending" and args.json:
+            print(json.dumps(loop.list_pending(), ensure_ascii=False, indent=2, default=str))
+        elif cmd == "show":
+            card = next((c for c in loop.list_pending() if c["id"] == args.card_id), None)
+            if card is None:
+                sys.stderr.write(f"No pending card {args.card_id}" + chr(10))
+                return 1
+            print(json.dumps(card, ensure_ascii=False, indent=2, default=str))
+        elif cmd == "status":
+            print(json.dumps(loop.status(), ensure_ascii=False, indent=2))
+        elif cmd == "suggest":
+            updates = dict(kv.split("=", 1) for kv in args.set)
+            card = loop.suggest(args.card_id, args.by, updates, args.rationale, args.confidence)
+            print(f"Suggestion recorded on {card['id']}: {card['llm_suggestion']['decision']}")
         elif cmd == "pending":
             for c in loop.list_pending():
                 ev = c["evidence"]
-                print(f"{c['id']}  [{c['kind']}] {c['candidate']}  x{ev['count']}  -> {c['decision'].get('action')}  ({c['review']['status']})")
+                sug = c.get("llm_suggestion")
+                hint = f"  | suggested by {sug['by']} ({sug['confidence']}): {sug['decision']}" if sug else ""
+                print(f"{c['id']}  [{c['kind']}] {c['candidate']}  x{ev['count']}  -> {c['decision'].get('action')}  ({c['review']['status']}){hint}")
                 for ctx in ev["contexts"][:1]:
                     print(f"    e.g. {ctx}")
         elif cmd == "approve":
             updates = dict(kv.split("=", 1) for kv in args.set)
-            card = loop.approve(args.card_id, args.reviewer, updates)
+            card = loop.approve(args.card_id, args.reviewer, updates, accept_suggestion=args.accept_suggestion)
             print(f"Approved {card['id']}: {card['decision']}")
         elif cmd == "reject":
             print(f"Rejected -> {loop.reject(args.card_id, args.reviewer, args.reason)}")
         elif cmd == "apply":
             print(json.dumps(loop.apply_approved(), ensure_ascii=False, indent=2))
         else:
-            sys.stderr.write("Usage: bhashabid learn {scan,pending,approve,reject,apply}\n")
+            sys.stderr.write("Usage: bhashabid learn {scan,pending,show,status,suggest,approve,reject,apply}\n")
             return 1
         return 0
     except Exception as e:
@@ -800,12 +816,24 @@ def main():
     p_ls = learn_sub.add_parser("scan", help="Ingest .txt/.jsonl files or folders (e.g. LLM outputs) and draft candidate cards")
     p_ls.add_argument("paths", nargs="+")
     p_ls.add_argument("--min-count", type=int, default=2, help="Minimum occurrences for unknown-word candidates")
-    learn_sub.add_parser("pending", help="List candidate cards awaiting human review")
+    p_lp = learn_sub.add_parser("pending", help="List candidate cards awaiting human review")
+    p_lp.add_argument("--json", action="store_true", help="Full cards as JSON (for agents)")
+    p_lsh = learn_sub.add_parser("show", help="Show one card as JSON")
+    p_lsh.add_argument("card_id")
+    learn_sub.add_parser("status", help="Counts per stage (pending, suggested, approved, learned, rejected)")
+    p_lg = learn_sub.add_parser("suggest", help="Record an agent/LLM recommendation on a card (does not approve)")
+    p_lg.add_argument("card_id")
+    p_lg.add_argument("--by", required=True, help="Model or person making the suggestion, e.g. gemini-2.5-pro")
+    p_lg.add_argument("--set", nargs="*", default=[], metavar="KEY=VALUE",
+                      help="Proposed decision, e.g. action=add_term english=deploy bengali=ডিপ্লয় (action=reject to propose rejection)")
+    p_lg.add_argument("--rationale", default="")
+    p_lg.add_argument("--confidence", choices=["high", "medium", "low"], default="medium")
     p_la = learn_sub.add_parser("approve", help="Approve a candidate card (human reviewer required)")
     p_la.add_argument("card_id")
     p_la.add_argument("--reviewer", required=True)
     p_la.add_argument("--set", nargs="*", default=[], metavar="KEY=VALUE",
                       help="Decision fields, e.g. action=add_term english=deploy bengali=ডিপ্লয়")
+    p_la.add_argument("--accept-suggestion", action="store_true", help="Use the recorded LLM suggestion as the decision")
     p_lr = learn_sub.add_parser("reject", help="Reject a candidate card")
     p_lr.add_argument("card_id")
     p_lr.add_argument("--reviewer", required=True)

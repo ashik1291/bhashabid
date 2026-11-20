@@ -48,6 +48,15 @@ ACTION_FIELDS = {
 }
 
 
+STOP_FILE = os.path.join(REPO_ROOT, "state", "STOP")
+
+
+def _check_stop(stop_file: str = None):
+    """Constitution kill switch: refuse to run while state/STOP exists."""
+    if os.path.exists(stop_file or STOP_FILE):
+        raise RuntimeError("state/STOP exists: learning loop halted (kill switch).")
+
+
 @dataclass
 class LoopPaths:
     drafts_dir: str = os.path.join(REPO_ROOT, "knowledge", "cards", "drafts")
@@ -62,6 +71,7 @@ class LoopPaths:
     terms_md: str = os.path.join(REPO_ROOT, "skills", "bangla-expert", "references", "technical_terms.md")
     cases_jsonl: str = os.path.join(REPO_ROOT, "eval", "gold", "learned_cases.jsonl")
     rebuild_bundle: bool = True
+    stop_file: str = STOP_FILE
 
 
 # ---------------------------------------------------------------- ingest
@@ -243,14 +253,61 @@ def list_pending(paths: LoopPaths = None) -> List[Dict]:
     return [_load(f) for f in sorted(glob.glob(os.path.join(paths.drafts_dir, "CAND-*.yaml")))]
 
 
-def approve(cid: str, reviewer: str, updates: Optional[Dict] = None, paths: LoopPaths = None) -> Dict:
-    """Records a human approval. Requires a reviewer name and every field the chosen action needs."""
-    paths = paths or LoopPaths()
-    if not reviewer or not reviewer.strip():
+# Model or tool names are not human reviewers (P2: agents never self-approve).
+_NON_HUMAN_REVIEWER = re.compile(r"(?i)\b(claude|gemini|gpt|chatgpt|openai|anthropic|llm|ai|bot|agent|assistant|model|copilot|llama|mistral)\b")
+CONFIDENCE_LEVELS = ("high", "medium", "low")
+
+
+def _check_human_reviewer(reviewer: str) -> str:
+    name = (reviewer or "").strip()
+    if not name:
         raise ValueError("A human reviewer name is required (Principle P2).")
+    if _NON_HUMAN_REVIEWER.search(name):
+        raise ValueError(f"'{name}' looks like a model or tool. Only a human native speaker may approve (Principle P2); "
+                         "agents record recommendations with `learn suggest`.")
+    return name
+
+
+def suggest(cid: str, by: str, updates: Optional[Dict] = None, rationale: str = "",
+            confidence: str = "medium", paths: LoopPaths = None) -> Dict:
+    """Records an agent/LLM recommendation on a pending card. Never changes the review status."""
+    paths = paths or LoopPaths()
+    if not by or not by.strip():
+        raise ValueError("`by` must name the suggesting model or person.")
+    if confidence not in CONFIDENCE_LEVELS:
+        raise ValueError(f"confidence must be one of {CONFIDENCE_LEVELS}")
     path = os.path.join(paths.drafts_dir, f"{cid}.yaml")
     card = _load(path)
     decision = dict(card.get("decision") or {})
+    decision.update({k: v for k, v in (updates or {}).items() if v not in (None, "")})
+    action = decision.get("action")
+    if action not in ACTION_FIELDS and action != "reject":
+        raise ValueError(f"Unknown action '{action}'. Use one of: {', '.join(ACTION_FIELDS)}, reject")
+    missing = [k for k in ACTION_FIELDS.get(action, []) if not decision.get(k)]
+    if missing:
+        raise ValueError(f"{cid}: suggested action '{action}' needs: {', '.join(missing)}")
+    card["llm_suggestion"] = {"by": by.strip(), "date": date.today().isoformat(), "decision": decision,
+                              "rationale": rationale.strip(), "confidence": confidence}
+    _save(card, path)
+    return card
+
+
+def approve(cid: str, reviewer: str, updates: Optional[Dict] = None, paths: LoopPaths = None,
+            accept_suggestion: bool = False) -> Dict:
+    """Records a human approval. Requires a human reviewer name and every field the chosen action needs.
+    With accept_suggestion, the recorded LLM suggestion is used as the starting decision."""
+    paths = paths or LoopPaths()
+    reviewer = _check_human_reviewer(reviewer)
+    path = os.path.join(paths.drafts_dir, f"{cid}.yaml")
+    card = _load(path)
+    decision = dict(card.get("decision") or {})
+    if accept_suggestion:
+        sug = card.get("llm_suggestion")
+        if not sug:
+            raise ValueError(f"{cid}: no LLM suggestion recorded to accept.")
+        if sug["decision"].get("action") == "reject":
+            raise ValueError(f"{cid}: the suggestion is to reject; use `learn reject`.")
+        decision = dict(sug["decision"])
     decision.update({k: v for k, v in (updates or {}).items() if v not in (None, "")})
     action = decision.get("action")
     if action not in ACTION_FIELDS:
@@ -260,13 +317,15 @@ def approve(cid: str, reviewer: str, updates: Optional[Dict] = None, paths: Loop
         raise ValueError(f"{cid}: action '{action}' needs: {', '.join(missing)}")
     card["decision"] = decision
     card["confidence"] = "reviewed"
-    card["review"].update({"status": "APPROVED", "reviewer_name": reviewer.strip(), "reviewed_date": date.today().isoformat()})
+    card["review"].update({"status": "APPROVED", "reviewer_name": reviewer, "reviewed_date": date.today().isoformat(),
+                           "accepted_llm_suggestion": bool(accept_suggestion)})
     _save(card, path)
     return card
 
 
 def reject(cid: str, reviewer: str, reason: str = "", paths: LoopPaths = None) -> str:
     paths = paths or LoopPaths()
+    reviewer = _check_human_reviewer(reviewer)
     src = os.path.join(paths.drafts_dir, f"{cid}.yaml")
     card = _load(src)
     card["review"].update({"status": "REJECTED", "reviewer_name": reviewer, "reviewed_date": date.today().isoformat(), "notes": reason})
@@ -360,6 +419,7 @@ def apply_approved(paths: LoopPaths = None) -> Dict[str, List[str]]:
     """Distills APPROVED cards into engine assets / skill references, records regression cases,
     moves the cards to knowledge/cards/learned/ and rebuilds the skill bundles."""
     paths = paths or LoopPaths()
+    _check_stop(paths.stop_file)
     report = {"applied": [], "manual": [], "pending": []}
     for path in sorted(glob.glob(os.path.join(paths.drafts_dir, "CAND-*.yaml"))):
         card = _load(path)
@@ -388,7 +448,26 @@ def apply_approved(paths: LoopPaths = None) -> Dict[str, List[str]]:
     return report
 
 
+def status(paths: LoopPaths = None) -> Dict:
+    """Counts cards per stage, for humans and agents."""
+    paths = paths or LoopPaths()
+    pending = list_pending(paths)
+    out = {
+        "pending_total": len(pending),
+        "pending_without_suggestion": sum(1 for c in pending if not c.get("llm_suggestion")),
+        "pending_with_suggestion": sum(1 for c in pending if c.get("llm_suggestion")),
+        "approved_not_applied": sum(1 for c in pending if c["review"].get("status") == "APPROVED"),
+        "learned": len(glob.glob(os.path.join(paths.learned_dir, "CAND-*.yaml"))),
+        "rejected": len(glob.glob(os.path.join(paths.rejected_dir, "CAND-*.yaml"))),
+        "by_kind": {},
+    }
+    for c in pending:
+        out["by_kind"][c["kind"]] = out["by_kind"].get(c["kind"], 0) + 1
+    return out
+
+
 def scan(paths_in: List[str], min_count: int = 2, paths: LoopPaths = None) -> Dict:
+    _check_stop((paths or LoopPaths()).stop_file)
     docs = ingest(paths_in)
     cands = detect_candidates(docs, min_count=min_count)
     written = draft_cards(cands, paths)

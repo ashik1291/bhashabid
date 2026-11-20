@@ -19,3 +19,11 @@ review:
   reviewer_name: null
   reviewed_date: null
   applied_date: null
+llm_suggestion:
+  by: claude-opus-5-5
+  date: '2026-11-20'
+  decision:
+    action: add_lexicon
+    word: খাওনি
+  rationale: 'খাওনি: খাও + negative -নি (''তুমি খাওনি''); valid Cholito.'
+  confidence: medium

@@ -22,3 +22,13 @@ review:
   reviewer_name: null
   reviewed_date: null
   applied_date: null
+llm_suggestion:
+  by: claude-opus-5-5
+  date: '2026-11-20'
+  decision:
+    action: reject
+    note: Write or extend a rule/reference; not applied automatically.
+  rationale: Genuine Sadhu/Cholito mixing in one LLM output (writ prayer, Haiku baseline);
+    the engine already detects it correctly. Nothing new to learn; the source text
+    was wrong.
+  confidence: high

@@ -22,3 +22,13 @@ review:
   reviewer_name: null
   reviewed_date: null
   applied_date: null
+llm_suggestion:
+  by: claude-opus-5-5
+  date: '2026-11-20'
+  decision:
+    action: manual
+    word: রোগীসহ
+  rationale: রোগীসহ is রোগী + সহ. Rather than adding one inflected form, add 'সহ'
+    to BENGALI_PRODUCTIVE_SUFFIXES in bhashabid/normalize/lexicon.py so every X+সহ
+    is recognised.
+  confidence: high

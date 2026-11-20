@@ -20,3 +20,12 @@ review:
   reviewer_name: null
   reviewed_date: null
   applied_date: null
+llm_suggestion:
+  by: claude-opus-5-5
+  date: '2026-11-20'
+  decision:
+    action: add_lexicon
+    word: পাঁচশত
+  rationale: 'পাঁচশত: formal/statutory form of 500, standard on cheques and legal
+    text.'
+  confidence: high
