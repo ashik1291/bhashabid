@@ -6,7 +6,7 @@ from typing import Tuple, List, Dict, Optional
 from .unicode import canonicalize_unicode
 from .punctuation import normalize_punctuation
 from .orthography import normalize_orthography
-from ..lint.guru_chandali import SADHU_MARKERS, find_style_tokens, sadhu_to_cholito
+from ..lint.guru_chandali import SADHU_MARKERS, find_style_tokens, convert_to_cholito
 from ..lint.honorifics import (
     check_honorific_clash,
     THIRD_PERSON_ORDINARY_TO_HONORIFIC,
@@ -149,7 +149,8 @@ CANONICAL_GRAMMAR_DEFECT_REPAIRS = [
 def repair_text(
     text: str,
     profile: str = "bd_standard",
-    preserve_code_blocks: bool = True
+    preserve_code_blocks: bool = True,
+    target_style: Optional[str] = None
 ) -> Tuple[str, List[Dict]]:
     """
     Deterministic Bengali linguistic repair engine.
@@ -264,24 +265,27 @@ def repair_text(
     except Exception:
         pass
 
-    # 4. Guru-Chandali Harmonization (Archaic Sadhu verbs in Cholito text)
-    # Only repair genuine mixing where Cholito dominates; consistent Sadhu prose (REQ-027) is left intact,
-    # since partial word-list conversion of Sadhu text would itself create Guru-chandali.
+    # 4. Guru-Chandali Harmonization / explicit Sadhu -> Cholito conversion
+    # target_style="cholito" converts the whole text. By default only genuine mixing where Cholito
+    # dominates is harmonized; consistent Sadhu prose (REQ-027) is left intact.
     sadhu_tokens, cholito_tokens = find_style_tokens(current_text)
-    if sadhu_tokens and cholito_tokens and len(cholito_tokens) >= len(sadhu_tokens):
-        for s_verb in dict.fromkeys(sadhu_tokens):
-            c_target = sadhu_to_cholito(s_verb)
-            if not c_target:
-                continue
-            pattern = re.compile(B_L + re.escape(s_verb) + B_R)
-            if pattern.search(current_text):
-                current_text = pattern.sub(c_target, current_text)
-                applied_fixes.append({
-                    "category": "GURU_CHANDALI_HARMONIZATION",
-                    "sadhu": s_verb,
-                    "cholito": c_target,
-                    "description": f"Harmonized Sadhu form '{s_verb}' to Promito Cholito '{c_target}'"
-                })
+    convert_all = target_style == "cholito"
+    if convert_all or (sadhu_tokens and cholito_tokens and len(cholito_tokens) >= len(sadhu_tokens)):
+        converted, changes, unresolved = convert_to_cholito(current_text)
+        current_text = converted
+        for ch in {c["sadhu"]: c for c in changes}.values():
+            applied_fixes.append({
+                "category": "GURU_CHANDALI_HARMONIZATION",
+                "sadhu": ch["sadhu"],
+                "cholito": ch["cholito"],
+                "description": f"Harmonized Sadhu form '{ch['sadhu']}' to Promito Cholito '{ch['cholito']}'"
+            })
+        if unresolved:
+            applied_fixes.append({
+                "category": "SADHU_UNRESOLVED",
+                "tokens": unresolved,
+                "description": "Sadhu forms without a known Cholito equivalent; rewrite manually: " + ", ".join(unresolved)
+            })
 
     # 5. Honorific Concordance Repair
     # Only rewrite clashes the linter confirms, so repair inherits every linter guard

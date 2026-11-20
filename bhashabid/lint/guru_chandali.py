@@ -2,6 +2,7 @@
 # Sadhu-Cholito mixing detection (গুরুচণ্ডালী দোষ)
 import re
 from .models import LintIssue, LintSeverity
+from .sadhu_paradigm import SADHU_FORMS, AMBIGUOUS_FORMS, CONTEXT_INFINITIVES
 
 SADHU_MARKERS = {
     "আসিয়া": "এসে",
@@ -150,8 +151,23 @@ _SADHU_TO_CHOLITO_RULES = [
 _SADHU_PERFECT_PAT = re.compile(r"^([^\u09BE]+)িয়াছ(.*)$")
 
 
-def sadhu_to_cholito(token: str):
-    """Cholito form of a Sadhu token from the dictionary or a regular suffix rule; None when not derivable."""
+# Sadhu forms that also occur in formal or Bangladeshi Cholito: converted only on explicit request,
+# never reported as Guru-chandali.
+_NOT_REPORTED = AMBIGUOUS_FORMS | CONTEXT_INFINITIVES | {"নিমিত্ত", "এরূপ", "সেরূপ", "যেরূপ", "কিরূপ"}
+# 'হইতে' is the infinitive 'হতে' before these verbs, otherwise the postposition 'থেকে'.
+_HOITE_INFINITIVE_NEXT = ("পার", "লাগ", "চা", "হই", "হব", "হবে", "দাও", "দিন", "দে", "থাক")
+# Motion verbs (গেল, যাই) are left out: "বাড়িতে গেল" is "went home", not an infinitive.
+_INFINITIVE_NEXT = _HOITE_INFINITIVE_NEXT + ("শুরু", "আরম্ভ")
+
+
+def sadhu_to_cholito(token: str, next_token: str = ""):
+    """Cholito form of a Sadhu token (paradigm table, dictionary, then suffix rule); None when not derivable."""
+    if token == "হইতে":
+        return "হতে" if next_token.startswith(_HOITE_INFINITIVE_NEXT) else "থেকে"
+    if token in CONTEXT_INFINITIVES and not next_token.startswith(_INFINITIVE_NEXT):
+        return None
+    if token in SADHU_FORMS:
+        return SADHU_FORMS[token]
     if token in SADHU_MARKERS:
         return SADHU_MARKERS[token].split("/")[0].strip()
     for pat, repl in _SADHU_TO_CHOLITO_RULES:
@@ -162,13 +178,38 @@ def sadhu_to_cholito(token: str):
     return None
 
 
+def convert_to_cholito(text: str) -> tuple[str, list[dict], list[str]]:
+    """Converts every recognised Sadhu form in text to Promito Cholito.
+    Returns (converted_text, changes, unresolved_sadhu_tokens)."""
+    matches = list(_BN_WORD.finditer(text))
+    out, changes, unresolved, last = [], [], [], 0
+    for idx, m in enumerate(matches):
+        tok = m.group(0)
+        if not (is_sadhu_token(tok) or tok in SADHU_FORMS):
+            continue
+        nxt = matches[idx + 1].group(0) if idx + 1 < len(matches) else ""
+        new = sadhu_to_cholito(tok, nxt)
+        if not new:
+            if is_sadhu_token(tok):
+                unresolved.append(tok)
+            continue
+        out.append(text[last:m.start()])
+        out.append(new)
+        last = m.end()
+        changes.append({"sadhu": tok, "cholito": new})
+    out.append(text[last:])
+    return "".join(out), changes, list(dict.fromkeys(unresolved))
+
+
 def is_word_in_text(word: str, text: str) -> bool:
     pattern = r"(?<![ঀ-৿])" + re.escape(word) + r"(?![ঀ-৿])"
     return bool(re.search(pattern, text))
 
 
 def is_sadhu_token(token: str) -> bool:
-    return token in SADHU_MARKERS or bool(_SADHU_SUFFIX_PAT.search(token))
+    if token in _NOT_REPORTED:
+        return False
+    return token in SADHU_MARKERS or token in SADHU_FORMS or bool(_SADHU_SUFFIX_PAT.search(token))
 
 
 def is_cholito_token(token: str) -> bool:

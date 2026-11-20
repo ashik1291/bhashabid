@@ -63,7 +63,8 @@ class BhashabidMCPServer:
                     "type": "object",
                     "properties": {
                         "text": {"type": "string", "description": "The Bengali text to repair and normalize."},
-                        "profile": {"type": "string", "default": "bd_standard"}
+                        "profile": {"type": "string", "default": "bd_standard"},
+                        "target_style": {"type": "string", "enum": ["cholito"], "description": "Set to 'cholito' to convert all Sadhu forms to Promito Cholito. By default only mixed Sadhu/Cholito text is harmonized."}
                     },
                     "required": ["text"]
                 }
@@ -243,7 +244,7 @@ class BhashabidMCPServer:
             from ..normalize.repair import repair_text
             raw_text = arguments.get("text") or ""
             profile = arguments.get("profile", "bd_standard")
-            repaired, fixes = repair_text(raw_text, profile=profile)
+            repaired, fixes = repair_text(raw_text, profile=profile, target_style=arguments.get("target_style"))
             return {
                 "original": raw_text,
                 "repaired": repaired,

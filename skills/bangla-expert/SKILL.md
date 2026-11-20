@@ -8,7 +8,7 @@ description: Standard Bangladeshi Bengali (Bangla Academy) writing, translation 
 ## 1. Exact facts come from tools, not memory
 Use the first option available:
 - **MCP tools** (`bhashabid` server): `convert_number`, `format_date`, `prosody_scan`, `lint_text`, `repair_text`, `generate_writ_prayer`, `generate_deed_clause`.
-- **Code execution**: run this skill's engine, e.g. `python scripts/bn.py number 1234567.50 --currency`, `date 2025-12-16 --bongabdo`, `date 2026-11-15 --no-suffix`, `prosody "<line>" --verify-payar`, `lint "<text>"`, `repair "<text>"`.
+- **Code execution**: run this skill's engine, e.g. `python scripts/bn.py number 1234567.50 --currency`, `date 2025-12-16 --bongabdo`, `date 2026-11-15 --no-suffix`, `prosody "<line>" --verify-payar`, `lint "<text>"`, `repair "<text>"` (add `--to-cholito` to convert Sadhu text).
 - **Neither**: use the rules below and the tables in `references/numerals.md`.
 
 Always use a tool (or the tables) for Bangabda dates, amounts in words and Payar line counts. For long or formal text, run `lint` on the draft and fix every issue it reports.

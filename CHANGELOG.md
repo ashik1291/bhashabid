@@ -4,6 +4,7 @@ All notable changes to Bhashabid are documented here following Semantic Versioni
 
 ## [Unreleased]
 ### Fixed
+- **Sadhu → Cholito conversion**: `repair_text(..., target_style="cholito")`, CLI `repair --to-cholito`, MCP `repair_text.target_style`. Paradigm-based (~3.5k forms: verb roots × tenses × persons, causatives, irregulars খাওয়া/যাওয়া/হওয়া/নেওয়া, আ→এ stem mutation, Sadhu pronouns/adverbs, context-aware হইতে → হতে/থেকে). Look-alikes (মোবাইল, লিখিত, চলিত, বাড়িতে, হাসিল, names) are protected; unconvertible forms are reported as `SADHU_UNRESOLVED`. Default `repair` still leaves consistent Sadhu text intact.
 - **Repair no longer corrupts correct text**: honorific repair only rewrites clashes the linter confirms (previously `তিনি কাজ শেষ করে বাড়ি ফিরলেন` → `করেন`, `সে সময় ... ছিলেন` → `ছিল`).
 - **Consistent Sadhu prose is preserved**: repair harmonizes only genuine Sadhu/Cholito mixing where Cholito dominates, instead of half-converting Sadhu text into Guru-chandali.
 - **Register detection by morphology**: Sadhu suffixes (-িয়াছ-, -িতেছ-), Sadhu pronouns, Cholito verb endings, and productive honorific forms (আছো/আছেন, -ছেন, -েছেন, -চ্ছে, করছে) are detected; `তুই` clashes are repaired.

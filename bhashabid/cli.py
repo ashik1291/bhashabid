@@ -121,7 +121,7 @@ def handle_repair(args):
         from .normalize.repair import repair_text
         import difflib
         text = resolve_text_or_file(args.text)
-        repaired, fixes = repair_text(text, profile=args.profile)
+        repaired, fixes = repair_text(text, profile=args.profile, target_style="cholito" if args.to_cholito else None)
 
         if getattr(args, "diff", False):
             diff = difflib.unified_diff(
@@ -625,6 +625,7 @@ def main():
     p_rep.add_argument("--verbose", "-v", action="store_true", help="Show applied repair explanations")
     p_rep.add_argument("--diff", action="store_true", help="Show unified diff of proposed changes without altering file")
     p_rep.add_argument("--write", "-w", action="store_true", help="Write repaired text in-place to the target file")
+    p_rep.add_argument("--to-cholito", action="store_true", help="Convert all Sadhu forms to Promito Cholito (default only fixes mixed text)")
     p_rep.set_defaults(func=handle_repair)
 
     # lint
