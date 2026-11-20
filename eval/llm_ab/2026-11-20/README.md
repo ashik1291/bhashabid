@@ -1,4 +1,4 @@
-# LLM A/B Pilot — 2026-11-20 (with skill vs. without skill)
+# LLM A/B Pilot — 2026-11-20 (base vs. skill vs. skill + MCP tools)
 
 First live comparison of real model outputs (REQ-039 / P7 pilot). Small and single-vendor; read the limits below.
 
@@ -7,24 +7,27 @@ First live comparison of real model outputs (REQ-039 / P7 pilot). Small and sing
 - Models: Claude Haiku and Claude Sonnet, run as isolated sub-agents.
   - **base**: own knowledge only; no files, skills, MCP or code.
   - **skill**: read `skills/bangla-expert/SKILL.md` + the references it points to; no MCP or code.
+  - **tools**: skill + the `bhashabid` MCP tools (the installed server, i.e. the released package, not this branch).
 - `+repair`: the same output passed through `bhashabid.repair` (the offline engine, no LLM).
 - Raw outputs: `out_<model>_<condition>.json`. Scoring: `python eval/llm_ab/2026-11-20/score.py` (deterministic checks only).
 
 ## Results
 
-| model | condition | task checks passed | engine-flagged defects |
-|---|---|---|---|
-| haiku | base | 12/12 | 3 (one real Sadhu/Cholito mix in T09) |
-| haiku | base+repair | 12/12 | 3 (repair declines: Sadhu-dominant text) |
-| haiku | skill | 11/12 | 0 |
-| sonnet | base | 10/12 | 0 |
-| sonnet | skill | 10/12 | 0 |
+| model | base | skill | skill + tools | engine-flagged defects (base / skill / tools) |
+|---|---|---|---|---|
+| haiku | 12/12 | 11/12 | 11/12 | 3 / 0 / 0 |
+| sonnet | 10/12 | 10/12 | **12/12** | 0 / 0 / 0 |
+
+`+repair` changed no task result in any condition.
 
 Per-task differences:
-- **T09 (writ prayer)**: Haiku without the skill mixed Sadhu (`দর্শাইতে`, `হইবে`, `করিবেন`) with Cholito (`জারি করে`, `বলে`); with the skill it did not. The only defect the skill removed.
-- **T10 (Payar)**: Haiku without the skill wrote two valid 8+6 lines; with the skill one line was 9+6. Sonnet failed in both conditions. The skill text does not help metre; the `prosody_scan` tool would.
-- **T07 (Bangabda)**: Sonnet gave 16 Dec 2025 = ২ পৌষ in both conditions (correct: ১ পৌষ ১৪৩২ under the revised calendar). The skill did not fix it; the `format_date` tool would.
-- All other tasks (lakh/crore grouping, cheque words, Dari, calque-free translation, official letter format, honorifics, fractions, Cholito rewrite) were correct **without** the skill for both models.
+- **T07 (Bangabda date)**: Sonnet gave 16 Dec 2025 = ২ পৌষ in base and skill (correct: ১ পৌষ ১৪৩২, revised calendar). With the `format_date` tool it was correct.
+- **T10 (Payar metre)**: Sonnet failed in base and skill; with `prosody_scan` it produced two valid 8+6 lines. Haiku: valid in base, one 9+6 line with skill, valid with tools.
+- **T09 (writ prayer)**: Haiku base mixed Sadhu (`দর্শাইতে`, `হইবে`, `করিবেন`) with Cholito (`জারি করে`, `বলে`); not in skill or tools runs. Both tool-using agents found `generate_writ_prayer` classified a detention petition as Habeas Corpus and added an interim-bail prayer, and wrote the Rule Nisi prayer themselves.
+- **T08 (fractions)**: Haiku with tools wrote `সাড়ে দুই সপ্তাহ` (wrong; 2.5 = আড়াই). Correct in base and skill. Tools did not prevent it.
+- All other tasks (lakh/crore grouping, cheque words, Dari, calque-free translation, official letter, honorifics, Cholito rewrite) were correct in every condition.
+
+Reading: on this small set the skill text alone gave no consistent gain; the deterministic MCP tools fixed the two tasks models get wrong from memory (calendar conversion, metre counting) for Sonnet.
 
 ## Engine bug found by this run (fixed)
 `তুমি যা বলবে তাই করব` (correct: implied subject আমি) was flagged as a person clash, and `repair` changed `করব` → `করবে`, altering meaning. Relative markers (`যা`, `তাই`, `যত`, `যেমন`, `যেখানে`) now count as clause boundaries; the sentence is in the gold set as `CLN-053`.

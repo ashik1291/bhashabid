@@ -68,7 +68,7 @@ def score(outputs, apply_repair):
 
 rows = []
 for model in ("haiku", "sonnet"):
-    for cond in ("base", "skill"):
+    for cond in ("base", "skill", "tools"):
         outs = json.load(open(os.path.join(D, f"out_{model}_{cond}.json"), encoding="utf-8"))
         for rep in (False, True):
             rows.append((model, cond + ("+repair" if rep else ""), *score(outs, rep)))
