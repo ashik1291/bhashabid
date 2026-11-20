@@ -1,17 +1,5 @@
-from dataclasses import dataclass
-from enum import Enum
+"""Development alias of `bhashabid.lint.models`."""
+import importlib
+import sys
 
-class LintSeverity(Enum):
-    INFO = "info"
-    WARNING = "warning"
-    ERROR = "error"
-
-@dataclass
-class LintIssue:
-    rule_id: str
-    message: str
-    line: int
-    col: int
-    severity: LintSeverity
-    matched_text: str
-    suggestion: str | None = None
+sys.modules[__name__] = importlib.import_module("bhashabid.lint.models")

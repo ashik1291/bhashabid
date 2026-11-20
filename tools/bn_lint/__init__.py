@@ -1,7 +1,7 @@
-# Bhashabid Static Linguistic Linter
-from .models import LintIssue, LintSeverity
-from .linter import lint_text
-from .spelling import check_spelling
-from .grammar import check_grammar_defects
+"""Development alias of `bhashabid.lint` (single source of truth lives in the package)."""
+import importlib
 
-__all__ = ["LintIssue", "LintSeverity", "lint_text", "check_spelling", "check_grammar_defects"]
+_impl = importlib.import_module("bhashabid.lint")
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})
+__all__ = getattr(_impl, "__all__", [k for k in vars(_impl) if not k.startswith("_")])

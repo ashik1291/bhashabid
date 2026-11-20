@@ -1,20 +1,7 @@
-# Bhashabid Bengali Text Normalization Engine
-from .normalizer import normalize, normalize_text
-from .unicode import canonicalize_unicode, is_nfc_normalized
-from .punctuation import normalize_punctuation
-from .orthography import normalize_orthography
-from .repair import repair_text
-from .lexicon import BengaliOfflineLexicon, get_default_lexicon, bengali_edit_distance
+"""Development alias of `bhashabid.normalize` (single source of truth lives in the package)."""
+import importlib
 
-__all__ = [
-    "normalize",
-    "normalize_text",
-    "canonicalize_unicode",
-    "is_nfc_normalized",
-    "normalize_punctuation",
-    "normalize_orthography",
-    "repair_text",
-    "BengaliOfflineLexicon",
-    "get_default_lexicon",
-    "bengali_edit_distance"
-]
+_impl = importlib.import_module("bhashabid.normalize")
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})
+__all__ = getattr(_impl, "__all__", [k for k in vars(_impl) if not k.startswith("_")])

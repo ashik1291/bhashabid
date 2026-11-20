@@ -1,22 +1,7 @@
-# tools/bn_legal
-from .writs import WritType, WritDraft, determine_writ_type, generate_writ_prayer, CONSTITUTIONAL_PROVISIONS
-from .deeds import (
-    DeedType,
-    DeedSchedule,
-    format_deed_schedule,
-    generate_encumbrance_free_clause,
-    generate_saf_kabala_clause
-)
+"""Development alias of `bhashabid.legal` (single source of truth lives in the package)."""
+import importlib
 
-__all__ = [
-    "WritType",
-    "WritDraft",
-    "determine_writ_type",
-    "generate_writ_prayer",
-    "CONSTITUTIONAL_PROVISIONS",
-    "DeedType",
-    "DeedSchedule",
-    "format_deed_schedule",
-    "generate_encumbrance_free_clause",
-    "generate_saf_kabala_clause",
-]
+_impl = importlib.import_module("bhashabid.legal")
+
+globals().update({k: v for k, v in vars(_impl).items() if not k.startswith("__")})
+__all__ = getattr(_impl, "__all__", [k for k in vars(_impl) if not k.startswith("_")])
