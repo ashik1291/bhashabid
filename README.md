@@ -151,7 +151,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 ### 2. Semi-Autonomous Learning Loop (human-approved)
 - **Problem**: Hand-maintained rules miss what models actually get wrong, while un-reviewed machine-generated rules drift into hallucinated grammar.
 - **Solution**: `bhashabid learn` runs a closed loop with a human gate (P2):
-  1. **scan** real text (LLM outputs you collect, or approved sources; see `eval/corpora/llm_inbox/`);
+  1. **collect** real text: LLM outputs you collect (`eval/corpora/llm_inbox/`) and sector-wise articles from licence-approved sources (Bengali Wikipedia and Wikisource, robots.txt-respecting) via `bhashabid learn cycle --fetch`, run manually as practice;
   2. **detect** what the engine cannot decide: unknown words with no confident correction, Sadhu forms it cannot convert, English left untranslated in Bengali prose (outside first-use glosses), and defects that survive `repair`;
   3. **draft** evidence cards (count, sources, contexts) in `knowledge/cards/drafts/`, never approving them;
   4. a native speaker **approves** (`learn approve --reviewer ...`) or rejects;

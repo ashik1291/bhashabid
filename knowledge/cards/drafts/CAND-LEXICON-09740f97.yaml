@@ -1,0 +1,27 @@
+id: CAND-LEXICON-09740f97
+title: 'Learning candidate (lexicon): প্রেস্'
+kind: lexicon
+candidate: প্রেস্
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 2
+  sectors:
+  - ICT & Software Engineering
+  sources:
+  - https://bn.wikipedia.org/wiki/%E0%A6%95%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A6%BF%E0%A6%89%E0%A6%9F%E0%A6%BE%E0%A6%B0_%E0%A6%AC%E0%A6%BF%E0%A6%9C%E0%A7%8D%E0%A6%9E%E0%A6%BE%E0%A6%A8
+  contexts:
+  - মার্কিন তড়িৎ প্রকৌশলী জন প্রেস্‌পার একার্ট ও মার্কিন পদার্থবিদ জন মক্‌লি ১৯৪৬
+    সালে বিশ্বের সর্বপ্রথম টুরিং-সম্পূর্ণ সাধারণ ব্যবহারোপযোগী ইলেকট্রনিক ডিজিটাল
+    কম্পিউটার এনিয়াক উদ্ভাবন করেন।
+  - এর আগে জন প্রেস্‌পার একার্ট ১৯৪৬ সালে পেন্সিলভেনিয়া বিশ্ববিদ্যালয়ে উচ্চশিক্ষা
+    স্তরে ইতিহাসের সর্বপ্রথম একটি কম্পিউটার বিজ্ঞান-বিষয়ক পাঠক্রম পরিচালনা করেন; এটি
+    মুর স্কুল লেকচার্স (মুর বিদ্যালয়ের বক্তৃতামালা) নামে বিখ্যাত।
+decision:
+  action: add_lexicon
+  word: প্রেস্
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

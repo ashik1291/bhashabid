@@ -10,7 +10,7 @@ import shutil
 import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime
 from typing import Dict, List, Optional
 
 import yaml
@@ -75,6 +75,17 @@ class LoopPaths:
 
 
 # ---------------------------------------------------------------- ingest
+PROMPT_BANK = os.path.join(REPO_ROOT, "eval", "corpora", "learning_prompts.json")
+
+
+def _prompt_sectors() -> Dict[str, str]:
+    try:
+        with open(PROMPT_BANK, encoding="utf-8") as f:
+            return {p["id"]: p.get("sector", "") for p in json.load(f)}
+    except (OSError, ValueError, KeyError):
+        return {}
+
+
 def ingest(paths: List[str]) -> List[Dict]:
     """Reads .txt (one document per file), .jsonl ({text, source?, sector?}) and .json ({id: text} or [text])
     files or directories."""
@@ -87,6 +98,7 @@ def ingest(paths: List[str]) -> List[Dict]:
         elif os.path.isfile(p):
             files.append(p)
     docs = []
+    sectors_by_prompt = _prompt_sectors()
     for f in files:
         name = os.path.basename(f)
         with open(f, encoding="utf-8") as fh:
@@ -96,12 +108,14 @@ def ingest(paths: List[str]) -> List[Dict]:
                 for key, val in items:
                     text = val.get("text") if isinstance(val, dict) else val
                     if isinstance(text, str):
-                        docs.append({"text": text, "source": f"{name}:{key}", "sector": ""})
+                        sector = (val.get("sector") if isinstance(val, dict) else None) or sectors_by_prompt.get(str(key), "")
+                        docs.append({"text": text, "source": f"{name}:{key}", "sector": sector})
             elif f.endswith(".jsonl"):
                 for line in fh:
                     if line.strip():
                         rec = json.loads(line)
-                        docs.append({"text": rec["text"], "source": rec.get("source", name), "sector": rec.get("sector", "")})
+                        docs.append({"text": rec["text"], "source": rec.get("source", name),
+                                     "sector": rec.get("sector") or rec.get("domain") or ""})
             else:
                 docs.append({"text": fh.read(), "source": name, "sector": ""})
     return docs
@@ -143,11 +157,13 @@ def detect_candidates(docs: List[Dict], min_count: int = 2) -> List[Dict]:
 
     def add(kind, detected_by, key, sentence, source, **extra):
         c = agg.setdefault((kind, key), {"kind": kind, "detected_by": detected_by, "candidate": key,
-                                         "count": 0, "contexts": [], "sources": set(), **extra})
+                                         "count": 0, "contexts": [], "sources": set(), "sectors": set(), **extra})
         c["count"] += 1
         if len(c["contexts"]) < 3 and sentence not in c["contexts"]:
             c["contexts"].append(sentence)
         c["sources"].add(source)
+        if sector:
+            c["sectors"].add(sector)
 
     for doc in docs:
         text = canonicalize_unicode(CODE_SPAN.sub(" ", doc["text"]))
@@ -155,10 +171,11 @@ def detect_candidates(docs: List[Dict], min_count: int = 2) -> List[Dict]:
             if not re.search(r"[ঀ-৿]", sent):
                 continue
             src = doc["source"]
+            sector = doc.get("sector", "")
             # 1. Words the lexicon does not know and cannot correct with confidence: new words or terms.
             for m in BN_WORD.finditer(sent):
                 tok = m.group(0)
-                if sent[m.end():m.end() + 1] == ".":  # abbreviation (মো., ড.), not a word
+                if sent[m.end():m.end() + 1] == "." or tok.endswith("ঃ"):  # abbreviation (মো., মোঃ, ড.), not a word
                     continue
                 if (not lex.is_known(tok) and not is_known_inflection(tok, lex)
                         and not lex.suggest_corrections(tok, max_suggestions=1, max_distance=1.0)):
@@ -182,6 +199,7 @@ def detect_candidates(docs: List[Dict], min_count: int = 2) -> List[Dict]:
         if c["kind"] == "lexicon" and c["count"] < min_count:
             continue
         c["sources"] = sorted(c["sources"])
+        c["sectors"] = sorted(c["sectors"])
         out.append(c)
     return sorted(out, key=lambda c: (-c["count"], c["kind"], c["candidate"]))
 
@@ -217,7 +235,18 @@ def draft_cards(candidates: List[Dict], paths: LoopPaths = None) -> List[str]:
     written = []
     for c in candidates:
         cid = card_id(c["kind"], c["candidate"])
-        if cid in known:
+        pending_path = os.path.join(paths.drafts_dir, f"{cid}.yaml")
+        if os.path.exists(pending_path):
+            # Same issue seen again: strengthen the pending card's evidence instead of duplicating it.
+            card = _load(pending_path)
+            ev = card["evidence"]
+            ev["count"] += c["count"]
+            ev["sources"] = sorted(set(ev["sources"]) | set(c["sources"]))
+            ev["sectors"] = sorted(set(ev.get("sectors", [])) | set(c.get("sectors", [])))
+            ev["contexts"] = (ev["contexts"] + [x for x in c["contexts"] if x not in ev["contexts"]])[:3]
+            _save(card, pending_path)
+            continue
+        if cid in known:  # already learned or rejected
             continue
         card = {
             "id": cid,
@@ -225,7 +254,8 @@ def draft_cards(candidates: List[Dict], paths: LoopPaths = None) -> List[str]:
             "kind": c["kind"],
             "candidate": c["candidate"],
             "detected_by": c["detected_by"],
-            "evidence": {"count": c["count"], "sources": c["sources"], "contexts": c["contexts"]},
+            "evidence": {"count": c["count"], "sectors": c.get("sectors", []), "sources": c["sources"],
+                         "contexts": c["contexts"]},
             "decision": _proposed_decision(c),
             "confidence": "llm-hypothesis",
             "review": {"status": "PENDING_HUMAN_REVIEW", "reviewer_name": None, "reviewed_date": None, "applied_date": None},
@@ -461,8 +491,11 @@ def status(paths: LoopPaths = None) -> Dict:
         "rejected": len(glob.glob(os.path.join(paths.rejected_dir, "CAND-*.yaml"))),
         "by_kind": {},
     }
+    out["by_sector"] = {}
     for c in pending:
         out["by_kind"][c["kind"]] = out["by_kind"].get(c["kind"], 0) + 1
+        for sec in c["evidence"].get("sectors") or ["(unknown)"]:
+            out["by_sector"][sec] = out["by_sector"].get(sec, 0) + 1
     return out
 
 
@@ -475,3 +508,86 @@ def scan(paths_in: List[str], min_count: int = 2, paths: LoopPaths = None) -> Di
     for c in cands:
         by_kind[c["kind"]] += 1
     return {"documents": len(docs), "candidates": len(cands), "new_cards": len(written), "by_kind": dict(by_kind)}
+
+
+# ---------------------------------------------------------------- cycle (manual practice run)
+LLM_INBOX = os.path.join(REPO_ROOT, "eval", "corpora", "llm_inbox")
+SOURCE_INBOX = os.path.join(REPO_ROOT, "eval", "corpora", "inbox")
+SCANNED_STATE = os.path.join(REPO_ROOT, "state", "learning_scanned.json")
+REPORT_DIR = os.path.join(REPO_ROOT, "eval", "reports", "learning_cycles")
+
+
+def _new_input_files(dirs: List[str], state_path: str) -> List[str]:
+    try:
+        with open(state_path, encoding="utf-8") as f:
+            done = json.load(f)
+    except (OSError, ValueError):
+        done = {}
+    out = []
+    for d in dirs:
+        for pattern in ("*.txt", "*.jsonl", "*.json"):
+            for f in sorted(glob.glob(os.path.join(d, pattern))):  # top level only (skips old archives)
+                key = os.path.relpath(f, REPO_ROOT)
+                if done.get(key) != os.path.getmtime(f):
+                    out.append(f)
+    return out
+
+
+def _mark_scanned(files: List[str], state_path: str):
+    try:
+        with open(state_path, encoding="utf-8") as f:
+            done = json.load(f)
+    except (OSError, ValueError):
+        done = {}
+    for f in files:
+        done[os.path.relpath(f, REPO_ROOT)] = os.path.getmtime(f)
+    os.makedirs(os.path.dirname(state_path), exist_ok=True)
+    with open(state_path, "w", encoding="utf-8") as fh:
+        json.dump(done, fh, ensure_ascii=False, indent=1)
+
+
+def cycle(fetch: bool = False, sectors: Optional[List[str]] = None, pages_per_sector: int = 3,
+          min_count: int = 2, input_dirs: Optional[List[str]] = None, paths: LoopPaths = None,
+          state_path: str = SCANNED_STATE, report_dir: str = REPORT_DIR) -> Dict:
+    """One manual practice run: optionally fetch sector-wise open-source text, scan every new inbox file
+    (LLM outputs + fetched sources), draft or strengthen cards, and write a sector report."""
+    paths = paths or LoopPaths()
+    _check_stop(paths.stop_file)
+    fetched = None
+    if fetch:
+        from tools.sector_sources import fetch_sector_texts
+        fetched = fetch_sector_texts(sectors=sectors, pages_per_sector=pages_per_sector)
+    files = _new_input_files(input_dirs or [LLM_INBOX, SOURCE_INBOX], state_path)
+    docs = ingest(files)
+    cands = detect_candidates(docs, min_count=min_count)
+    written = draft_cards(cands, paths)
+    _mark_scanned(files, state_path)
+
+    st = status(paths)
+    new_by_sector: Dict[str, int] = defaultdict(int)
+    for path in written:
+        for sec in _load(path)["evidence"].get("sectors") or ["(unknown)"]:
+            new_by_sector[sec] += 1
+    summary = {"files_scanned": len(files), "documents": len(docs), "candidates": len(cands),
+               "new_cards": len(written), "new_cards_by_sector": dict(new_by_sector), "status": st,
+               "fetched": fetched}
+
+    os.makedirs(report_dir, exist_ok=True)
+    lines = [f"# Learning cycle {datetime.now().strftime('%Y-%m-%d %H:%M')}", "",
+             f"- Files scanned: {len(files)} · documents: {len(docs)} · candidates: {len(cands)} · new cards: {len(written)}",
+             f"- Pending: {st['pending_total']} (with suggestion: {st['pending_with_suggestion']}, "
+             f"approved not applied: {st['approved_not_applied']}) · learned: {st['learned']} · rejected: {st['rejected']}"]
+    if fetched:
+        lines += ["", "## Fetched (licence-approved sources)", "| Sector | Sentences |", "|---|---|"]
+        lines += [f"| {k} | {v} |" for k, v in sorted(fetched["per_sector"].items())]
+        if fetched["skipped"]:
+            lines += ["", f"Skipped: {len(fetched['skipped'])} (first: {fetched['skipped'][0]})"]
+    lines += ["", "## Pending cards by sector", "| Sector | Pending | New this cycle |", "|---|---|---|"]
+    for sec in sorted(set(st["by_sector"]) | set(new_by_sector)):
+        lines.append(f"| {sec} | {st['by_sector'].get(sec, 0)} | {new_by_sector.get(sec, 0)} |")
+    lines += ["", "Next: `bhashabid learn pending` → agent `learn suggest` → human `learn approve` → `learn apply`."]
+    report = os.path.join(report_dir, f"cycle_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md")
+    with open(report, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(lines) + "\n")
+    summary["report"] = report
+    return summary

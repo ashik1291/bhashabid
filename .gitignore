@@ -45,3 +45,10 @@ docs/assets/*.jpeg
 
 # Temporary scratch & live test scripts
 scratch/
+
+# Learning loop machine state & per-run reports
+state/learning_scanned.json
+state/learning_sources_seen.json
+eval/reports/learning_cycles/
+eval/corpora/llm_inbox/*
+!eval/corpora/llm_inbox/README.md

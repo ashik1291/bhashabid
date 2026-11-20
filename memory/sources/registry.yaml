@@ -29,3 +29,10 @@ sources:
     status: approved
     domain: government_reports
     added_date: 2026-11-11
+  - id: SRC-005
+    name: Bengali Wikisource
+    license: Public-domain texts; site content CC BY-SA 4.0
+    url: https://bn.wikisource.org/
+    status: approved
+    domain: classical_literature
+    added_date: 2026-11-20

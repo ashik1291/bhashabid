@@ -16,7 +16,18 @@ linguistic analysis; a human native speaker makes every decision that changes th
 ## One learning session
 ```bash
 bhashabid learn status                                   # 0. where things stand
+bhashabid learn sectors                                  # sectors and their licence-approved source pages
 ```
+**Manual practice run (the usual entry point):**
+```bash
+bhashabid learn cycle --fetch                  # fetch new sector articles + scan every new inbox file
+bhashabid learn cycle --fetch --sectors "ICT & Software Engineering" --pages 5
+bhashabid learn cycle                          # only scan new LLM outputs dropped in the inbox
+```
+`cycle` fetches only from approved sources (bn.wikipedia, bn.wikisource) where robots.txt allows, never re-fetches an
+article, scans only files not scanned before, merges repeat evidence into existing pending cards (so frequent issues
+rise to the top), tags cards with sectors, and writes a report to `eval/reports/learning_cycles/`.
+Sectors with no open source (e-commerce, MFS, customer support, citizen services) learn from LLM outputs only.
 **1. Produce input (raw model behaviour).** Pick 10–20 prompts from `eval/corpora/learning_prompts.json`
 (or prompts the human gives). Answer each in Bengali **from your own knowledge, without this skill or
 its tools**, the way you would for a normal user. Save as `eval/corpora/llm_inbox/<model>_<YYYYMMDD>.json`:
@@ -25,10 +36,10 @@ its tools**, the way you would for a normal user. Save as `eval/corpora/llm_inbo
 ```
 Outputs collected by the human from ChatGPT/Gemini/Claude chats go in the same folder (`.txt`, `.jsonl`, `.json`).
 
-**2. Scan.**
+**2. Scan** (or run `learn cycle`, which also scans fetched sector text).
 ```bash
-bhashabid learn scan eval/corpora/llm_inbox
-bhashabid learn pending --json        # full cards with evidence
+bhashabid learn cycle
+bhashabid learn pending --json        # full cards with evidence and sectors
 ```
 
 **3. Suggest a decision for every pending card without a suggestion.** Read the evidence contexts,

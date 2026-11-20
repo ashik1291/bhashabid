@@ -1,0 +1,25 @@
+id: CAND-LEXICON-8c1f98f8
+title: 'Learning candidate (lexicon): ফাইন্যান্সিং'
+kind: lexicon
+candidate: ফাইন্যান্সিং
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 2
+  sectors:
+  - Macroeconomics & Banking
+  sources:
+  - https://bn.wikipedia.org/wiki/%E0%A6%85%E0%A6%97%E0%A7%8D%E0%A6%B0%E0%A6%A3%E0%A7%80_%E0%A6%8F%E0%A6%B8%E0%A6%8F%E0%A6%AE%E0%A6%87_%E0%A6%AB%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%B8%E0%A6%BF%E0%A6%82_%E0%A6%95%E0%A7%8B%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A6%BE%E0%A6%A8%E0%A6%BF_%E0%A6%B2%E0%A6%BF%E0%A6%AE%E0%A6%BF%E0%A6%9F%E0%A7%87%E0%A6%A1
+  contexts:
+  - অগ্রণী এসএমই ফাইন্যান্সিং কোম্পানি লিমিটেড বাংলাদেশের একটি ব্যাংক বহির্ভূত আর্থিক
+    সেবাদানকারী কোম্পানি।
+  - অগ্রণী এসএমই ফাইন্যান্সিং কোম্পানি লিমিটেড একটি ব্যাংক বহির্ভূত আর্থিক সেবাদানকারী
+    কোম্পানি।
+decision:
+  action: add_lexicon
+  word: ফাইন্যান্সিং
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

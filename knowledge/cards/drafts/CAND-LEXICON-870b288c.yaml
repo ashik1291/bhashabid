@@ -1,0 +1,24 @@
+id: CAND-LEXICON-870b288c
+title: 'Learning candidate (lexicon): পুনর্মুদ্রিত'
+kind: lexicon
+candidate: পুনর্মুদ্রিত
+detected_by: UNKNOWN_WORD
+evidence:
+  count: 2
+  sectors:
+  - Classical Literature (Sadhu)
+  sources:
+  - https://bn.wikisource.org/wiki/%E0%A6%95%E0%A6%AE%E0%A6%B2%E0%A6%BE%E0%A6%95%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%A4_%28%E0%A7%A7%E0%A7%AE%E0%A7%AE%E0%A7%AB%29
+  contexts:
+  - এক্ষণে লেখকদিগের নিকট জানিয়াছি যে, তাঁহারা ঐ দুইটি প্রবন্ধ নিজে নিজে পুনর্মুদ্রিত
+    করিবার কোন সম্ভাবনা নাই।
+  - “কমলাকান্তের জোবানবন্দী’ সমেত সর্ব্বশুদ্ধ আটটি নূতন পুনর্মুদ্রিত করা গেল।
+decision:
+  action: add_lexicon
+  word: পুনর্মুদ্রিত
+confidence: llm-hypothesis
+review:
+  status: PENDING_HUMAN_REVIEW
+  reviewer_name: null
+  reviewed_date: null
+  applied_date: null

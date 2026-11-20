@@ -16,3 +16,6 @@ All knowledge cards, linguistic datasets, and evaluation benchmarks in Bhashabid
 | SRC-002 | Bengali Wikipedia Articles (Dumps) | CC BY-SA 4.0 | https://dumps.wikimedia.org/bnwiki/ | Approved | 2026-11-11 |
 | SRC-003 | Bangla Academy Standard Spelling Rules (Public Linguistic Norms) | Public Guidance / CC-BY-SA Equivalent | https://banglaacademy.portal.gov.bd/ | Approved | 2026-11-11 |
 | SRC-004 | Open Government Data (OGD) Bangladesh Public Datasets | Open Access (OGD License) | https://data.gov.bd/ | Approved | 2026-11-11 |
+| SRC-005 | Bengali Wikisource (classical prose and poetry) | Public-domain texts; site content CC BY-SA 4.0 | https://bn.wikisource.org/ | Approved (maintainer, 2026-11-20) | 2026-11-20 |
+
+Learning-loop note: `tools/sector_sources.py` reads article pages of SRC-002 (`bn.wikipedia.org/wiki/…`) and SRC-005 only where robots.txt allows. Excerpts are stored locally in the gitignored `eval/corpora/inbox/` with their source URL; knowledge cards keep at most three context sentences plus the URL for attribution.

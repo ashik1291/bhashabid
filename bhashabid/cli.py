@@ -591,8 +591,16 @@ def handle_learn(args):
             print(f"Rejected -> {loop.reject(args.card_id, args.reviewer, args.reason)}")
         elif cmd == "apply":
             print(json.dumps(loop.apply_approved(), ensure_ascii=False, indent=2))
+        elif cmd == "cycle":
+            res = loop.cycle(fetch=args.fetch, sectors=args.sectors, pages_per_sector=args.pages, min_count=args.min_count)
+            print(json.dumps({k: v for k, v in res.items() if k != "status"}, ensure_ascii=False, indent=2))
+            print(f"Report: {res['report']}")
+        elif cmd == "sectors":
+            src = _load_dev_module("sector_sources")
+            for sector, pages in src.SECTOR_SOURCES.items():
+                print(f"{sector}: " + ", ".join(f"{site}:{title}" for site, title in pages))
         else:
-            sys.stderr.write("Usage: bhashabid learn {scan,pending,show,status,suggest,approve,reject,apply}\n")
+            sys.stderr.write("Usage: bhashabid learn {cycle,scan,pending,show,status,suggest,approve,reject,apply,sectors}\n")
             return 1
         return 0
     except Exception as e:
@@ -839,6 +847,12 @@ def main():
     p_lr.add_argument("--reviewer", required=True)
     p_lr.add_argument("--reason", default="")
     learn_sub.add_parser("apply", help="Distill approved cards into the engine and skill, then rebuild bundles")
+    p_lc = learn_sub.add_parser("cycle", help="Manual practice run: scan new inbox files (and optionally fetch sector sources), report by sector")
+    p_lc.add_argument("--fetch", action="store_true", help="Fetch new sector-wise text from licence-approved sources first")
+    p_lc.add_argument("--sectors", nargs="*", default=None, help="Limit fetching to these sectors (see `learn sectors`)")
+    p_lc.add_argument("--pages", type=int, default=3, help="New articles to fetch per sector (default 3)")
+    p_lc.add_argument("--min-count", type=int, default=2)
+    learn_sub.add_parser("sectors", help="List sectors and their licence-approved source pages")
     p_learn.set_defaults(func=handle_learn)
 
     args = parser.parse_args()
