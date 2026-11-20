@@ -39,6 +39,18 @@ BENGALI_PRODUCTIVE_PREFIXES = [
     "অনতি", "অপ", "অভি", "অধি", "প্রতি", "উপ", "সু", "কু", "বে", "না", "অ", "অন"
 ]
 
+# (ending, verbal): verbal endings also accept the verb's headword forms (বল -> বলা) and stem vowel changes.
+_VERB_ENDINGS = ["েছিলেন", "েছিলাম", "েছিল", "চ্ছিলেন", "চ্ছিল", "ছিলেন", "ছিলাম", "ছিল", "েছেন", "েছে", "েছি", "েছো",
+                 "চ্ছেন", "চ্ছে", "চ্ছি", "চ্ছো", "িয়েছেন", "িয়েছে", "িয়েছি", "িয়ে", "য়েছেন", "য়েছে", "য়েছি", "য়ে",
+                 "লেন", "লাম", "বেন", "বে", "বি", "তেন", "তাম", "তে", "েন", "লি", "লো", "লে", "নি", "ছে", "ছেন",
+                 "ে", "ি", "ো", "ল", "ব", "ত", "য়", "ুন", "ান", "ায়", "াও"]
+_CASE_ENDINGS = ["গুলোর", "গুলোকে", "গুলোতে", "গুলো", "দেরকে", "দের", "টির", "টার", "টিকে", "টাকে", "টি", "টা",
+                 "য়ের", "ের", "এর", "র", "কে", "তে", "েই", "ই", "ও", "রা", "এ"]
+_INFLECTION_ENDINGS = sorted([(canonicalize_unicode(e), True) for e in _VERB_ENDINGS]
+                             + [(canonicalize_unicode(e), False) for e in _CASE_ENDINGS],
+                             key=lambda x: -len(x[0]))
+
+
 def _phonetic_cost(c1: str, c2: str) -> float:
     if c1 == c2:
         return 0.0
@@ -162,6 +174,33 @@ class BengaliOfflineLexicon:
                 if w1 in self._vocab and (w2 in self._vocab or any(w2.endswith(sfx) and w2[:-len(sfx)] in self._vocab for sfx in BENGALI_PRODUCTIVE_SUFFIXES)):
                     return True
 
+        # 4. Verb conjugation and case inflection (the lexicon stores headwords: বলা, পারা, প্রস্তুতি)
+        return self._known_inflection(w)
+
+    def _stem_known(self, stem: str, verbal: bool) -> bool:
+        if len(stem) < 2:
+            return False
+        if stem in self._vocab:
+            return True
+        if not verbal:
+            return False
+        variants = {stem + "া", stem + "ো", stem + "ানো"}
+        if stem.endswith("ি"):
+            variants |= {stem[:-1] + "ানো", stem[:-1] + "া"}  # মানিয়ে <- মানানো, শিখিয়ে <- শেখানো
+        mutated = stem.replace("ে", "া", 1) if "ে" in stem else (stem.replace("ু", "ো", 1) if "ু" in stem else None)
+        if mutated:  # ছেড়ে <- ছাড়া, পেরে <- পারা, শুনে <- শোনা
+            variants |= {mutated + "া", mutated}
+        return any(v in self._vocab for v in variants)
+
+    def _known_inflection(self, w: str) -> bool:
+        for e, verbal in _INFLECTION_ENDINGS:
+            if w.endswith(e) and len(w) > len(e) + 1:
+                stem = w[: -len(e)]
+                if self._stem_known(stem, verbal):
+                    return True
+                for e2, verbal2 in _INFLECTION_ENDINGS:  # one more layer: পারেনি = পার + ে + নি
+                    if stem.endswith(e2) and len(stem) > len(e2) + 1 and self._stem_known(stem[: -len(e2)], verbal2):
+                        return True
         return False
 
     def suggest_corrections(self, word: str, max_suggestions: int = 3, max_distance: float = 3.0) -> List[str]:
@@ -237,7 +276,7 @@ class BengaliOfflineLexicon:
         for m in tokens:
             word = m.group(0)
             # Skip single characters and numerals
-            if len(word) <= 1:
+            if len(word) <= 1 or re.fullmatch(r"[\u09E6-\u09EF]+", word):
                 continue
             if not self.is_known(word):
                 suggestions = self.suggest_corrections(word, max_suggestions=2, max_distance=2.5)
