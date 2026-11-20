@@ -1,7 +1,7 @@
 # Bhashabid System Status
 
-- **Current Release**: v1.1.1 (accuracy & honest-claims fixes pending on branch `fix/accuracy-and-honest-claims`)
-- **Gate Status**: Branch awaiting user approval to merge into `main` (constitution: merges require approval)
+- **Current Release**: v1.2.0
+- **Gate Status**: Released by maintainer decision (2026-11-20)
 - **Kill Switch**: INACTIVE (`state/STOP` not present)
 - **Last Updated**: 2026-11-20
 

@@ -2,7 +2,7 @@
 
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
-## [Unreleased]
+## [1.2.0] - 2026-11-20
 ### Fixed
 - **Creative writing guide**: `creative_writing.md` condensed from ~7.0k to ~3.1k cl100k tokens (duplicated rules merged, idioms moved to `idioms.md`); fixed a Devanagari-mixed word (পরিশিষ্ট) and wrong gemstone names in the guide and the `lookup_lapidary` / literary-audit engine (lapis = রাজাবর্ত/লাজবর্দ, not বৈদূর্য/নীলা; jade had sunstone/coral; opal had moonstone); no more pressure to invent names when no Bengali name exists.
 - **Technical vocabulary**: new `technical_terms.md` (Bengali vs. established loanword, Bangla Academy loanword spelling, English kept for code/commands/brands, Bengali grammar around loanwords, ~80-term glossary across UI, files, software engineering, infrastructure, security, AI).
