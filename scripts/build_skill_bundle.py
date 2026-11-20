@@ -3,11 +3,12 @@
   bhashabid-skill-text.zip               text-only (SKILL.md + references) for Gemini Gems, ChatGPT and
                                          claude.ai without code execution; no Python code or binary files
 
-Layout (Anthropic's documented format: skill folder at the ZIP root, named like the skill):
-  bangla-expert/SKILL.md
-  bangla-expert/references/...
-  bangla-expert/scripts/bn.py            # runner: python scripts/bn.py <command> ...
-  bangla-expert/scripts/bhashabid/...    # pure-stdlib engine (no MCP server needed)
+Layout: SKILL.md at the ZIP root, the format verified to upload on both claude.ai (Customize > Skills)
+and Gemini (Customize > Skills):
+  SKILL.md
+  references/...
+  scripts/bn.py            # bhashabid-skill.zip only: runner, python scripts/bn.py <command> ...
+  scripts/bhashabid/...    # bhashabid-skill.zip only: pure-stdlib engine (no MCP server needed)
 """
 import json
 import os
@@ -64,7 +65,7 @@ def _skill_files():
             if f == "STANDALONE_ALL_IN_ONE.md":  # human copy-paste manual, not part of the skill
                 continue
             full = os.path.join(root, f)
-            yield full, os.path.join(SKILL_NAME, os.path.relpath(full, SKILL_DIR))
+            yield full, os.path.relpath(full, SKILL_DIR)
 
 
 def _engine_files():
@@ -75,7 +76,7 @@ def _engine_files():
             if f in PKG_EXCLUDE_FILES or f.endswith(".pyc"):
                 continue
             full = os.path.join(root, f)
-            yield full, os.path.join(SKILL_NAME, "scripts", "bhashabid", os.path.relpath(full, PKG_DIR))
+            yield full, os.path.join("scripts", "bhashabid", os.path.relpath(full, PKG_DIR))
 
 
 def render_idioms_md() -> str:
@@ -116,7 +117,7 @@ def build() -> list:
         with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
             for src, arc in entries:
                 z.write(src, arc.replace(os.sep, "/"))
-            z.writestr(f"{SKILL_NAME}/scripts/bn.py", RUNNER)
+            z.writestr("scripts/bn.py", RUNNER)
         written.append(path)
     text_path = os.path.join(REPO, TEXT_OUTPUT)
     with zipfile.ZipFile(text_path, "w", zipfile.ZIP_DEFLATED) as z:
