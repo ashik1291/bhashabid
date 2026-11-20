@@ -23,16 +23,7 @@
 - **Strict Code Block & Identifier Preservation**:
   - Keep all fenced code blocks (` ```python `, ` ```javascript `, ` ```sql `, ` ```bash `) and inline backticks (`` `variable` ``) strictly in original ASCII English.
   - Never translate programming keywords (`def`, `class`, `import`, `return`, `SELECT`, `WHERE`), JSON schema keys, REST endpoints (`/api/v1/auth`), regex patterns, or Git commands.
-- **Anti-Calque Technical Glossary**:
-  - Avoid absurd or over-literal Bengali translations for established computing terms:
-    - *Database* -> **ডাটাবেস** (Never "উপাত্তভাণ্ডার" in software engineering contexts)
-    - *Cloud Computing* -> **ক্লাউড কম্পিউটিং** (Never "মেঘের গণনা")
-    - *Memory Leak* -> **মেমোরি লিক** (Never "স্মৃতি ফুটো")
-    - *Thread Safety* -> **থ্রেড সেফটি** (Never "সুতার নিরাপত্তা")
-    - *Frontend / Backend* -> **ফ্রন্টএন্ড / ব্যাকএন্ড**
-    - *Cache / Caching* -> **ক্যাশ / ক্যাশিং**
-    - *Open Source* -> **ওপেন সোর্স**
-    - *Bug / Debugging* -> **বাগ / ডিবাগিং**
+- **Technical vocabulary** (Bengali vs. loanword, spelling, glossary): see `technical_terms.md`.
 
 ## 5. Alphanumeric IDs, Security CVEs & Number Grouping
 - Preserve support ticket numbers, transactional hashes, Git commit SHAs, and security vulnerabilities untranslated:

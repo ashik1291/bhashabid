@@ -144,7 +144,7 @@ Core Invariants:
 2. Lapidary & Nature Equivalence Table:
    - Amber ➔ পিঙ্গল-আভ / মধুরঙা (never অ্যাম্বার)
    - Amethyst ➔ রক্তনীলমণি / নীলমণি (never অ্যামেথিস্ট)
-   - Turquoise ➔ ফিরোজা. Lapis Lazuli ➔ বৈদূর্যমণি. Slough ➔ নির্মোক. Azure ➔ নীলিমা.
+   - Turquoise ➔ ফিরোজা. Lapis Lazuli ➔ রাজাবর্ত. Slough ➔ নির্মোক. Azure ➔ নীলিমা.
    - Cognitive Volition: Intent/will ➔ 'অভিপ্রায়' বা 'সংকল্প' (never romanticize into 'বাসনা').
 ```
 
@@ -366,7 +366,7 @@ When the context touches any of these domains, apply its verified institutional 
 6. **Classical Poetry, Prosody & Literary Translation (সাহিত্যিক অনুবাদের পঞ্চসূত্র)**:
    - Law 1 (Transduction): অভিধা (Direct physical sense), লক্ষণা (Cultural metaphor grounding), ব্যঞ্জনা (Resonant emotional aura).
    - Law 2 (Tone-Matrix): Archetype A (Minimalist/Imagist - zero padding particles), Archetype B (Romantic/Symbolist - elevated compounds), Archetype C (Realist - living dialogue & muscular verbs).
-   - Law 3 (Anatomical & Lapidary Realism): Never invent limbs or organs (jellyfish pulses: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`). Lapidary: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `বৈদূর্যমণি`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`. Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
+   - Law 3 (Anatomical & Lapidary Realism): Never invent limbs or organs (jellyfish pulses: `খোলে ও বুজে যায়/মুদে যায়`, never spreading wings `ডানা মেলা`). Lapidary: Amber ➔ `পিঙ্গল-আভ / মধুরঙা`, Amethyst ➔ `রক্তনীলমণি`, Turquoise ➔ `ফিরোজা`, Lapis ➔ `রাজাবর্ত`, Slough ➔ `নির্মোক`, Azure ➔ `নীলিমা`. Cognitive Volition: Intent/will ➔ `অভিপ্রায়` বা `সংকল্প` (never romanticize into `বাসনা`).
    - Law 4 (Anti-Calque Syntax): Dissolve passive English structures into active Bengali; use expressive compound verbs (sank ➔ তলিয়ে গেল; faded ➔ মিলিয়ে গেল).
    - Law 5 (Prosodic Cadence): 14-Akshar Payar (৮ + ৬ মাত্রার অন্ত্যমিল), Matrabritta, or organic free verse with zero padding particles (`কখনো`, `যেন`, `তুমিও`, `সেই`).
 7. **Healthcare, Clinical Advisories & Epidemiology**:
