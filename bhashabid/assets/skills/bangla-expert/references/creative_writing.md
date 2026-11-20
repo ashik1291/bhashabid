@@ -21,7 +21,7 @@
 - **Transitions (সংযোগকারী পদ)**:
   - Affirmative: `বস্তুত`, `বস্তুতপক্ষে`, `বলা বাহুল্য`
   - Contrast: `পক্ষান্তরে`, `অপরদিকে`, `তা সত্ত্বেও`
-  - Causation: `ফলশ্রুতিতে`, `সুতরাং`, `এরই ধারাবাহিকতায়`
+  - Causation: `ফলে`, `সুতরাং`, `এরই ধারাবাহিকতায়`
 
 ## 3. Proverbs, Idioms & Cross-Lingual Metaphors (প্রবাদ-প্রবচন ও বাগধারা)
 - **Cultural Equivalence over Literal Calques**:
@@ -89,7 +89,7 @@ Literary translation requires identifying and strictly maintaining the author's 
 - **Expressive Compound Verbs (যৌগিক ক্রিয়া)**: Naturalize flat English verbs with rich Bengali compound verbs (*sank* ➔ *তলিয়ে গেল / ডুবে গেল*; *faded* ➔ *মিলিয়ে গেল / মুছে গেল*; *opened* ➔ *খুলে গেল / মেলে ধরল*).
 
 ### Law 5: Prosody, Rhythm & Cadence Lock (ছন্দ ও লয় নিয়ন্ত্রণ)
-- **Lyrical / Metrical Verse**: Strictly maintain designated classical Bengali meters: **মাত্রাবৃত্ত**, **দলবৃত্ত / স্বরবৃত্ত**, or **অক্ষরবৃত্ত / পয়ার** (৮ + ৬ বা ৮ + ৮ মাত্রা).
+- **Lyrical / Metrical Verse**: Strictly maintain designated classical Bengali meters: **মাত্রাবৃত্ত**, **দলবৃত্ত / স্বরবৃত্ত**, or **অক্ষরবৃত্ত** (পয়ার ৮ + ৬ = ১৪ মাত্রা; মহাপয়ার ৮ + ১০ = ১৮ মাত্রা). Counting rules: `numerals.md` §6.
 - **Free Verse / Prose Poetry (মুক্তক)**: Preserve breath units (*শ্বাসাঘাত ও পঙ্ক্তিচ্ছেদ*) and acoustic vowel resonance.
 - **Rule of Zero Uninvited Particles (অনাহূত পদ বর্জন)**: Never insert padding words (`কখনো`, `তুমিও`, `সেই`, `যেন`, `একটি`) to artificially smooth a line.
 

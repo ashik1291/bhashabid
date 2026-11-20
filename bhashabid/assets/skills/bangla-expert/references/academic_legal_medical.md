@@ -34,7 +34,7 @@
 - **Schedule of Property (তফসিল বর্ণনা)**: `মৌজা, জে.এল নং, সি.এস/এস.এ/আর.এস/বি.এস খতিয়ান নং, দাগ নং ও চারপাশের চৌহদ্দি বর্ণনা।`
 
 ## 5. Agronomy & Disaster Early Warning (কৃষি ও দুর্যোগ ব্যবস্থাপনা)
-- **Meteorology Alerts**: Use standard BMD warnings (`মহাবিপদ সংকেত ১-১০`, never 'বড় বিপদ').
+- **Meteorology Alerts**: Use BMD maritime port signals 1–11: ১–২ দূরবর্তী সতর্ক/হুঁশিয়ারি সংকেত, ৩ স্থানীয় সতর্ক সংকেত, ৪ স্থানীয় হুঁশিয়ারি সংকেত, ৫–৭ বিপদ সংকেত, ৮–১০ মহাবিপদ সংকেত, ১১ যোগাযোগ বিচ্ছিন্ন সংকেত (never 'বড় বিপদ').
 - **Storm Surge**: `জলোচ্ছ্বাস` (never literal 'ঝড় বৃদ্ধি').
 - **Crop Husbandry**: `সুষম সার ও অনুমোদিত বালাইনাশক প্রয়োগ করতে হবে` (never 'পোকা মারার ওষুধ' or archaic 'করিতে হইবে').
 

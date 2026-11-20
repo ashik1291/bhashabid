@@ -153,7 +153,8 @@ _SADHU_PERFECT_PAT = re.compile(r"^([^\u09BE]+)িয়াছ(.*)$")
 
 # Sadhu forms that also occur in formal or Bangladeshi Cholito: converted only on explicit request,
 # never reported as Guru-chandali.
-_NOT_REPORTED = AMBIGUOUS_FORMS | CONTEXT_INFINITIVES | {"নিমিত্ত", "এরূপ", "সেরূপ", "যেরূপ", "কিরূপ"}
+# অদ্য and ঐ survive in legal/official Cholito formulas ("এই চুক্তিপত্র অদ্য ... সম্পাদিত হলো").
+_NOT_REPORTED = AMBIGUOUS_FORMS | CONTEXT_INFINITIVES | {"নিমিত্ত", "এরূপ", "সেরূপ", "যেরূপ", "কিরূপ", "অদ্য", "ঐ"}
 # 'হইতে' is the infinitive 'হতে' before these verbs, otherwise the postposition 'থেকে'.
 _HOITE_INFINITIVE_NEXT = ("পার", "লাগ", "চা", "হই", "হব", "হবে", "দাও", "দিন", "দে", "থাক")
 # Motion verbs (গেল, যাই) are left out: "বাড়িতে গেল" is "went home", not an infinitive.
