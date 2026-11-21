@@ -1,45 +1,53 @@
-# Bhashabid Autonomous Learning Curve & Saturation Audit
+# Bhashabid Corpus Coverage Audit (engine agreement rate)
 
-- **Execution Timestamp**: `2026-11-12 12:50:48`
-- **Approved Knowledge Invariants**: `28` production cards
-- **Quarantined Candidate Drafts**: `2` (Principle P2 review queue)
-- **External Corpora Ingested**: `14` source files (`94` total sentences)
-- **Clean Native Benchmarks**: `87`
-- **Canary Flaws Trapped**: `7`
+- **Execution Timestamp**: `2026-11-21 18:47:29`
+- **Approved Knowledge Invariants**: `50` production cards
+- **Quarantined Candidate Drafts**: `21` (Principle P2 review queue)
+- **External Corpora Ingested**: `20` source files (`176` total sentences)
+- **Clean Native Benchmarks**: `166`
+- **Canary Flaws Trapped**: `10`
 - **Active Anomaly Candidates**: `0`
 
-## 1. Domain & Sector Saturation Index
+> **Read carefully:** *Engine agreement* = share of sentences the current rules already classify as clean or as a known flaw. It is circular (the rules were tuned on this data), is not accuracy, and is not evidence of learning or coverage. Sectors with fewer than 30 sentences are marked INSUFFICIENT DATA.
 
-| Domain / Sector | Sentences | Clean Benchmark | Trapped Canaries | Saturation Index | Status & Recommendation |
+## 1. Domain & Sector Engine Agreement
+
+| Domain / Sector | Sentences | Clean Benchmark | Trapped Canaries | Engine Agreement | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Academic Research & Methodology | 7 | 85.7% | 1 | `100%` | SATURATED (Needs New Data) |
-| Administrative Governance & Memos | 6 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Agronomy & Disaster Management | 7 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Banking & Macroeconomics | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Administrative Governance | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Tax & Customs | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Official Administrative | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Land Conveyancing & Deeds | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Macroeconomic & Finance | 2 | 50.0% | 1 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Judicial & High Court | 2 | 50.0% | 1 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Sports Vernacular | 2 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Corporate & Tech | 2 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Disaster Early Warning | 2 | 50.0% | 1 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Classical Poetry & Prosody | 5 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Creative Fiction & Dialogue | 7 | 71.4% | 2 | `100%` | SATURATED (Needs New Data) |
-| Education & NCTB Pedagogy | 7 | 85.7% | 1 | `100%` | SATURATED (Needs New Data) |
-| Healthcare & Epidemiology | 7 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| ICT & Software Engineering | 7 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Land Registry & Deeds | 7 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Constitutional Law & Writs | 7 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Macroeconomics & Banking | 7 | 100.0% | 0 | `100%` | SATURATED (Needs New Data) |
-| Education & Pedagogy | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Science & Encyclopedic | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Poetic Prosody | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Agronomy & Crop Protection | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
-| Healthcare & Medicine | 1 | 100.0% | 0 | `100%` | LEARNING (Active Anomaly Discovery) |
+| Academic Research & Methodology | 11 | 90.9% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Administrative Governance & Memos | 11 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Agronomy & Disaster Management | 13 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Banking & Macroeconomics | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Administrative Governance | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Tax & Customs | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Official Administrative | 1 | 0.0% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Land Conveyancing & Deeds | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Macroeconomic & Finance | 2 | 50.0% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Judicial & High Court | 2 | 50.0% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Sports Vernacular | 2 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Corporate & Tech | 2 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Disaster Early Warning | 2 | 50.0% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Citizen Digital Services & Smart Governance | 4 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Classical Poetry & Prosody | 5 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Consumer E-Commerce & Retail Logistics | 8 | 87.5% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Creative Fiction & Dialogue | 7 | 71.4% | 2 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Customer Support & Conversational Chat | 8 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Education & NCTB Pedagogy | 12 | 91.7% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Healthcare & Epidemiology | 12 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| ICT & Software Engineering | 7 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Land Registry & Deeds | 14 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Constitutional Law & Writs | 18 | 94.4% | 1 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Macroeconomics & Banking | 12 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Mass Media & Digital Journalism | 4 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| MFS, Microfinance & Grassroots FinTech | 4 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Education & Pedagogy | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Science & Encyclopedic | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Poetic Prosody | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Agronomy & Crop Protection | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Healthcare & Medicine | 1 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
+| Translation & Calque Naturalization | 6 | 100.0% | 0 | `100%` | INSUFFICIENT DATA (n<30; rate not meaningful) |
 
-**Average System-Wide Saturation on Current Batch**: `100.0%`
+**Average Engine Agreement on Current Batch (circular; not accuracy)**: `100.0%`
 
 ## 2. Autonomous Ingestion & Convergence Criteria
 

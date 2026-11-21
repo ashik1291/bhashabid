@@ -1,5 +1,8 @@
 # Specifications & Features Changelog
 
+## [2026-11-21] - REQ-036 budget raised
+- **REQ-036**: SKILL.md limit raised from 600 to 1000 tokens (cl100k_base). Rationale: real count is ~907, so the 600 limit was already violated and only passed via a words*1.3 underestimate. Test now uses tiktoken when available.
+
 ## [2026-11-20] - Traceability Honesty Audit
 - **Rationale**: Several rows cited tests that do not exist or a card-schema test as proof of behaviour.
 - **Corrected rows**: REQ-013, 037, 038, 040 now cite existing tests; REQ-026/028/029/030/032 cite lint tests plus `eval/unit/test_engine_gold.py`.

@@ -12,7 +12,7 @@ To ensure complete clarity regarding project status and milestones:
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        CURRENT ACTIVE ENGINE                           │
 │  [PHASE 1: Human-in-the-Loop Review Gate (Principle P2)]   ──► LIVE    │
-│  [PHASE 2: Skill Distillation & < 390 BPE Token Ceiling]   ──► LIVE    │
+│  [PHASE 2: Skill Distillation & < 1000 Token Ceiling]    ──► LIVE    │
 │  [PHASE 3: Rule Hardening & Zero-Regression Memory]        ──► LIVE    │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │ Generates Longitudinal Empirical Evidence
@@ -28,7 +28,7 @@ To ensure complete clarity regarding project status and milestones:
 
 * **Phases 1–3 are ALREADY FULLY IMPLEMENTED and OPERATING**:
   * **Phase 1**: [PENDING_REVIEWS.md](file:///C:/Users/BS01671/Documents/personal_projects/bhashabid/docs/review_queue/PENDING_REVIEWS.md) and `bhashabid review` enforce Principle P2 human sign-off.
-  * **Phase 2**: [skill_distiller.py](file:///C:/Users/BS01671/Documents/personal_projects/bhashabid/tools/skill_distiller.py) enforces the $< 390$ true BPE token budget (currently at 298 tokens).
+  * **Phase 2**: [skill_distiller.py](file:///C:/Users/BS01671/Documents/personal_projects/bhashabid/tools/skill_distiller.py) enforces the $< 1000$ true cl100k token budget (REQ-036; SKILL.md currently ~907 tokens).
   * **Phase 3**: [repair.py](file:///C:/Users/BS01671/Documents/personal_projects/bhashabid/tools/bn_normalize/repair.py), [ledger.jsonl](file:///C:/Users/BS01671/Documents/personal_projects/bhashabid/memory/mistakes/ledger.jsonl), and [test_regression_ledger.py](file:///C:/Users/BS01671/Documents/personal_projects/bhashabid/eval/unit/test_regression_ledger.py) enforce 102 automated regression tests.
 * **Phase 4 is a FUTURE MILESTONE**:
   * It will be initiated **only after** Phases 1–3 run continuously across several weeks/months, gathering the mature statistical data needed for a peer-reviewed publication.
@@ -65,7 +65,7 @@ To win community respect, the research paper must present a fair, transparent ab
 
 ## 3. Quantitative Maturity Triggers: When is Phase 4 Ready?
 
-We do not start writing Phase 4 based on calendar dates. We initiate Phase 4 **only when the autonomous flywheel hits four objective, reproducible milestones**:
+We do not start writing Phase 4 based on calendar dates. We initiate Phase 4 **only when the human-approved rule-growth loop hits four objective, reproducible milestones**:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -143,7 +143,7 @@ To ensure the paper is respected by top academic conferences (**ACL, EMNLP, COLI
 When Phase 4 is executed, the research paper will be structured following standard ACL/IEEE formatting:
 
 * **Title**:
-  * *Bhashabid: A Neuro-Symbolic Cognitive Coprocessor and Semi-Autonomous Closed-Loop Practice Flywheel for Deterministic Bengali Linguistic Processing*
+  * *Bhashabid: A Deterministic Rule-Based Coprocessor and Human-Approved Rule-Growth Loop for Bengali LLM Output*
 * **1. Introduction**:
   * The crisis of high-stakes precision in low-resource South Asian NLP.
   * Why fine-tuning LLMs is economically unsustainable and degrades general reasoning.
@@ -153,9 +153,9 @@ When Phase 4 is executed, the research paper will be structured following standa
   * Bengali computational linguistics and Bangla Academy standards.
 * **3. Architecture & Core Mechanisms**:
   * Symbolic Layer: deterministic repair transforms, moraic scansion, AST normalizer.
-  * In-Context Distillation: compressing 28+ cards into $< 390$ true BPE tokens.
+  * In-Context Distillation: compressing 28+ cards into $< 1000$ true cl100k tokens.
   * Mistake Memory: `ledger.jsonl` and immutable regression testing (Principle P8).
-* **4. Semi-Autonomous Practice Flywheel**:
+* **4. Human-Approved Rule-Growth Loop**:
   * Per-sector precision tracking ($P_d$).
   * Targeted live feed ingestion vs. offline mistake-learning synthesis fallback.
   * Human-in-the-loop governance (Principle P2).

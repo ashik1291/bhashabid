@@ -258,9 +258,21 @@ class BengaliOfflineLexicon:
         if len(w) < 4 or self.is_known(w):
             return None
         suggestions = self.suggest_corrections(w, max_suggestions=1, max_distance=1.0)
-        if suggestions and suggestions[0] != w:
+        if suggestions and suggestions[0] != w and self._is_safe_autorepair(w, suggestions[0]):
             return suggestions[0]
         return None
+
+    # Long -> short vowel sign is the only rule-governed swap (Bangla Academy). ন/ণ, র/ড়, শ/ষ/স
+    # swaps are lexical identity: auto-applying them corrupts valid words and proper nouns
+    # (খোড়া, নেত্রকোণা); they stay suggestions only.
+    _SAFE_AUTOREPAIR_SWAPS = {("ী", "ি"), ("ূ", "ু")}  # not initial ঈ/ঊ: ঊননব্বই, ঊন- are valid
+
+    @classmethod
+    def _is_safe_autorepair(cls, original: str, candidate: str) -> bool:
+        if len(original) != len(candidate):
+            return False
+        diffs = [(a, b) for a, b in zip(original, candidate) if a != b]
+        return bool(diffs) and all(d in cls._SAFE_AUTOREPAIR_SWAPS for d in diffs)
 
     def audit_text(self, text: str) -> List[Dict]:
         """

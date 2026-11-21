@@ -122,8 +122,6 @@ CANONICAL_CALQUE_REPAIRS = STRUCTURAL_CALQUE_REPAIRS + (_LOADED_REPAIRS if _LOAD
 
 # Deterministic grammatical pleonasms and ungrammatical affix repairs (অপপ্রয়োগ ও বাহুল্য বর্জন)
 CANONICAL_GRAMMAR_DEFECT_REPAIRS = [
-    # Pleonasm: প্রায়শই -> প্রায়শ / প্রায়ই
-    (re.compile(B_L + r"প্রায়শই" + B_R), "প্রায়শ", "বাহুল্য প্রত্যয় বর্জন: 'প্রায়শই' -> 'প্রায়শ'"),
     # Suffix defect: একত্রিত -> একত্র
     (re.compile(B_L + r"একত্রিত\s+করে" + B_R), "একত্র করে", "প্রত্যয়ঘটিত অপপ্রয়োগ নিবারণ: 'একত্রিত করে' -> 'একত্র করে'"),
     (re.compile(B_L + r"একত্রিত\s+হয়ে" + B_R), "একত্র হয়ে", "প্রত্যয়ঘটিত অপপ্রয়োগ নিবারণ: 'একত্রিত হয়ে' -> 'একত্র হয়ে'"),

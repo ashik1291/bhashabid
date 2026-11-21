@@ -1,5 +1,7 @@
 # Neuro-Symbolic Cognitive Architecture & Semi-Autonomous Practice Flywheel
 
+> **Terminology & evidence note (2026-11-21):** "neuro-symbolic" and "flywheel" here describe an LLM calling deterministic rule tools plus a human-approved rule-growth loop. Bhashabid contains no learned neural component and does not self-improve autonomously. Accuracy claims below are unvalidated by native speakers or held-out multi-vendor tests; see README "Evidence Status" and `eval/vendor_test/`.
+
 > **Bhashabid (ভাষাবিদ)**: An open-source deterministic linguistic coprocessor and self-evaluatory learning flywheel for the Bengali language.
 
 ---

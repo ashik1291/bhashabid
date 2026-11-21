@@ -119,8 +119,10 @@ class TestRepairEngine(unittest.TestCase):
 
         # Pleonasm
         repaired_pl, _ = repair_text("তিনি প্রায়শই বিলম্ব করেন।")
-        self.assertEqual(repaired_pl, "তিনি প্রায়শ বিলম্ব করেন।")
-        self.assertEqual(len(lint_text(repaired_pl)), 0)
+        # প্রায়শই is widely accepted; the lint rule is advisory and repair must not rewrite it
+        from bhashabid.normalize.unicode import canonicalize_unicode as _canon
+        self.assertEqual(_canon(repaired_pl), _canon("তিনি প্রায়শই বিলম্ব করেন।"))
+        self.assertTrue(any(x.rule_id == "RULE-GRAMMAR-PLEONASM" for x in lint_text(repaired_pl)))
 
         repaired_km, _ = repair_text("তিনি কেবলমাত্র সত্য বলতেন।")
         self.assertEqual(repaired_km, "তিনি কেবল সত্য বলতেন।")
@@ -148,7 +150,6 @@ class TestRepairEngine(unittest.TestCase):
 
     def test_grammar_defect_and_pleonasm_repairs(self):
         cases = [
-            ("আমি প্রায়শই সিস্টেম ডিজাইন বিষয়ক আলোচনা দেখি।", "আমি প্রায়শ সিস্টেম ডিজাইন বিষয়ক আলোচনা দেখি।"),
             ("বিভিন্ন সার্ভিসকে একত্রিত করে একটি কাঠামো গড়ে তোলা।", "বিভিন্ন সার্ভিসকে একত্র করে একটি কাঠামো গড়ে তোলা।"),
             ("প্রকৌশলীরা যেসব সমস্যার মুখোমুখি হন, তার সমাধানের জন্য এটি উপযোগী।", "প্রকৌশলীরা যেসব সমস্যার মুখোমুখি হন, সেগুলোর সমাধানের জন্য এটি উপযোগী।"),
             ("রবিবার তারা মিছিল করে। এছাড়া কারো কারো মাথায় হেলমেট ছিল।", "রোববার তারা মিছিল করে। এ ছাড়া কারও কারও মাথায় হেলমেট ছিল।"),
@@ -301,3 +302,28 @@ class TestRepairEngine(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAutoRepairSafety(unittest.TestCase):
+    """Regression cases from the Wikipedia false-positive audit (2026-11-21)."""
+
+    def _canon(self, t):
+        from bhashabid.normalize.unicode import canonicalize_unicode
+        return canonicalize_unicode(t)
+
+    def test_lexical_identity_words_and_names_untouched(self):
+        for text in ["চারা রোপণের জন্য গর্ত খোড়া হয়।", "নেত্রকোণা জেলা।", "তৌকির আহমেদ এলেন।"]:
+            self.assertEqual(self._canon(repair_text(text)[0]), self._canon(text))
+
+    def test_short_vowel_and_known_typo_still_repaired(self):
+        self.assertEqual(self._canon(repair_text("সে খুশী হল।")[0]), self._canon("সে খুশি হল।"))
+        self.assertEqual(self._canon(repair_text("আবিস্কৃত")[0]), self._canon("আবিষ্কৃত"))
+
+    def test_no_devanagari_in_output(self):
+        import re
+        self.assertEqual(self._canon(repair_text("আবিস্কার")[0]), self._canon("আবিষ্কার"))
+        self.assertIsNone(re.search("[ऀ-ॿ]", repair_text("আবিস্কার")[0]))
+
+    def test_valid_long_initial_vowel_numerals_untouched(self):
+        for w in ["ঊননব্বই", "ঊনপঞ্চাশ", "ঊনিশ"]:
+            self.assertEqual(self._canon(repair_text(w)[0]), self._canon(w))

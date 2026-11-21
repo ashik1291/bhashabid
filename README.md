@@ -92,16 +92,24 @@ However, because frontier LLMs are **probabilistic token predictors**, mission-c
 6. **Zero Offline Capability**:
    - Frontier models require live cloud network connectivity and API keys. They cannot run in disconnected local environments, air-gapped workstations, or microservice edge pipelines.
 
-### 🤝 The Neurosymbolic Solution: Coprocessor Synergy, Not Replacement
-Bhashabid does not attempt to train a model from scratch or replace frontier LLMs. Instead, it pairs with them as a **high-speed, deterministic neurosymbolic coprocessor**:
-- **Frontier LLM (Semantic Heavy-Lifter)**: Handles open-domain world knowledge, reasoning, creative depth, and semantic generation (~85% of the cognitive burden).
-- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the 15% deterministic last mile—zero-latency Unicode canonicalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and compact, on-demand context guidance via MCP & pure local Python.
+## ⚠️ Evidence Status (read before citing accuracy claims)
+
+- The deterministic engine (numerals, dates, Unicode, lint, repair) is unit-tested. Its gold set (~90 sentences) was drafted by an LLM, tuned by the same party, and is **not native-speaker verified**: scores are an optimistic upper bound.
+- The LLM A/B pilot (`eval/llm_ab/2026-11-20`) is 12 tasks, Claude Haiku/Sonnet only, deterministic checks only. It shows defect reduction on checked classes, **not** general Bengali quality, and does not cover Gemini/ChatGPT.
+- The learning loop does **not** train or self-improve a model. It collects real output, proposes candidate rules, and a named human approves them. No measured held-out learning curve exists yet.
+- "Saturation" figures in `eval/reports/learning_curve_audit.md` count tiny sector samples (1-7 sentences) and are not evidence of coverage.
+- Independent evaluation: `eval/vendor_test/` is a frozen manual multi-vendor protocol (base vs skill vs tools). Results will be published there, including negative ones.
+
+### 🤝 Rule-Based Coprocessor for LLMs: Synergy, Not Replacement
+Bhashabid does not attempt to train a model from scratch or replace frontier LLMs. Instead, it pairs with them as a **high-speed, deterministic rule-based coprocessor** (a tool-augmented LLM pattern; there is no learned neural component in Bhashabid itself):
+- **Frontier LLM (Semantic Heavy-Lifter)**: Handles open-domain world knowledge, reasoning, creative depth, and semantic generation .
+- **Bhashabid Coprocessor (Deterministic Guardrail)**: Handles the deterministic last mile—zero-latency Unicode canonicalization, Bangla Academy orthography repair, statutory banking numbers/words, honorific concordance checking, and compact, on-demand context guidance via MCP & pure local Python.
 
 ---
 
 ## 📊 Side-by-Side Comparison: Frontier LLMs vs. Bhashabid Coprocessor
 
-| Linguistic & Production Dimension | Frontier LLM Baseline (Probabilistic Generation) | Bhashabid Neurosymbolic Coprocessor (Deterministic Guard) | Empirical Production Example |
+| Linguistic & Production Dimension | Frontier LLM Baseline (Probabilistic Generation) | Bhashabid Rule-Based Coprocessor (Deterministic Guard) | Empirical Production Example |
 | :--- | :--- | :--- | :--- |
 | **1. South Asian Currency & Numbers** | High fluency, but frequently defaults to Western 3-digit comma grouping (`1,234,567.50`). | Mathematically guarantees South Asian Lakh/Crore grouping and official check words in Bengali. | Input: `1234567.50`<br>Raw LLM: `1,234,567.50` ⚠️<br>Bhashabid: **"১২,৩৪,৫৬৭.৫০ (বারো লাখ চৌত্রিশ হাজার পাঁচশত সাতষট্টি টাকা পঞ্চাশ পয়সা মাত্র)"** ✔️ |
 | **2. Unicode NFC & Punctuation** | Emits mixed Unicode codepoints (NFD/broken Hasanta) and ASCII periods (`.`) instead of Dari (`।`). | Deterministically canonicalizes Unicode (NFC with precomposed য়/ড়/ঢ়) and converts terminal periods to Dari while preserving decimals (`৩.১৪`). | Raw LLM: `"তিনি বাড়ি গেলেন."` ⚠️<br>Bhashabid: **"তিনি বাড়ি গেলেন।"** ✔️ |
@@ -148,7 +156,7 @@ Bhashabid does not attempt to train a model from scratch or replace frontier LLM
 - **Problem**: Monolithic linguistic system prompts (5,000–20,000 tokens) cause severe context dilution, high latency, and high API expenses.
 - **Solution**: The root skill kernel (`skills/bangla-expert/SKILL.md` and `.cursor/rules/bangla-expert.mdc`) is kept compact (**~890 tokens** on `cl100k_base`). It contains only universal structural invariants; domain reference files are retrieved via progressive disclosure. Note: this exceeds the 600-token target in REQ-036 — the unit test uses a word-count estimate that undercounts Bengali; see [Measured Accuracy](#-measured-accuracy--what-is-and-isnt-verified).
 
-### 2. Semi-Autonomous Learning Loop (human-approved)
+### 2. Human-Approved Rule-Growth Loop (not autonomous learning)
 - **Problem**: Hand-maintained rules miss what models actually get wrong, while un-reviewed machine-generated rules drift into hallucinated grammar.
 - **Solution**: `bhashabid learn` runs a closed loop with a human gate (P2):
   1. **collect** real text: LLM outputs you collect (`eval/corpora/llm_inbox/`) and sector-wise articles from licence-approved sources (Bengali Wikipedia and Wikisource, robots.txt-respecting) via `bhashabid learn cycle --fetch`, run manually as practice;

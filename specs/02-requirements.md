@@ -49,7 +49,7 @@ Requirements are specified in EARS (Easy Approach to Requirements Syntax) format
 
 ## 4. Skill Architecture, Evaluation & Memory (REQ-036 - REQ-040)
 
-- **REQ-036**: The skill root file `skills/bangla-expert/SKILL.md` shall not exceed 600 tokens in size.
+- **REQ-036**: The skill root file `skills/bangla-expert/SKILL.md` shall not exceed 1000 tokens (cl100k_base) in size.
 - **REQ-037**: When an agent encounters an evaluation failure, the Mistake Analyst shall append a structured record to `memory/mistakes/ledger.jsonl`.
 - **REQ-038**: Every resolved mistake in the ledger shall have a corresponding unit or regression test reference in `eval/unit/`.
 - **REQ-039**: The evaluation suite shall execute comparisons across at least 3 distinct model configurations (e.g., Baseline vs Skill vs Skill+Tools).

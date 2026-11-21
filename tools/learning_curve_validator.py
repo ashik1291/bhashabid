@@ -15,6 +15,9 @@ if REPO_ROOT not in sys.path:
 from tools.corpus_harvester import CorpusHarvester
 from tools.bn_lint import lint_text
 
+MIN_SECTOR_N = 30  # below this a sector sample says nothing about coverage
+
+
 class LearningCurveValidator:
     """
     Autonomously evaluates Bhashabid's learning trajectory, saturation index,
@@ -89,7 +92,11 @@ class LearningCurveValidator:
                 "trapped_canaries": stats["trapped"],
                 "novel_anomalies": stats["anomalies"],
                 "saturation_index": round(known_rate, 2),
-                "status": "SATURATED (Needs New Data)" if stats["anomalies"] == 0 and tot >= 5 else "LEARNING (Active Anomaly Discovery)"
+                "status": (
+                    f"INSUFFICIENT DATA (n<{MIN_SECTOR_N}; rate not meaningful)" if tot < MIN_SECTOR_N
+                    else "NO NOVEL ANOMALIES IN SAMPLE" if stats["anomalies"] == 0
+                    else "ANOMALIES FOUND (review candidates)"
+                )
             }
 
         return {
@@ -107,7 +114,7 @@ class LearningCurveValidator:
         os.makedirs(os.path.dirname(report_path), exist_ok=True)
 
         lines = [
-            "# Bhashabid Autonomous Learning Curve & Saturation Audit",
+            "# Bhashabid Corpus Coverage Audit (engine agreement rate)",
             "",
             f"- **Execution Timestamp**: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`",
             f"- **Approved Knowledge Invariants**: `{card_data['approved_cards_count']}` production cards",
@@ -117,9 +124,11 @@ class LearningCurveValidator:
             f"- **Canary Flaws Trapped**: `{h_stats['canary_trapped']}`",
             f"- **Active Anomaly Candidates**: `{h_stats['anomalies']}`",
             "",
-            "## 1. Domain & Sector Saturation Index",
+            "> **Read carefully:** *Engine agreement* = share of sentences the current rules already classify as clean or as a known flaw. It is circular (the rules were tuned on this data), is not accuracy, and is not evidence of learning or coverage. Sectors with fewer than "+str(MIN_SECTOR_N)+" sentences are marked INSUFFICIENT DATA.",
             "",
-            "| Domain / Sector | Sentences | Clean Benchmark | Trapped Canaries | Saturation Index | Status & Recommendation |",
+            "## 1. Domain & Sector Engine Agreement",
+            "",
+            "| Domain / Sector | Sentences | Clean Benchmark | Trapped Canaries | Engine Agreement | Status |",
             "| :--- | :--- | :--- | :--- | :--- | :--- |"
         ]
 
@@ -134,7 +143,7 @@ class LearningCurveValidator:
 
         lines.extend([
             "",
-            f"**Average System-Wide Saturation on Current Batch**: `{avg_sat * 100:.1f}%`",
+            f"**Average Engine Agreement on Current Batch (circular; not accuracy)**: `{avg_sat * 100:.1f}%`",
             "",
             "## 2. Autonomous Ingestion & Convergence Criteria",
             "",

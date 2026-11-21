@@ -2,6 +2,19 @@
 
 All notable changes to Bhashabid are documented here following Semantic Versioning.
 
+## [Unreleased]
+### Fixed
+- **Repair corrupted valid words and proper nouns** (found by the Bengali Wikipedia false-positive audit, `eval/reports/fp_audit_bnwiki_2026-11-21.md`): the lexicon auto-repair rewrote `খোড়া`→`খোরা`, `নেত্রকোণা`→`নেত্রকোনা`, `তৌকির`→`তৌকীর`. Auto-repair is now limited to long→short vowel-sign swaps; ন/ণ, র/ড়, শ/ষ/স swaps remain suggestions only.
+- `repair` no longer rewrites the widely used `প্রায়শই` (the lint rule stays advisory).
+- Orthography table entry `আবিস্কার` mapped to a string containing Devanagari characters; now `আবিষ্কার`. Added `আবিস্কৃত`→`আবিষ্কৃত`.
+- Learning-curve audit no longer reports a circular "100% saturation"; sectors with n<30 are marked INSUFFICIENT DATA.
+### Changed
+- REQ-036 skill budget raised from 600 to 1000 cl100k tokens; test counts real tokens when tiktoken is installed.
+- README/docs reworded: no "neurosymbolic" or "autonomous learning" claims; added "Evidence Status".
+### Added
+- `eval/vendor_test/` frozen manual multi-vendor protocol with scorer (Wilson CI, exact McNemar, blind rating sheet).
+- `eval/benchmarks/fp_audit.py` (false-positive audit) and `eval/benchmarks/heldout_curve.py` (held-out learning-curve logger); `eval/heldout/README.md`; `docs/PAPER_OUTLINE.md`.
+
 ## [1.2.0] - 2026-11-20
 ### Added
 - **Learning loop** (`bhashabid learn scan|pending|approve|reject|apply`, `tools/learning_loop.py`): ingests real text (e.g. LLM outputs), detects what the engine cannot decide (unknown words without confident correction, unconvertible Sadhu forms, untranslated English outside parenthetical glosses, defects surviving repair), drafts evidence cards, requires a named human approval (P2), then distills approved cards into the lexicon (`assets/learned/lexicon_additions.txt`), Sadhu roots (`assets/learned/sadhu_roots.json`), the idiom table or `technical_terms.md`, records regression cases (`eval/gold/learned_cases.jsonl`) and rebuilds bundles. First scan of the 120 pilot outputs produced 12 candidates.

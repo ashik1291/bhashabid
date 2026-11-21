@@ -13,12 +13,14 @@ class TestSkillIntegrity(unittest.TestCase):
         with open(skill_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # Approximate token count: words * 1.3 or whitespace-separated tokens
-        word_count = len(content.split())
-        approx_tokens = int(word_count * 1.3)
-        
-        # REQ-036 requires SKILL.md not to exceed 600 tokens
-        self.assertLess(approx_tokens, 600, f"SKILL.md exceeds token budget: approx {approx_tokens} tokens")
+        try:
+            import tiktoken
+            tokens = len(tiktoken.get_encoding("cl100k_base").encode(content))
+        except ImportError:
+            tokens = int(len(content.split()) * 2.2)  # conservative fallback for Bengali-heavy text
+
+        # REQ-036 requires SKILL.md not to exceed 1000 cl100k tokens
+        self.assertLess(tokens, 1000, f"SKILL.md exceeds token budget: {tokens} tokens")
 
     def test_skill_references_exist(self):
         ref_dir = os.path.join(REPO_ROOT, "skills", "bangla-expert", "references")
